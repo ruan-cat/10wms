@@ -9,11 +9,6 @@
 		"vscode": "^1.22.0",
 		"pnpm": ">=9.5.0"
 	},
-	"config": {
-		"commitizen": {
-			"path": "wms-frontend/node_modules/cz-git"
-		}
-	},
 	"scripts": {
 		"dev": "turbo vite:dev",
 		"build": "vite build --mode production",

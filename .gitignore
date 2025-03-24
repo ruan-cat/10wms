@@ -64,6 +64,8 @@ vite.config.ts.*.mjs
 
 # 单独的环境变量文件 要忽略 因为存储了敏感信息
 # !.env
+.env
+
 .vercel
 
 # 忽略 vitepress 项目生成的缓存

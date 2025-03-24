@@ -23,7 +23,7 @@ import type { FormInstance, UploadFile } from "element-plus";
 import { read, utils, writeFileXLSX } from "xlsx";
 
 // 导入API
-import {getshangpingApi} from  "@/apis/base-data/index.js";
+import { getshangpingApi } from "@/apis/base-data/index.js";
 // =============================弹窗部分=============================
 export interface OnConfirmParams<T> {
 	resolve: (value: T) => void;

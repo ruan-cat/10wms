@@ -344,7 +344,6 @@ const componentsTableProps = ref<SimpleDataTableProps<TableData>>({
 // 	},
 // );
 
-
 function loadData() {
 	getshangpingApi(
 		{

@@ -9,7 +9,7 @@
 	>
 		<div v-if="data1 || data2">
 			<ComponentsTable v-bind="status === 1 ? tableProps1 : tableProps2">
-				<template #bodyCell="{ prop, row }" >
+				<template #bodyCell="{ prop, row }">
 					<div v-if="prop === 'operation-bar'">
 						<el-button type="success" @click="goNoticeDetail(status === 1 ? 1 : 2, row)">阅读</el-button>
 					</div>

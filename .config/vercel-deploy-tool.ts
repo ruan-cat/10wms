@@ -7,17 +7,7 @@ export default <Config>{
 	vercelProjetName: "01s-vercel",
 	vercelOrgId: "team_cUeGw4TtOCLp0bbuH8kA7BYH",
 	vercelProjectId: "prj_0dbaKzhoqP9C3A7C4QDkzjSprN2L",
-
-	/**
-	 * 警告 token时效警告
-	 *
-	 * 这是阮喵喵自己提供的token，用的是阮喵喵的token，有效期仅为大项目期间。
-	 *
-	 * token标识名：  01s-10wsm-vercel-token
-	 *
-	 * 有效期：  25 年 8 月 19 日
-	 */
-	vercelToken: "RAR6YMjcE0cVTqjNEy30GIFo",
+	vercelToken: "",
 
 	// TODO: 后端接口尚未部署 不考虑反向代理
 	// TODO: 处理项目的404页面显示，让vercel项目可以自己显示出404

@@ -12,7 +12,7 @@
 	"scripts": {
 		"dev": "turbo vite:dev",
 		"build": "vite build --mode production",
-		"deploy": "node --import=tsx ./scripts/deploy.ts --env-path=.env.production",
+		"deploy": "node --import=tsx ./scripts/deploy.ts",
 		"preview": "vite preview",
 		"test": "vitest --ui --watch --api.port=4000",
 		"format": "prettier --write .",

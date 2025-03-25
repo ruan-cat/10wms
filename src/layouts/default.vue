@@ -15,7 +15,6 @@ import ChangePasswordDialog from "./components/ChangePasswordDialog.vue";
 import UserInfoDialog from "./components/UserInfoDialog.vue";
 import SystemMessageDialog from "./components/SystemMessageDialog.vue";
 import HomeStyleDialog from "./components/HomeStyleDialog.vue";
-import ClearCacheDialog from "./components/ClearCacheDialog.vue";
 import LogoutDialog from "./components/LogoutDialog.vue";
 
 import avatarImage from "@/assets/layoutIcon/avatar2.png";
@@ -215,11 +214,10 @@ const handleStyleConfirm = (style: string) => {
 const homeStyleClass = computed(() => {
 	return `home-style-${currentStyle.value}`;
 });
-const clearCacheDialog = ref();
 
 const handleClearCache = () => {
 	// 模拟清除缓存操作
-	clearCacheDialog.value.showDialog("浏览器缓存清除成功！");
+	// clearCacheDialog.value.showDialog("浏览器缓存清除成功！");
 };
 const logoutDialog = ref();
 
@@ -399,8 +397,6 @@ const goNoticeDetail = async (type: string, id: string) => {
 	<UserInfoDialog v-model:visible="userInfoDialogVisible" />
 	<SystemMessageDialog v-model:visible="systemMessageDialogVisible" :messages="messages" />
 	<HomeStyleDialog v-model:visible="homeStyleDialogVisible" @confirm="handleStyleConfirm" />
-	<!-- 清除缓存弹框 -->
-	<ClearCacheDialog ref="clearCacheDialog" />
 	<!-- 注销弹框 -->
 	<LogoutDialog ref="logoutDialog" />
 	<!-- 点击右上角按钮中的查看全部后显示的组件 -->

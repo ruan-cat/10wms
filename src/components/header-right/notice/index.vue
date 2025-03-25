@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue";
 
-import { Bell } from "@element-plus/icons-vue";
+import { Bell, WarnTriangleFilled } from "@element-plus/icons-vue";
 
 /** 未读公告数量 */
 const unreadNoticeCount = ref(0);

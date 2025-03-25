@@ -1,3 +1,7 @@
+<!-- 
+	用户信息弹框 
+	显示用户信息，可修改用户信息
+-->
 <script lang="ts" setup>
 import { ref } from "vue";
 import { type DialogPromiseProps } from "components/dialog-promise/types";

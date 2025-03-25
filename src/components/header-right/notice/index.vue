@@ -51,6 +51,16 @@ const goNoticeDetail = async (type: string, id: string) => {
 	showDetail.value = true;
 };
 
+/**
+ * 处理弹框逻辑
+ * @description
+ * 待优化
+ */
+function showDialog(i: any) {
+	status.value = i;
+	dialogVisible.value = true;
+}
+
 onMounted(() => {
 	getUnreadNoticeList();
 });

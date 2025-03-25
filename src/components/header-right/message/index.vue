@@ -1,6 +1,16 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue";
 import { Message } from "@element-plus/icons-vue";
+
+/**
+ * 处理弹框逻辑
+ * @description
+ * 待优化
+ */
+function showDialog(i: any) {
+	status.value = i;
+	dialogVisible.value = true;
+}
 </script>
 
 <template>

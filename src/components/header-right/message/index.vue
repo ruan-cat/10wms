@@ -13,7 +13,7 @@ import { Message } from "@element-plus/icons-vue";
 		</div>
 
 		<template #dropdown>
-			<el-dropdown-menu size="large">
+			<el-dropdown-menu>
 				<div class="notice">
 					<div class="header">
 						<el-icon style="margin: 0 4px 0 4px; color: #b471a0" size="16"><Message /></el-icon>

@@ -340,7 +340,7 @@ const goNoticeDetail = async (type: string, id: string) => {
 								</span>
 
 								<template #dropdown>
-									<el-dropdown-menu size="large">
+									<el-dropdown-menu>
 										<el-dropdown-item :icon="User" @click="userInfoDialogVisible = true">个人信息</el-dropdown-item>
 										<el-dropdown-item :icon="Setting" @click="showSystemMessageDialog"> 系统消息 </el-dropdown-item>
 										<el-dropdown-item :icon="Setting" @click="showHomeStyleDialog"> 首页风格 </el-dropdown-item>

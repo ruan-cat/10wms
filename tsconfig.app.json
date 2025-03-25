@@ -71,6 +71,9 @@
 			"models/*": [
 				"src/models/*"
 			],
+			"assets/*": [
+				"src/assets/*"
+			],
 		},
 	},
 	"include": [

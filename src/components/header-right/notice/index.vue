@@ -72,6 +72,7 @@ onMounted(() => {
 						<el-icon style="margin: 0 4px 0 4px; color: #b471a0" size="16"><WarnTriangleFilled /></el-icon>
 						<span>{{ unreadNoticeCount }}公告</span>
 					</div>
+
 					<div class="content">
 						<ul>
 							<li
@@ -133,33 +134,31 @@ onMounted(() => {
 .notice-root {
 }
 
+// TODO: 冗余的样式 需要想办法复用
 .icon-container {
 	position: relative;
 	display: inline-block;
-}
-
-.icon-container .el-icon {
-	width: 30px;
-	height: 30px;
-	color: white;
-}
-
-.move {
-	cursor: pointer;
-}
-
-.badge {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	background-color: red;
-	color: white;
-	width: 10px;
-	height: 10px;
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 12px;
+	.el-icon {
+		width: 30px;
+		height: 30px;
+		color: white;
+	}
+	.move {
+		cursor: pointer;
+	}
+	.badge {
+		position: absolute;
+		top: 0px;
+		right: 0px;
+		background-color: red;
+		color: white;
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 12px;
+	}
 }
 </style>

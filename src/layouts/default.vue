@@ -12,13 +12,10 @@ import { TabPaneName } from "element-plus";
 import TotalDialog from "./components/totalDialog.vue";
 
 import ChangePasswordDialog from "./components/ChangePasswordDialog.vue";
-import UserInfoDialog from "./components/UserInfoDialog.vue";
 import SystemMessageDialog from "./components/SystemMessageDialog.vue";
 import HomeStyleDialog from "./components/HomeStyleDialog.vue";
 import LogoutDialog from "./components/LogoutDialog.vue";
 
-import avatarImage from "@/assets/layoutIcon/avatar2.png";
-import guestImage from "@/assets/layoutIcon/游客.png";
 import noticeDetail from "./components/notice-detail.vue";
 import { getUnreadNoticeListAPI } from "@/apis/notice-remind";
 import { updateNoticeStatusAPI } from "@/apis/notice-remind";
@@ -42,11 +39,6 @@ const menuFromRouter = useRouterToMenuItem({
 });
 
 const { getMenus } = storeToRefs(userStore);
-
-/** 用户信息提示 */
-const userInfo = computed(() => {
-	return userStore.getUser === null ? "游客" : userStore.getUser.username;
-});
 
 const tabStore = useTabStore();
 const { activeTab, tabs } = storeToRefs(tabStore); // 当前激活的选项卡,标签选项数组
@@ -160,37 +152,6 @@ const handleCommand = (command: string, tabName: string) => {
 	}
 };
 
-// 处理弹框逻辑
-const showDialog = (i: any) => {
-	status.value = i;
-	dialogVisible.value = true;
-};
-
-const changePasswordDialogVisible = ref(false); // 修改密码控制弹框显示/隐藏
-// 控制个人信息弹框显示/隐藏
-const userInfoDialogVisible = ref(false);
-// 系统消息控制弹框显示
-const systemMessageDialogVisible = ref(false);
-// 消息数据
-const messages = ref([]);
-// 打开弹框
-const showSystemMessageDialog = () => {
-	systemMessageDialogVisible.value = true;
-};
-// 控制弹框显示
-const homeStyleDialogVisible = ref(false);
-
-// 当前选中的风格
-const currentStyle = ref("ace"); // 默认风格
-
-// // 打开弹框
-const showHomeStyleDialog = () => {
-	homeStyleDialogVisible.value = true;
-};
-
-// 控制详情页
-const showDetail = ref(false);
-
 // 传递的标题
 const dialogTitle = ref("");
 // 传递的noticeId
@@ -203,6 +164,9 @@ onMounted(() => {
 		currentStyle.value = savedStyle; // 从 localStorage 中读取风格
 	}
 });
+
+/** 当前选中的风格 */
+const currentStyle = ref("ace");
 // 处理风格确认
 const handleStyleConfirm = (style: string) => {
 	currentStyle.value = style; // 更新当前风格
@@ -214,16 +178,6 @@ const handleStyleConfirm = (style: string) => {
 const homeStyleClass = computed(() => {
 	return `home-style-${currentStyle.value}`;
 });
-
-const handleClearCache = () => {
-	// 模拟清除缓存操作
-	// clearCacheDialog.value.showDialog("浏览器缓存清除成功！");
-};
-const logoutDialog = ref();
-
-const handleLogout = () => {
-	logoutDialog.value.showDialog();
-};
 
 // TODO 去往公告详情页
 const goNoticeDetail = async (type: string, id: string) => {
@@ -363,8 +317,7 @@ const goNoticeDetail = async (type: string, id: string) => {
 
 	<!-- 修改密码弹框 -->
 	<ChangePasswordDialog v-model="changePasswordDialogVisible" />
-	<!-- 个人信息弹框 -->
-	<UserInfoDialog v-model:visible="userInfoDialogVisible" />
+
 	<SystemMessageDialog v-model:visible="systemMessageDialogVisible" :messages="messages" />
 	<HomeStyleDialog v-model:visible="homeStyleDialogVisible" @confirm="handleStyleConfirm" />
 	<!-- 注销弹框 -->

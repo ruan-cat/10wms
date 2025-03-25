@@ -1,3 +1,32 @@
+<script lang="ts" setup>
+import { ref } from "vue";
+import { type DialogPromiseProps } from "components/dialog-promise/types";
+
+const dialogPromiseProps = ref<DialogPromiseProps<null>>({
+	async onDialogClose({ reject, resolve }) {
+		resolve(null);
+		return true;
+	},
+});
+
+const form = ref({
+	username: "admin",
+	name: "管理员",
+	phone: "",
+	email: "",
+});
+
+const handleSubmit = () => {
+	// 这里可以添加保存逻辑
+	alert("个人信息已保存！");
+	// handleClose();
+};
+
+const handleUpdateVisible = (value: boolean) => {
+	// emit("update:visible", value);
+};
+</script>
+
 <template>
 	<el-dialog
 		:model-value="visible"
@@ -27,41 +56,7 @@
 	</el-dialog>
 </template>
 
-<script lang="ts" setup>
-import { ref } from "vue";
-
-const { visible } = defineProps({
-	visible: {
-		type: Boolean,
-		required: true,
-	},
-});
-
-const emit = defineEmits(["update:visible"]);
-
-const form = ref({
-	username: "admin",
-	name: "管理员",
-	phone: "",
-	email: "",
-});
-
-const handleClose = () => {
-	emit("update:visible", false);
-};
-
-const handleSubmit = () => {
-	// 这里可以添加保存逻辑
-	alert("个人信息已保存！");
-	handleClose();
-};
-
-const handleUpdateVisible = (value: boolean) => {
-	emit("update:visible", value);
-};
-</script>
-
-<style scoped>
+<style lang="scss" scoped>
 .el-form-item {
 	margin-bottom: 20px;
 }

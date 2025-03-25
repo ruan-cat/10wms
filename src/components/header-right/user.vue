@@ -4,9 +4,56 @@
 <script lang="ts" setup>
 import { ref, computed, watch } from "vue";
 
-import avatarImage from "@/assets/layoutIcon/avatar2.png";
+import { SwitchButton, Setting, User } from "@element-plus/icons-vue";
+import avatarImage from "assets/layoutIcon/avatar2.png";
+import guestImage from "assets/layoutIcon/游客.png";
+
+// 待优化
+// import UserInfoDialog from "./components/UserInfoDialog.vue";
 
 const userStore = useUserStore();
+
+/** 用户信息提示 */
+const userInfo = computed(() => {
+	return userStore.getUser === null ? "游客" : userStore.getUser.username;
+});
+
+// 处理弹框逻辑
+const showDialog = (i: any) => {
+	status.value = i;
+	dialogVisible.value = true;
+};
+
+const changePasswordDialogVisible = ref(false); // 修改密码控制弹框显示/隐藏
+// 控制个人信息弹框显示/隐藏
+const userInfoDialogVisible = ref(false);
+// 系统消息控制弹框显示
+const systemMessageDialogVisible = ref(false);
+// 消息数据
+const messages = ref([]);
+// 打开弹框
+const showSystemMessageDialog = () => {
+	systemMessageDialogVisible.value = true;
+};
+// 控制弹框显示
+const homeStyleDialogVisible = ref(false);
+
+// // 打开弹框
+const showHomeStyleDialog = () => {
+	homeStyleDialogVisible.value = true;
+};
+
+// 控制详情页
+const showDetail = ref(false);
+
+const handleClearCache = () => {
+	// 模拟清除缓存操作
+	// clearCacheDialog.value.showDialog("浏览器缓存清除成功！");
+};
+const logoutDialog = ref();
+const handleLogout = () => {
+	logoutDialog.value.showDialog();
+};
 </script>
 
 <template>
@@ -39,6 +86,9 @@ const userStore = useUserStore();
 				<el-dropdown-item :icon="SwitchButton" @click="handleLogout">注销</el-dropdown-item>
 			</el-dropdown-menu>
 		</template>
+
+		<!-- 个人信息弹框 -->
+		<UserInfoDialog v-model:visible="userInfoDialogVisible" />
 	</el-dropdown>
 </template>
 

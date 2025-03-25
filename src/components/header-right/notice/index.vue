@@ -59,7 +59,7 @@ onMounted(() => {
 <template>
 	<el-dropdown trigger="click">
 		<div class="icon-container">
-			<el-icon :size="20" class="icon move">
+			<el-icon :size="20" class="move">
 				<Bell />
 				<span class="badge">{{ unreadNoticeCount }}</span>
 			</el-icon>

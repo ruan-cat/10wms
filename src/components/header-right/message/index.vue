@@ -6,7 +6,7 @@ import { Message } from "@element-plus/icons-vue";
 <template>
 	<el-dropdown trigger="click">
 		<div class="icon-container">
-			<el-icon :size="20" class="icon move">
+			<el-icon :size="20" class="move">
 				<Message />
 				<span class="badge">0</span>
 			</el-icon>

@@ -161,4 +161,92 @@ onMounted(() => {
 		font-size: 12px;
 	}
 }
+
+// TODO: 冗余的样式 需要想办法复用
+/* 右上角下拉菜单样式 */
+.notice {
+	width: 240px;
+	display: flex;
+	flex-wrap: wrap;
+
+	.header {
+		padding: 0px 0px;
+		background-color: #f4deea;
+		border-bottom: 1px solid #d3d0d0;
+		width: 100%;
+		height: 35px;
+		line-height: 35px;
+		display: flex;
+		align-items: center;
+
+		span {
+			color: #c06090;
+			font-size: 16px;
+		}
+	}
+
+	.content {
+		border-bottom: 1px solid #efefef;
+
+		ul {
+			list-style: none;
+			display: flex;
+			flex-wrap: wrap;
+			padding-left: 12px;
+			align-items: center;
+
+			li {
+				padding-right: 0;
+				height: 25px;
+				margin-top: 5px;
+				width: 100%;
+				display: flex;
+
+				svg {
+					width: 20px;
+					height: 20px;
+					color: white;
+					background-color: #428bca;
+					border: 3px solid #428bca;
+					margin-right: 5px;
+					cursor: pointer;
+
+					&:hover {
+						border-bottom: 1px solid #428bca;
+					}
+				}
+
+				span {
+					font-size: 12px;
+					line-height: 20px;
+					color: #428bca;
+					cursor: pointer;
+
+					&:hover {
+						border-bottom: 1px solid #428bca;
+					}
+				}
+			}
+		}
+	}
+
+	.footer {
+		padding: 0;
+		cursor: pointer;
+		width: 100%;
+		text-align: center;
+		height: 40px;
+		color: #4f99c6;
+		line-height: 40px;
+
+		span:hover {
+			border-bottom: 0.5px solid #4f99c6;
+		}
+
+		&:hover {
+			background-color: #f4deea;
+			width: 100%;
+		}
+	}
+}
 </style>

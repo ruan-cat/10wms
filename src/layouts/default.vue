@@ -330,6 +330,7 @@ const goNoticeDetail = async (type: string, id: string) => {
 										alt="欢迎用户"
 										style="width: 32px; height: 32px; vertical-align: middle; border-radius: 50%"
 									/>
+
 									<img
 										v-else
 										:src="guestImage"
@@ -513,88 +514,88 @@ const goNoticeDetail = async (type: string, id: string) => {
 /* 右上角下拉菜单样式 */
 .notice {
 	width: 240px;
-	/* height: 100px; */
 	display: flex;
 	flex-wrap: wrap;
-}
-.notice .header {
-	padding: 0px 0px;
-	background-color: #f4deea;
-	border-bottom: 1px solid #d3d0d0;
-	width: 100%;
-	height: 35px;
-	line-height: 35px;
-	display: flex;
-	align-items: center;
-}
 
-.notice .header el-icon {
-}
-.notice .header span {
-	color: #c06090;
-	font-size: 16px;
-}
+	.header {
+		padding: 0px 0px;
+		background-color: #f4deea;
+		border-bottom: 1px solid #d3d0d0;
+		width: 100%;
+		height: 35px;
+		line-height: 35px;
+		display: flex;
+		align-items: center;
 
-.notice .content {
-	border-bottom: 1px solid #efefef;
-}
-.notice .content ul {
-	/* width: 900%; */
-	list-style: none;
-	display: flex;
-	flex-wrap: wrap;
-	padding-left: 12px;
-	align-items: center;
-}
+		span {
+			color: #c06090;
+			font-size: 16px;
+		}
+	}
 
-.notice .content ul li {
-	padding-right: 0;
-	height: 25px;
-	margin-top: 5px;
-	width: 100%;
-	display: flex;
-}
-.notice .content ul li svg {
-	width: 20px;
-	height: 20px;
-	color: white;
-	background-color: #428bca;
-	border: 3px solid #428bca;
-	margin-right: 5px;
-	cursor: pointer;
-}
+	.content {
+		border-bottom: 1px solid #efefef;
 
-.notice .content ul li svg:hover {
-	border-bottom: 1px solid #428bca;
-}
+		ul {
+			list-style: none;
+			display: flex;
+			flex-wrap: wrap;
+			padding-left: 12px;
+			align-items: center;
 
-.notice .content ul li span {
-	font-size: 12px;
-	line-height: 20px;
-	color: #428bca;
-	cursor: pointer;
-}
+			li {
+				padding-right: 0;
+				height: 25px;
+				margin-top: 5px;
+				width: 100%;
+				display: flex;
 
-.notice .content ul li span:hover {
-	border-bottom: 1px solid #428bca;
-}
+				svg {
+					width: 20px;
+					height: 20px;
+					color: white;
+					background-color: #428bca;
+					border: 3px solid #428bca;
+					margin-right: 5px;
+					cursor: pointer;
 
-.notice .footer {
-	padding: 0;
-	cursor: pointer;
-	width: 100%;
-	text-align: center;
-	height: 40px;
-	color: #4f99c6;
-	line-height: 40px;
-}
+					&:hover {
+						border-bottom: 1px solid #428bca;
+					}
+				}
 
-.notice .footer span:hover {
-	border-bottom: 0.5px solid #4f99c6;
-}
-.notice .footer:hover {
-	background-color: #f4deea;
-	width: 100%;
+				span {
+					font-size: 12px;
+					line-height: 20px;
+					color: #428bca;
+					cursor: pointer;
+
+					&:hover {
+						border-bottom: 1px solid #428bca;
+					}
+				}
+			}
+		}
+	}
+
+	.footer {
+		padding: 0;
+		cursor: pointer;
+		width: 100%;
+		text-align: center;
+		height: 40px;
+		color: #4f99c6;
+		line-height: 40px;
+
+		span:hover {
+			border-bottom: 0.5px solid #4f99c6;
+		}
+
+		&:hover {
+			background-color: #f4deea;
+			width: 100%;
+		}
+	}
 }
 
 .el-dropdown-menu {

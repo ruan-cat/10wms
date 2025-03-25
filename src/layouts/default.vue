@@ -2,9 +2,9 @@
 import { ref, computed } from "vue";
 import { storeToRefs } from "pinia";
 
-import { useUserStore } from "stores/user";
-import { useTabStore } from "@/stores/tab";
-import { useRouterToMenuItem } from "composables/use-routers-to-menu-item/index";
+// import { useUserStore } from "stores/user";
+// import { useTabStore } from "@/stores/tab";
+// import { useRouterToMenuItem } from "composables/use-routers-to-menu-item/index";
 
 import { Fold, Expand, Bell, Message, SwitchButton, Setting, User, WarnTriangleFilled } from "@element-plus/icons-vue";
 import { TabPaneName } from "element-plus";
@@ -319,38 +319,8 @@ const goNoticeDetail = async (type: string, id: string) => {
 							<!-- 消息组件 -->
 							<ComponentsHeaderRightMessage />
 
-							<el-dropdown trigger="click">
-								<span style="color: white" class="move">
-									<!-- 根据用户是否登录显示不同的图片 -->
-									<img
-										v-if="userStore.getUser !== null"
-										:src="avatarImage"
-										alt="欢迎用户"
-										style="width: 32px; height: 32px; vertical-align: middle; border-radius: 50%"
-									/>
-
-									<img
-										v-else
-										:src="guestImage"
-										alt="欢迎游客"
-										style="width: 32px; height: 32px; vertical-align: middle; border-radius: 50%"
-									/>
-									{{ userInfo }}
-								</span>
-
-								<template #dropdown>
-									<el-dropdown-menu>
-										<el-dropdown-item :icon="User" @click="userInfoDialogVisible = true">个人信息</el-dropdown-item>
-										<el-dropdown-item :icon="Setting" @click="showSystemMessageDialog"> 系统消息 </el-dropdown-item>
-										<el-dropdown-item :icon="Setting" @click="showHomeStyleDialog"> 首页风格 </el-dropdown-item>
-										<el-dropdown-item :icon="Setting" @click="handleClearCache">消除缓存</el-dropdown-item>
-										<el-dropdown-item :icon="SwitchButton" @click="changePasswordDialogVisible = true"
-											>修改密码</el-dropdown-item
-										>
-										<el-dropdown-item :icon="SwitchButton" @click="handleLogout">注销</el-dropdown-item>
-									</el-dropdown-menu>
-								</template>
-							</el-dropdown>
+							<!-- 用户组件 -->
+							<ComponentsHeaderRightUser />
 						</div>
 					</div>
 				</el-header>

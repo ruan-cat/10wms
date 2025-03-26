@@ -105,3 +105,23 @@ export function sysManagerLockUserStatus<T = string>(options: UseAxiosOptionsJso
 		},
 	});
 }
+
+/**
+ * 激活用户状态接口
+ * @description
+ * userId必填
+ * @see https://zero-one-star-10wms.apifox.cn
+ */
+export function sysManagerActiveUserStatus<T = string>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsQueryKey, T, { userId: string }>({
+		url: "/sys-manager/modify/modifyuserstatus-to-active",
+		options,
+		httpParamWay: "query",
+		config: {
+			method: "PUT",
+			data: {
+				userId: "",
+			},
+		},
+	});
+}

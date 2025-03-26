@@ -1,5 +1,5 @@
 import { RequiredPick } from "type-plus";
-import { ParamsQueryKey, useRequest } from "composables/use-request/index";
+import { ParamsBodyKey, ParamsQueryKey, UseAxiosOptionsJsonVO, useRequest } from "composables/use-request/index";
 
 /**
  * 用户详情对象
@@ -70,6 +70,8 @@ export function sysManagerModifyUserDetail<T = string>(options: UseAxiosOptionsJ
  * 锁定用户状态对象
  * @description
  * 锁定/解锁用户状态
+ *
+ * TODO: 错的
  * @see https://zero-one-star-10wms.apifox.cn
  */
 export interface LockUserStatus {
@@ -90,10 +92,10 @@ export interface LockUserStatus {
  * @see https://zero-one-star-10wms.apifox.cn
  */
 export function sysManagerLockUserStatus<T = string>(options: UseAxiosOptionsJsonVO<T>) {
-	return useRequest<ParamsBodyKey, T, LockUserStatus>({
+	return useRequest<ParamsQueryKey, T, LockUserStatus>({
 		url: "/sys-manager/modify/modifyuserstatus-to-ban",
 		options,
-		httpParamWay: "body",
+		httpParamWay: "query",
 		config: {
 			method: "PUT",
 			data: {

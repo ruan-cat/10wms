@@ -1,5 +1,11 @@
 import { RequiredPick } from "type-plus";
-import { ParamsBodyKey, ParamsQueryKey, UseAxiosOptionsJsonVO, useRequest } from "composables/use-request/index";
+import {
+	ParamsBodyKey,
+	ParamsQueryKey,
+	ParamsPathKey,
+	UseAxiosOptionsJsonVO,
+	useRequest,
+} from "composables/use-request/index";
 
 /**
  * 用户详情对象
@@ -125,3 +131,23 @@ export function sysManagerActiveUserStatus<T = string>(options: UseAxiosOptionsJ
 		},
 	});
 }
+
+/**
+ * 查询重复账号接口
+ * @description
+ * username必填
+ * @see https://zero-one-star-10wms.apifox.cn
+ */
+export function sysManagerCheckUsername<T = string>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsPathKey, T, { username: string }>({
+		url: "/sys-manager/get/username/{username}",
+		options,
+		httpParamWay: "path",
+		config: {
+			method: "GET",
+			url: "/sys-manager/get/username/{username}",
+		},
+	});
+}
+
+// TODO: 还差 添加用户 接口

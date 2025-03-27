@@ -51,7 +51,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "用户账号",
 				prop: "username",
-				// TODO: 实现对其他props属性的全面提示
+				disabled: true,
 			},
 		},
 		{
@@ -59,6 +59,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "姓名",
 				prop: "name",
+				disabled: true,
 			},
 		},
 		{
@@ -66,6 +67,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "手机号码",
 				prop: "phone",
+				disabled: true,
 			},
 		},
 		{
@@ -73,6 +75,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "邮箱",
 				prop: "email",
+				disabled: true,
 			},
 		},
 	],
@@ -80,12 +83,6 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 
 /** 表单组件实例 */
 const baseFormRef = useTemplateRef("baseFormRef");
-
-const handleSubmit = () => {
-	// 这里可以添加保存逻辑
-	// alert("个人信息已保存！");
-	// handleClose();
-};
 
 onMounted(() => {
 	// TODO: 对接获取用户信息的接口

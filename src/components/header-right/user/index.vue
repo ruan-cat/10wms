@@ -88,6 +88,7 @@ const handleLogout = () => {
 		</template>
 
 		<!-- 个人信息弹框 -->
+		<!-- <compsinfod > -->
 		<UserInfoDialog v-model:visible="userInfoDialogVisible" />
 	</el-dropdown>
 </template>

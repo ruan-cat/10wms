@@ -3,7 +3,7 @@
 	显示用户信息，可修改用户信息
 -->
 <script lang="ts" setup>
-import { ref, useTemplateRef, onMounted } from "vue";
+import { ref, useTemplateRef, onMounted, defineExpose } from "vue";
 import { type DialogPromiseProps } from "components/dialog-promise/types";
 import { type BaseFormProps } from "components/base-form/index.vue";
 
@@ -11,7 +11,7 @@ import { type BaseFormProps } from "components/base-form/index.vue";
 const dialogPromiseProps = ref<DialogPromiseProps<{}>>({
 	dialogProps: {
 		title: "个人信息",
-		width: "30%",
+		width: "40%",
 	},
 	async onDialogClose({ reject, resolve }) {
 		resolve({});
@@ -21,6 +21,17 @@ const dialogPromiseProps = ref<DialogPromiseProps<{}>>({
 
 /** 弹框组件实例 */
 const dialogRef = useTemplateRef("dialogRef");
+
+/** 打开弹框 */
+async function open() {
+	await nextTick();
+	dialogRef.value?.open();
+}
+
+defineExpose({
+	// 对外导出打开弹框函数
+	open,
+});
 
 /**
  * 用户信息
@@ -46,36 +57,59 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 	form: form.value,
 	labelWidth: "100px",
 	formItems: [
+		// 用户账号
 		{
 			type: "input",
 			props: {
 				label: "用户账号",
 				prop: "username",
 				disabled: true,
+				responsive: {
+					xs: 24,
+					lg: 24,
+				},
 			},
 		},
+
+		// 姓名
 		{
 			type: "input",
 			props: {
 				label: "姓名",
 				prop: "name",
 				disabled: true,
+				responsive: {
+					xs: 24,
+					lg: 24,
+				},
 			},
 		},
+
+		// 手机号码
 		{
 			type: "input",
 			props: {
 				label: "手机号码",
 				prop: "phone",
 				disabled: true,
+				responsive: {
+					xs: 24,
+					lg: 24,
+				},
 			},
 		},
+
+		// 邮箱
 		{
 			type: "input",
 			props: {
 				label: "邮箱",
 				prop: "email",
 				disabled: true,
+				responsive: {
+					xs: 24,
+					lg: 24,
+				},
 			},
 		},
 	],
@@ -90,15 +124,20 @@ onMounted(() => {
 </script>
 
 <template>
-	<ComponentsDialogPromise :="dialogPromiseProps" ref="dialogRef">
-		<template #default>
-			<ComponentsBaseForm :="baseFormProps" ref="baseFormRef"></ComponentsBaseForm>
-		</template>
+	<section class="info-dialog-root">
+		<ComponentsDialogPromise :="dialogPromiseProps" ref="dialogRef">
+			<template #default>
+				<ComponentsBaseForm :="baseFormProps" ref="baseFormRef"></ComponentsBaseForm>
+			</template>
 
-		<template #footer="{ reject, resolve }">
-			<ElButton type="info" @click="dialogPromiseProps.onDialogClose({ reject, resolve })"> 关闭 </ElButton>
-		</template>
-	</ComponentsDialogPromise>
+			<template #footer="{ reject, resolve }">
+				<ElButton type="info" @click="dialogPromiseProps.onDialogClose({ reject, resolve })"> 关闭 </ElButton>
+			</template>
+		</ComponentsDialogPromise>
+	</section>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.info-dialog-root {
+}
+</style>

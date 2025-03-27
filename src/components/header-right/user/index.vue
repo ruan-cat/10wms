@@ -2,7 +2,7 @@
 	用户组件 即顶部导航栏内最右侧的用户按钮
 -->
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue";
+import { ref, computed, watch, useTemplateRef, nextTick } from "vue";
 
 import { SwitchButton, Setting, User } from "@element-plus/icons-vue";
 import avatarImage from "assets/layoutIcon/avatar2.png";
@@ -19,14 +19,12 @@ const userInfo = computed(() => {
 });
 
 // 处理弹框逻辑
-const showDialog = (i: any) => {
-	status.value = i;
-	dialogVisible.value = true;
-};
+// const showDialog = (i: any) => {
+// 	status.value = i;
+// 	dialogVisible.value = true;
+// };
 
 const changePasswordDialogVisible = ref(false); // 修改密码控制弹框显示/隐藏
-// 控制个人信息弹框显示/隐藏
-const userInfoDialogVisible = ref(false);
 // 系统消息控制弹框显示
 const systemMessageDialogVisible = ref(false);
 // 消息数据
@@ -54,6 +52,15 @@ const logoutDialog = ref();
 const handleLogout = () => {
 	logoutDialog.value.showDialog();
 };
+
+/** 用户信息弹框 组件实例 */
+const userInfoDialogRef = useTemplateRef("userInfoDialogRef");
+
+/** 打开 用户信息弹框 */
+async function openUserInfoDialog() {
+	await nextTick();
+	userInfoDialogRef.value?.open();
+}
 </script>
 
 <template>
@@ -78,7 +85,7 @@ const handleLogout = () => {
 
 		<template #dropdown>
 			<el-dropdown-menu>
-				<el-dropdown-item :icon="User" @click="userInfoDialogVisible = true">个人信息</el-dropdown-item>
+				<el-dropdown-item :icon="User" @click="openUserInfoDialog">个人信息</el-dropdown-item>
 				<el-dropdown-item :icon="Setting" @click="showSystemMessageDialog"> 系统消息 </el-dropdown-item>
 				<el-dropdown-item :icon="Setting" @click="showHomeStyleDialog"> 首页风格 </el-dropdown-item>
 				<el-dropdown-item :icon="Setting" @click="handleClearCache">消除缓存</el-dropdown-item>
@@ -86,11 +93,10 @@ const handleLogout = () => {
 				<el-dropdown-item :icon="SwitchButton" @click="handleLogout">注销</el-dropdown-item>
 			</el-dropdown-menu>
 		</template>
-
-		<!-- 个人信息弹框 -->
-		<!-- <compsinfod > -->
-		<UserInfoDialog v-model:visible="userInfoDialogVisible" />
 	</el-dropdown>
+
+	<!-- 个人信息弹框 -->
+	<ComponentsHeaderRightUserInfoDialog ref="userInfoDialogRef" />
 </template>
 
 <style lang="scss" scoped>

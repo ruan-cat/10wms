@@ -1,7 +1,7 @@
 import type { FormProps } from "element-plus";
 import type { DinamicTableFormProps } from "components/dinamic-table-form/index.vue";
 
-import type { _InputProps } from "components/base-form/_extends";
+import type { _InputProps, _SelectProps } from "components/base-form/_extends";
 
 /** 表单组件 可用的表单类型 */
 export type FormComponentType =
@@ -37,7 +37,11 @@ export interface ResponsiveConfig {
  */
 export type _OmitFormProps = Omit<Partial<FormProps>, "rules">;
 
-/** 输入框 props */
+/**
+ * 输入框 props
+ * @description
+ * 排除掉 `modelValue` 属性
+ */
 interface InputProps<T> extends Omit<_InputProps<T>, "modelValue"> {
 	placeholder?: string;
 	maxlength?: number;
@@ -45,8 +49,17 @@ interface InputProps<T> extends Omit<_InputProps<T>, "modelValue"> {
 	width?: number;
 }
 
-/** 选择框 props */
-interface SelectProps<T> extends _BaseFormItemProps<T> {
+/**
+ * 选择框 props
+ * @description
+ * 排除掉 `modelValue` 属性
+ */
+interface SelectProps<T> extends Omit<_SelectProps<T>, "modelValue"> {
+	/**
+	 * 下拉列表选项
+	 * @description
+	 * TODO: 暂时先不考虑对接 `el-option` 的属性
+	 */
 	options: Array<{ label: string; value: any }>;
 	multiple?: boolean;
 	filterable?: boolean;

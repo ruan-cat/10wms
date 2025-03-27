@@ -19,8 +19,8 @@ const props = ref<BaseFormProps<TestBuzi>>({
 			props: {
 				label: "年龄",
 				prop: "age",
-				placeholder: "请输入年龄",
-				maxlength: 10,
+				// placeholder: "请输入年龄",
+				// maxlength: 10,
 				responsive: { md: 12, lg: 8 },
 			},
 		},

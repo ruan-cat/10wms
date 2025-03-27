@@ -1,6 +1,8 @@
 import type { FormProps } from "element-plus";
 import type { DinamicTableFormProps } from "components/dinamic-table-form/index.vue";
 
+import type { _InputProps } from "components/base-form/_extends";
+
 /** 表单组件 可用的表单类型 */
 export type FormComponentType =
 	// 输入框
@@ -35,50 +37,12 @@ export interface ResponsiveConfig {
  */
 export type _OmitFormProps = Omit<Partial<FormProps>, "rules">;
 
-/**
- * 表单配置对象 可以配置的字段
- * @description
- * 这里的写法是为了排除掉冗余的类型
- *
- * 预期用于表单校验等场景
- */
-export type BaseFormPropKey<T> = string & keyof T;
-// export type BaseFormPropKey<T> = keyof T;
-
-/**
- * 每一个表单配置项都具有的字段
- * @description
- * 该类型预期被继承 本类型旨在于框定每一个表单配置项都要填写的字段
- * @private 暂不考虑该类型被其他组件使用
- */
-interface _BaseFormItemProps<T> {
-	/** 表单字段 */
-	label: string;
-	/**
-	 * 表单的字段key值
-	 * @version 2 即之前的 `dataKey` 配置
-	 * @description
-	 * 取名为 prop 是为了配合表单校验所需的字段
-	 *
-	 * @see https://element-plus.org/zh-CN/component/form#表单校验
-	 */
-	prop: BaseFormPropKey<T>;
-
-	/**
-	 * 响应式布局配置
-	 * @description
-	 * 每个表单项的响应式布局配置·
-	 */
-	responsive?: ResponsiveConfig;
-}
-
 /** 输入框 props */
-interface InputProps<T> extends _BaseFormItemProps<T> {
+interface InputProps<T> extends Omit<_InputProps<T>, "modelValue"> {
 	placeholder?: string;
 	maxlength?: number;
 	lableWidth?: number;
 	width?: number;
-	required?: boolean;
 }
 
 /** 选择框 props */
@@ -129,7 +93,6 @@ interface TableProps<
 > extends _BaseFormItemProps<T>,
 		DinamicTableFormProps<Row extends Record<string, any> ? Row : never> {}
 
-// 创建联合类型
 /** 基础表单项 */
 export type BaseFormItem<T> =
 	| {
@@ -138,7 +101,7 @@ export type BaseFormItem<T> =
 	  }
 	| {
 			type: "select";
-			props: SelectProps<T>; // 这里使用强制要求 props 的写法
+			props: SelectProps<T>;
 	  }
 	| {
 			type: "date";

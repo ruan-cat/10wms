@@ -69,7 +69,7 @@ order: 20
 
 ## 二次封装的注意事项
 
-vueuse 的 createTemplatePromise 的渲染逻辑是：必须要先执行内部的创建组件实例函数。
+vueuse 的 createTemplatePromise 的渲染逻辑是：**必须要先执行内部的创建组件实例函数**。
 
 如果二次封装时，直接以本组件为根元素的话，会导致父组件永远无法获取到有效的组件实例。
 

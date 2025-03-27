@@ -41,6 +41,8 @@ export type _OmitFormProps = Omit<Partial<FormProps>, "rules">;
  * 输入框 props
  * @description
  * 排除掉 `modelValue` 属性
+ *
+ * 以下属性仅仅是为了展示常用的字段
  */
 interface InputProps<T> extends Omit<_InputProps<T>, "modelValue"> {
 	placeholder?: string;
@@ -53,6 +55,8 @@ interface InputProps<T> extends Omit<_InputProps<T>, "modelValue"> {
  * 选择框 props
  * @description
  * 排除掉 `modelValue` 属性
+ *
+ * 以下属性仅仅是为了展示常用的字段
  */
 interface SelectProps<T> extends Omit<_SelectProps<T>, "modelValue"> {
 	/**
@@ -65,7 +69,11 @@ interface SelectProps<T> extends Omit<_SelectProps<T>, "modelValue"> {
 	filterable?: boolean;
 }
 
-/** 日期框 props */
+/**
+ * 日期框 props
+ * @description
+ * TODO: 拓展属性
+ */
 interface DateProps<T> extends _BaseFormItemProps<T> {
 	placeholder?: string;
 	format?: string;
@@ -85,7 +93,11 @@ interface DateProps<T> extends _BaseFormItemProps<T> {
 		| "yearrange";
 }
 
-/** 输入框（纯数字） props */
+/**
+ * 输入框（纯数字） props
+ * @description
+ * TODO: 拓展属性
+ */
 interface NumberProps<T> extends _BaseFormItemProps<T> {
 	min?: number;
 	max?: number;

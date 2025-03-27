@@ -51,6 +51,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "用户账号",
 				prop: "username",
+				// TODO: 实现对其他props属性的全面提示
 			},
 		},
 		{

@@ -3,12 +3,16 @@
 	显示用户信息，可修改用户信息
 -->
 <script lang="ts" setup>
-import { ref, useTemplateRef } from "vue";
+import { ref, useTemplateRef, onMounted } from "vue";
 import { type DialogPromiseProps } from "components/dialog-promise/types";
 import { type BaseFormProps } from "components/base-form/index.vue";
 
 /** 弹框组件配置 */
 const dialogPromiseProps = ref<DialogPromiseProps<{}>>({
+	dialogProps: {
+		title: "个人信息",
+		width: "30%",
+	},
 	async onDialogClose({ reject, resolve }) {
 		resolve({});
 		return true;
@@ -40,15 +44,34 @@ const form = ref<UserInfo>({
 /** 表单配置 */
 const baseFormProps = ref<BaseFormProps<UserInfo>>({
 	form: form.value,
+	labelWidth: "100px",
 	formItems: [
 		{
 			type: "input",
 			props: {
-				label: "年龄",
-				prop: "age",
-				placeholder: "请输入年龄",
-				maxlength: 10,
-				responsive: { md: 12, lg: 8 },
+				label: "用户账号",
+				prop: "username",
+			},
+		},
+		{
+			type: "input",
+			props: {
+				label: "姓名",
+				prop: "name",
+			},
+		},
+		{
+			type: "input",
+			props: {
+				label: "手机号码",
+				prop: "phone",
+			},
+		},
+		{
+			type: "input",
+			props: {
+				label: "邮箱",
+				prop: "email",
 			},
 		},
 	],
@@ -63,9 +86,9 @@ const handleSubmit = () => {
 	// handleClose();
 };
 
-const handleUpdateVisible = (value: boolean) => {
-	// emit("update:visible", value);
-};
+onMounted(() => {
+	// TODO: 对接获取用户信息的接口
+});
 </script>
 
 <template>
@@ -78,30 +101,6 @@ const handleUpdateVisible = (value: boolean) => {
 			<ElButton type="info" @click="dialogPromiseProps.onDialogClose({ reject, resolve })"> 关闭 </ElButton>
 		</template>
 	</ComponentsDialogPromise>
-	<el-dialog title="个人信息" width="30%" :before-close="handleClose" @update:model-value="handleUpdateVisible">
-		<el-form :model="form" label-width="100px">
-			<el-form-item label="用户账号">
-				<el-input v-model="form.username" disabled />
-			</el-form-item>
-			<el-form-item label="姓名">
-				<el-input v-model="form.name" />
-			</el-form-item>
-			<el-form-item label="手机号码">
-				<el-input v-model="form.phone" />
-			</el-form-item>
-			<el-form-item label="邮箱">
-				<el-input v-model="form.email" />
-			</el-form-item>
-		</el-form>
-		<template #footer>
-			<el-button @click="handleClose">关闭</el-button>
-			<el-button type="primary" @click="handleSubmit">保存</el-button>
-		</template>
-	</el-dialog>
 </template>
 
-<style lang="scss" scoped>
-.el-form-item {
-	margin-bottom: 20px;
-}
-</style>
+<style lang="scss" scoped></style>

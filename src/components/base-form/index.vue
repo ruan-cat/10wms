@@ -209,12 +209,7 @@ defineExpose({
 				>
 					<ElFormItem :label="formItem.props.label" :prop="formItem.props.prop">
 						<!-- 输入框 -->
-						<ElInput
-							v-if="formItem.type === 'input'"
-							v-model="form[formItem.props.prop]"
-							:placeholder="formItem.props.placeholder"
-							:maxlength="formItem.props.maxlength"
-						/>
+						<ElInput v-if="formItem.type === 'input'" v-model="form[formItem.props.prop]" :="formItem" />
 
 						<!-- 选择器 -->
 						<ElSelect v-else-if="formItem.type === 'select'" v-model="form[formItem.props.prop]">

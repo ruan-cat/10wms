@@ -41,6 +41,13 @@ export interface BaseFormProps<T extends Record<string, any>>
 	 * 对于
 	 */
 	rules?: FormRules<T>;
+
+	/**
+	 * 开启类似于表格样式的背景
+	 * @description
+	 * 增加背景色 增强业务表单的显示效果
+	 */
+	isTableLikeBg?: boolean;
 }
 
 const props = defineProps<BaseFormProps<T>>();

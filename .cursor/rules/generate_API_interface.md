@@ -79,3 +79,8 @@ export function sysManagerModifyUserDetail<T = string>(options: UseAxiosOptionsJ
 1. 导入的测试工具仅为以下的测试套件。我们用测试套件来完成测试。
    > `import { describe, it } from "vitest";`
 2. 使用相对路径的方式导入要测试的函数。
+
+## 边缘情况注意事项
+
+1. 当目标接口的参数请求方式为 query 时，请不要添加多余的 params 参数。
+2. 当接口请求的返回参数含有 PageDTO 时，请导入 PageDTO 类型，作为返回值的包装类。

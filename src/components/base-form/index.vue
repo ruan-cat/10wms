@@ -265,19 +265,27 @@ defineExpose({
 
 <style lang="scss">
 .dynamic-form {
+	--bs: 2px;
+	--bsm: calc(var(--bs) * 0.5);
+	--bc: #ebeef5;
+
 	&.table-like-bg {
 		.el-form-item {
-			border: 1px solid #ebeef5;
+			border: var(--bs) solid var(--bc);
 			border-bottom: none;
-
-			&:last-child {
-				border-bottom: 1px solid #ebeef5;
-			}
 
 			.el-form-item__label {
 				color: #606266;
 				background-color: #f5f7fa;
-				border-right: 1px solid #ebeef5;
+				border-right: var(--bs) solid var(--bc);
+			}
+		}
+
+		.el-row .el-col {
+			&:last-child {
+				.el-form-item {
+					border-bottom: var(--bs) solid var(--bc);
+				}
 			}
 		}
 	}
@@ -291,7 +299,6 @@ defineExpose({
 			min-height: 40px;
 			display: flex;
 			align-items: center;
-			width: 120px;
 			justify-content: flex-end;
 		}
 
@@ -307,7 +314,6 @@ defineExpose({
 		.el-form-item__label {
 			font-weight: 500;
 			color: #606266;
-			// padding-bottom: 4px !important;
 		}
 	}
 

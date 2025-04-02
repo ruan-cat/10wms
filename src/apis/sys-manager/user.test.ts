@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { sysManagerAddUser, sysManagerDeleteUser, sysManagerResetPassword } from "./user";
+import { sysManagerAddUser, sysManagerDeleteUser, sysManagerResetPassword, sysManagerQueryDepartmentAll } from "./user";
 
 describe("用户管理接口实现", () => {
 	it("添加用户接口", async () => {
@@ -48,6 +48,16 @@ describe("用户管理接口实现", () => {
 				newPassword: "newPassword123", // 新密码
 			},
 		});
+		console.log("查看简单的 data.value ", data.value);
+	});
+
+	it("获取组织名称树接口", async () => {
+		const { execute, data } = sysManagerQueryDepartmentAll({
+			onSuccess(data) {
+				console.log("获取组织名称树接口 onSuccess", data);
+			},
+		});
+		await execute();
 		console.log("查看简单的 data.value ", data.value);
 	});
 });

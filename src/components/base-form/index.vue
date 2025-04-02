@@ -43,21 +43,18 @@ export interface BaseFormProps<T extends Record<string, any>>
 	rules?: FormRules<T>;
 
 	/**
-	 * 开启类似于表格样式的背景
+	 * 不开启类似于表格样式的背景
 	 * @description
 	 * 增加背景色 增强业务表单的显示效果
-	 * @default true
+	 * @default false
 	 */
-	isTableLikeBg?: boolean;
+	isNotTableLikeBg?: boolean;
 }
 
 const props = defineProps<BaseFormProps<T>>();
 
 /** @deprecated TODO: 暂不需要实现事件数据传递 */
 const emits = defineEmits(["form-finish"]);
-
-/** 是否开启表格样式背景 */
-const isTableLikeBg = computed(() => props.isTableLikeBg ?? true);
 
 /** 被遍历的表单配置项 */
 const formItems = computed(() => props.formItems);
@@ -187,7 +184,7 @@ defineExpose({
 <template>
 	<ElForm
 		class="dynamic-form"
-		:class="{ 'table-like-bg': isTableLikeBg }"
+		:class="{ 'table-like-bg': !props.isNotTableLikeBg }"
 		:="{ ...$attrs, ...props }"
 		:model="form"
 		:rules="rules"

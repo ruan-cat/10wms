@@ -263,24 +263,45 @@ defineExpose({
 
 <style lang="scss">
 .dynamic-form {
-	.ElFormItem {
-		margin-bottom: 18px;
+	.el-form-item {
+		margin-bottom: 0;
+		border: 1px solid #ebeef5;
+		border-bottom: none;
 
-		&__label {
+		&:last-child {
+			border-bottom: 1px solid #ebeef5;
+		}
+
+		.el-form-item__label {
 			font-weight: 500;
-			padding-bottom: 4px !important;
+			padding: 12px 15px !important;
 			color: #606266;
+			background-color: #f5f7fa;
+			border-right: 1px solid #ebeef5;
+			margin-bottom: 0;
+			min-height: 40px;
+			display: flex;
+			align-items: center;
+			width: 120px;
+			justify-content: flex-end;
+		}
+
+		.el-form-item__content {
+			padding: 4px 12px;
+			min-height: 40px;
+			display: flex;
+			align-items: center;
 		}
 	}
 
 	.el-input,
-	.ElSelect,
+	.el-select,
 	.el-date-editor,
-	.ElInputNumber {
+	.el-input-number {
 		width: 100% !important;
 	}
 
-	.ElInputNumber {
+	.el-input-number {
 		.el-input__wrapper {
 			padding-left: 10px;
 			padding-right: 10px;
@@ -288,8 +309,8 @@ defineExpose({
 	}
 
 	@media (max-width: 768px) {
-		.ElFormItem {
-			margin-bottom: 12px;
+		.el-form-item {
+			margin-bottom: 0;
 		}
 	}
 }

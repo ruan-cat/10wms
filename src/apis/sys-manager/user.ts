@@ -117,3 +117,40 @@ export function sysManagerResetPassword<T = string>(options: UseAxiosOptionsJson
 		},
 	});
 }
+
+/**
+ * 组织机构显示数据对象
+ */
+export interface DepartmentDisplayDTO {
+	/**
+	 * 组织机构名称
+	 */
+	departname: string;
+
+	/**
+	 * 组织机构id
+	 */
+	id: string;
+
+	/**
+	 * 组织机构类型
+	 */
+	orgType: string;
+}
+
+/**
+ * 获取组织名称树接口
+ * @description
+ * 获取组织机构的层级结构数据
+ */
+export function sysManagerQueryDepartmentAll<T = PageDTO<DepartmentDisplayDTO>>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsQueryKey, T>({
+		url: "/sys-manager/query-department-all",
+		options,
+		httpParamWay: "query",
+		config: {
+			method: "GET",
+			data: {},
+		},
+	});
+}

@@ -4,7 +4,6 @@ import {
 	sysManagerLockUserStatus,
 	sysManagerActiveUserStatus,
 	sysManagerCheckUsername,
-	sysManagerAddUser,
 } from "./modify";
 
 describe("用户管理接口实现", () => {
@@ -67,28 +66,6 @@ describe("用户管理接口实现", () => {
 		});
 		await execute({
 			url: `/sys-manager/user/username/test_user`,
-		});
-		console.log("查看简单的 data.value ", data.value);
-	});
-
-	it("添加用户接口", async () => {
-		const { execute, data } = sysManagerAddUser({
-			onSuccess(data) {
-				console.log("添加用户接口 onSuccess", data);
-			},
-		});
-		await execute({
-			data: {
-				departmentIds: ["dept_001", "dept_002"],
-				password: "123456",
-				roleIds: ["role_001", "role_002"],
-				username: "test_user",
-				email: "test@example.com",
-				mobilePhone: "13800138000",
-				officePhone: "0571-88888888",
-				realname: "测试用户",
-				userType: "1",
-			},
 		});
 		console.log("查看简单的 data.value ", data.value);
 	});

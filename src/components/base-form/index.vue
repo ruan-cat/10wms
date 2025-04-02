@@ -284,17 +284,8 @@ defineExpose({
 
 	.el-form-item {
 		margin-bottom: 0;
-		// border: 1px solid #ebeef5;
-		// border-bottom: none;
-
-		&:last-child {
-			// border-bottom: 1px solid #ebeef5;
-		}
 
 		.el-form-item__label {
-			// color: #606266;
-			// background-color: #f5f7fa;
-			// border-right: 1px solid #ebeef5;
 			font-weight: 500;
 			margin-bottom: 0;
 			min-height: 40px;
@@ -302,7 +293,6 @@ defineExpose({
 			align-items: center;
 			width: 120px;
 			justify-content: flex-end;
-			// padding: 12px 15px !important;
 		}
 
 		.el-form-item__content {

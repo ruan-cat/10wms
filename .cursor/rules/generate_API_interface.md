@@ -36,6 +36,10 @@
 1. 请根据 API 文档，生成 `获取XXX` 接口。
 2. 生成 `删除***` 接口
 
+## 以我提供的截图为类型生成的标准
+
+你在生成接口的 DTO 和 VO 类型时，如果我有给你上传图片，请以图片所示的为准。
+
 ## 新建文件夹时提醒我
 
 在你想新建文件夹时，提醒我，并由我审核你的文件夹命名。
@@ -83,4 +87,4 @@ export function sysManagerModifyUserDetail<T = string>(options: UseAxiosOptionsJ
 ## 边缘情况注意事项
 
 1. 当目标接口的参数请求方式为 query 时，请不要添加多余的 params 参数。
-2. 当接口请求的返回参数含有 PageDTO 时，请导入 PageDTO 类型，作为返回值的包装类。
+2. 当接口请求的返回参数含有 PageDTO 时，不要生成该类型。直接使用已经有的全局 PageDTO 类型即可。

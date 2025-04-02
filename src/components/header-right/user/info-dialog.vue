@@ -56,6 +56,7 @@ const form = ref<UserInfo>({
 const baseFormProps = ref<BaseFormProps<UserInfo>>({
 	form: form.value,
 	labelWidth: "100px",
+	// isTableLikeBg: false,
 	formItems: [
 		// 用户账号
 		{

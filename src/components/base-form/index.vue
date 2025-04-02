@@ -46,6 +46,7 @@ export interface BaseFormProps<T extends Record<string, any>>
 	 * 开启类似于表格样式的背景
 	 * @description
 	 * 增加背景色 增强业务表单的显示效果
+	 * @default true
 	 */
 	isTableLikeBg?: boolean;
 }
@@ -54,6 +55,9 @@ const props = defineProps<BaseFormProps<T>>();
 
 /** @deprecated TODO: 暂不需要实现事件数据传递 */
 const emits = defineEmits(["form-finish"]);
+
+/** 是否开启表格样式背景 */
+const isTableLikeBg = computed(() => props.isTableLikeBg ?? true);
 
 /** 被遍历的表单配置项 */
 const formItems = computed(() => props.formItems);
@@ -183,6 +187,7 @@ defineExpose({
 <template>
 	<ElForm
 		class="dynamic-form"
+		:class="{ 'table-like-bg': isTableLikeBg }"
 		:="{ ...$attrs, ...props }"
 		:model="form"
 		:rules="rules"
@@ -263,34 +268,46 @@ defineExpose({
 
 <style lang="scss">
 .dynamic-form {
-	.el-form-item {
-		margin-bottom: 0;
-		border: 1px solid #ebeef5;
-		border-bottom: none;
+	&.table-like-bg {
+		.el-form-item {
+			margin-bottom: 0;
+			border: 1px solid #ebeef5;
+			border-bottom: none;
 
-		&:last-child {
-			border-bottom: 1px solid #ebeef5;
+			&:last-child {
+				border-bottom: 1px solid #ebeef5;
+			}
+
+			.el-form-item__label {
+				font-weight: 500;
+				padding: 12px 15px !important;
+				color: #606266;
+				background-color: #f5f7fa;
+				border-right: 1px solid #ebeef5;
+				margin-bottom: 0;
+				min-height: 40px;
+				display: flex;
+				align-items: center;
+				width: 120px;
+				justify-content: flex-end;
+			}
+
+			.el-form-item__content {
+				padding: 4px 12px;
+				min-height: 40px;
+				display: flex;
+				align-items: center;
+			}
 		}
+	}
+
+	.el-form-item {
+		margin-bottom: 18px;
 
 		.el-form-item__label {
 			font-weight: 500;
-			padding: 12px 15px !important;
+			padding-bottom: 4px !important;
 			color: #606266;
-			background-color: #f5f7fa;
-			border-right: 1px solid #ebeef5;
-			margin-bottom: 0;
-			min-height: 40px;
-			display: flex;
-			align-items: center;
-			width: 120px;
-			justify-content: flex-end;
-		}
-
-		.el-form-item__content {
-			padding: 4px 12px;
-			min-height: 40px;
-			display: flex;
-			align-items: center;
 		}
 	}
 
@@ -309,8 +326,12 @@ defineExpose({
 	}
 
 	@media (max-width: 768px) {
-		.el-form-item {
+		&.table-like-bg .el-form-item {
 			margin-bottom: 0;
+		}
+
+		.el-form-item {
+			margin-bottom: 12px;
 		}
 	}
 }

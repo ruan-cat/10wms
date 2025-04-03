@@ -64,7 +64,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "用户账号",
 				prop: "username",
-				disabled: true,
+				readonly: true,
 				responsive: {
 					xs: 24,
 					lg: 24,
@@ -78,7 +78,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "姓名",
 				prop: "name",
-				disabled: true,
+				readonly: true,
 				responsive: {
 					xs: 24,
 					lg: 24,
@@ -92,7 +92,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "手机号码",
 				prop: "phone",
-				disabled: true,
+				readonly: true,
 				responsive: {
 					xs: 24,
 					lg: 24,
@@ -106,7 +106,7 @@ const baseFormProps = ref<BaseFormProps<UserInfo>>({
 			props: {
 				label: "邮箱",
 				prop: "email",
-				disabled: true,
+				readonly: true,
 				responsive: {
 					xs: 24,
 					lg: 24,

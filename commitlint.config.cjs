@@ -93,6 +93,12 @@ const businessScopesConfigs = [
 	},
 
 	{
+		code: "pagination",
+		value: "分页栏组件",
+		desc: "pagination，分页栏组件，即表格下常用的分页组件。",
+	},
+
+	{
 		code: "daily-check",
 		value: "每日检查",
 		desc: "每日检查",

@@ -39,8 +39,8 @@ const props = defineProps<PaginationProps>();
 /** 给分页栏组件批量赋值的 props 对象 */
 const toPaginationProps = computed(() => {
 	return {
-		...paginationProps.value,
 		...props,
+		...paginationProps.value,
 	};
 });
 
@@ -49,29 +49,18 @@ const toPaginationProps = computed(() => {
  * @description
  * 即 PageDTO 的 `pageIndex`
  */
-const pageIndex = defineModel<number>();
+const pageIndex = defineModel<number>("pageIndex");
 
 /**
  * 每页显示最大数据条数
  * @description
  * 即 PageDTO 的 `pageSize`
  */
-const pageSize = defineModel<number>();
+const pageSize = defineModel<number>("pageSize");
 </script>
 
 <template>
 	<ElPagination :="toPaginationProps" v-model:current-page="pageIndex" v-model:page-size="pageSize"></ElPagination>
 </template>
 
-<style lang="scss" scoped>
-// .pagination {
-// 	width: 100%;
-// 	background: #fff;
-// 	padding: 5px 0;
-// 	text-align: center;
-// 	margin: 0 auto;
-// 	display: flex;
-// 	flex-direction: column;
-// 	align-items: center;
-// }
-</style>
+<style lang="scss" scoped></style>

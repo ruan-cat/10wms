@@ -14,8 +14,8 @@ interface SomeListDTO {
 }
 
 const someListDTO = ref<SomeListDTO>({
-	pageIndex: 1,
-	pageSize: 10,
+	pageIndex: 3,
+	pageSize: 30,
 });
 </script>
 
@@ -26,6 +26,8 @@ const someListDTO = ref<SomeListDTO>({
 			v-model:pageIndex="someListDTO.pageIndex"
 			v-model:pageSize="someListDTO.pageSize"
 		/>
+
+		{{ someListDTO }}
 	</section>
 </template>
 

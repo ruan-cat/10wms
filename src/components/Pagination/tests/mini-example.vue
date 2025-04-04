@@ -13,12 +13,19 @@ interface SomeListDTO {
 	pageSize: number;
 }
 
-const someListDTO = ref();
+const someListDTO = ref<SomeListDTO>({
+	pageIndex: 1,
+	pageSize: 10,
+});
 </script>
 
 <template>
 	<section class="root">
-		<ComponentsPagination :="paginationProps" />
+		<ComponentsPagination
+			:="paginationProps"
+			v-model:pageIndex="someListDTO.pageIndex"
+			v-model:pageSize="someListDTO.pageSize"
+		/>
 	</section>
 </template>
 

@@ -1,44 +1,5 @@
 <!-- 这是点击查看全部后的组件 -->
-<template>
-	<el-dialog
-		:model-value="visible"
-		:title="status === 1 ? '公告' : '消息'"
-		width="800"
-		draggable
-		@update:model-value="updateVisible"
-	>
-		<div v-if="data1 || data2">
-			<ComponentsTable v-bind="status === 1 ? tableProps1 : tableProps2">
-				<template #bodyCell="{ prop, row }">
-					<div v-if="prop === 'operation-bar'">
-						<el-button type="success" @click="goNoticeDetail(status === 1 ? 1 : 2, row)">阅读</el-button>
-					</div>
-				</template>
-			</ComponentsTable>
-		</div>
-
-		<el-pagination
-			v-if="status === 1"
-			style="margin-top: 20px"
-			v-model:current-page="pageIndex"
-			v-model:page-size="pageSize"
-			:page-sizes="[10, 20, 30]"
-			:disabled="disabled"
-			layout="total, sizes, prev, pager, next, jumper"
-			:total="total"
-			@size-change="handlePageSize"
-			@current-change="handlePageIndex"
-		/>
-		<template #footer>
-			<div class="dialog-footer">
-				<el-button @click="handleCancel">取消</el-button>
-			</div>
-		</template>
-	</el-dialog>
-	<noticeDetail v-model:control="showDetail" :dialogTitle="dialogTitle" :noticeId="noticeId"></noticeDetail>
-</template>
-
-<script setup>
+<script lang="ts" setup>
 import noticeDetail from "./notice-detail.vue";
 import { defineProps, defineEmits, ref, onMounted } from "vue";
 import ComponentsTable from "@/components/table/index.vue";
@@ -60,15 +21,10 @@ const handlePageSize = (val) => {
 	console.log(val);
 	pageSize.value = val;
 	const params = {
-		currentPage: pageIndex.value,
+		pageIndex: pageIndex.value,
 		pageSize: val,
 	};
-	// const params1 = {
-	// 	pageIndex: pageIndex.value,
-	// 	pageSize: val,
-	// };
 	getNoticeList(params);
-	// getMessageList(params1);
 };
 
 // 改变页码
@@ -76,15 +32,10 @@ const handlePageIndex = (val) => {
 	console.log(val);
 	pageIndex.value = val;
 	const params = {
-		currentPage: val,
+		pageIndex: val,
 		pageSize: pageSize.value,
 	};
-	// const params1 = {
-	// 	pageIndex: val,
-	// 	pageSize: pageSize.value,
-	// };
 	getNoticeList(params);
-	// getMessageList(params1);
 };
 
 // 下面是提供给tabledialog的数据
@@ -119,7 +70,7 @@ const emit = defineEmits(["update:visible"]);
 const getNoticeList = async (params) => {
 	const res = await getNoticeListAPI(
 		params || {
-			currentPage: pageIndex.value,
+			pageIndex: pageIndex.value,
 			pageSize: pageSize.value,
 		},
 	);
@@ -134,8 +85,8 @@ const getNoticeList = async (params) => {
 		// 还得判断时间，注意不显示过期公告
 		total.value = res.data.total;
 	}
-	// console.log(res);
 };
+
 // 获取消息列表
 const getMessageList = async () => {
 	const res = await getMessageListAPI({
@@ -148,6 +99,7 @@ const getMessageList = async () => {
 	}
 	// console.log(res);
 };
+
 // 修改公告状态
 const updateNoticeStatus = async (id) => {
 	const res = await updateNoticeStatusAPI({
@@ -189,6 +141,46 @@ const handleCancel = () => {
 const updateVisible = (value) => {
 	emit("update:visible", value);
 };
+
+const paginationProps = ref<PaginationProps>({
+	// TODO: 使用带有参数的接口
+	asyncFunc: getNoticeListAPI,
+	total: 100,
+});
 </script>
+
+<template>
+	<el-dialog
+		:model-value="visible"
+		:title="status === 1 ? '公告' : '消息'"
+		width="800"
+		draggable
+		@update:model-value="updateVisible"
+	>
+		<div v-if="data1 || data2">
+			<ComponentsTable v-bind="status === 1 ? tableProps1 : tableProps2">
+				<template #bodyCell="{ prop, row }">
+					<div v-if="prop === 'operation-bar'">
+						<el-button type="success" @click="goNoticeDetail(status === 1 ? 1 : 2, row)">阅读</el-button>
+					</div>
+				</template>
+			</ComponentsTable>
+		</div>
+
+		<ComponentsPagination
+			v-if="status === 1"
+			:="paginationProps"
+			v-model:pageIndex="pageIndex"
+			v-model:pageSize="pageSize"
+		/>
+
+		<template #footer>
+			<div class="dialog-footer">
+				<el-button @click="handleCancel">取消</el-button>
+			</div>
+		</template>
+	</el-dialog>
+	<noticeDetail v-model:control="showDetail" :dialogTitle="dialogTitle" :noticeId="noticeId"></noticeDetail>
+</template>
 
 <style lang="scss" scoped></style>

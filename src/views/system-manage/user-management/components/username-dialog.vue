@@ -96,17 +96,6 @@ const pageIndex = ref(1);
 const pageSize = ref(10);
 const total = ref(0);
 
-// 改变页码
-const handlePageIndex = (val) => {
-	console.log(val);
-	pageIndex.value = val;
-	const params = {
-		pageIndex: val,
-		pageSize: pageSize.value,
-	};
-	getUserList(params);
-};
-
 // 获取组织名称树
 const getNoticeList = async () => {
 	const res = await getOrgNameTreeAPI();

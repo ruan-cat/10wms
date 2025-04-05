@@ -36,6 +36,7 @@
 		"do-docs-build": "vitepress build src"
 	},
 	"dependencies": {
+		"@antfu/utils": "^9.2.0",
 		"@element-plus/icons-vue": "^2.3.1",
 		"@form-create/designer": "^3.2.6",
 		"@form-create/element-ui": "^3.2.8",

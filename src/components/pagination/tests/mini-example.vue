@@ -1,10 +1,15 @@
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue";
+import { ref } from "vue";
 import ComponentsPagination, { type PaginationProps } from "components/pagination/index.vue";
+import { sleep } from "@antfu/utils";
+
+async function asyncFunc() {
+	await sleep(1000);
+	console.log(" 模拟请求成功 ");
+}
 
 const paginationProps = ref<PaginationProps>({
-	asyncFunc: () => Promise.resolve(),
-	// pageSize: 10,
+	asyncFunc,
 	total: 100,
 });
 

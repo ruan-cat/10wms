@@ -57,6 +57,14 @@ const pageIndex = defineModel<number>("pageIndex");
  * 即 PageDTO 的 `pageSize`
  */
 const pageSize = defineModel<number>("pageSize");
+
+/**
+ * 监听分页栏的 pageIndex 和 pageSize 变化
+ */
+watchImmediate([pageIndex, pageSize], ([pageIndex, pageSize]) => {
+	// 触发异步请求函数
+	props.asyncFunc(pageIndex, pageSize);
+});
 </script>
 
 <template>

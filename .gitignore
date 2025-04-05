@@ -81,3 +81,5 @@ vite.config.ts.*.mjs
 # 忽略turbo任务调度产生的缓存目录
 .turbo
 
+
+.vercel

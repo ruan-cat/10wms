@@ -1,73 +1,4 @@
-<template>
-	<el-dialog
-		style="height: 700px"
-		:model-value="showName"
-		@update:model-value="handleDialogChange"
-		title="用户名称"
-		class="content"
-		width="1200px"
-	>
-		<h4>组织机构</h4>
-		<el-row>
-			<el-col :span="5">
-				<el-tree
-					ref="treeRef"
-					style="max-width: 600px; border-right: 1px solid #efefef; height: 100%; margin-right: 10px"
-					:props="props"
-					:data="dataTree"
-					check-strictly
-					node-key="label"
-					@check-change="handleCheckChange"
-					@current-change="handleCurrentChange"
-				/>
-			</el-col>
-			<el-col :span="19">
-				<p>用户选择</p>
-				<TableTitle v-model="titleData" @user-click="userChildClick" @select-click="selectChildClick" />
-				<ComponentsTable
-					v-bind="tableProps"
-					@selection-change="multipleSelectRows = $event"
-					style="margin-bottom: 250px"
-				>
-					<template #bodyCell="{ row, prop }">
-						<div v-if="prop === 'operation-bar'">
-							<el-popconfirm
-								:title="`确定要删除该数据吗？`"
-								confirm-button-text="确定"
-								cancel-button-text="取消"
-								@confirm="handleConfirmDelete(row)"
-							>
-								<template #reference>
-									<el-button type="success" size="small" :icon="Delete">删除</el-button>
-								</template>
-							</el-popconfirm>
-						</div>
-					</template>
-				</ComponentsTable>
-				<el-pagination
-					size="small"
-					style="margin-top: 20px"
-					v-model:current-page="pageIndex"
-					v-model:page-size="pageSize"
-					:page-sizes="[10, 20, 30]"
-					:disabled="disabled"
-					layout="total, sizes, prev, pager, next, jumper"
-					:total="total"
-					@size-change="handlePageSize"
-					@current-change="handlePageIndex"
-				/>
-			</el-col>
-		</el-row>
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button type="primary" @click="btnConfirm">确定</el-button>
-				<el-button @click="showName = false">关闭</el-button>
-			</span>
-		</template>
-	</el-dialog>
-</template>
-
-<script setup>
+<script lang="ts" setup>
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "@/components/table/index.vue";
 import { ref, defineModel } from "vue";
@@ -158,23 +89,12 @@ watch(
 		}
 	},
 );
-// 页码
-const pageIndex = ref(1);
-// 页面大小
-const pageSize = ref(10);
-// total
-const total = ref(0);
 
-// 改变页面大小
-const handlePageSize = (val) => {
-	console.log(val);
-	pageSize.value = val;
-	const params = {
-		pageIndex: pageIndex.value,
-		pageSize: val,
-	};
-	getUserList(params);
-};
+/** 页码 */
+const pageIndex = ref(1);
+/** 页面大小 */
+const pageSize = ref(10);
+const total = ref(0);
 
 // 改变页码
 const handlePageIndex = (val) => {
@@ -315,27 +235,70 @@ const handleDialogChange = (value) => {
 	// console.log("点击关闭", value);
 	showName.value = value;
 };
+
+const paginationProps = ref<PaginationProps>({
+	asyncFunc: getUserListAPI,
+	total: 100,
+});
 </script>
 
-<style lang="scss" scoped>
-// .content {
-// 	height: 500px;
-// 	width: 100%;
-// 	display: flex;
-// 	justify-content: center;
-// 	.left {
-// 		display: flex;
-// 		height: 500px;
-// 		width: 15%;
-// 		// flex: 2;
-// 		background-color: red;
-// 	}
-// 	.right {
-// 		display: flex;
-// 		height: 500px;
-// 		// flex: 8;
-// 		width: 75%;
-// 		background-color: blue;
-// 	}
-// }
-</style>
+<template>
+	<el-dialog
+		style="height: 700px"
+		:model-value="showName"
+		@update:model-value="handleDialogChange"
+		title="用户名称"
+		class="content"
+		width="1200px"
+	>
+		<h4>组织机构</h4>
+		<el-row>
+			<el-col :span="5">
+				<el-tree
+					ref="treeRef"
+					style="max-width: 600px; border-right: 1px solid #efefef; height: 100%; margin-right: 10px"
+					:props="props"
+					:data="dataTree"
+					check-strictly
+					node-key="label"
+					@check-change="handleCheckChange"
+					@current-change="handleCurrentChange"
+				/>
+			</el-col>
+			<el-col :span="19">
+				<p>用户选择</p>
+				<TableTitle v-model="titleData" @user-click="userChildClick" @select-click="selectChildClick" />
+				<ComponentsTable
+					v-bind="tableProps"
+					@selection-change="multipleSelectRows = $event"
+					style="margin-bottom: 250px"
+				>
+					<template #bodyCell="{ row, prop }">
+						<div v-if="prop === 'operation-bar'">
+							<el-popconfirm
+								:title="`确定要删除该数据吗？`"
+								confirm-button-text="确定"
+								cancel-button-text="取消"
+								@confirm="handleConfirmDelete(row)"
+							>
+								<template #reference>
+									<el-button type="success" size="small" :icon="Delete">删除</el-button>
+								</template>
+							</el-popconfirm>
+						</div>
+					</template>
+				</ComponentsTable>
+
+				<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
+			</el-col>
+		</el-row>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button type="primary" @click="btnConfirm">确定</el-button>
+				<el-button @click="showName = false">关闭</el-button>
+			</span>
+		</template>
+	</el-dialog>
+</template>
+
+<style lang="scss" scoped></style>

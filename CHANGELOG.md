@@ -1,5 +1,11 @@
 # 更新日志
 
+## 0.6.0
+
+### Minor Changes
+
+1. 提供封装后的[分页栏组件](./components/pagination/index.md)。
+
 ## 0.5.3
 
 ### Patch Changes

@@ -1,3 +1,5 @@
+// eslint-disable-next-line
+import { it } from "vitest";
 import type { PartialPick } from "type-plus";
 
 import type { RouteRecordNormalized, RouteRecordRaw } from "vue-router";

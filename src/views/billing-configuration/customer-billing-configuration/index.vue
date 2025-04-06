@@ -1,4 +1,4 @@
-<script lang="js" setup>
+<script lang="ts" setup>
 import Pagination from "@/components/Pagination/index.vue";
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "@/components/table/index.vue";

@@ -12,22 +12,22 @@ export default antfu(
 			semi: true,
 		},
 
-		// TypeScript 配置
-		typescript: {
-			tsconfigPath: "./tsconfig.json",
-			parserOptions: {
-				project: "tsconfig.json",
-				sourceType: "module",
-				// tsconfigRootDir: __dirname,
-			},
-		},
-
 		// Vue 支持
 		vue: true,
 
 		// 禁用 jsonc 和 yaml
 		jsonc: false,
 		yaml: false,
+
+		javascript: {
+			/**
+			 * @see https://eslint.org/docs/latest/use/configure/migration-guide#importing-plugins-and-custom-parsers
+			 */
+			overrides: {
+				"jsdoc/require-description": "error",
+				"jsdoc/check-values": "error",
+			},
+		},
 
 		// 忽略文件
 		ignores: ["**/fixtures", "dist", "node_modules", "public"],
@@ -43,6 +43,7 @@ export default antfu(
 	// 自定义规则
 	{
 		rules: {
+			"no-console": "off",
 			// Vue
 			"vue/no-mutating-props": ["error"],
 			"vue/multi-word-component-names": "off",

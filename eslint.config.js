@@ -1,25 +1,57 @@
-import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
-import eslintPluginVue from "eslint-plugin-vue";
-import globals from "globals";
+// @ts-check
+import antfu from "@antfu/eslint-config";
+import eslintConfigPrettier from "eslint-config-prettier";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
-import prettier from "eslint-config-prettier";
 
-export default [
+export default antfu(
 	{
-		// Ignore files
-		ignores: ["dist", "node_modules", "public", "src/components/verifition"],
-	},
-	//js 推荐规则
-	eslint.configs.recommended,
-	// ts 推荐规则
-	...tseslint.configs.recommended,
-	// vue 推荐规则
-	...eslintPluginVue.configs["flat/recommended"],
+		// 基础样式规则
+		stylistic: {
+			indent: 2,
+			quotes: "double",
+			semi: true,
+		},
 
-	// javascript 规则
+		// TypeScript 配置
+		typescript: {
+			tsconfigPath: "./tsconfig.json",
+			parserOptions: {
+				project: "tsconfig.json",
+				sourceType: "module",
+				tsconfigRootDir: __dirname,
+			},
+		},
+
+		// Vue 支持
+		vue: true,
+
+		// JavaScript 配置
+		javascript: {
+			overrides: {
+				"jsdoc/require-description": "error",
+				"jsdoc/check-values": "error",
+			},
+		},
+
+		// 禁用 jsonc 和 yaml
+		jsonc: false,
+		yaml: false,
+
+		// 忽略文件
+		ignores: ["**/fixtures", "dist", "node_modules"],
+
+		// 格式化工具配置
+		formatters: {
+			css: true,
+			html: true,
+			markdown: "prettier",
+		},
+	},
+
+	// 自定义规则
 	{
 		rules: {
+			// JavaScript
 			"no-console": "off",
 			"no-debugger": "off",
 			"no-alert": "off",
@@ -27,48 +59,38 @@ export default [
 			"no-undef": "off",
 			"no-unused-expressions": "off",
 			"no-restricted-syntax": "off",
-		},
-	},
 
-	//配置全局变量
-	{
-		languageOptions: {
-			globals: {
-				...globals.browser,
-				//可以在这里追加一些其他自定义的全局变量
-			},
-		},
-	},
-
-	// vue 规则
-	{
-		files: ["**/*.vue"],
-		languageOptions: {
-			parserOptions: {
-				parser: tseslint.parser,
-				ecmaVersion: "latest",
-				ecmaFeatures: {
-					jsx: true,
-				},
-			},
-		},
-		rules: {
-			//禁止在组件内部直接修改通过 props 传递进来的属性值
+			// Vue
 			"vue/no-mutating-props": ["error"],
 			"vue/multi-word-component-names": "off",
 			"vue/attribute-hyphenation": "off",
 			"vue/attributes-order": "off",
-		},
-	},
-	// ts 规则
-	{
-		files: ["**/*.{ts,vue}"],
-		rules: {
+
+			// TypeScript
 			"@typescript-eslint/no-explicit-any": "off",
 		},
 	},
-	// 会合并 prettier 的规则
+
+	// Prettier 配置
+	{
+		rules: {
+			"prettier/prettier": [
+				"error",
+				{
+					usePrettierrc: true,
+					singleQuote: false,
+					printWidth: 120,
+					semi: true,
+					jsxSingleQuote: true,
+					useTabs: true,
+					tabWidth: 2,
+					endOfLine: "auto",
+				},
+			],
+		},
+	},
+
+	// 合并 Prettier
+	eslintConfigPrettier,
 	eslintPluginPrettierRecommended,
-	// 禁用掉与 prettier 冲突的规则
-	prettier,
-];
+);

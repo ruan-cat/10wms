@@ -63,10 +63,10 @@ function handleDialogChange(value) {
 
 <style lang="scss" scoped>
 .time {
-  border-bottom: 1px solid #000;
+	border-bottom: 1px solid #000;
 }
 .content {
-  margin-top: 10px;
-  height: 400px;
+	margin-top: 10px;
+	height: 400px;
 }
 </style>

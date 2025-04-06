@@ -69,12 +69,12 @@ function updateVisible(value: boolean) {
 
 <style lang="scss" scoped>
 .style-options {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
 }
 
 .dialog-footer {
-  text-align: right;
+	text-align: right;
 }
 </style>

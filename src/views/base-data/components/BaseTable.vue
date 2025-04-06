@@ -651,76 +651,76 @@ defineExpose({
 
 <style scoped lang="scss">
 .base-config-table {
-  width: 100%;
+	width: 100%;
 
-  .header {
-    margin-bottom: 20px;
+	.header {
+		margin-bottom: 20px;
 
-    h2 {
-      font-size: 20px;
-      font-weight: 600;
-      color: #303133;
-      margin: 0;
-    }
-  }
+		h2 {
+			font-size: 20px;
+			font-weight: 600;
+			color: #303133;
+			margin: 0;
+		}
+	}
 
-  .tool-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+	.tool-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
 
-    .left-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+		.left-buttons {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
 
-    .right-tools {
-      min-width: 200px;
-    }
-  }
+		.right-tools {
+			min-width: 200px;
+		}
+	}
 
-  .upload-excel {
-    display: flex;
-    justify-content: center;
+	.upload-excel {
+		display: flex;
+		justify-content: center;
 
-    .el-upload__tip {
-      margin-top: 8px;
-      color: #909399;
-    }
-  }
-  .tool-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+		.el-upload__tip {
+			margin-top: 8px;
+			color: #909399;
+		}
+	}
+	.tool-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 20px;
 
-    .left-buttons {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+		.left-buttons {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
 
-    .right-tools {
-      display: flex;
-      gap: 10px;
-      align-items: center;
+		.right-tools {
+			display: flex;
+			gap: 10px;
+			align-items: center;
 
-      .filter-select {
-        width: 240px;
-      }
+			.filter-select {
+				width: 240px;
+			}
 
-      .search-input {
-        width: 220px;
-      }
-    }
-  }
+			.search-input {
+				width: 220px;
+			}
+		}
+	}
 }
 
 .title {
-  width: 100%;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #efefef;
+	width: 100%;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #efefef;
 }
 </style>

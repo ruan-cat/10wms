@@ -26,8 +26,7 @@ onMounted(() => {
 // 组件销毁时，也及时销毁编辑器
 onBeforeUnmount(() => {
 	const editor = editorRef.value;
-	if (editor == null) 
-return;
+	if (editor == null) return;
 	editor.destroy();
 });
 // 组件相关配置
@@ -52,8 +51,7 @@ const editorConfig = {
 			// 自定义插入图片
 			customInsert(res, insertFn) {
 				// 服务端的返回结果
-				if (res.code === 10000) 
-insertFn(res.data.url, res.data.alt, res.data.href);
+				if (res.code === 10000) insertFn(res.data.url, res.data.alt, res.data.href);
 				else ElMessage.error("图片上传失败");
 			},
 		},

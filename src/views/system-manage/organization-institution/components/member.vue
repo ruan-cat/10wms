@@ -353,13 +353,13 @@ function getRoleList(val) {
 
 <style lang="scss" scoped>
 p {
-  width: 100%;
-  border-bottom: 1px solid #efefef;
+	width: 100%;
+	border-bottom: 1px solid #efefef;
 }
 
 .title {
-  width: 100%;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #efefef;
+	width: 100%;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #efefef;
 }
 </style>

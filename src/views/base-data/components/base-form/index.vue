@@ -260,34 +260,34 @@ defineExpose({
 
 <style lang="scss">
 .dynamic-form {
-  .ElFormItem {
-    margin-bottom: 18px;
+	.ElFormItem {
+		margin-bottom: 18px;
 
-    &__label {
-      font-weight: 500;
-      padding-bottom: 4px !important;
-      color: #606266;
-    }
-  }
+		&__label {
+			font-weight: 500;
+			padding-bottom: 4px !important;
+			color: #606266;
+		}
+	}
 
-  .el-input,
-  .ElSelect,
-  .el-date-editor,
-  .ElInputNumber {
-    width: 100% !important;
-  }
+	.el-input,
+	.ElSelect,
+	.el-date-editor,
+	.ElInputNumber {
+		width: 100% !important;
+	}
 
-  .ElInputNumber {
-    .el-input__wrapper {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
+	.ElInputNumber {
+		.el-input__wrapper {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
 
-  @media (max-width: 768px) {
-    .ElFormItem {
-      margin-bottom: 12px;
-    }
-  }
+	@media (max-width: 768px) {
+		.ElFormItem {
+			margin-bottom: 12px;
+		}
+	}
 }
 </style>

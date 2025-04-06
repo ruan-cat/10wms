@@ -43,9 +43,9 @@ function exportFile() {
 
 <style scoped>
 .el-table {
-  width: 100%;
+	width: 100%;
 }
 .el-button {
-  margin-top: 5px;
+	margin-top: 5px;
 }
 </style>

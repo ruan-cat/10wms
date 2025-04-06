@@ -66,11 +66,11 @@ function openPopup(buttonId: number) {
 
 <style scoped>
 h3 {
-  margin-bottom: 20px;
+	margin-bottom: 20px;
 }
 
 /* 按钮间距 */
 .el-button {
-  margin-right: 10px;
+	margin-right: 10px;
 }
 </style>

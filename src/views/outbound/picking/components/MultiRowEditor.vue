@@ -73,8 +73,7 @@ function handleSingleRowEdit() {
 
 // 保存单行编辑
 function saveSingleRow() {
-	if (currentEditId.value === null) 
-return;
+	if (currentEditId.value === null) return;
 
 	const updatedRow = { ...currentEditRow.value };
 	emit("save", [updatedRow]);
@@ -241,71 +240,71 @@ function handleCellChange(row: TableData, field: string, value: any) {
 
 <style scoped lang="scss">
 .detail-dialog :deep(.el-dialog__header) {
-  border-bottom: 1px solid #ebeef5;
-  padding: 15px 20px;
-  background-color: #f5f7fa;
+	border-bottom: 1px solid #ebeef5;
+	padding: 15px 20px;
+	background-color: #f5f7fa;
 }
 .detail-dialog :deep(.el-dialog__body) {
-  padding: 20px 30px;
-  max-height: 60vh;
-  overflow-y: auto;
+	padding: 20px 30px;
+	max-height: 60vh;
+	overflow-y: auto;
 }
 .detail-dialog :deep(.el-dialog__footer) {
-  border-top: 1px solid #ebeef5;
-  padding: 15px 20px;
+	border-top: 1px solid #ebeef5;
+	padding: 15px 20px;
 }
 .detail-form .el-form-item {
-  margin-bottom: 18px;
+	margin-bottom: 18px;
 }
 .full-width {
-  width: 100%;
+	width: 100%;
 }
 .detail-form :deep(.is-disabled) {
-  background-color: #f5f7fa;
-  border-color: #e4e7ed;
-  color: #606266;
-  cursor: not-allowed;
+	background-color: #f5f7fa;
+	border-color: #e4e7ed;
+	color: #606266;
+	cursor: not-allowed;
 }
 .detail-form .el-row {
-  margin-bottom: 10px;
+	margin-bottom: 10px;
 }
 .detail-form .el-col {
-  margin-bottom: 5px;
+	margin-bottom: 5px;
 }
 .editable-data-grid {
-  .toolbar {
-    margin-bottom: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .leftb {
-      display: flex;
-      align-items: center;
-    }
-    .rightb {
-      display: flex;
-      align-items: center;
-    }
-    ::deep(.el-button) {
-      margin: 0;
-      .el-icon {
-        margin-right: 4px;
-      }
-    }
-    // ::deep(.el-button-group) {
-    // 	.el-button:not(:last-child) {
-    // 		margin-right: -1px;
-    // 	}
-    // }
-  }
+	.toolbar {
+		margin-bottom: 16px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.leftb {
+			display: flex;
+			align-items: center;
+		}
+		.rightb {
+			display: flex;
+			align-items: center;
+		}
+		::deep(.el-button) {
+			margin: 0;
+			.el-icon {
+				margin-right: 4px;
+			}
+		}
+		// ::deep(.el-button-group) {
+		// 	.el-button:not(:last-child) {
+		// 		margin-right: -1px;
+		// 	}
+		// }
+	}
 }
 
 .dialog-footer {
-  display: flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 
-  .el-button {
-    margin-left: 8px;
-  }
+	.el-button {
+		margin-left: 8px;
+	}
 }
 </style>

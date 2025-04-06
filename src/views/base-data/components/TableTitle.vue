@@ -131,32 +131,32 @@ function userClick(data: object) {
 
 <style scoped>
 .animated-div {
-  background-color: gainsboro;
-  padding: 10px;
-  margin-top: 5px;
-  opacity: 1;
-  transform: translateY(0px);
-  transition:
-    transform 0.3s ease-out,
-    opacity 0.3s ease-out;
+	background-color: gainsboro;
+	padding: 10px;
+	margin-top: 5px;
+	opacity: 1;
+	transform: translateY(0px);
+	transition:
+		transform 0.3s ease-out,
+		opacity 0.3s ease-out;
 }
 
 .titleAnimate-enter-active,
 .titleAnimate-leave-active {
-  transition:
-    transform 0.3s ease-out,
-    opacity 0.3s ease-out;
+	transition:
+		transform 0.3s ease-out,
+		opacity 0.3s ease-out;
 }
 
 .titleAnimate-enter-from,
 .titleAnimate-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
+	opacity: 0;
+	transform: translateY(-10px);
 }
 
 .titleAnimate-enter-to,
 .titleAnimate-leave-from {
-  opacity: 1;
-  transform: translateY(0);
+	opacity: 1;
+	transform: translateY(0);
 }
 </style>

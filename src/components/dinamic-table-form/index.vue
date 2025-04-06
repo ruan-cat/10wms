@@ -156,13 +156,13 @@ function getEditable(column: EditableTableColumn<T>) {
 
 <style lang="scss" scoped>
 .editable-table {
-  padding: 20px;
-  background: #fff;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+	padding: 20px;
+	background: #fff;
+	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
 }
 
 .table-actions {
-  margin-bottom: 15px;
+	margin-bottom: 15px;
 }
 </style>

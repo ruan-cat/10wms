@@ -264,80 +264,80 @@ defineExpose({
 
 <style lang="scss">
 .dynamic-form {
-  --bs: 2px;
-  --bsm: calc(var(--bs) * 0.5);
-  --bc: #ebeef5;
+	--bs: 2px;
+	--bsm: calc(var(--bs) * 0.5);
+	--bc: #ebeef5;
 
-  &.table-like-bg {
-    .el-form-item {
-      border: var(--bs) solid var(--bc);
-      border-bottom: none;
+	&.table-like-bg {
+		.el-form-item {
+			border: var(--bs) solid var(--bc);
+			border-bottom: none;
 
-      .el-form-item__label {
-        color: #606266;
-        background-color: #f5f7fa;
-        border-right: var(--bs) solid var(--bc);
-      }
-    }
+			.el-form-item__label {
+				color: #606266;
+				background-color: #f5f7fa;
+				border-right: var(--bs) solid var(--bc);
+			}
+		}
 
-    .el-row .el-col {
-      &:last-child {
-        .el-form-item {
-          border-bottom: var(--bs) solid var(--bc);
-        }
-      }
-    }
-  }
+		.el-row .el-col {
+			&:last-child {
+				.el-form-item {
+					border-bottom: var(--bs) solid var(--bc);
+				}
+			}
+		}
+	}
 
-  .el-form-item {
-    margin-bottom: 0;
+	.el-form-item {
+		margin-bottom: 0;
 
-    .el-form-item__label {
-      font-weight: 500;
-      margin-bottom: 0;
-      min-height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-    }
+		.el-form-item__label {
+			font-weight: 500;
+			margin-bottom: 0;
+			min-height: 40px;
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
+		}
 
-    .el-form-item__content {
-      padding: 4px 12px;
-      min-height: 40px;
-      display: flex;
-      align-items: center;
-    }
-  }
+		.el-form-item__content {
+			padding: 4px 12px;
+			min-height: 40px;
+			display: flex;
+			align-items: center;
+		}
+	}
 
-  .el-form-item {
-    .el-form-item__label {
-      font-weight: 500;
-      color: #606266;
-    }
-  }
+	.el-form-item {
+		.el-form-item__label {
+			font-weight: 500;
+			color: #606266;
+		}
+	}
 
-  .el-input,
-  .el-select,
-  .el-date-editor,
-  .el-input-number {
-    width: 100% !important;
-  }
+	.el-input,
+	.el-select,
+	.el-date-editor,
+	.el-input-number {
+		width: 100% !important;
+	}
 
-  .el-input-number {
-    .el-input__wrapper {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
+	.el-input-number {
+		.el-input__wrapper {
+			padding-left: 10px;
+			padding-right: 10px;
+		}
+	}
 
-  @media (max-width: 768px) {
-    &.table-like-bg .el-form-item {
-      margin-bottom: 0;
-    }
+	@media (max-width: 768px) {
+		&.table-like-bg .el-form-item {
+			margin-bottom: 0;
+		}
 
-    .el-form-item {
-      margin-bottom: 12px;
-    }
-  }
+		.el-form-item {
+			margin-bottom: 12px;
+		}
+	}
 }
 </style>

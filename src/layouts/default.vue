@@ -76,8 +76,7 @@ function handleMenuSelect(menu: string) {
 function removeTab(tabName: TabPaneName) {
 	// 1. 查找目标标签页索引
 	const tabIndex = tabs.value.findIndex((tab) => tab.href === tabName);
-	if (tabIndex === -1) 
-return;
+	if (tabIndex === -1) return;
 	// 2. 预先计算要切换的标签页（在删除前）
 	let nextTab: MenuItem | null = null;
 	if (tabs.value.length > 1) {
@@ -126,8 +125,7 @@ function handleCommand(command: string, tabName: string) {
 		}
 		case "closeElse": {
 			const currentTab = tabs.value.find((t) => t.href === tabName);
-			if (!currentTab) 
-return;
+			if (!currentTab) return;
 			// 过滤保留当前标签和首页
 			tabs.value = tabs.value.filter((t) => t.href === tabName || t.href === "/home");
 			setActiveTab(tabName);
@@ -136,8 +134,7 @@ return;
 		}
 		case "closeRight": {
 			const currentIndex = tabs.value.findIndex((t) => t.href === tabName);
-			if (currentIndex === -1) 
-return;
+			if (currentIndex === -1) return;
 			activeTab.value = tabName;
 			// 保留当前及左侧标签（slice含头不含尾）
 			tabs.value = tabs.value.slice(0, currentIndex + 1);
@@ -145,8 +142,7 @@ return;
 		}
 		case "closeLeft": {
 			const currentIndex = tabs.value.findIndex((t) => t.href === tabName);
-			if (currentIndex === -1) 
-return;
+			if (currentIndex === -1) return;
 			activeTab.value = tabName;
 			// 保留当前及右侧标签
 			tabs.value = tabs.value.slice(currentIndex);

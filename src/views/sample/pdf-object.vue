@@ -24,7 +24,7 @@ onMounted(() => {
 <style scoped>
 /* 设置pdf样式，类名固定 */
 .pdfobject-container {
-  height: 680px;
-  border: 1rem solid rgba(0, 0, 0, 0.1);
+	height: 680px;
+	border: 1rem solid rgba(0, 0, 0, 0.1);
 }
 </style>

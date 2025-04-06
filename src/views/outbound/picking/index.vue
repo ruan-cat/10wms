@@ -377,6 +377,6 @@ function handleView(rowId: number | string) {
 
 <style scoped lang="scss">
 .picking-list {
-  padding: 20px;
+	padding: 20px;
 }
 </style>

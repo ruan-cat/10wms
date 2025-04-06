@@ -9,7 +9,7 @@
 
 <style lang="scss" scoped>
 .login-root {
-  // width: 100vw;
-  // height: 100%;
+	// width: 100vw;
+	// height: 100%;
 }
 </style>

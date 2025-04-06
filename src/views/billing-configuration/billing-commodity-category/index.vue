@@ -96,13 +96,13 @@ const tableColumns = ref([
 
 <style lang="scss" scoped>
 .billing-commodity-category-root {
-  .title {
-    width: 100%;
-    border: 1px;
-    height: 2rem;
-    line-height: 2rem;
-    padding-left: 10px;
-    background-color: gainsboro;
-  }
+	.title {
+		width: 100%;
+		border: 1px;
+		height: 2rem;
+		line-height: 2rem;
+		padding-left: 10px;
+		background-color: gainsboro;
+	}
 }
 </style>

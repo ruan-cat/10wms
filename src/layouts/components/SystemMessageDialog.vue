@@ -43,12 +43,12 @@ function updateVisible(value: boolean) {
 
 <style lang="scss" scoped>
 .dialog-footer {
-  text-align: right;
+	text-align: right;
 }
 
 .empty-placeholder {
-  text-align: center;
-  padding: 20px;
-  color: #999;
+	text-align: center;
+	padding: 20px;
+	color: #999;
 }
 </style>

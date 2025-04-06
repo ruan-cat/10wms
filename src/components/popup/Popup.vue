@@ -34,8 +34,7 @@ function startDrag(e: MouseEvent) {
 
 // 拖拽中
 function onDrag(e: MouseEvent) {
-	if (!isDragging.value) 
-return;
+	if (!isDragging.value) return;
 
 	// 计算偏移量
 	offsetX.value = e.clientX - startX.value;
@@ -102,55 +101,55 @@ onUnmounted(() => {
 <style scoped>
 /* 蒙层样式 */
 .popup-layer-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色 */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* 确保蒙层在最上层 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色 */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000; /* 确保蒙层在最上层 */
 }
 
 /* 主体样式 */
 .popup-body {
-  width: 400px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-  position: relative; /* 确保 transform 生效 */
+	width: 400px;
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+	position: relative; /* 确保 transform 生效 */
 }
 
 .popup-title {
-  padding: 16px;
-  border-bottom: 1px solid #eee;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: move; /* 拖拽时显示可移动光标 */
+	padding: 16px;
+	border-bottom: 1px solid #eee;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: move; /* 拖拽时显示可移动光标 */
 }
 
 .popup-content {
-  padding: 16px;
+	padding: 16px;
 }
 
 .popup-bottom-button {
-  padding: 16px;
-  border-top: 1px solid #eee;
-  text-align: right;
+	padding: 16px;
+	border-top: 1px solid #eee;
+	text-align: right;
 }
 
 /* 关闭按钮样式 */
 .close-btn {
-  cursor: pointer;
-  background: none;
-  border: none;
-  font-size: 16px;
+	cursor: pointer;
+	background: none;
+	border: none;
+	font-size: 16px;
 }
 
 .close-btn:hover {
-  color: #f00; /* 鼠标悬停时变红色 */
+	color: #f00; /* 鼠标悬停时变红色 */
 }
 </style>

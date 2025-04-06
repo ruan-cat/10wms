@@ -661,107 +661,107 @@ function setPieChartOptions4() {
 
 <style scoped>
 * {
-  margin: 0;
-  padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 .container {
-  display: flex;
-  flex-direction: column;
-  background-color: #f2f2f2;
+	display: flex;
+	flex-direction: column;
+	background-color: #f2f2f2;
 }
 .header {
-  margin: 5px 5px 30px 5px;
-  width: 99%;
-  height: 120px;
-  background-color: #fff;
-  display: flex; /* 添加 Flexbox */
-  flex-direction: column; /* 设置为列方向 */
-  justify-content: center; /* 垂直居中 */
-  align-items: flex-start; /* 左对齐 */
+	margin: 5px 5px 30px 5px;
+	width: 99%;
+	height: 120px;
+	background-color: #fff;
+	display: flex; /* 添加 Flexbox */
+	flex-direction: column; /* 设置为列方向 */
+	justify-content: center; /* 垂直居中 */
+	align-items: flex-start; /* 左对齐 */
 }
 
 .header p {
-  padding-left: 50px;
-  font-size: 18px;
-  color: rgb(55, 71, 79);
+	padding-left: 50px;
+	font-size: 18px;
+	color: rgb(55, 71, 79);
 }
 
 .body {
-  margin: 5px 5px 30px 5px;
-  width: 99%;
-  height: 150px;
-  background-color: #fff;
-  display: flex;
+	margin: 5px 5px 30px 5px;
+	width: 99%;
+	height: 150px;
+	background-color: #fff;
+	display: flex;
 }
 
 .card {
-  padding: 20px;
-  height: 100%;
-  width: 25%;
-  background-color: #fff;
-  border-right: 1px solid #f1f4f5;
-  display: flex;
-  flex-direction: column;
+	padding: 20px;
+	height: 100%;
+	width: 25%;
+	background-color: #fff;
+	border-right: 1px solid #f1f4f5;
+	display: flex;
+	flex-direction: column;
 }
 .card .up {
-  height: 50%;
-  width: 100%;
-  display: flex;
+	height: 50%;
+	width: 100%;
+	display: flex;
 }
 .card .up span {
-  color: #76838f;
-  font-size: 12px;
-  margin-left: 20px;
-  height: 50px;
-  line-height: 40px;
+	color: #76838f;
+	font-size: 12px;
+	margin-left: 20px;
+	height: 50px;
+	line-height: 40px;
 }
 .icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
 }
 
 .icon div {
-  font-size: 12px;
-  color: white;
-  line-height: 40px;
-  text-align: center;
+	font-size: 12px;
+	color: white;
+	line-height: 40px;
+	text-align: center;
 }
 
 .card .down {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
 }
 .box1 {
-  display: flex;
-  width: 100%;
-  justify-content: center;
+	display: flex;
+	width: 100%;
+	justify-content: center;
 }
 
 .box1 .iconfont {
-  font-size: 12px;
-  color: #f96868;
+	font-size: 12px;
+	color: #f96868;
 }
 
 .box1 span {
-  color: #76838f;
-  font-size: 30px;
-  line-height: 30px;
-  margin-left: 5px;
+	color: #76838f;
+	font-size: 30px;
+	line-height: 30px;
+	margin-left: 5px;
 }
 
 .box2 span {
-  color: #a3afb7;
-  font-size: 12px;
+	color: #a3afb7;
+	font-size: 12px;
 }
 
 .footer {
-  margin: 5px 5px 5px 0px;
-  width: 99%;
-  height: 350px;
-  background-color: #fff;
-  display: flex;
+	margin: 5px 5px 5px 0px;
+	width: 99%;
+	height: 350px;
+	background-color: #fff;
+	display: flex;
 }
 </style>

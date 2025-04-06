@@ -73,35 +73,35 @@ function save() {
 
 <style lang="scss" scoped>
 * {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+	margin: 0;
+	padding: 0;
+	list-style: none;
 }
 
 p {
-  width: 100%;
-  margin-bottom: 10px;
-  border-bottom: 1px solid #efefef;
+	width: 100%;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #efefef;
 }
 
 ::v-deep(.el-button span) {
-  padding: 2px;
+	padding: 2px;
 }
 
 .content {
-  margin-top: 20px;
-  ul {
-    margin-top: 10px;
-  }
-  li {
-    margin-bottom: 5px;
-    .role {
-      margin-left: 4px;
-    }
-  }
+	margin-top: 20px;
+	ul {
+		margin-top: 10px;
+	}
+	li {
+		margin-bottom: 5px;
+		.role {
+			margin-left: 4px;
+		}
+	}
 }
 
 svg {
-  margin-right: 4px;
+	margin-right: 4px;
 }
 </style>

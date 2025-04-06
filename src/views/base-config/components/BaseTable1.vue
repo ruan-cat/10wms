@@ -141,8 +141,7 @@ async function fetchData() {
 		if (props.tableData && props.tableData.length > 0) {
 			// 根据搜索字段和关键字过滤数据
 			const filteredData = props.tableData.filter((item) => {
-				if (!searchKeyword.value) 
-return true;
+				if (!searchKeyword.value) return true;
 
 				// 如果选择了特定字段，只在该字段中搜索
 				if (searchField.value) {
@@ -247,8 +246,7 @@ function handleRowDelete(row: any) {
 		type: "warning",
 	})
 		.then(async () => {
-			if (!props.api?.delete) 
-return;
+			if (!props.api?.delete) return;
 
 			try {
 				const res = await props.api.delete(row.id);
@@ -282,8 +280,7 @@ function handleBatchDelete() {
 		type: "warning",
 	})
 		.then(async () => {
-			if (!props.api?.batchDelete) 
-return;
+			if (!props.api?.batchDelete) return;
 
 			const ids = selectedRows.value.map((row) => row.id);
 			try {
@@ -359,8 +356,7 @@ async function uploadExcel() {
 	}
 
 	const file = fileList.value[0].raw;
-	if (!file) 
-return;
+	if (!file) return;
 
 	try {
 		const res = await props.api.import(file);
@@ -380,16 +376,13 @@ return;
 
 // 提交表单
 async function submitForm() {
-	if (!formRef.value) 
-return;
+	if (!formRef.value) return;
 
 	await formRef.value.validate(async (valid) => {
-		if (!valid) 
-return;
+		if (!valid) return;
 
 		if (dialogType.value === "add") {
-			if (!props.api?.add) 
-return;
+			if (!props.api?.add) return;
 
 			try {
 				const res = await props.api.add(formData.value);
@@ -406,8 +399,7 @@ return;
 				ElMessage.error("添加失败");
 			}
 		} else if (dialogType.value === "edit") {
-			if (!props.api?.update) 
-return;
+			if (!props.api?.update) return;
 
 			try {
 				const res = await props.api.update({ ...formData.value, id: currentId.value });

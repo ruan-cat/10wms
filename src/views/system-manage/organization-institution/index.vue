@@ -414,26 +414,26 @@ function handleCurrentChange(val) {
 
 <style lang="scss" scoped>
 p {
-  width: 100%;
-  border-bottom: 1px solid #efefef;
+	width: 100%;
+	border-bottom: 1px solid #efefef;
 }
 
 .title {
-  width: 100%;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #efefef;
+	width: 100%;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #efefef;
 }
 /* 自定义抽屉样式 */
 ::v-deep(.el-drawer) {
-  background-color: transparent !important; /* 设置抽屉背景颜色为透明 */
+	background-color: transparent !important; /* 设置抽屉背景颜色为透明 */
 }
 
 /* 自定义遮罩层样式 */
 ::v-deep(.el-overlay) {
-  background-color: rgba(0, 0, 0, 0) !important; /* 设置遮罩层透明度为0 */
+	background-color: rgba(0, 0, 0, 0) !important; /* 设置遮罩层透明度为0 */
 }
 
 ::v-deep(header.el-drawer__header) {
-  margin: 0;
+	margin: 0;
 }
 </style>

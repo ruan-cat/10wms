@@ -3,17 +3,7 @@
 	<p>消息发送列表</p>
 	<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
 	<ComponentsTable v-bind="tableProps" @selection-change="multipleSelectRows = $event"> </ComponentsTable>
-	<el-pagination
-		style="margin-top: 20px"
-		v-model:current-page="pageIndex"
-		v-model:page-size="pageSize"
-		:page-sizes="[10, 20, 30]"
-		:disabled="disabled"
-		layout="total, sizes, prev, pager, next, jumper"
-		:total="400"
-		@size-change="handlePageSize"
-		@current-change="handlePageIndex"
-	/>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 	<!-- 单行编辑弹窗 -->
 	<el-dialog
 		v-model="dialogVisible"
@@ -95,6 +85,14 @@ const dialogTitle = ref("");
 const pageIndex = ref(1);
 // 页面大小
 const pageSize = ref(10);
+// total
+const total = ref(0);
+
+// 分页配置
+const paginationProps = ref<PaginationProps>({
+	asyncFunc: getMessageCenterAPI,
+	total: total,
+});
 
 // 改变页面大小
 const handlePageSize = (val) => {

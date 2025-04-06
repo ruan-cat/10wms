@@ -12,6 +12,19 @@ definePage({
 	},
 });
 
+// 页码
+const pageIndex = ref(1);
+// 页面大小
+const pageSize = ref(10);
+// total
+const total = ref(0);
+
+// 分页配置
+const paginationProps = ref({
+	asyncFunc: () => {}, // TODO: 替换成实际的API函数
+	total: total,
+});
+
 // 发送到子组件的数据
 const titleData = ref({
 	unfold: true,
@@ -149,19 +162,7 @@ const tableProps = ref({
 	<h1>进货通知明细</h1>
 	<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
 	<ComponentsTable v-bind="tableProps"> </ComponentsTable>
-	<el-pagination
-		style="margin-top: 20px"
-		v-model:current-page="currentPage4"
-		v-model:page-size="pageSize4"
-		:page-sizes="[10, 20, 30]"
-		:size="size"
-		:disabled="disabled"
-		:background="background"
-		layout="total, sizes, prev, pager, next, jumper"
-		:total="400"
-		@size-change="handleSizeChange"
-		@current-change="handleCurrentChange"
-	/>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 </template>
 
 <style lang="scss" scoped></style>

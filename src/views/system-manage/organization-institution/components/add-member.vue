@@ -3,17 +3,7 @@
 		<p>添加已有客户</p>
 		<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
 		<ComponentsTable v-bind="tableProps" @selection-change="multipleSelectRows2 = $event"> </ComponentsTable>
-		<el-pagination
-			style="margin-top: 20px"
-			v-model:current-page="pageIndex"
-			v-model:page-size="pageSize"
-			:page-sizes="[10, 20, 30]"
-			:disabled="disabled"
-			layout="total, sizes, prev, pager, next, jumper"
-			:total="400"
-			@size-change="handlePageSize"
-			@current-change="handlePageIndex"
-		/>
+		<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 
 		<template #footer>
 			<span class="dialog-footer">
@@ -27,7 +17,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, defineModel } from "vue";
 import TableTitle from "@/components/table-title/TableTitle.vue";
-import ComponentsTable from "@/components/table/index.vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -38,6 +28,19 @@ definePage({
 
 // 使用 defineModel实现双向绑定
 const myModel = defineModel("myModel");
+
+// 页码
+const pageIndex = ref(1);
+// 页面大小
+const pageSize = ref(10);
+// total
+const total = ref(0);
+
+// 分页配置
+const paginationProps = ref({
+	asyncFunc: () => {}, // TODO: 替换成实际的API函数
+	total: total,
+});
 
 // 消息列表
 const messageList = ref([]);

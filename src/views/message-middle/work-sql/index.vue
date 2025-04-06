@@ -17,17 +17,7 @@
 			</div>
 		</template>
 	</ComponentsTable>
-	<el-pagination
-		style="margin-top: 20px"
-		v-model:current-page="pageIndex"
-		v-model:page-size="pageSize"
-		:page-sizes="[10, 20, 30]"
-		:disabled="disabled"
-		layout="total, sizes, prev, pager, next, jumper"
-		:total="total"
-		@size-change="handlePageSize"
-		@current-change="handlePageIndex"
-	/>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 
 	<!-- 单行编辑弹窗 -->
 	<el-dialog
@@ -162,6 +152,12 @@ const pageIndex = ref(1);
 const pageSize = ref(10);
 // total
 const total = ref(0);
+
+// 分页配置
+const paginationProps = ref({
+	asyncFunc: getSqlListAPI,
+	total: total,
+});
 
 // 改变页面大小
 const handlePageSize = (val) => {

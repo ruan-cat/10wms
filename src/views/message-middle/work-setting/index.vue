@@ -17,17 +17,7 @@
 			</div>
 		</template>
 	</ComponentsTable>
-	<el-pagination
-		style="margin-top: 20px"
-		v-model:current-page="page"
-		v-model:page-size="size"
-		:page-sizes="[10, 20, 30]"
-		:disabled="disabled"
-		layout="total, sizes, prev, pager, next, jumper"
-		:total="total"
-		@size-change="handlesize"
-		@current-change="handlepage"
-	/>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 	<!-- 单行编辑弹窗 -->
 	<el-dialog
 		v-model="dialogVisible"

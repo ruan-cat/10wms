@@ -19,17 +19,7 @@
 			</div>
 		</template>
 	</ComponentsTable>
-	<el-pagination
-		style="margin-top: 20px"
-		v-model:current-page="pageIndex"
-		v-model:page-size="pageSize"
-		:page-sizes="[10, 20, 30]"
-		:disabled="disabled"
-		layout="total, sizes, prev, pager, next, jumper"
-		:total="total"
-		@size-change="handlePageSize"
-		@current-change="handlePageIndex"
-	/>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 	<!-- 单行编辑弹窗 -->
 	<el-dialog
 		@close="handleClose"
@@ -112,6 +102,7 @@ import { Delete, Setting, User } from "@element-plus/icons-vue";
 import { ref, onMounted } from "vue";
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "@/components/table/index.vue";
+import ComponentsPagination from "@/components/pagination/index.vue";
 import { ElMessage } from "element-plus";
 import { read, utils, writeFileXLSX } from "xlsx"; // 导入 xlsx 库的方法
 import {
@@ -211,17 +202,11 @@ const pageSize = ref(10);
 // total
 const total = ref(0);
 
-// 改变页面大小
-const handlePageSize = (val) => {
-	console.log(val);
-	pageSize.value = val;
-};
-
-// 改变页码
-const handlePageIndex = (val) => {
-	console.log(val);
-	pageIndex.value = val;
-};
+// 分页配置
+const paginationProps = ref<PaginationProps>({
+	asyncFunc: getRoleListAPI,
+	total: total,
+});
 
 // 获取角色列表
 const getRoleList = async (params) => {

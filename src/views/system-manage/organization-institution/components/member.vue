@@ -8,18 +8,7 @@
 			</div>
 		</template>
 	</ComponentsTable>
-	<el-pagination
-		size="small"
-		style="margin-top: 20px"
-		v-model:current-page="pageIndex"
-		v-model:page-size="pageSize"
-		:page-sizes="[10, 20, 30]"
-		:disabled="disabled"
-		layout="total, sizes, prev, pager, next, jumper"
-		:total="400"
-		@size-change="handlePageSize"
-		@current-change="handlePageIndex"
-	/>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 	<!-- 单行编辑弹窗 -->
 	<el-dialog
 		v-model="dialogVisible"
@@ -116,7 +105,6 @@ import AddMember from "./add-member.vue";
 import { Delete, Search, Position } from "@element-plus/icons-vue";
 import { ref, onMounted } from "vue";
 import TableTitle from "@/components/table-title/TableTitle.vue";
-import ComponentsTable from "@/components/table/index.vue";
 import { ElMessage } from "element-plus";
 
 // AddMember显示隐藏
@@ -137,6 +125,19 @@ const showOrg = ref(false);
 const showRol = ref(false);
 // 只有录入的时候会出现密码输入框
 const showPassword = ref(false);
+
+// 页码
+const pageIndex = ref(1);
+// 页面大小
+const pageSize = ref(10);
+// total
+const total = ref(0);
+
+// 分页配置
+const paginationProps = ref({
+	asyncFunc: () => {}, // TODO: 替换成实际的API函数
+	total: total,
+});
 
 // 发送到子组件的数据
 const titleData = ref({

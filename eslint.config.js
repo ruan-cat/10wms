@@ -5,9 +5,6 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 
 export default antfu(
 	{
-		// 文件忽略
-		ignores: ["dist", "node_modules", "public"],
-
 		// 基础样式规则
 		stylistic: {
 			indent: 2,
@@ -41,7 +38,7 @@ export default antfu(
 		yaml: false,
 
 		// 忽略文件
-		ignores: ["**/fixtures", "dist", "node_modules"],
+		ignores: ["**/fixtures", "dist", "node_modules", "public"],
 
 		// 格式化工具配置
 		formatters: {

@@ -13,7 +13,7 @@
 	</el-dialog>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "@/components/table/index.vue";
 

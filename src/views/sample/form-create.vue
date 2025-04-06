@@ -2,7 +2,7 @@
 	<fc-designer ref="designer" height="88vh" />
 </template>
 
-<script setup>
+<script lang="ts" setup>
 definePage({
 	meta: {
 		menuType: "page",

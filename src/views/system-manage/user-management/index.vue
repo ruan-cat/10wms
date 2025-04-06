@@ -17,17 +17,7 @@
 			</div>
 		</template>
 	</ComponentsTable>
-	<el-pagination
-		style="margin-top: 20px"
-		v-model:current-page="pageIndex"
-		v-model:page-size="pageSize"
-		:page-sizes="[10, 20, 30]"
-		:disabled="disabled"
-		layout="total, sizes, prev, pager, next, jumper"
-		:total="total"
-		@size-change="handlePageSize"
-		@current-change="handlePageIndex"
-	/>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
 	<!-- 单行编辑弹窗 -->
 	<el-dialog
 		@close="handleClose"
@@ -169,7 +159,8 @@
 		</el-upload>
 	</el-dialog>
 </template>
-<script setup>
+
+<script lang="ts" setup>
 import UserDialog from "./components/username-dialog.vue";
 import Role from "./components/role-input.vue";
 import Organization from "./components/organization-input.vue";
@@ -191,6 +182,8 @@ import {
 	activeUserStatusAPI,
 	importUserAPI,
 } from "@/apis/sysmanager-ok/index.js";
+import ComponentsPagination from "@/components/pagination/index.vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -374,6 +367,12 @@ const pageIndex = ref(1);
 const pageSize = ref(10);
 // total
 const total = ref(0);
+
+// 分页配置
+const paginationProps = ref<PaginationProps>({
+	asyncFunc: getUserListAPI,
+	total: total,
+});
 
 // 改变页面大小
 const handlePageSize = (val) => {

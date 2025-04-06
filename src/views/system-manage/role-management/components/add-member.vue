@@ -24,7 +24,7 @@
 	</el-dialog>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted, defineModel } from "vue";
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "@/components/table/index.vue";

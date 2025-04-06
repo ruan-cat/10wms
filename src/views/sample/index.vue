@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { reactive } from "vue";
 
 // 该组件在生产环境下将会固定移除

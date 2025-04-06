@@ -25,7 +25,7 @@
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted, watch, computed } from "vue";
 import { getResourceNameTreeAPI, setRoleResourceAPI, getRoleResourceAPI } from "@/apis/menu";
 

@@ -13,7 +13,7 @@
 	</el-dialog>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { getNoticeDetailAPI } from "@/apis/notice-remind/index.js";
 import { ref } from "vue";
 const control = defineModel("control");

@@ -1,5 +1,5 @@
 <!-- 本组件就是原来的 dashboard 控制台面板组件 -->
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from "vue";
 
 definePage({

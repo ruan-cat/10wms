@@ -64,7 +64,7 @@
 		</template>
 	</el-dialog>
 </template>
-<script setup>
+<script lang="ts" setup>
 import { Delete } from "@element-plus/icons-vue";
 import { ref, onMounted } from "vue";
 import TableTitle from "@/components/table-title/TableTitle.vue";

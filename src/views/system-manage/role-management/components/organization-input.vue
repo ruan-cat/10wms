@@ -10,7 +10,7 @@
 	</el-dialog>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted, defineModel } from "vue";
 
 // 使用 defineModel实现双向绑定

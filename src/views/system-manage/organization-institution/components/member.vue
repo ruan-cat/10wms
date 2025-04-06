@@ -109,7 +109,7 @@
 		<Role :showRol="showRol" @show-role-dialog="showRoleDialog" @get-role-list="getRoleList"></Role>
 	</div>
 </template>
-<script setup>
+<script lang="ts" setup>
 import Role from "./role-input.vue";
 import Organization from "./organization-input.vue";
 import AddMember from "./add-member.vue";

@@ -62,7 +62,7 @@
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, defineProps } from "vue";
 import * as XLSX from "xlsx";
 

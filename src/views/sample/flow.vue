@@ -20,7 +20,7 @@
 	</div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 definePage({
 	meta: {
 		menuType: "page",

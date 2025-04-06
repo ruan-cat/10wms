@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 definePage({
 	meta: {
 		menuType: "folder",

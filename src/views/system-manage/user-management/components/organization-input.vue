@@ -10,7 +10,7 @@
 	</el-dialog>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 import { ref, onMounted, defineModel } from "vue";
 import { getOrgNameTreeAPI } from "@/apis/sysmanager-ok/index.js";
 

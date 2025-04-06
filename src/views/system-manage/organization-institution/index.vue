@@ -126,7 +126,7 @@
 		</el-upload>
 	</el-dialog>
 </template>
-<script setup>
+<script lang="ts" setup>
 import Member from "./components/member.vue";
 import Role from "./components/role.vue";
 import { Delete, User, Setting } from "@element-plus/icons-vue";

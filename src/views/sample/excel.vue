@@ -6,7 +6,7 @@
 	<el-button type="primary" @click="exportFile">导出</el-button>
 </template>
 
-<script setup>
+<script lang="ts" setup>
 definePage({
 	meta: {
 		menuType: "page",

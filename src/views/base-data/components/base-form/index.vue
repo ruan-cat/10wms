@@ -1,11 +1,11 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
-import { defineEmits, defineProps, useTemplateRef, nextTick } from "vue";
-import type { Ref, ComputedRef } from "vue";
-import type { FormItemRule, FormRules, FormProps } from "element-plus";
-import { isNil, cloneDeep } from "lodash-es";
-
+import type { FormRules } from "element-plus";
+import type { Ref } from "vue";
+import type { _OmitFormProps, BaseFormItem } from "./types";
 import ComponentsDinamicTableForm from "components/dinamic-table-form/index.vue";
-import type { BaseFormItem, _OmitFormProps } from "./types";
+
+import { cloneDeep, isNil } from "lodash-es";
+import { defineEmits, defineProps, nextTick, useTemplateRef } from "vue";
 
 /** 基础通用表单 props */
 export interface BaseFormProps<T extends Record<string, any>>
@@ -73,7 +73,7 @@ const form = ref<T>(props.form) as Ref<T>;
  * 让外部组件 直接获取本组件的表单数据
  *
  * TODO: 未来实现组件数据监听 对外暴露数据变更事件
- * @public 外部组件能够有效使用本函数
+ * @public
  */
 function getForm() {
 	return form.value;
@@ -81,7 +81,7 @@ function getForm() {
 
 /**
  * 得到数据表更之后的组件实例
- * @private 本组件内部使用 不考虑对外暴露出去
+ * @private
  */
 async function getFormRef() {
 	// 无条件地先等待数据变化 变化完毕后再从组件内使用函数做
@@ -131,7 +131,7 @@ async function isValidatePass() {
  * 2. 然后再对外返回经过校验的数据
  *
  * 不会做有意义的接口请求 本组件不负责和业务直接关联的异步请求
- * @public 外部组件能够有效使用本函数
+ * @public
  */
 async function submit() {
 	const formRef = await getFormRef();
@@ -147,7 +147,7 @@ async function submit() {
  * 重置表单
  * @description
  * 用的是组件库内部的重置能力 重置不等于清空表单
- * @public 外部组件能够有效使用本函数
+ * @public
  */
 async function resetForm() {
 	/**
@@ -162,7 +162,6 @@ async function resetForm() {
 	const formRef = await getFormRef();
 	if (!isNil(formRef)) {
 		formRef.resetFields();
-		return;
 	}
 }
 
@@ -261,34 +260,34 @@ defineExpose({
 
 <style lang="scss">
 .dynamic-form {
-	.ElFormItem {
-		margin-bottom: 18px;
+  .ElFormItem {
+    margin-bottom: 18px;
 
-		&__label {
-			font-weight: 500;
-			padding-bottom: 4px !important;
-			color: #606266;
-		}
-	}
+    &__label {
+      font-weight: 500;
+      padding-bottom: 4px !important;
+      color: #606266;
+    }
+  }
 
-	.el-input,
-	.ElSelect,
-	.el-date-editor,
-	.ElInputNumber {
-		width: 100% !important;
-	}
+  .el-input,
+  .ElSelect,
+  .el-date-editor,
+  .ElInputNumber {
+    width: 100% !important;
+  }
 
-	.ElInputNumber {
-		.el-input__wrapper {
-			padding-left: 10px;
-			padding-right: 10px;
-		}
-	}
+  .ElInputNumber {
+    .el-input__wrapper {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
 
-	@media (max-width: 768px) {
-		.ElFormItem {
-			margin-bottom: 12px;
-		}
-	}
+  @media (max-width: 768px) {
+    .ElFormItem {
+      margin-bottom: 12px;
+    }
+  }
 }
 </style>

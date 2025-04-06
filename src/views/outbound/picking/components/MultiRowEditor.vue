@@ -1,3 +1,154 @@
+<script setup lang="ts">
+import { Check, Close, Download, Edit, EditPen, RefreshRight, Search, View } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
+import { computed, defineEmits, defineProps, ref } from "vue";
+
+interface Column {
+	title: string;
+	field: string;
+	width?: number;
+	editable?: boolean;
+	hidden?: boolean;
+	formatter?: (val: any) => string;
+}
+
+interface TableData {
+	id: string | number;
+	[key: string]: any;
+}
+
+//
+const props = defineProps<{
+	columns: Column[]; // 列配置
+	dataSource: TableData[]; // 数据源
+	title?: string; // 标题
+	currentPage?: number;
+	pageSize?: number;
+}>();
+
+const emit = defineEmits(["save", "edit", "cancel", "export", "view"]);
+
+function calculateIndex(index: number) {
+	const currentPage = 1;
+	const pageSize = 10;
+	return (currentPage - 1) * pageSize + index + 1;
+}
+// 编辑状态管理
+const tableRef = ref();
+const editingRows = ref<Set<string | number>>(new Set());
+const selectedRows = ref<TableData[]>([]);
+const editedData = ref<Map<string | number, any>>(new Map());
+const editMode = ref<"single" | "multi">("multi");
+const isEditing = computed(() => editingRows.value.size > 0);
+const currentClickRow = ref<TableData | null>(null);
+
+// 弹窗
+const dialogMode = ref<"edit" | "view">("edit");
+const dialogVisible = ref(false);
+const dialogTitle = ref("编辑数据");
+const currentEditRow = ref<any>({});
+const currentEditId = ref<string | number | null>(null);
+
+// 处理表格选择变化
+function handleSelectionChange(rows: TableData[]) {
+	selectedRows.value = rows;
+}
+
+// 单行完整编辑
+function handleSingleRowEdit() {
+	if (selectedRows.value.length !== 1) {
+		ElMessage.warning("请选择一条记录进行编辑");
+		return;
+	}
+
+	const row = selectedRows.value[0];
+	currentEditId.value = row.id;
+	currentEditRow.value = { ...row };
+	dialogTitle.value = `编辑 - ${row.id}`;
+	dialogMode.value = "edit";
+
+	dialogVisible.value = true;
+	editMode.value = "single";
+}
+
+// 保存单行编辑
+function saveSingleRow() {
+	if (currentEditId.value === null) 
+return;
+
+	const updatedRow = { ...currentEditRow.value };
+	emit("save", [updatedRow]);
+	dialogVisible.value = false;
+	currentEditId.value = null;
+}
+
+// 多行特定字段编辑
+function handleMultiRowEdit() {
+	if (selectedRows.value.length === 0) {
+		ElMessage.warning("请选择要编辑的行");
+		return;
+	}
+
+	editMode.value = "multi";
+	selectedRows.value.forEach((row) => {
+		editingRows.value.add(row.id);
+		editedData.value.set(row.id, { ...row });
+	});
+
+	emit(
+		"edit",
+		selectedRows.value.map((row) => row.id),
+	);
+}
+
+// 保存多行编辑
+function handleSave() {
+	if (editMode.value === "multi") {
+		const updatedRows = Array.from(editingRows.value).map((id) => editedData.value.get(id));
+		emit("save", updatedRows);
+		editingRows.value.clear();
+		editedData.value.clear();
+	}
+}
+
+// 取消修改
+function handleCancel() {
+	editingRows.value.clear();
+	editedData.value.clear();
+	editMode.value = "multi";
+	tableRef.value?.clearSelection();
+	emit("cancel");
+}
+
+// 导出
+function handleExport() {
+	emit("export");
+}
+
+// 查看详情
+function handleView() {
+	if (selectedRows.value.length !== 1) {
+		ElMessage.warning("请选择一条记录查看");
+		return;
+	}
+	// emit("view", selectedRows.value[0].id);
+	const row = selectedRows.value[0];
+	currentEditId.value = row.id;
+	currentEditRow.value = { ...row };
+	dialogTitle.value = `查看详情 - ${row.id}`;
+	dialogMode.value = "view";
+	dialogVisible.value = true;
+}
+
+// 处理单元格值变化
+function handleCellChange(row: TableData, field: string, value: any) {
+	const editedRow = editedData.value.get(row.id);
+	if (editedRow) {
+		editedRow[field] = value;
+	}
+}
+</script>
+
 <template>
 	<div class="editable-data-grid">
 		<div class="toolbar">
@@ -88,222 +239,73 @@
 	</div>
 </template>
 
-<script setup lang="ts">
-import { ref, defineProps, defineEmits, computed } from "vue";
-import { ElMessage } from "element-plus";
-import { Edit, View, Download, EditPen, Check, Close, Search, RefreshRight } from "@element-plus/icons-vue";
-interface Column {
-	title: string;
-	field: string;
-	width?: number;
-	editable?: boolean;
-	hidden?: boolean;
-	formatter?: (val: any) => string;
-}
-
-interface TableData {
-	id: string | number;
-	[key: string]: any;
-}
-
-//
-const props = defineProps<{
-	columns: Column[]; //列配置
-	dataSource: TableData[]; //数据源
-	title?: string; //标题
-	currentPage?: number;
-	pageSize?: number;
-}>();
-
-const emit = defineEmits(["save", "edit", "cancel", "export", "view"]);
-
-const calculateIndex = (index: number) => {
-	const currentPage = 1;
-	const pageSize = 10;
-	return (currentPage - 1) * pageSize + index + 1;
-};
-// 编辑状态管理
-const tableRef = ref();
-const editingRows = ref<Set<string | number>>(new Set());
-const selectedRows = ref<TableData[]>([]);
-const editedData = ref<Map<string | number, any>>(new Map());
-const editMode = ref<"single" | "multi">("multi");
-const isEditing = computed(() => editingRows.value.size > 0);
-const currentClickRow = ref<TableData | null>(null);
-
-// 弹窗
-const dialogMode = ref<"edit" | "view">("edit");
-const dialogVisible = ref(false);
-const dialogTitle = ref("编辑数据");
-const currentEditRow = ref<any>({});
-const currentEditId = ref<string | number | null>(null);
-
-// 处理表格选择变化
-const handleSelectionChange = (rows: TableData[]) => {
-	selectedRows.value = rows;
-};
-
-// 单行完整编辑
-const handleSingleRowEdit = () => {
-	if (selectedRows.value.length !== 1) {
-		ElMessage.warning("请选择一条记录进行编辑");
-		return;
-	}
-
-	const row = selectedRows.value[0];
-	currentEditId.value = row.id;
-	currentEditRow.value = { ...row };
-	dialogTitle.value = `编辑 - ${row.id}`;
-	dialogMode.value = "edit";
-
-	dialogVisible.value = true;
-	editMode.value = "single";
-};
-
-// 保存单行编辑
-const saveSingleRow = () => {
-	if (currentEditId.value === null) return;
-
-	const updatedRow = { ...currentEditRow.value };
-	emit("save", [updatedRow]);
-	dialogVisible.value = false;
-	currentEditId.value = null;
-};
-
-// 多行特定字段编辑
-const handleMultiRowEdit = () => {
-	if (selectedRows.value.length === 0) {
-		ElMessage.warning("请选择要编辑的行");
-		return;
-	}
-
-	editMode.value = "multi";
-	selectedRows.value.forEach((row) => {
-		editingRows.value.add(row.id);
-		editedData.value.set(row.id, { ...row });
-	});
-
-	emit(
-		"edit",
-		selectedRows.value.map((row) => row.id),
-	);
-};
-
-// 保存多行编辑
-const handleSave = () => {
-	if (editMode.value === "multi") {
-		const updatedRows = Array.from(editingRows.value).map((id) => editedData.value.get(id));
-		emit("save", updatedRows);
-		editingRows.value.clear();
-		editedData.value.clear();
-	}
-};
-
-// 取消修改
-const handleCancel = () => {
-	editingRows.value.clear();
-	editedData.value.clear();
-	editMode.value = "multi";
-	tableRef.value?.clearSelection();
-	emit("cancel");
-};
-
-// 导出
-const handleExport = () => {
-	emit("export");
-};
-
-// 查看详情
-const handleView = () => {
-	if (selectedRows.value.length !== 1) {
-		ElMessage.warning("请选择一条记录查看");
-		return;
-	}
-	// emit("view", selectedRows.value[0].id);
-	const row = selectedRows.value[0];
-	currentEditId.value = row.id;
-	currentEditRow.value = { ...row };
-	dialogTitle.value = `查看详情 - ${row.id}`;
-	dialogMode.value = "view";
-	dialogVisible.value = true;
-};
-
-// 处理单元格值变化
-const handleCellChange = (row: TableData, field: string, value: any) => {
-	const editedRow = editedData.value.get(row.id);
-	if (editedRow) {
-		editedRow[field] = value;
-	}
-};
-</script>
-
 <style scoped lang="scss">
 .detail-dialog :deep(.el-dialog__header) {
-	border-bottom: 1px solid #ebeef5;
-	padding: 15px 20px;
-	background-color: #f5f7fa;
+  border-bottom: 1px solid #ebeef5;
+  padding: 15px 20px;
+  background-color: #f5f7fa;
 }
 .detail-dialog :deep(.el-dialog__body) {
-	padding: 20px 30px;
-	max-height: 60vh;
-	overflow-y: auto;
+  padding: 20px 30px;
+  max-height: 60vh;
+  overflow-y: auto;
 }
 .detail-dialog :deep(.el-dialog__footer) {
-	border-top: 1px solid #ebeef5;
-	padding: 15px 20px;
+  border-top: 1px solid #ebeef5;
+  padding: 15px 20px;
 }
 .detail-form .el-form-item {
-	margin-bottom: 18px;
+  margin-bottom: 18px;
 }
 .full-width {
-	width: 100%;
+  width: 100%;
 }
 .detail-form :deep(.is-disabled) {
-	background-color: #f5f7fa;
-	border-color: #e4e7ed;
-	color: #606266;
-	cursor: not-allowed;
+  background-color: #f5f7fa;
+  border-color: #e4e7ed;
+  color: #606266;
+  cursor: not-allowed;
 }
 .detail-form .el-row {
-	margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .detail-form .el-col {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 .editable-data-grid {
-	.toolbar {
-		margin-bottom: 16px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		.leftb {
-			display: flex;
-			align-items: center;
-		}
-		.rightb {
-			display: flex;
-			align-items: center;
-		}
-		::deep(.el-button) {
-			margin: 0;
-			.el-icon {
-				margin-right: 4px;
-			}
-		}
-		// ::deep(.el-button-group) {
-		// 	.el-button:not(:last-child) {
-		// 		margin-right: -1px;
-		// 	}
-		// }
-	}
+  .toolbar {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .leftb {
+      display: flex;
+      align-items: center;
+    }
+    .rightb {
+      display: flex;
+      align-items: center;
+    }
+    ::deep(.el-button) {
+      margin: 0;
+      .el-icon {
+        margin-right: 4px;
+      }
+    }
+    // ::deep(.el-button-group) {
+    // 	.el-button:not(:last-child) {
+    // 		margin-right: -1px;
+    // 	}
+    // }
+  }
 }
 
 .dialog-footer {
-	display: flex;
-	justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 
-	.el-button {
-		margin-left: 8px;
-	}
+  .el-button {
+    margin-left: 8px;
+  }
 }
 </style>

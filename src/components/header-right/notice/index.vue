@@ -1,8 +1,8 @@
 <!-- 用户的消息待办组件 -->
 <script lang="ts" setup>
-import { ref, computed, watch } from "vue";
-
 import { Bell, WarnTriangleFilled } from "@element-plus/icons-vue";
+
+import { ref } from "vue";
 
 /** 未读公告数量 */
 const unreadNoticeCount = ref(0);
@@ -11,7 +11,7 @@ const unreadNoticeCount = ref(0);
 const unreadNoticeList = ref([]);
 
 /** 获取未读公告标题列表 */
-const getUnreadNoticeList = async () => {
+async function getUnreadNoticeList() {
 	const res = await getUnreadNoticeListAPI();
 	console.log(res);
 	if (res.code === 10000) {
@@ -27,7 +27,7 @@ const getUnreadNoticeList = async () => {
 	} else {
 		ElMessage.error(res.message);
 	}
-};
+}
 
 // 传递的标题
 const dialogTitle = ref("");
@@ -37,7 +37,7 @@ const noticeId = ref();
 const showDetail = ref(false);
 
 // TODO 去往公告详情页
-const goNoticeDetail = async (type: string, id: string) => {
+async function goNoticeDetail(type: string, id: string) {
 	// 修改成已读
 	console.log(id, typeof id);
 	await updateNoticeStatusAPI({
@@ -49,7 +49,7 @@ const goNoticeDetail = async (type: string, id: string) => {
 	noticeId.value = id;
 	dialogTitle.value = type === "1" ? "通知公告详情" : "系统消息详情";
 	showDetail.value = true;
-};
+}
 
 /**
  * 处理弹框逻辑
@@ -146,117 +146,117 @@ onMounted(() => {
 
 // TODO: 冗余的样式 需要想办法复用
 .icon-container {
-	position: relative;
-	display: inline-block;
-	.el-icon {
-		width: 30px;
-		height: 30px;
-		color: white;
-	}
-	.move {
-		cursor: pointer;
-	}
-	.badge {
-		position: absolute;
-		top: 0px;
-		right: 0px;
-		background-color: red;
-		color: white;
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		font-size: 12px;
-	}
+  position: relative;
+  display: inline-block;
+  .el-icon {
+    width: 30px;
+    height: 30px;
+    color: white;
+  }
+  .move {
+    cursor: pointer;
+  }
+  .badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background-color: red;
+    color: white;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+  }
 }
 
 // TODO: 冗余的样式 需要想办法复用
 /* 右上角下拉菜单样式 */
 .notice {
-	width: 240px;
-	display: flex;
-	flex-wrap: wrap;
+  width: 240px;
+  display: flex;
+  flex-wrap: wrap;
 
-	.header {
-		padding: 0px 0px;
-		background-color: #f4deea;
-		border-bottom: 1px solid #d3d0d0;
-		width: 100%;
-		height: 35px;
-		line-height: 35px;
-		display: flex;
-		align-items: center;
+  .header {
+    padding: 0px 0px;
+    background-color: #f4deea;
+    border-bottom: 1px solid #d3d0d0;
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    display: flex;
+    align-items: center;
 
-		span {
-			color: #c06090;
-			font-size: 16px;
-		}
-	}
+    span {
+      color: #c06090;
+      font-size: 16px;
+    }
+  }
 
-	.content {
-		border-bottom: 1px solid #efefef;
+  .content {
+    border-bottom: 1px solid #efefef;
 
-		ul {
-			list-style: none;
-			display: flex;
-			flex-wrap: wrap;
-			padding-left: 12px;
-			align-items: center;
+    ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      padding-left: 12px;
+      align-items: center;
 
-			li {
-				padding-right: 0;
-				height: 25px;
-				margin-top: 5px;
-				width: 100%;
-				display: flex;
+      li {
+        padding-right: 0;
+        height: 25px;
+        margin-top: 5px;
+        width: 100%;
+        display: flex;
 
-				svg {
-					width: 20px;
-					height: 20px;
-					color: white;
-					background-color: #428bca;
-					border: 3px solid #428bca;
-					margin-right: 5px;
-					cursor: pointer;
+        svg {
+          width: 20px;
+          height: 20px;
+          color: white;
+          background-color: #428bca;
+          border: 3px solid #428bca;
+          margin-right: 5px;
+          cursor: pointer;
 
-					&:hover {
-						border-bottom: 1px solid #428bca;
-					}
-				}
+          &:hover {
+            border-bottom: 1px solid #428bca;
+          }
+        }
 
-				span {
-					font-size: 12px;
-					line-height: 20px;
-					color: #428bca;
-					cursor: pointer;
+        span {
+          font-size: 12px;
+          line-height: 20px;
+          color: #428bca;
+          cursor: pointer;
 
-					&:hover {
-						border-bottom: 1px solid #428bca;
-					}
-				}
-			}
-		}
-	}
+          &:hover {
+            border-bottom: 1px solid #428bca;
+          }
+        }
+      }
+    }
+  }
 
-	.footer {
-		padding: 0;
-		cursor: pointer;
-		width: 100%;
-		text-align: center;
-		height: 40px;
-		color: #4f99c6;
-		line-height: 40px;
+  .footer {
+    padding: 0;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    height: 40px;
+    color: #4f99c6;
+    line-height: 40px;
 
-		span:hover {
-			border-bottom: 0.5px solid #4f99c6;
-		}
+    span:hover {
+      border-bottom: 0.5px solid #4f99c6;
+    }
 
-		&:hover {
-			background-color: #f4deea;
-			width: 100%;
-		}
-	}
+    &:hover {
+      background-color: #f4deea;
+      width: 100%;
+    }
+  }
 }
 </style>

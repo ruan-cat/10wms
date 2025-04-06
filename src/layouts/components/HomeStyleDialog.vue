@@ -1,27 +1,6 @@
-<template>
-	<el-dialog :model-value="visible" title="首页风格" width="400px" draggable @update:model-value="updateVisible">
-		<!-- 风格选项 -->
-		<div class="style-options">
-			<el-radio-group v-model="selectedStyle">
-				<el-radio v-for="style in styles" :key="style.value" :label="style.value">
-					{{ style.label }}
-				</el-radio>
-			</el-radio-group>
-		</div>
-
-		<!-- 底部按钮 -->
-		<template #footer>
-			<div class="dialog-footer">
-				<el-button @click="handleConfirm">确定</el-button>
-				<el-button @click="handleCancel">关闭</el-button>
-			</div>
-		</template>
-	</el-dialog>
-</template>
-
 <script setup lang="ts">
-import { ref, defineProps, defineEmits } from "vue";
 import { ElMessage } from "element-plus"; // 引入 ElMessage
+import { defineEmits, defineProps, ref } from "vue";
 
 // 定义 Props
 defineProps<{
@@ -43,7 +22,7 @@ const styles = ref([
 const selectedStyle = ref("");
 
 // 确定按钮
-const handleConfirm = () => {
+function handleConfirm() {
 	emit("confirm", selectedStyle.value);
 	emit("update:visible", false);
 
@@ -54,27 +33,48 @@ const handleConfirm = () => {
 	setTimeout(() => {
 		window.location.reload();
 	}, 1500); // 1.5秒后刷新页面
-};
+}
 
 // 关闭按钮
-const handleCancel = () => {
+function handleCancel() {
 	emit("update:visible", false);
-};
+}
 
 // 更新 visible 状态
-const updateVisible = (value: boolean) => {
+function updateVisible(value: boolean) {
 	emit("update:visible", value);
-};
+}
 </script>
+
+<template>
+	<el-dialog :model-value="visible" title="首页风格" width="400px" draggable @update:model-value="updateVisible">
+		<!-- 风格选项 -->
+		<div class="style-options">
+			<el-radio-group v-model="selectedStyle">
+				<el-radio v-for="style in styles" :key="style.value" :label="style.value">
+					{{ style.label }}
+				</el-radio>
+			</el-radio-group>
+		</div>
+
+		<!-- 底部按钮 -->
+		<template #footer>
+			<div class="dialog-footer">
+				<el-button @click="handleConfirm">确定</el-button>
+				<el-button @click="handleCancel">关闭</el-button>
+			</div>
+		</template>
+	</el-dialog>
+</template>
 
 <style lang="scss" scoped>
 .style-options {
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .dialog-footer {
-	text-align: right;
+  text-align: right;
 }
 </style>

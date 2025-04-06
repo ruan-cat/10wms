@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { Plus, Edit, Delete, View, Upload, Download, Search } from "@element-plus/icons-vue";
-import { ref, computed, watch, onMounted } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 import type { FormInstance, UploadFile } from "element-plus";
+import { Edit, Plus } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { computed, onMounted, ref, watch } from "vue";
 import TableTitle from "./TableTitle.vue";
+
 interface Props {
 	// 表格标题
 	title: string;
@@ -40,8 +41,6 @@ interface Props {
 	};
 	immediate?: boolean;
 }
-const searchField = ref("");
-const searchKeyword = ref("");
 // 定义默认值
 const props = withDefaults(defineProps<Props>(), {
 	title: "基础配置",
@@ -58,7 +57,8 @@ const emit = defineEmits([
 	"export-success",
 	"row-click",
 ]);
-
+const searchField = ref("");
+const searchKeyword = ref("");
 // 表格数据
 const loading = ref(false);
 const tableData = ref<any[]>([]);
@@ -134,14 +134,15 @@ onMounted(() => {
 });
 
 // 加载表格数据
-const fetchData = async () => {
+async function fetchData() {
 	loading.value = true;
 	try {
 		// 如果直接传入了tableData，则使用传入的数据
 		if (props.tableData && props.tableData.length > 0) {
 			// 根据搜索字段和关键字过滤数据
 			const filteredData = props.tableData.filter((item) => {
-				if (!searchKeyword.value) return true;
+				if (!searchKeyword.value) 
+return true;
 
 				// 如果选择了特定字段，只在该字段中搜索
 				if (searchField.value) {
@@ -191,22 +192,22 @@ const fetchData = async () => {
 	} finally {
 		loading.value = false;
 	}
-};
+}
 
 // 表格选择事件
-const handleSelectionChange = (selection: any[]) => {
+function handleSelectionChange(selection: any[]) {
 	selectedRows.value = selection;
-};
+}
 
 // 新增事件
-const handleAdd = () => {
+function handleAdd() {
 	dialogType.value = "add";
 	dialogVisible.value = true;
 	formData.value = {};
-};
+}
 
 // 编辑事件
-const handleEdit = () => {
+function handleEdit() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行编辑");
 		return;
@@ -216,10 +217,10 @@ const handleEdit = () => {
 	currentId.value = selectedRows.value[0].id;
 	formData.value = { ...selectedRows.value[0] };
 	dialogVisible.value = true;
-};
+}
 
 // 查看事件
-const handleView = () => {
+function handleView() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行查看");
 		return;
@@ -228,25 +229,26 @@ const handleView = () => {
 	dialogType.value = "view";
 	formData.value = { ...selectedRows.value[0] };
 	dialogVisible.value = true;
-};
+}
 
 // 行编辑事件
-const handleRowEdit = (row: any) => {
+function handleRowEdit(row: any) {
 	dialogType.value = "edit";
 	currentId.value = row.id;
 	formData.value = { ...row };
 	dialogVisible.value = true;
-};
+}
 
 // 行删除事件
-const handleRowDelete = (row: any) => {
+function handleRowDelete(row: any) {
 	ElMessageBox.confirm("确定要删除此条记录吗？", "提示", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
 		type: "warning",
 	})
 		.then(async () => {
-			if (!props.api?.delete) return;
+			if (!props.api?.delete) 
+return;
 
 			try {
 				const res = await props.api.delete(row.id);
@@ -265,10 +267,10 @@ const handleRowDelete = (row: any) => {
 		.catch(() => {
 			// 取消删除
 		});
-};
+}
 
 // 批量删除事件
-const handleBatchDelete = () => {
+function handleBatchDelete() {
 	if (selectedRows.value.length === 0) {
 		ElMessage.warning("请至少选择一条记录进行删除");
 		return;
@@ -280,7 +282,8 @@ const handleBatchDelete = () => {
 		type: "warning",
 	})
 		.then(async () => {
-			if (!props.api?.batchDelete) return;
+			if (!props.api?.batchDelete) 
+return;
 
 			const ids = selectedRows.value.map((row) => row.id);
 			try {
@@ -300,10 +303,10 @@ const handleBatchDelete = () => {
 		.catch(() => {
 			// 取消删除
 		});
-};
+}
 
 // 导出事件
-const handleExport = async () => {
+async function handleExport() {
 	if (!props.api?.export) {
 		ElMessage.warning("导出功能未配置");
 		return;
@@ -330,21 +333,21 @@ const handleExport = async () => {
 		console.error("导出失败", error);
 		ElMessage.error("导出失败");
 	}
-};
+}
 
 // 导入事件
-const handleImport = () => {
+function handleImport() {
 	importDialogVisible.value = true;
 	fileList.value = [];
-};
+}
 
 // 文件变更事件
-const handleFileChange = (file: UploadFile) => {
+function handleFileChange(file: UploadFile) {
 	fileList.value = [file];
-};
+}
 
 // 上传Excel
-const uploadExcel = async () => {
+async function uploadExcel() {
 	if (fileList.value.length === 0) {
 		ElMessage.warning("请选择文件");
 		return;
@@ -356,7 +359,8 @@ const uploadExcel = async () => {
 	}
 
 	const file = fileList.value[0].raw;
-	if (!file) return;
+	if (!file) 
+return;
 
 	try {
 		const res = await props.api.import(file);
@@ -372,17 +376,20 @@ const uploadExcel = async () => {
 		console.error("导入失败", error);
 		ElMessage.error("导入失败");
 	}
-};
+}
 
 // 提交表单
-const submitForm = async () => {
-	if (!formRef.value) return;
+async function submitForm() {
+	if (!formRef.value) 
+return;
 
 	await formRef.value.validate(async (valid) => {
-		if (!valid) return;
+		if (!valid) 
+return;
 
 		if (dialogType.value === "add") {
-			if (!props.api?.add) return;
+			if (!props.api?.add) 
+return;
 
 			try {
 				const res = await props.api.add(formData.value);
@@ -399,7 +406,8 @@ const submitForm = async () => {
 				ElMessage.error("添加失败");
 			}
 		} else if (dialogType.value === "edit") {
-			if (!props.api?.update) return;
+			if (!props.api?.update) 
+return;
 
 			try {
 				const res = await props.api.update({ ...formData.value, id: currentId.value });
@@ -417,20 +425,20 @@ const submitForm = async () => {
 			}
 		}
 	});
-};
+}
 
 // 重置表单
-const resetForm = () => {
+function resetForm() {
 	if (formRef.value) {
 		formRef.value.resetFields();
 	}
 	formData.value = {};
 	currentId.value = "";
-};
-const handleSearch = () => {
+}
+function handleSearch() {
 	currentPage.value = 1;
 	fetchData();
-};
+}
 
 watch(
 	() => props.tableData,

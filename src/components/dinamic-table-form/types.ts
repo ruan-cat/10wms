@@ -1,5 +1,5 @@
-import type { CommonTableColumn, SimpleDataTableColumn } from "components/table/types";
 import type { SimpleDataTableProps } from "components/table/index.vue";
+import type { CommonTableColumn, SimpleDataTableColumn } from "components/table/types";
 
 /**
  * 可编辑表格列的配置
@@ -36,16 +36,16 @@ export type EditableTableColumn<T> = CommonTableColumn<T> & {
  * 简单表格移除掉特定的配置
  * @description
  * 移除掉特定的字段 便于重设新的字段
- * @private 本类型事实上是私有的 仅供给给特定类型使用
+ * @private
  */
 export type _OmitSimpleDataTableProps<
-	T extends Object,
+	T extends object,
 	//
 	Column extends SimpleDataTableColumn<T>,
 > = Omit<SimpleDataTableProps<T, Column>, "columns">;
 
 /** 动态表格样式表单 事件 */
-export interface DinamicTableFormEmit<T extends Object> {
+export interface DinamicTableFormEmit<T extends object> {
 	/** 数据表更事件 时刻地将更改的数据返回给父级组件 */
 	(e: "change-data", rows: T[]): void;
 }

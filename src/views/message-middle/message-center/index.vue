@@ -1,70 +1,9 @@
-<template>
-	<!-- <div>消息发送列表</div> -->
-	<p>消息发送列表</p>
-	<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
-	<ComponentsTable v-bind="tableProps" @selection-change="multipleSelectRows = $event"> </ComponentsTable>
-	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
-	<!-- 单行编辑弹窗 -->
-	<el-dialog
-		v-model="dialogVisible"
-		:title="dialogTitle"
-		width="40%"
-		:close-on-click-modal="false"
-		:close-on-press-escape="false"
-		draggable
-		:destroy-on-close="true"
-		class="detail-dialog"
-	>
-		<el-form
-			:label-position="left"
-			label-width="auto"
-			:model="formLabelAlign"
-			style="max-width: 600px"
-			:disabled="dialogTitle === '查看'"
-		>
-			<el-form-item label="消息标题" style="width: 300px">
-				<el-input v-model="multipleSelectRows[0].esTitle" />
-			</el-form-item>
-
-			<el-form-item label="消息类型" style="width: 300px">
-				<el-select placeholder="--请选择--" v-model="multipleSelectRows[0].esType">
-					<el-option label="--请选择--" value="" />
-					<el-option label="短信提醒" value="短信提醒" />
-					<el-option label="邮件提醒" value="邮件提醒" />
-					<el-option label="系统提醒" value="系统提醒" />
-				</el-select>
-			</el-form-item>
-
-			<el-form-item label="接收人" style="width: 300px">
-				<el-input v-model="multipleSelectRows[0].esReceiver" />
-			</el-form-item>
-
-			<el-form-item label="内容">
-				<el-input type="textarea" v-model="multipleSelectRows[0].esContent" />
-			</el-form-item>
-
-			<el-form-item label="发送状态" style="width: 300px">
-				<el-select placeholder="--请选择--" v-model="multipleSelectRows[0].esStatus">
-					<el-option label="--请选择--" value="" />
-					<el-option label="发送成功" value="发送成功" />
-					<el-option label="发送失败" value="发送失败" />
-				</el-select>
-			</el-form-item>
-		</el-form>
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button type="primary" @click="btnConfirm">确定</el-button>
-				<el-button @click="dialogVisible = false">关闭</el-button>
-			</span>
-		</template>
-	</el-dialog>
-</template>
-
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { getMessageCenterAPI } from "@/apis/message-middle";
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "@/components/table/index.vue";
-import { getMessageCenterAPI } from "@/apis/message-middle";
+import { onMounted, ref } from "vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -91,20 +30,20 @@ const total = ref(0);
 // 分页配置
 const paginationProps = ref<PaginationProps>({
 	asyncFunc: getMessageCenterAPI,
-	total: total,
+	total,
 });
 
 // 改变页面大小
-const handlePageSize = (val) => {
+function handlePageSize(val) {
 	console.log(val);
 	pageSize.value = val;
-};
+}
 
 // 改变页码
-const handlePageIndex = (val) => {
+function handlePageIndex(val) {
 	console.log(val);
 	pageIndex.value = val;
-};
+}
 
 // 发送到子组件的数据
 const titleData = ref({
@@ -174,11 +113,11 @@ const data = ref([
 	},
 ]);
 
-//表格配置
+// 表格配置
 const tableProps = ref({
 	isIndex: true,
 	isMultipleSelect: true,
-	data: data,
+	data,
 	columns: [
 		{ prop: "esType", label: "消息类型", width: "90px" },
 		{ prop: "esTitle", label: "消息标题", width: "100px" },
@@ -196,7 +135,7 @@ onMounted(() => {
 	getMessageList();
 });
 
-const getMessageList = async () => {
+async function getMessageList() {
 	// TODO 获取消息列表
 	const res = await getMessageCenterAPI({
 		pageIndex: pageIndex.value,
@@ -204,10 +143,10 @@ const getMessageList = async () => {
 	});
 	console.log(res);
 	messageList.value = data;
-};
+}
 
 // 处理子组件按钮事件
-const userChildClick = (icon) => {
+function userChildClick(icon) {
 	if (icon.name === "消息修正") {
 		handleSingleRowEdit(multipleSelectRows);
 	}
@@ -218,10 +157,10 @@ const userChildClick = (icon) => {
 	if (icon.name === "右侧重置") {
 		handleReset();
 	}
-};
+}
 
 // 消息修正
-const handleSingleRowEdit = (multipleSelectRows) => {
+function handleSingleRowEdit(multipleSelectRows) {
 	if (multipleSelectRows.value.length < 1) {
 		ElMessage.warning("请选择编辑项目");
 		return;
@@ -233,39 +172,101 @@ const handleSingleRowEdit = (multipleSelectRows) => {
 
 	dialogVisible.value = true;
 	dialogTitle.value = "编辑";
-};
+}
 
 // 确定
-const btnConfirm = () => {
+function btnConfirm() {
 	// 保存请求
 
 	// TODO 修改消息
 	dialogVisible.value = false;
-};
+}
 
 // 右侧查询
-const handleSearch = () => {
+function handleSearch() {
 	// const templateName = titleData.value.contentList[0].content;
 	// const type = titleData.value.contentList[1].content;
 	// TODO 获取消息列表
-};
+}
 // 右侧重置
-const handleReset = () => {
+function handleReset() {
 	titleData.value.contentList[0].content = ["", ""];
 	titleData.value.contentList[1].content = ["", ""];
 	titleData.value.contentList[2].content = ["", ""];
-};
+}
 </script>
+
+<template>
+	<!-- <div>消息发送列表</div> -->
+	<p>消息发送列表</p>
+	<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
+	<ComponentsTable v-bind="tableProps" @selection-change="multipleSelectRows = $event"> </ComponentsTable>
+	<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
+	<!-- 单行编辑弹窗 -->
+	<el-dialog
+		v-model="dialogVisible"
+		:title="dialogTitle"
+		width="40%"
+		:close-on-click-modal="false"
+		:close-on-press-escape="false"
+		draggable
+		:destroy-on-close="true"
+		class="detail-dialog"
+	>
+		<el-form
+			:label-position="left"
+			label-width="auto"
+			:model="formLabelAlign"
+			style="max-width: 600px"
+			:disabled="dialogTitle === '查看'"
+		>
+			<el-form-item label="消息标题" style="width: 300px">
+				<el-input v-model="multipleSelectRows[0].esTitle" />
+			</el-form-item>
+
+			<el-form-item label="消息类型" style="width: 300px">
+				<el-select placeholder="--请选择--" v-model="multipleSelectRows[0].esType">
+					<el-option label="--请选择--" value="" />
+					<el-option label="短信提醒" value="短信提醒" />
+					<el-option label="邮件提醒" value="邮件提醒" />
+					<el-option label="系统提醒" value="系统提醒" />
+				</el-select>
+			</el-form-item>
+
+			<el-form-item label="接收人" style="width: 300px">
+				<el-input v-model="multipleSelectRows[0].esReceiver" />
+			</el-form-item>
+
+			<el-form-item label="内容">
+				<el-input type="textarea" v-model="multipleSelectRows[0].esContent" />
+			</el-form-item>
+
+			<el-form-item label="发送状态" style="width: 300px">
+				<el-select placeholder="--请选择--" v-model="multipleSelectRows[0].esStatus">
+					<el-option label="--请选择--" value="" />
+					<el-option label="发送成功" value="发送成功" />
+					<el-option label="发送失败" value="发送失败" />
+				</el-select>
+			</el-form-item>
+		</el-form>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button type="primary" @click="btnConfirm">确定</el-button>
+				<el-button @click="dialogVisible = false">关闭</el-button>
+			</span>
+		</template>
+	</el-dialog>
+</template>
 
 <style lang="scss" scoped>
 p {
-	width: 100%;
-	border-bottom: 1px solid #efefef;
+  width: 100%;
+  border-bottom: 1px solid #efefef;
 }
 
 .title {
-	width: 100%;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #efefef;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #efefef;
 }
 </style>

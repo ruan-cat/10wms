@@ -1,4 +1,9 @@
 <script lang="ts" setup>
+import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
+import { ElMessage } from "element-plus";
+import { onBeforeUnmount, onMounted, ref, shallowRef } from "vue";
+import "@wangeditor/editor/dist/css/style.css"; // 引入 css
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -7,11 +12,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import "@wangeditor/editor/dist/css/style.css"; // 引入 css
-import { onBeforeUnmount, ref, shallowRef, onMounted } from "vue";
-import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
-import { ElMessage } from "element-plus";
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef();
 const mode = "default"; // 或 'simple'
@@ -26,7 +26,8 @@ onMounted(() => {
 // 组件销毁时，也及时销毁编辑器
 onBeforeUnmount(() => {
 	const editor = editorRef.value;
-	if (editor == null) return;
+	if (editor == null) 
+return;
 	editor.destroy();
 });
 // 组件相关配置
@@ -51,21 +52,22 @@ const editorConfig = {
 			// 自定义插入图片
 			customInsert(res, insertFn) {
 				// 服务端的返回结果
-				if (res.code === 10000) insertFn(res.data.url, res.data.alt, res.data.href);
+				if (res.code === 10000) 
+insertFn(res.data.url, res.data.alt, res.data.href);
 				else ElMessage.error("图片上传失败");
 			},
 		},
 	},
 };
 // 编辑器创建回调
-const handleCreated = (editor) => {
+function handleCreated(editor) {
 	editorRef.value = editor; // 记录 editor 实例，重要！
-};
+}
 // 编辑器内容发生变化
-const handleChange = (editor) => {
+function handleChange(editor) {
 	console.log(editor.getHtml());
 	console.log(editor.getText());
-};
+}
 </script>
 
 <template>

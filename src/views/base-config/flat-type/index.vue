@@ -1,4 +1,23 @@
 <script lang="ts" setup>
+import ComponentsTable from "components/table/index.vue";
+import { ElButton, ElMessage, ElMessageBox } from "element-plus";
+
+import { onMounted, ref, useTemplateRef } from "vue";
+import { cloneDeep, isEqual, isNil } from "lodash-es";
+import ComponentsDialogPromise from "components/dialog-promise/index.vue";
+import type { DialogPromiseProps } from "components/dialog-promise/types";
+// 导入API
+import {
+	addFlatType,
+	deleteFlatType,
+	exportFlatType,
+	listFlatType,
+	updateFlatType,
+} from "@/apis/flat-type-gaogao/index";
+import Pagination from "@/components/Pagination/index.vue";
+import Delete from "@/components/table-title/table-icon/Delete.vue";
+import Edit from "@/components/table-title/table-icon/Edit.vue";
+import { Download, Plus, Upload, View } from "@element-plus/icons-vue";
 definePage({
 	meta: {
 		menuType: "page",
@@ -6,30 +25,11 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-import ComponentsTable from "components/table/index.vue";
-import { ElButton, ElMessage, ElMessageBox } from "element-plus";
 
-import { ref, useTemplateRef, onMounted } from "vue";
-import { isEqual, isNil, cloneDeep } from "lodash-es";
-import ComponentsDialogPromise from "components/dialog-promise/index.vue";
-import { type DialogPromiseProps } from "components/dialog-promise/types";
-import Pagination from "@/components/Pagination/index.vue";
+import { utils, writeFileXLSX } from "xlsx";
+
 // 确保Element Plus的样式被导入
 import "element-plus/dist/index.css";
-import { Download, Plus, Upload, View } from "@element-plus/icons-vue";
-import Edit from "@/components/table-title/table-icon/Edit.vue";
-import Delete from "@/components/table-title/table-icon/Delete.vue";
-
-import { read, utils, writeFileXLSX } from "xlsx";
-
-// 导入API
-import {
-	listFlatType,
-	addFlatType,
-	updateFlatType,
-	deleteFlatType,
-	exportFlatType,
-} from "@/apis/flat-type-gaogao/index";
 
 // =============================表格部分=============================
 interface TableData {
@@ -102,7 +102,7 @@ const emptyForm = {
 	unitTypeName: "",
 };
 
-/** 弹窗类型 0 新增 1 编辑  2 删除 3 导出*/
+/** 弹窗类型 0 新增 1 编辑  2 删除 3 导出 */
 const dialogType = ref<number>(0);
 
 /** 表单对象 */
@@ -120,7 +120,7 @@ function hasChange() {
 		unitTypeName: "",
 	});
 }
-const isViewMode = ref(false); //默认不是查看模式
+const isViewMode = ref(false); // 默认不是查看模式
 const dialogPromiseProps = ref<DialogPromiseProps<TableData>>({
 	dialogProps: {
 		// title: "单位类型录入",
@@ -174,7 +174,7 @@ const onConfirm: OnConfirmFunction<any> = async ({ resolve, reject }) => {
 		resolve(form.value);
 		console.log("ok form", form.value);
 
-		//根据窗口类型进行不同的操作
+		// 根据窗口类型进行不同的操作
 		if (dialogType.value === 0) {
 			addFlatType(
 				form.value,
@@ -201,7 +201,8 @@ const onConfirm: OnConfirmFunction<any> = async ({ resolve, reject }) => {
 					ElMessage.error("编辑失败");
 				},
 			);
-			/**	}  else if (dialogType.value === 2) {
+			/**
+				}  else if (dialogType.value === 2) {
 			deleteFlatType(
 				[form.value.id],
 				() => {
@@ -213,7 +214,8 @@ const onConfirm: OnConfirmFunction<any> = async ({ resolve, reject }) => {
 					// 失败逻辑
 					ElMessage.error("删除失败");
 				},
-			);*/
+			);
+			 */
 		} else if (dialogType.value === 3) {
 			exportFlatType(
 				() => {
@@ -249,15 +251,15 @@ function openDialog() {
 const selectedRows: Ref<TableData[]> = ref([]);
 
 // 录入逻辑
-const handleAdd = () => {
+function handleAdd() {
 	resetForm();
 	isViewMode.value = false; // 编辑模式
 	dialogType.value = 0;
 	openDialog();
-};
+}
 
 // 编辑
-const handleEdit = () => {
+function handleEdit() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行编辑");
 		return;
@@ -270,10 +272,10 @@ const handleEdit = () => {
 	isViewMode.value = false; // 编辑模式
 	dialogType.value = 1;
 	openDialog(); // 打开弹窗
-};
+}
 
 // 查看
-const handleView = () => {
+function handleView() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行查看");
 		return;
@@ -287,10 +289,10 @@ const handleView = () => {
 	isViewMode.value = true; // 查看模式
 	dialogType.value = 2;
 	openDialog(); // 打开弹窗
-};
+}
 
 // 批量删除
-const handleBatchDelete = () => {
+function handleBatchDelete() {
 	if (selectedRows.value.length === 0) {
 		ElMessage.warning("请至少选择一条记录进行删除");
 		return;
@@ -322,10 +324,10 @@ const handleBatchDelete = () => {
 		.catch(() => {
 			// 取消删除
 		});
-};
+}
 
 // 单行删除
-const handleDelete = (row: TableData) => {
+function handleDelete(row: TableData) {
 	ElMessageBox.confirm("确定要删除这条记录吗？", "提示", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -347,7 +349,7 @@ const handleDelete = (row: TableData) => {
 		.catch(() => {
 			// 取消删除
 		});
-};
+}
 // 导出
 const rows = ref([]);
 // onMounted(async () => {
@@ -370,12 +372,12 @@ function exportFile() {
 
 // ===========================分页组件部分=============================
 
-const handlePageChange = (data: any) => {
+function handlePageChange(data: any) {
 	currentPageData.value.pageIndex = data.pageNum;
 	currentPageData.value.pageSize = data.pageSize;
 	loadData();
 	console.log("页码变化：", data);
-};
+}
 </script>
 
 <template>

@@ -1,3 +1,39 @@
+<script lang="ts" setup>
+import { ref } from "vue";
+
+const { modelValue } = defineProps({
+	modelValue: {
+		type: Boolean,
+		required: true,
+	},
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+const form = ref({
+	oldPassword: "",
+	newPassword: "",
+	repeatPassword: "",
+});
+
+function handleClose() {
+	emit("update:modelValue", false);
+}
+
+function handleSubmit() {
+	if (form.value.newPassword !== form.value.repeatPassword) {
+		alert("新密码和重复密码不一致！");
+		return;
+	}
+	alert("密码修改成功！");
+	handleClose();
+}
+
+function handleUpdateVisible(value: boolean) {
+	emit("update:modelValue", value);
+}
+</script>
+
 <template>
 	<el-dialog
 		:model-value="modelValue"
@@ -23,39 +59,3 @@
 		</template>
 	</el-dialog>
 </template>
-
-<script lang="ts" setup>
-import { ref } from "vue";
-
-const { modelValue } = defineProps({
-	modelValue: {
-		type: Boolean,
-		required: true,
-	},
-});
-
-const emit = defineEmits(["update:modelValue"]);
-
-const form = ref({
-	oldPassword: "",
-	newPassword: "",
-	repeatPassword: "",
-});
-
-const handleClose = () => {
-	emit("update:modelValue", false);
-};
-
-const handleSubmit = () => {
-	if (form.value.newPassword !== form.value.repeatPassword) {
-		alert("新密码和重复密码不一致！");
-		return;
-	}
-	alert("密码修改成功！");
-	handleClose();
-};
-
-const handleUpdateVisible = (value: boolean) => {
-	emit("update:modelValue", value);
-};
-</script>

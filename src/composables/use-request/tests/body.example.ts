@@ -1,4 +1,4 @@
-import { type ParamsBodyKey, type UseAxiosOptionsJsonVO } from "composables/use-request";
+import type { ParamsBodyKey, UseAxiosOptionsJsonVO } from "composables/use-request";
 
 /**
  * 分类对象例子

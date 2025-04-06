@@ -2,11 +2,11 @@
 	用户组件 即顶部导航栏内最右侧的用户按钮
 -->
 <script lang="ts" setup>
-import { ref, computed, watch, useTemplateRef, nextTick } from "vue";
+import { Setting, SwitchButton, User } from "@element-plus/icons-vue";
 
-import { SwitchButton, Setting, User } from "@element-plus/icons-vue";
 import avatarImage from "assets/layoutIcon/avatar2.png";
 import guestImage from "assets/layoutIcon/游客.png";
+import { computed, nextTick, ref, useTemplateRef } from "vue";
 
 // 待优化
 // import UserInfoDialog from "./components/UserInfoDialog.vue";
@@ -30,28 +30,28 @@ const systemMessageDialogVisible = ref(false);
 // 消息数据
 const messages = ref([]);
 // 打开弹框
-const showSystemMessageDialog = () => {
+function showSystemMessageDialog() {
 	systemMessageDialogVisible.value = true;
-};
+}
 // 控制弹框显示
 const homeStyleDialogVisible = ref(false);
 
 // // 打开弹框
-const showHomeStyleDialog = () => {
+function showHomeStyleDialog() {
 	homeStyleDialogVisible.value = true;
-};
+}
 
 // 控制详情页
 const showDetail = ref(false);
 
-const handleClearCache = () => {
+function handleClearCache() {
 	// 模拟清除缓存操作
 	// clearCacheDialog.value.showDialog("浏览器缓存清除成功！");
-};
+}
 const logoutDialog = ref();
-const handleLogout = () => {
+function handleLogout() {
 	logoutDialog.value.showDialog();
-};
+}
 
 /** 用户信息弹框 组件实例 */
 const userInfoDialogRef = useTemplateRef("userInfoDialogRef");

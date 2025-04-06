@@ -1,9 +1,9 @@
 import { describe, it } from "vitest";
 import {
-	sysManagerModifyUserDetail,
-	sysManagerLockUserStatus,
 	sysManagerActiveUserStatus,
 	sysManagerCheckUsername,
+	sysManagerLockUserStatus,
+	sysManagerModifyUserDetail,
 } from "./modify";
 
 describe("用户管理接口实现", () => {

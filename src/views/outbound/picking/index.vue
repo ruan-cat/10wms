@@ -1,24 +1,9 @@
-<template>
-	<div class="picking-list">
-		<EditableDataGrid
-			title="按单拣货"
-			:columns="columns"
-			:data-source="dataSource"
-			@save="handleSave"
-			@export="handleExport"
-			@view="handleView"
-			@edit="handleEdit"
-			@cancel="handleCancel"
-		/>
-	</div>
-</template>
-
 <script setup lang="ts">
+import type { Column } from "./types/picking";
 import { Tickets } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
 import { ref } from "vue";
 import EditableDataGrid from "./components/MultiRowEditor.vue";
-import { ElMessage } from "element-plus";
-import type { Column } from "./types/picking";
 
 definePage({
 	meta: {
@@ -266,12 +251,12 @@ const dataSource = ref([
 ]);
 
 // 处理编辑开始
-const handleEdit = (rowIds: (string | number)[]) => {
+function handleEdit(rowIds: (string | number)[]) {
 	console.log("开始编辑行:", rowIds);
-};
+}
 
 // 处理保存
-const handleSave = async (updatedRows: any[]) => {
+async function handleSave(updatedRows: any[]) {
 	try {
 		// 模拟API调用
 		await new Promise((resolve) => setTimeout(resolve, 800));
@@ -288,15 +273,15 @@ const handleSave = async (updatedRows: any[]) => {
 		ElMessage.success(`成功保存了 ${updatedRows.length} 条数据`);
 	} catch (error) {
 		console.error("保存失败:", error);
-		ElMessage.error("保存失败: " + (error instanceof Error ? error.message : "未知错误"));
+		ElMessage.error(`保存失败: ${error instanceof Error ? error.message : "未知错误"}`);
 	}
-};
+}
 
 // 处理取消
-const handleCancel = () => {
+function handleCancel() {
 	console.log("取消编辑");
 	ElMessage.info("已取消编辑");
-};
+}
 
 // 处理导出
 // const handleExport = () => {
@@ -308,7 +293,7 @@ const handleCancel = () => {
 // 	}, 1500);
 // };
 // 处理导出 (不使用外部库的版本)
-const handleExport = () => {
+function handleExport() {
 	ElMessage.info("正在导出数据，请稍候...");
 
 	try {
@@ -337,10 +322,10 @@ const handleExport = () => {
 		const csvContent = `${headers}\n${rows}`;
 
 		// 创建Blob对象
-		const blob = new Blob(["\ufeff" + csvContent], { type: "text/csv;charset=utf-8;" });
+		const blob = new Blob([`\uFEFF${csvContent}`], { type: "text/csv;charset=utf-8;" });
 
 		// 获取当前页面名称作为文件名
-		const fileName = "按单拣货" + "_" + new Date().toISOString().slice(0, 10) + ".csv";
+		const fileName = `按单拣货` + `_${new Date().toISOString().slice(0, 10)}.csv`;
 
 		// 创建下载链接
 		const link = document.createElement("a");
@@ -358,12 +343,12 @@ const handleExport = () => {
 		ElMessage.success("数据已成功导出");
 	} catch (error) {
 		console.error("导出失败:", error);
-		ElMessage.error("导出失败: " + (error instanceof Error ? error.message : "未知错误"));
+		ElMessage.error(`导出失败: ${error instanceof Error ? error.message : "未知错误"}`);
 	}
-};
+}
 
 // 查看详情 - 现在接收ID而不是整行数据
-const handleView = (rowId: number | string) => {
+function handleView(rowId: number | string) {
 	const row = dataSource.value.find((item) => item.id === rowId);
 	if (row) {
 		console.log("查看详情:", row);
@@ -372,11 +357,26 @@ const handleView = (rowId: number | string) => {
 		ElMessage.info(`正在查看订单 ${row.orderId} 中的商品 ${row.goodsName}`);
 		// openDetailDialog(row);
 	}
-};
+}
 </script>
+
+<template>
+	<div class="picking-list">
+		<EditableDataGrid
+			title="按单拣货"
+			:columns="columns"
+			:data-source="dataSource"
+			@save="handleSave"
+			@export="handleExport"
+			@view="handleView"
+			@edit="handleEdit"
+			@cancel="handleCancel"
+		/>
+	</div>
+</template>
 
 <style scoped lang="scss">
 .picking-list {
-	padding: 20px;
+  padding: 20px;
 }
 </style>

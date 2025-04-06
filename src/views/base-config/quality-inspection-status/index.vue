@@ -1,9 +1,4 @@
-<template>
-	<base-config-table title="品检状态配置" :columns="columns" :form-fields="formFields" :table-data="mockData" />
-</template>
-
 <script setup lang="ts">
-import { reactive } from "vue";
 import { CircleCheck } from "@element-plus/icons-vue";
 import BaseConfigTable from "../components/BaseTable.vue";
 // import { qualityInspectionStatusApi } from "@/api/quality";
@@ -75,6 +70,11 @@ const mockData = [
 	},
 ];
 </script>
+
+<template>
+	<BaseConfigTable title="品检状态配置" :columns="columns" :form-fields="formFields" :table-data="mockData" />
+</template>
+
 <style scoped lang="scss">
 .title {
 	margin-bottom: 20px;

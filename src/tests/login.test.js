@@ -1,6 +1,6 @@
-import { expect, describe, it, beforeAll, afterAll } from "vitest";
-import { withSetup } from "./test-apis-settings";
 import { login } from "@/apis/login";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { withSetup } from "./test-apis-settings";
 
 // 测试指令 npm run test:unit login
 describe("login", () => {

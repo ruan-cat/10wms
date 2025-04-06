@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { ref } from "vue";
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "components/table/index.vue";
+import { ref } from "vue";
 
 definePage({
 	meta: {
@@ -22,7 +22,7 @@ const total = ref(0);
 // 分页配置
 const paginationProps = ref({
 	asyncFunc: () => {}, // TODO: 替换成实际的API函数
-	total: total,
+	total,
 });
 
 // 发送到子组件的数据
@@ -136,7 +136,7 @@ const data = [
 ];
 
 const tableProps = ref({
-	data: data,
+	data,
 	isIndex: true,
 	columns: [
 		{ prop: "noticeNumber", label: "通知单号", width: "90px" },

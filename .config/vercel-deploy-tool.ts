@@ -1,4 +1,4 @@
-import { type Config } from "@ruan-cat/vercel-deploy-tool/src/config.ts";
+import type { Config } from "@ruan-cat/vercel-deploy-tool/src/config.ts";
 import { domains } from "@ruan-cat/domains";
 
 // 这里使用的是阮喵喵的vercel账号

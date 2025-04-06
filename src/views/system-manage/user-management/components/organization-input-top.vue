@@ -1,27 +1,6 @@
-<template>
-	<el-dialog :model-value="dep" @update:model-value="handleDialogChange" draggable title="组织机构列表">
-		<el-tree
-			style="max-width: 600px"
-			:props="props"
-			:data="data"
-			show-checkbox
-			check-strictly
-			node-key="label"
-			@check-change="handleCheckChange"
-			@current-change="handleCurrentChange"
-		/>
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button type="primary" @click="btnInConfirm">确定</el-button>
-				<el-button @click="dep = false">关闭</el-button>
-			</span>
-		</template>
-	</el-dialog>
-</template>
-
 <script lang="ts" setup>
-import { ref, onMounted, defineModel } from "vue";
 import { getOrgNameTreeAPI } from "@/apis/sysmanager-ok/index.js";
+import { defineModel, ref } from "vue";
 
 const emit = defineEmits(["getDep"]);
 
@@ -51,29 +30,29 @@ watch(
 );
 
 // 获取组织名称树
-const getNoticeList = async () => {
+async function getNoticeList() {
 	const res = await getOrgNameTreeAPI();
 	data.value = res.data.rows;
-};
+}
 
 // 处理可见性变化
-const handleDialogChange = (value) => {
+function handleDialogChange(value) {
 	// console.log("点击关闭", value);
 	dep.value = value;
-};
+}
 
 // 最里面对话框的确定按钮
-const btnInConfirm = () => {
+function btnInConfirm() {
 	DepartmentNamesIds1.value = departmentNamesList.value.map((item) => ({
 		id: item.id,
 		departname: item.departname,
 	}));
 
 	dep.value = false;
-};
+}
 
 // 节点复选框被点击时候触发
-const handleCheckChange = (data, checked) => {
+function handleCheckChange(data, checked) {
 	if (checked) {
 		// 如果复选框被选中，添加节点数据
 		departmentNamesList.value.push(data);
@@ -82,7 +61,28 @@ const handleCheckChange = (data, checked) => {
 		departmentNamesList.value = departmentNamesList.value.filter((item) => item.id !== data.id);
 	}
 	console.log("节点触发departmentNamesList.value", departmentNamesList.value);
-};
+}
 </script>
+
+<template>
+	<el-dialog :model-value="dep" @update:model-value="handleDialogChange" draggable title="组织机构列表">
+		<el-tree
+			style="max-width: 600px"
+			:props="props"
+			:data="data"
+			show-checkbox
+			check-strictly
+			node-key="label"
+			@check-change="handleCheckChange"
+			@current-change="handleCurrentChange"
+		/>
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button type="primary" @click="btnInConfirm">确定</el-button>
+				<el-button @click="dep = false">关闭</el-button>
+			</span>
+		</template>
+	</el-dialog>
+</template>
 
 <style lang="scss" scoped></style>

@@ -1,8 +1,8 @@
+import type { TabPaneName } from "element-plus";
+import type { MenuItem } from "types/MenuItem";
+
 import { defineStore } from "pinia";
 import { ref } from "vue";
-
-import type { MenuItem } from "types/MenuItem";
-import type { TabPaneName } from "element-plus";
 
 export const useTabStore = defineStore(
 	"tab",

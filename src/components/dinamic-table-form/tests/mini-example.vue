@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import ComponentsDinamicTableForm, { type DinamicTableFormProps } from "components/dinamic-table-form/index.vue";
-import ComponentsTable, { type SimpleDataTableProps } from "components/table/index.vue";
+import type { DinamicTableFormProps } from "components/dinamic-table-form/index.vue";
+import type { SimpleDataTableProps } from "components/table/index.vue";
+import ComponentsDinamicTableForm from "components/dinamic-table-form/index.vue";
+import ComponentsTable from "components/table/index.vue";
+import { computed, ref } from "vue";
 
 interface TestBuzi {
 	name: string;

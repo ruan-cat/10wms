@@ -1,4 +1,10 @@
 <script lang="js" setup>
+import Pagination from "@/components/Pagination/index.vue";
+import TableTitle from "@/components/table-title/TableTitle.vue";
+import ComponentsTable from "@/components/table/index.vue";
+import { Delete } from "@element-plus/icons-vue";
+import { ref } from "vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -6,11 +12,7 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-import TableTitle from "@/components/table-title/TableTitle.vue";
-import ComponentsTable from "@/components/table/index.vue";
-import Pagination from "@/components/Pagination/index.vue";
-import { ref } from "vue";
-import { Delete } from "@element-plus/icons-vue";
+
 const titleData = ref({
 	unfold: true,
 	rightButton: true,

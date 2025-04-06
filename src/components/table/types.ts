@@ -1,5 +1,5 @@
-import { Omit, RequiredPick, PartialPick } from "type-plus";
-import type { TableProps, TableColumnInstance } from "element-plus";
+import type { TableColumnInstance, TableProps } from "element-plus";
+import type { Omit, PartialPick, RequiredPick } from "type-plus";
 
 /**
  * ElTableColumn 组件的 props 值

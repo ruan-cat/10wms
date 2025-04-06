@@ -1,4 +1,4 @@
-import { type ParamsQueryKey, type UseAxiosOptionsJsonVO } from "composables/use-request";
+import type { ParamsQueryKey, UseAxiosOptionsJsonVO } from "composables/use-request";
 
 interface ToDelete {
 	/** 分类的唯一编号 */

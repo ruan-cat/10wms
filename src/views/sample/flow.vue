@@ -1,26 +1,11 @@
-<template>
-	<div>
-		<div id="graph" ref="container"></div>
-		<div className="graph-io">
-			<span title="导出画图数据" @click="exportJson">
-				<img
-					src="https://cdn.jsdelivr.net/gh/Logic-Flow/static@latest/docs/examples/case/bussiness/bpmn/download.png"
-					alt="导出画图数据"
-				/>
-			</span>
-			<span id="upload-xml" title="导入画图数据">
-				<input type="file" className="upload" @change="uploadJson" />
-				<img
-					className="upload-img"
-					src="https://cdn.jsdelivr.net/gh/Logic-Flow/static@latest/docs/examples/case/bussiness/bpmn/upload.png"
-					alt="导入画图数据"
-				/>
-			</span>
-		</div>
-	</div>
-</template>
-
 <script lang="ts" setup>
+import LogicFlow from "@logicflow/core";
+import { BpmnElement, BpmnXmlAdapter, Control, DndPanel, Menu, SelectionSelect } from "@logicflow/extension";
+import { onMounted, ref } from "vue";
+// 导入LF样式表和库
+import "@logicflow/extension/lib/style/index.css";
+import "@logicflow/core/lib/style/index.css";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -29,13 +14,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import { ref, onMounted } from "vue";
-// 导入LF样式表和库
-import "@logicflow/extension/lib/style/index.css";
-import "@logicflow/core/lib/style/index.css";
-import LogicFlow from "@logicflow/core";
-import { BpmnElement, BpmnXmlAdapter, Control, Menu, SelectionSelect, DndPanel } from "@logicflow/extension";
 
 // 声明容器的对应ref对象和LF对象
 const container = ref();
@@ -108,24 +86,24 @@ onMounted(() => {
 	lf.value.render({});
 });
 
-const download = (filename, text) => {
+function download(filename, text) {
 	const element = document.createElement("a");
-	element.setAttribute("href", "data:text/plain;charset=utf-8," + encodeURIComponent(text));
+	element.setAttribute("href", `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
 	element.setAttribute("download", filename);
 	element.style.display = "none";
 	document.body.appendChild(element);
 	element.click();
 	document.body.removeChild(element);
-};
+}
 
 // 导出json数据
-const exportJson = () => {
+function exportJson() {
 	const data = JSON.stringify(lf.value.getGraphRawData());
 	download("logic-flow.json", data);
-};
+}
 
 // 导入json数据
-const uploadJson = (ev) => {
+function uploadJson(ev) {
 	const file = ev.target.files[0];
 	const reader = new FileReader();
 	reader.onload = (event) => {
@@ -135,8 +113,30 @@ const uploadJson = (ev) => {
 		}
 	};
 	reader.readAsText(file);
-};
+}
 </script>
+
+<template>
+	<div>
+		<div id="graph" ref="container"></div>
+		<div className="graph-io">
+			<span title="导出画图数据" @click="exportJson">
+				<img
+					src="https://cdn.jsdelivr.net/gh/Logic-Flow/static@latest/docs/examples/case/bussiness/bpmn/download.png"
+					alt="导出画图数据"
+				/>
+			</span>
+			<span id="upload-xml" title="导入画图数据">
+				<input type="file" className="upload" @change="uploadJson" />
+				<img
+					className="upload-img"
+					src="https://cdn.jsdelivr.net/gh/Logic-Flow/static@latest/docs/examples/case/bussiness/bpmn/upload.png"
+					alt="导入画图数据"
+				/>
+			</span>
+		</div>
+	</div>
+</template>
 
 <style>
 .explain {

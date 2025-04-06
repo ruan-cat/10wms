@@ -1,12 +1,6 @@
-<template>
-	<base-config-table title="大区信息" :columns="columns" :form-fields="formFields" :table-data="mockData" />
-</template>
-
 <script setup lang="ts">
-import { reactive } from "vue";
 import { UserFilled } from "@element-plus/icons-vue";
 import BaseConfigTable from "../../base-config/components/BaseTable.vue";
-import { id } from "element-plus/es/locale/index.mjs";
 
 definePage({
 	meta: {
@@ -42,6 +36,10 @@ const columns = [
 	{ prop: "region_name", label: "大区名称", width: "400px" },
 ];
 </script>
+
+<template>
+	<BaseConfigTable title="大区信息" :columns="columns" :form-fields="formFields" :table-data="mockData" />
+</template>
 
 <style scoped lang="scss">
 .title {

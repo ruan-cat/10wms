@@ -1,9 +1,7 @@
 <script lang="ts" setup generic="T extends Object">
-import { ref, computed, watch } from "vue";
-import { createTemplatePromise, useToggle, type TemplatePromiseProps } from "@vueuse/core";
+import type { DialogPromiseProps } from "./types";
 
-import { DialogPromiseProps } from "./types";
-import { before } from "lodash-es";
+import { createTemplatePromise, useToggle } from "@vueuse/core";
 
 const props = defineProps<DialogPromiseProps<T>>();
 

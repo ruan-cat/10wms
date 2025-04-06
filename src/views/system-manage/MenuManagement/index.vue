@@ -1,3 +1,359 @@
+<script lang="ts" setup>
+import {
+	addMenuAPI,
+	getIconListAPI,
+	getMenuListAPI,
+	getMenuNameTreeAPI,
+	getMenuTreeAPI,
+	updateMenuAPI,
+} from "@/apis/menu";
+import TableTitle from "@/components/table-title/TableTitle.vue";
+import { Delete } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
+import { onMounted, ref } from "vue";
+
+definePage({
+	meta: {
+		menuType: "page",
+		text: "菜单管理",
+		icon: "IconMenu",
+	},
+});
+// 被选中的父菜单id
+const parentFunctionId = ref("mc90ac564c9d6734014csd6f4e370100");
+// 默认父菜单名称
+const parentFunctionName = ref("基础配置");
+// 选中的表格数据s
+const multipleSelectRows = ref([]);
+// 创建一个中间变量来处理当前行的数据
+const currentRow = computed({
+	get() {
+		return multipleSelectRows.value[0] || {}; // 如果没有选中行，则返回空对象
+	},
+	set(value) {
+		if (multipleSelectRows.value.length > 0) {
+			multipleSelectRows.value[0] = value; // 更新选中行的数据
+		}
+	},
+});
+
+// 当前行
+const currentRowData = ref(null);
+// 弹窗显示
+const dialogVisible = ref(false);
+// 弹窗标题
+const dialogTitle = ref("");
+// 控制菜单录入的父菜单
+const isAdd = ref(false);
+
+// 获取form组件实例
+const form = ref();
+const parentRef = ref();
+
+// 图标
+const menuIconOptions = ref([
+	{ label: "默认", value: "默认" },
+	{ label: "小车", value: "小车" },
+	{ label: "星星", value: "星星" },
+	{ label: "小圆点", value: "小圆点" },
+]);
+const defaultProps = ref({
+	label: "menuName",
+	children: "children",
+});
+const defaultProps1 = ref({
+	label: "menuName",
+	children: "children",
+});
+
+// 菜单名称树 通过获取菜单名称树接口获得
+const dataTree = ref([]);
+
+// 发送到子组件的数据
+const titleData = ref({
+	unfold: false,
+	bottomList: [
+		{
+			name: "菜单录入",
+			iconType: "Add",
+		},
+		{
+			name: "菜单编辑",
+			iconType: "Edit",
+		},
+	],
+});
+
+// 表格内数据
+const data = ref([]);
+
+// 自定义行号
+function indexMethod(index) {
+	return index + 1;
+}
+
+// 菜单名称自定义校验 请填写2到15位任意字符！
+function validatorMenuName(rule, value, callBack) {
+	const reg = /^[a-z0-9\u4E00-\u9FA5]{2,15}$/i;
+	if (reg.test(value)) {
+		callBack();
+	} else {
+		callBack(new Error("请填写2到15位任意字符！"));
+	}
+}
+
+// 自定义菜单顺序校验 请填写1到3位数字！
+function validatorMenuSort(rule, value, callback) {
+	const reg = /^\d{1,3}$/;
+	if (reg.test(value)) {
+		callback();
+	} else {
+		callback(new Error("请填写1到3位数字！"));
+	}
+}
+
+// 表单校验的规则
+const rules = {
+	menuName: [
+		{ required: true, message: "请填写菜单名称", trigger: ["blur", "change"] },
+		{
+			trigger: "change",
+			validator: validatorMenuName,
+		},
+	],
+	menuSort: [
+		{ required: true, message: "请填写菜单排序", trigger: ["blur", "change"] },
+		{ trigger: "change", validator: validatorMenuSort },
+	],
+};
+
+// 组件加载完毕后
+onMounted(() => {
+	getMenuList();
+});
+
+// 处理子组件按钮事件
+function userChildClick(icon) {
+	if (icon.name === "菜单录入") {
+		handleAdd(multipleSelectRows);
+	}
+	if (icon.name === "菜单编辑") {
+		handleSingleRowEdit(multipleSelectRows);
+	}
+}
+
+// 菜单录入
+function handleAdd(multipleSelectRows) {
+	isAdd.value = true;
+	multipleSelectRows.value = [
+		{
+			menuIcon: "默认",
+			menuType: "菜单类型",
+			menuLevels: "一级菜单",
+			menuName: "", // 添加默认值
+			menuUrl: "",
+			menuSort: "",
+			menuIconStyle: "",
+		},
+	];
+	dialogVisible.value = true;
+	dialogTitle.value = "菜单录入";
+}
+// 菜单编辑
+function handleSingleRowEdit(multipleSelectRows) {
+	isAdd.value = false;
+	// console.log(multipleSelectRows.value.length);
+	if (!multipleSelectRows.value[0].menuName) {
+		ElMessage.warning("请选择编辑项目");
+		return;
+	}
+	if (multipleSelectRows.value.length > 1) {
+		ElMessage.warning("请选择一条记录进行编辑");
+		return;
+	}
+	dialogVisible.value = true;
+	dialogTitle.value = "菜单编辑";
+}
+
+// 确定
+function btnConfirm() {
+	form.value.validate(async (valid) => {
+		if (valid) {
+			try {
+				const res = await performAction();
+				if (res.code === 10000) {
+					dialogVisible.value = false;
+					// 刷新
+					await getMenuList();
+					ElMessage.success(dialogTitle.value === "菜单录入" ? "添加成功" : "修改成功");
+					return;
+				} else {
+					ElMessage.warning(res.message);
+				}
+			} catch (error) {
+				ElMessage.warning(error.data.message);
+			}
+			dialogVisible.value = false;
+		} else {
+			// 表单验证失败
+			ElMessage.warning("请重新填写");
+		}
+	});
+}
+
+async function performAction() {
+	if (dialogTitle.value === "菜单录入") {
+		return await addMenuAPI({
+			// TODO 还无法获取到所有图标
+			menuIcon: multipleSelectRows.value[0].menuIcon === "默认" ? "8a8ab0b246dc81120146dc8180460000" : "",
+			menuType: multipleSelectRows.value[0].menuType === "菜单类型" ? 0 : 1,
+			menuLevels: multipleSelectRows.value[0].menuLevels === "一级菜单" ? 0 : 1,
+			menuUrl: multipleSelectRows.value[0].menuUrl,
+			menuName: multipleSelectRows.value[0].menuName,
+			parentFunctionId: parentFunctionId.value,
+		});
+	} else if (dialogTitle.value === "菜单编辑") {
+		return await updateMenuAPI({
+			// menuIcon:
+			// 	multipleSelectRows.value[0].menuIcon === "默认"
+			// 		? "http://121.43.101.169:8888/group1/M00/00/01/oYYBAGfXw5uAMDmpAAA3UytLVCc281.png?token=6de7c1ff30687961b10323c73086192a&ts=1742292087"
+			// 		: "",
+			menuIcon: multipleSelectRows.value[0].menuIcon === "默认" ? "8a8ab0b246dc81120146dc8180460000" : "",
+			menuType: multipleSelectRows.value[0].menuType === "菜单类型" ? 0 : 1,
+			menuLevels: multipleSelectRows.value[0].menuLevels === "一级菜单" ? 0 : 1,
+			menuUrl: multipleSelectRows.value[0].menuUrl,
+			menuName: multipleSelectRows.value[0].menuName,
+			parentFunctionId: parentFunctionId.value,
+		});
+	}
+}
+
+// 处理确认删除事件
+async function handleConfirmDelete(row) {
+	console.log("row.menuId", row.menuId, typeof row.menuId);
+	const res = await deleteResourceAPI(row.menuId);
+	if (res.code === 10000) {
+		await getMenuList();
+		ElMessage.success("删除成功");
+	} else {
+		ElMessage.warning(res.message);
+	}
+}
+
+// 处理行点击事件
+function handleRowClick(row, column, event) {
+	console.log("点击的行数据:", row);
+	multipleSelectRows.value[0] = row;
+	currentRowData.value = row; // 更新当前行
+}
+
+// 获取菜单列表
+async function getMenuList() {
+	const res = await getMenuListAPI();
+	console.log(res);
+	if (res.code === 10000) {
+		data.value = res.data;
+		// 处理 menuType 和 menuLevels 的转换
+		transformMenuData(data.value);
+		// 获取图标 URL 并映射到 items
+		await fetchAndMapIcons(data.value);
+		// 给每个isParentNode===1的data加上children
+		// 给每个 isParentNode === 1 的 item 添加 children
+		addChildrenToParentNodes(data.value);
+		console.log("菜单列表", data.value);
+	} else {
+		ElMessage.error(res.message);
+	}
+}
+
+// 表格树形节点点击事件
+async function haneleTableNode(row) {
+	// 我点一次节点就会获取到当前节点下的数据，我会把数据存到当前节点的children里面，
+
+	console.log("当前展开row", row.menuId, row.menuLevels);
+
+	// data.value 中 当前row
+	const res = await getMenuTreeAPI(row.menuId);
+	row.children = res.data; // 要把这个数据存到对应的data的哪个位置
+	console.log("row.children", row.children);
+	// 处理 menuType 和 menuLevels 的转换
+	transformMenuData(row.children);
+	// 获取图标 URL 并映射到 items
+	await fetchAndMapIcons(row.children);
+	// 给每个 isParentNode === 1 的 item 添加 children
+	addChildrenToParentNodes(row.children);
+
+	console.log(data.value);
+}
+
+// 处理 menuType 和 menuLevels 的转换
+function transformMenuData(items) {
+	items.forEach((item) => {
+		item.menuType = item.menuType === 0 ? "菜单类型" : "权限类型";
+		item.menuLevels = item.menuLevels === 0 ? "一级菜单" : "下级菜单";
+	});
+}
+
+// 获取图标 URL 并映射到 items
+async function fetchAndMapIcons(items) {
+	const uniqueIconIds = [...new Set(items.map((item) => item.menuIcon))].filter((iconId) => iconId !== undefined);
+	const iconMap = {};
+	for (const iconId of uniqueIconIds) {
+		const iconUrl = await getIcon(iconId);
+		iconMap[iconId] = iconUrl;
+	}
+	items.forEach((item) => {
+		item.menuIcon = iconMap[item.menuIcon];
+	});
+}
+
+// 给每个 isParentNode === 1 的 item 添加 children
+function addChildrenToParentNodes(items) {
+	items.forEach((child) => {
+		if (child.isParentNode === 1) {
+			child.children = [{}];
+		}
+	});
+}
+
+// 树形
+// const handleCheckChange = (data, checked, indeterminate) => {
+// 	console.log("handleCheckChange", data, checked, indeterminate);
+// };
+
+function handleCurrentChange(currentNode) {
+	console.log("handleCurrentChange", currentNode);
+	currentRowData.value = currentNode;
+}
+
+// 树节点点击事件
+function handleNodeClick(data) {
+	console.log("1", data.menuName);
+	parentFunctionName.value = data.menuName;
+	parentFunctionId.value = data.menuId; // 更新父菜单选项
+	parentRef.value.blur(); // 关闭下拉菜单
+}
+
+function handleChange(value) {
+	// console.log("选中的值:", value);
+}
+
+// 获取父菜单列表
+async function getParentTree() {
+	const res = await getMenuNameTreeAPI();
+	dataTree.value = res.data;
+	console.log("父菜单列表", res);
+}
+
+// 转化为图标
+async function getIcon(id) {
+	const res = await getIconListAPI(id);
+	console.log("图标", res);
+
+	return res.data.url;
+}
+</script>
+
 <template>
 	<p>菜单管理</p>
 	<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
@@ -32,7 +388,7 @@
 		<el-table-column prop="operation-bar" label="操作" width="100">
 			<template #default="{ row }">
 				<el-popconfirm
-					:title="`确定要删除该数据吗？`"
+					title="确定要删除该数据吗？"
 					confirm-button-text="确定"
 					cancel-button-text="取消"
 					@confirm="handleConfirmDelete(row)"
@@ -121,385 +477,29 @@
 		</template>
 	</el-dialog>
 </template>
-<script lang="ts" setup>
-import { Delete } from "@element-plus/icons-vue";
-import { ref, onMounted } from "vue";
-import TableTitle from "@/components/table-title/TableTitle.vue";
-import {
-	getMenuListAPI,
-	addMenuAPI,
-	getMenuTreeAPI,
-	getMenuNameTreeAPI,
-	getIconListAPI,
-	updateMenuAPI,
-} from "@/apis/menu";
-import { ElMessage } from "element-plus";
-definePage({
-	meta: {
-		menuType: "page",
-		text: "菜单管理",
-		icon: "IconMenu",
-	},
-});
-// 被选中的父菜单id
-const parentFunctionId = ref("mc90ac564c9d6734014csd6f4e370100");
-// 默认父菜单名称
-const parentFunctionName = ref("基础配置");
-// 选中的表格数据s
-const multipleSelectRows = ref([]);
-// 创建一个中间变量来处理当前行的数据
-const currentRow = computed({
-	get() {
-		return multipleSelectRows.value[0] || {}; // 如果没有选中行，则返回空对象
-	},
-	set(value) {
-		if (multipleSelectRows.value.length > 0) {
-			multipleSelectRows.value[0] = value; // 更新选中行的数据
-		}
-	},
-});
-
-// 当前行
-const currentRowData = ref(null);
-// 弹窗显示
-const dialogVisible = ref(false);
-// 弹窗标题
-const dialogTitle = ref("");
-// 控制菜单录入的父菜单
-const isAdd = ref(false);
-
-//获取form组件实例
-let form = ref();
-let parentRef = ref();
-
-// 图标
-const menuIconOptions = ref([
-	{ label: "默认", value: "默认" },
-	{ label: "小车", value: "小车" },
-	{ label: "星星", value: "星星" },
-	{ label: "小圆点", value: "小圆点" },
-]);
-const defaultProps = ref({
-	label: "menuName",
-	children: "children",
-});
-const defaultProps1 = ref({
-	label: "menuName",
-	children: "children",
-});
-
-// 菜单名称树 通过获取菜单名称树接口获得
-const dataTree = ref([]);
-
-// 发送到子组件的数据
-const titleData = ref({
-	unfold: false,
-	bottomList: [
-		{
-			name: "菜单录入",
-			iconType: "Add",
-		},
-		{
-			name: "菜单编辑",
-			iconType: "Edit",
-		},
-	],
-});
-
-// 表格内数据
-const data = ref([]);
-
-// 自定义行号
-const indexMethod = (index) => {
-	return index + 1;
-};
-
-// 菜单名称自定义校验 请填写2到15位任意字符！
-const validatorMenuName = (rule, value, callBack) => {
-	const reg = /^[a-zA-Z0-9\u4e00-\u9fa5]{2,15}$/;
-	if (reg.test(value)) {
-		callBack();
-	} else {
-		callBack(new Error("请填写2到15位任意字符！"));
-	}
-};
-
-// 自定义菜单顺序校验 请填写1到3位数字！
-const validatorMenuSort = (rule, value, callback) => {
-	const reg = /^\d{1,3}$/;
-	if (reg.test(value)) {
-		callback();
-	} else {
-		callback(new Error("请填写1到3位数字！"));
-	}
-};
-
-// 表单校验的规则
-const rules = {
-	menuName: [
-		{ required: true, message: "请填写菜单名称", trigger: ["blur", "change"] },
-		{
-			trigger: "change",
-			validator: validatorMenuName,
-		},
-	],
-	menuSort: [
-		{ required: true, message: "请填写菜单排序", trigger: ["blur", "change"] },
-		{ trigger: "change", validator: validatorMenuSort },
-	],
-};
-
-// 组件加载完毕后
-onMounted(() => {
-	getMenuList();
-});
-
-// 处理子组件按钮事件
-const userChildClick = (icon) => {
-	if (icon.name === "菜单录入") {
-		handleAdd(multipleSelectRows);
-	}
-	if (icon.name === "菜单编辑") {
-		handleSingleRowEdit(multipleSelectRows);
-	}
-};
-
-//菜单录入
-const handleAdd = (multipleSelectRows) => {
-	isAdd.value = true;
-	multipleSelectRows.value = [
-		{
-			menuIcon: "默认",
-			menuType: "菜单类型",
-			menuLevels: "一级菜单",
-			menuName: "", // 添加默认值
-			menuUrl: "",
-			menuSort: "",
-			menuIconStyle: "",
-		},
-	];
-	dialogVisible.value = true;
-	dialogTitle.value = "菜单录入";
-};
-// 菜单编辑
-const handleSingleRowEdit = (multipleSelectRows) => {
-	isAdd.value = false;
-	// console.log(multipleSelectRows.value.length);
-	if (!multipleSelectRows.value[0].menuName) {
-		ElMessage.warning("请选择编辑项目");
-		return;
-	}
-	if (multipleSelectRows.value.length > 1) {
-		ElMessage.warning("请选择一条记录进行编辑");
-		return;
-	}
-	dialogVisible.value = true;
-	dialogTitle.value = "菜单编辑";
-};
-
-// 确定
-const btnConfirm = () => {
-	form.value.validate(async (valid) => {
-		if (valid) {
-			try {
-				const res = await performAction();
-				if (res.code === 10000) {
-					dialogVisible.value = false;
-					// 刷新
-					await getMenuList();
-					ElMessage.success(dialogTitle.value === "菜单录入" ? "添加成功" : "修改成功");
-					return;
-				} else {
-					ElMessage.warning(res.message);
-				}
-			} catch (error) {
-				ElMessage.warning(error.data.message);
-			}
-			dialogVisible.value = false;
-			return;
-		} else {
-			// 表单验证失败
-			ElMessage.warning("请重新填写");
-			return;
-		}
-	});
-};
-
-const performAction = async () => {
-	if (dialogTitle.value === "菜单录入") {
-		return await addMenuAPI({
-			// TODO 还无法获取到所有图标
-			menuIcon: multipleSelectRows.value[0].menuIcon === "默认" ? "8a8ab0b246dc81120146dc8180460000" : "",
-			menuType: multipleSelectRows.value[0].menuType === "菜单类型" ? 0 : 1,
-			menuLevels: multipleSelectRows.value[0].menuLevels === "一级菜单" ? 0 : 1,
-			menuUrl: multipleSelectRows.value[0].menuUrl,
-			menuName: multipleSelectRows.value[0].menuName,
-			parentFunctionId: parentFunctionId.value,
-		});
-	} else if (dialogTitle.value === "菜单编辑") {
-		return await updateMenuAPI({
-			// menuIcon:
-			// 	multipleSelectRows.value[0].menuIcon === "默认"
-			// 		? "http://121.43.101.169:8888/group1/M00/00/01/oYYBAGfXw5uAMDmpAAA3UytLVCc281.png?token=6de7c1ff30687961b10323c73086192a&ts=1742292087"
-			// 		: "",
-			menuIcon: multipleSelectRows.value[0].menuIcon === "默认" ? "8a8ab0b246dc81120146dc8180460000" : "",
-			menuType: multipleSelectRows.value[0].menuType === "菜单类型" ? 0 : 1,
-			menuLevels: multipleSelectRows.value[0].menuLevels === "一级菜单" ? 0 : 1,
-			menuUrl: multipleSelectRows.value[0].menuUrl,
-			menuName: multipleSelectRows.value[0].menuName,
-			parentFunctionId: parentFunctionId.value,
-		});
-	}
-};
-
-// 处理确认删除事件
-const handleConfirmDelete = async (row) => {
-	console.log("row.menuId", row.menuId, typeof row.menuId);
-	const res = await deleteResourceAPI(row.menuId);
-	if (res.code === 10000) {
-		await getMenuList();
-		ElMessage.success("删除成功");
-	} else {
-		ElMessage.warning(res.message);
-	}
-};
-
-// 处理行点击事件
-const handleRowClick = (row, column, event) => {
-	console.log("点击的行数据:", row);
-	multipleSelectRows.value[0] = row;
-	currentRowData.value = row; // 更新当前行
-};
-
-// 获取菜单列表
-const getMenuList = async () => {
-	const res = await getMenuListAPI();
-	console.log(res);
-	if (res.code === 10000) {
-		data.value = res.data;
-		// 处理 menuType 和 menuLevels 的转换
-		transformMenuData(data.value);
-		// 获取图标 URL 并映射到 items
-		await fetchAndMapIcons(data.value);
-		// 给每个isParentNode===1的data加上children
-		// 给每个 isParentNode === 1 的 item 添加 children
-		addChildrenToParentNodes(data.value);
-		console.log("菜单列表", data.value);
-	} else {
-		ElMessage.error(res.message);
-	}
-};
-
-// 表格树形节点点击事件
-const haneleTableNode = async (row) => {
-	// 我点一次节点就会获取到当前节点下的数据，我会把数据存到当前节点的children里面，
-
-	console.log("当前展开row", row.menuId, row.menuLevels);
-
-	// data.value 中 当前row
-	const res = await getMenuTreeAPI(row.menuId);
-	row.children = res.data; // 要把这个数据存到对应的data的哪个位置
-	console.log("row.children", row.children);
-	// 处理 menuType 和 menuLevels 的转换
-	transformMenuData(row.children);
-	// 获取图标 URL 并映射到 items
-	await fetchAndMapIcons(row.children);
-	// 给每个 isParentNode === 1 的 item 添加 children
-	addChildrenToParentNodes(row.children);
-
-	console.log(data.value);
-};
-
-// 处理 menuType 和 menuLevels 的转换
-const transformMenuData = (items) => {
-	items.forEach((item) => {
-		item.menuType = item.menuType === 0 ? "菜单类型" : "权限类型";
-		item.menuLevels = item.menuLevels === 0 ? "一级菜单" : "下级菜单";
-	});
-};
-
-// 获取图标 URL 并映射到 items
-const fetchAndMapIcons = async (items) => {
-	const uniqueIconIds = [...new Set(items.map((item) => item.menuIcon))].filter((iconId) => iconId !== undefined);
-	const iconMap = {};
-	for (const iconId of uniqueIconIds) {
-		let iconUrl = await getIcon(iconId);
-		iconMap[iconId] = iconUrl;
-	}
-	items.forEach((item) => {
-		item.menuIcon = iconMap[item.menuIcon];
-	});
-};
-
-// 给每个 isParentNode === 1 的 item 添加 children
-const addChildrenToParentNodes = (items) => {
-	items.forEach((child) => {
-		if (child.isParentNode === 1) {
-			child.children = [{}];
-		}
-	});
-};
-
-//树形
-// const handleCheckChange = (data, checked, indeterminate) => {
-// 	console.log("handleCheckChange", data, checked, indeterminate);
-// };
-
-const handleCurrentChange = (currentNode) => {
-	console.log("handleCurrentChange", currentNode);
-	currentRowData.value = currentNode;
-};
-
-// 树节点点击事件
-const handleNodeClick = (data) => {
-	console.log("1", data.menuName);
-	parentFunctionName.value = data.menuName;
-	parentFunctionId.value = data.menuId; // 更新父菜单选项
-	parentRef.value.blur(); //关闭下拉菜单
-};
-
-const handleChange = (value) => {
-	// console.log("选中的值:", value);
-};
-
-// 获取父菜单列表
-const getParentTree = async () => {
-	const res = await getMenuNameTreeAPI();
-	dataTree.value = res.data;
-	console.log("父菜单列表", res);
-};
-
-// 转化为图标
-const getIcon = async (id) => {
-	const res = await getIconListAPI(id);
-	console.log("图标", res);
-
-	return res.data.url;
-};
-</script>
 
 <style lang="scss" scoped>
 p {
-	width: 100%;
-	border-bottom: 1px solid #efefef;
+  width: 100%;
+  border-bottom: 1px solid #efefef;
 }
 
 .title {
-	width: 100%;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #efefef;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #efefef;
 }
 /* 自定义抽屉样式 */
 ::v-deep(.el-drawer) {
-	background-color: transparent !important; /* 设置抽屉背景颜色为透明 */
+  background-color: transparent !important; /* 设置抽屉背景颜色为透明 */
 }
 
 /* 自定义遮罩层样式 */
 ::v-deep(.el-overlay) {
-	background-color: rgba(0, 0, 0, 0) !important; /* 设置遮罩层透明度为0 */
+  background-color: rgba(0, 0, 0, 0) !important; /* 设置遮罩层透明度为0 */
 }
 
 ::v-deep(header.el-drawer__header) {
-	margin: 0;
+  margin: 0;
 }
 </style>

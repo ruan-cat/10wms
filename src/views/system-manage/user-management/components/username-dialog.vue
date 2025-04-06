@@ -1,18 +1,9 @@
 <script lang="ts" setup>
+import { deleteUserAPI, getOrgNameTreeAPI, getUserListAPI } from "@/apis/sysmanager-ok/index.js";
 import TableTitle from "@/components/table-title/TableTitle.vue";
 import ComponentsTable from "@/components/table/index.vue";
-import { ref, defineModel } from "vue";
-import { getOrgNameTreeAPI } from "@/apis/sysmanager-ok/index.js";
-import {
-	getUserListAPI,
-	addUserAPI,
-	updateUserAPI,
-	deleteUserAPI,
-	getUserDetailAPI,
-	resetUserPasswordAPI,
-	lockUserStatusAPI,
-	activeUserStatusAPI,
-} from "@/apis/sysmanager-ok/index.js";
+import { defineModel, ref } from "vue";
+
 const showName = defineModel("showName");
 // 添加 treeRef 引用
 const treeRef = ref(null);
@@ -67,7 +58,7 @@ const data = ref([
 const tableProps = ref({
 	isIndex: true,
 	isMultipleSelect: true,
-	data: data,
+	data,
 	columns: [
 		{ prop: "username", label: "用户账号", width: "100px" },
 		{ prop: "departname", label: "组织机构", width: "250px" },
@@ -97,13 +88,13 @@ const pageSize = ref(10);
 const total = ref(0);
 
 // 获取组织名称树
-const getNoticeList = async () => {
+async function getNoticeList() {
 	const res = await getOrgNameTreeAPI();
 	dataTree.value = res.data.rows;
-};
+}
 
 // 获取用户管理列表
-const getUserList = async (params) => {
+async function getUserList(params) {
 	const res = await getUserListAPI(
 		params || {
 			pageIndex: pageIndex.value,
@@ -130,20 +121,20 @@ const getUserList = async (params) => {
 	} else {
 		ElMessage.warning(res.message);
 	}
-};
+}
 
 // 处理子组件按钮事件
-const userChildClick = (icon) => {
+function userChildClick(icon) {
 	if (icon.name === "右侧查询") {
 		handleSearch();
 	}
 	if (icon.name === "右侧重置") {
 		handleResetData();
 	}
-};
+}
 
 // 右侧查询
-const handleSearch = () => {
+function handleSearch() {
 	const params = {
 		pageIndex: pageIndex.value,
 		pageSize: pageSize.value,
@@ -162,16 +153,16 @@ const handleSearch = () => {
 	// 	params.department = department;
 	// }
 	getUserList(params);
-};
+}
 
 // 右侧重置
-const handleResetData = () => {
+function handleResetData() {
 	titleData.value.contentList[0].content = ["", ""];
 	getUserList({
 		pageIndex: pageIndex.value,
 		pageSize: pageSize.value,
 	});
-};
+}
 
 // 最里面对话框的确定按钮
 // const btnInConfirm = () => {
@@ -185,7 +176,7 @@ const handleResetData = () => {
 // };
 
 // 节点复选框被点击时候触发
-const handleCheckChange = (data, checked) => {
+function handleCheckChange(data, checked) {
 	// 当前
 	// console.log(data.label);
 	// console.log(typeof data.label);
@@ -194,17 +185,17 @@ const handleCheckChange = (data, checked) => {
 		treeRef.value.setCheckedKeys([]);
 		treeRef.value.setChecked(data, true);
 	}
-};
+}
 
 // 当前选中的节点变化时触发
-const handleCurrentChange = (data) => {
+function handleCurrentChange(data) {
 	console.log(data.label);
 	currentNodeKey.value = data.label;
 	// console.log(currentNodeKey.value);
-};
+}
 
 // 处理确认删除事件
-const handleConfirmDelete = async (row) => {
+async function handleConfirmDelete(row) {
 	console.log("删除的id", row.useId);
 	const res = await deleteUserAPI(row.useId);
 	if (res.code === 10000) {
@@ -213,17 +204,17 @@ const handleConfirmDelete = async (row) => {
 	} else {
 		ElMessage.warning(res.message);
 	}
-};
+}
 
-const btnConfirm = () => {
+function btnConfirm() {
 	showName.value = false;
-};
+}
 
 // 处理可见性变化
-const handleDialogChange = (value) => {
+function handleDialogChange(value) {
 	// console.log("点击关闭", value);
 	showName.value = value;
-};
+}
 
 const paginationProps = ref<PaginationProps>({
 	asyncFunc: getUserListAPI,
@@ -265,7 +256,7 @@ const paginationProps = ref<PaginationProps>({
 					<template #bodyCell="{ row, prop }">
 						<div v-if="prop === 'operation-bar'">
 							<el-popconfirm
-								:title="`确定要删除该数据吗？`"
+								title="确定要删除该数据吗？"
 								confirm-button-text="确定"
 								cancel-button-text="取消"
 								@confirm="handleConfirmDelete(row)"

@@ -14,10 +14,10 @@ const currBaseUrl = "/parameter-type";
 /**
  * 获取参数类型列表（条件+分页）
  */
-export const listParameterType = async (data, success, fail) => {
+export async function listParameterType(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "/all", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}/all`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -32,15 +32,15 @@ export const listParameterType = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 录入参数类型
  */
-export const addParameterType = async (data, success, fail) => {
+export async function addParameterType(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "/add", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}/add`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -55,15 +55,15 @@ export const addParameterType = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 修改参数类型
  */
-export const updateParameterType = async (data, success, fail) => {
+export async function updateParameterType(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "/modify-one", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}/modify-one`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -78,15 +78,15 @@ export const updateParameterType = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 删除参数类型（支持批量删除）
  */
-export const deleteParameterType = async (data, success, fail) => {
+export async function deleteParameterType(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.DELETE, currBaseUrl + "/delete-parameter-type", data);
+		const res = await Request.requestForm(Request.DELETE, `${currBaseUrl}/delete-parameter-type`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -101,15 +101,15 @@ export const deleteParameterType = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导出参数类型
  */
-export const exportParameterType = async (data, success, fail) => {
+export async function exportParameterType(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "get-parameter-type", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}get-parameter-type`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -124,15 +124,15 @@ export const exportParameterType = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导入参数类型
  */
-export const importParameterType = async (data, success, fail) => {
+export async function importParameterType(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.POST, currBaseUrl + "add-parameter-type", data);
+		const res = await Request.requestForm(Request.POST, `${currBaseUrl}add-parameter-type`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -147,15 +147,15 @@ export const importParameterType = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 获取参数类型名称列表
  */
-export const getParameterTypeName = async (data, success, fail) => {
+export async function getParameterTypeName(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "list-name", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}list-name`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -170,4 +170,4 @@ export const getParameterTypeName = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}

@@ -1,4 +1,4 @@
-import { type ParamsPathKey, type UseAxiosOptionsJsonVO } from "composables/use-request";
+import type { ParamsPathKey, UseAxiosOptionsJsonVO } from "composables/use-request";
 
 /**
  * path传参例子

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { type TestBuziDataForTable, testBuziDataForTable } from "./data";
+import type { TestBuziDataForTable } from "./data";
 import ComponentsTable from "components/table/index.vue";
 import { ElTag } from "element-plus";
+import { ref } from "vue";
+import { testBuziDataForTable } from "./data";
 
 const componentsTableProps = ref<SimpleDataTableProps<TestBuziDataForTable>>({
 	isIndex: true,

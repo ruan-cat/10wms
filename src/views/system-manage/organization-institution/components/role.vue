@@ -1,3 +1,35 @@
+<script lang="ts" setup>
+import { onMounted, ref } from "vue";
+
+// 用户列表
+const roleList = ref([]);
+
+onMounted(() => {});
+
+// 获取用户列表
+function getRoleList() {
+	// TODO 获取组织角色
+}
+// 定义复选框状态数组
+const checkboxList = ref(Array.from({ length: 10 }).fill(false));
+
+// 全选功能
+function allChecked() {
+	checkboxList.value = checkboxList.value.map(() => true);
+}
+
+// 重置功能
+function resetAll() {
+	checkboxList.value = checkboxList.value.map(() => false);
+}
+
+// 保存功能
+function save() {
+	// TODO 更新组织角色
+	console.log(checkboxList.value);
+}
+</script>
+
 <template>
 	<div class="header">
 		<p>11:机构</p>
@@ -39,69 +71,37 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted } from "vue";
-
-// 用户列表
-const roleList = ref([]);
-
-onMounted(() => {});
-
-// 获取用户列表
-const getRoleList = () => {
-	// TODO 获取组织角色
-};
-// 定义复选框状态数组
-const checkboxList = ref(new Array(10).fill(false));
-
-// 全选功能
-const allChecked = () => {
-	checkboxList.value = checkboxList.value.map(() => true);
-};
-
-// 重置功能
-const resetAll = () => {
-	checkboxList.value = checkboxList.value.map(() => false);
-};
-
-// 保存功能
-const save = () => {
-	// TODO 更新组织角色
-	console.log(checkboxList.value);
-};
-</script>
-
 <style lang="scss" scoped>
 * {
-	margin: 0;
-	padding: 0;
-	list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 p {
-	width: 100%;
-	margin-bottom: 10px;
-	border-bottom: 1px solid #efefef;
+  width: 100%;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #efefef;
 }
 
 ::v-deep(.el-button span) {
-	padding: 2px;
+  padding: 2px;
 }
 
 .content {
-	margin-top: 20px;
-	ul {
-		margin-top: 10px;
-	}
-	li {
-		margin-bottom: 5px;
-		.role {
-			margin-left: 4px;
-		}
-	}
+  margin-top: 20px;
+  ul {
+    margin-top: 10px;
+  }
+  li {
+    margin-bottom: 5px;
+    .role {
+      margin-left: 4px;
+    }
+  }
 }
 
 svg {
-	margin-right: 4px;
+  margin-right: 4px;
 }
 </style>

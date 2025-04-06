@@ -1,3 +1,112 @@
+<script setup lang="ts">
+import TableTitle from "@/components/table-title/TableTitle.vue";
+// 路由
+// 组件导入
+import { ref } from "vue";
+
+definePage({
+	meta: {
+		menuType: "page",
+		isSample: true,
+		text: "表格标题栏",
+		icon: "IconSetting",
+	},
+});
+// 发送到子组件的数据
+const titleData = ref<TableTitleListData>({
+	unfold: true,
+	rightButton: false,
+	contentList: [
+		{
+			name: "日期框",
+			type: "AddCal",
+			content: ["", ""],
+		},
+		{
+			name: "选择框",
+			type: "AddCheckBox",
+			content: ["", ""],
+			optionData: ["马卡", "巴卡", "Makar", "Bakar"],
+		},
+		{
+			name: "日期至日期",
+			type: "AddDbcal",
+			content: ["", ""],
+		},
+		{
+			name: "输入框至输入框",
+			type: "AddDbinput",
+			content: ["", ""],
+		},
+		{
+			name: "输入框",
+			type: "AddSininput",
+			content: ["", ""],
+		},
+	],
+	bottomList: [
+		{
+			name: "编辑",
+			iconType: "Edit",
+		},
+		{
+			name: "删除",
+			iconType: "Delete",
+		},
+		{
+			name: "保存",
+			iconType: "Save",
+		},
+	],
+});
+// 收到子组件的数据
+function userChildClick(data: FuncTransferData) {
+	const { name, iconType, rightButton } = data;
+	if (name == "右侧查询" && rightButton == true) {
+		console.log("VUE : 用户查询的数据 : one", titleData.value.contentList);
+		addList.value.push(`用户点击了${name}按钮`);
+		for (let index = 0; index < titleData.value.contentList.length; index++) {
+			const addData = `查询数据为:${titleData.value.contentList[index].name}: ${
+				titleData.value.contentList[index].content[0]
+			}${titleData.value.contentList[index].content[1]}`;
+			addList.value.push(addData);
+		}
+	} else if (name == "右侧重置" && rightButton == true) {
+		const { name } = data;
+		addList.value.push(`用户点击了${name}按钮`);
+		titleData.value.contentList.map((element: TableTitleContentList) => {
+			element.content = ["", ""];
+		});
+	} else {
+		console.log("VUE : 收到的数据 : one ", data);
+		addList.value.push(`用户点击了 { name : ${name} ; iconType : ${iconType}} `);
+	}
+}
+// 页面演示的数据和func
+const addList = ref<string[]>([]);
+function addContentData(traName: string, traType: string) {
+	const dataOne = {
+		name: traName,
+		type: traType,
+		optionData: ["黄色的奶龙", "绿色的奶龙", "蓝色的奶龙", "五彩斑斓的黑色的奶龙"],
+	};
+	titleData.value.contentList.push(dataOne);
+}
+function deletContentData() {
+	titleData.value.contentList = [];
+}
+function addBottomData(traName: string, traType: string) {
+	const dataOne = {
+		name: traName,
+		iconType: traType,
+	};
+	titleData.value.bottomList.push(dataOne);
+}
+function deletBottomData() {
+	titleData.value.bottomList = [];
+}
+</script>
+
 <template>
 	<div>
 		<h1>表格标题栏展示及说明页面</h1>
@@ -51,113 +160,3 @@
 		</div>
 	</div>
 </template>
-<script setup lang="ts">
-// 路由
-definePage({
-	meta: {
-		menuType: "page",
-		isSample: true,
-		text: "表格标题栏",
-		icon: "IconSetting",
-	},
-});
-// 组件导入
-import { ref } from "vue";
-import TableTitle from "@/components/table-title/TableTitle.vue";
-// 发送到子组件的数据
-const titleData = ref<TableTitleListData>({
-	unfold: true,
-	rightButton: false,
-	contentList: [
-		{
-			name: "日期框",
-			type: "AddCal",
-			content: ["", ""],
-		},
-		{
-			name: "选择框",
-			type: "AddCheckBox",
-			content: ["", ""],
-			optionData: ["马卡", "巴卡", "Makar", "Bakar"],
-		},
-		{
-			name: "日期至日期",
-			type: "AddDbcal",
-			content: ["", ""],
-		},
-		{
-			name: "输入框至输入框",
-			type: "AddDbinput",
-			content: ["", ""],
-		},
-		{
-			name: "输入框",
-			type: "AddSininput",
-			content: ["", ""],
-		},
-	],
-	bottomList: [
-		{
-			name: "编辑",
-			iconType: "Edit",
-		},
-		{
-			name: "删除",
-			iconType: "Delete",
-		},
-		{
-			name: "保存",
-			iconType: "Save",
-		},
-	],
-});
-// 收到子组件的数据
-const userChildClick = (data: FuncTransferData) => {
-	const { name, iconType, rightButton } = data;
-	if (name == "右侧查询" && rightButton == true) {
-		console.log("VUE : 用户查询的数据 : one", titleData.value.contentList);
-		addList.value.push(`用户点击了${name}按钮`);
-		for (let index = 0; index < titleData.value.contentList.length; index++) {
-			const addData =
-				"查询数据为:" +
-				titleData.value.contentList[index].name +
-				": " +
-				titleData.value.contentList[index].content[0] +
-				titleData.value.contentList[index].content[1];
-			addList.value.push(addData);
-		}
-	} else if (name == "右侧重置" && rightButton == true) {
-		const { name } = data;
-		addList.value.push(`用户点击了${name}按钮`);
-		titleData.value.contentList.map((element: TableTitleContentList) => {
-			element.content = ["", ""];
-		});
-	} else {
-		console.log("VUE : 收到的数据 : one ", data);
-		addList.value.push(`用户点击了 { name : ${name} ; iconType : ${iconType}} `);
-	}
-};
-// 页面演示的数据和func
-const addList = ref<string[]>([]);
-const addContentData = (traName: string, traType: string) => {
-	const dataOne = {
-		name: traName,
-		type: traType,
-		optionData: ["黄色的奶龙", "绿色的奶龙", "蓝色的奶龙", "五彩斑斓的黑色的奶龙"],
-	};
-	titleData.value.contentList.push(dataOne);
-};
-const deletContentData = () => {
-	titleData.value.contentList = [];
-};
-const addBottomData = (traName: string, traType: string) => {
-	const dataOne = {
-		name: traName,
-		iconType: traType,
-	};
-	titleData.value.bottomList.push(dataOne);
-};
-const deletBottomData = () => {
-	titleData.value.bottomList = [];
-};
-</script>

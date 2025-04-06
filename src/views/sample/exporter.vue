@@ -1,4 +1,25 @@
 <script lang="ts" setup>
+import { BarChart, LineChart, PieChart } from "echarts/charts";
+// 引入标题，提示框，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
+import {
+	DatasetComponent,
+	GridComponent,
+	LegendComponent,
+	TitleComponent,
+	TooltipComponent,
+	TransformComponent,
+} from "echarts/components";
+// 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
+import * as echarts from "echarts/core";
+// 标签自动布局、全局过渡动画等特性
+import { LabelLayout, UniversalTransition } from "echarts/features";
+// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
+import { CanvasRenderer } from "echarts/renderers";
+// ---单图表导出示例---
+// 引入jspdf,html2canvas用于打印导出
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -7,26 +28,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-// ---单图表导出示例---
-// 引入jspdf,html2canvas用于打印导出
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
-// 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
-import * as echarts from "echarts/core";
-// 引入标题，提示框，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
-import {
-	TitleComponent,
-	TooltipComponent,
-	GridComponent,
-	DatasetComponent,
-	TransformComponent,
-	LegendComponent,
-} from "echarts/components";
-// 标签自动布局、全局过渡动画等特性
-import { LabelLayout, UniversalTransition } from "echarts/features";
-// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import { CanvasRenderer } from "echarts/renderers";
-import { BarChart, LineChart, PieChart } from "echarts/charts";
 // 注册必须的组件
 echarts.use([
 	TitleComponent,
@@ -91,36 +92,36 @@ onMounted(() => {
 	});
 });
 
-const pagePrint = () => {
+function pagePrint() {
 	window.print();
-};
+}
 // 导出多张图表为一张图片
 // dmo元素里的内容转换为canvas,并将canvas下载为图片
-const chartExport = (fileType: string, typeDisplay: string) => {
+function chartExport(fileType: string, typeDisplay: string) {
 	// 转换成canvas
 	html2canvas(document.getElementById("one") as HTMLElement).then(function (canvas) {
 		console.log(canvas);
 		if (fileType !== "application/pdf") {
-			var fileDownload = canvas.toDataURL(fileType).replace(fileType, "image/octet-stream"); // 创建a标签，实现下载
-			var creatIMg = document.createElement("a");
-			creatIMg.download = "图表." + typeDisplay; // 设置下载的文件名，
+			const fileDownload = canvas.toDataURL(fileType).replace(fileType, "image/octet-stream"); // 创建a标签，实现下载
+			const creatIMg = document.createElement("a");
+			creatIMg.download = `图表.${typeDisplay}`; // 设置下载的文件名，
 			creatIMg.href = fileDownload; // 下载url
 			document.body.appendChild(creatIMg);
 			creatIMg.click();
 			creatIMg.remove(); // 下载之后把创建的元素删除
 		} else {
-			let contentWidth = canvas.width;
-			let contentHeight = canvas.height;
-			//a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
-			let imgWidth = 595.28;
-			let imgHeight = (592.28 / contentWidth) * contentHeight; // 第一个参数： l：横向  p：纵向
+			const contentWidth = canvas.width;
+			const contentHeight = canvas.height;
+			// a4纸的尺寸[595.28,841.89]，html页面生成的canvas在pdf中图片的宽高
+			const imgWidth = 595.28;
+			const imgHeight = (592.28 / contentWidth) * contentHeight; // 第一个参数： l：横向  p：纵向
 			// 第二个参数：测量单位（"pt"，"mm", "cm", "m", "in" or "px"）
-			let pdf = new jsPDF("p", "pt");
+			const pdf = new jsPDF("p", "pt");
 			pdf.addImage(canvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, imgWidth, imgHeight);
 			pdf.save("图表" + ".pdf");
 		}
 	});
-};
+}
 const gridDatas = [
 	{
 		date: "下载png图片",

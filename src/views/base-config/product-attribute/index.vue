@@ -1,20 +1,7 @@
-<template>
-	<div class="product-attribute-page">
-		<base-config-table
-			ref="baseTableRef"
-			title="产品属性配置"
-			:columns="columns"
-			:form-fields="formFields"
-			:table-data="mockData"
-		>
-		</base-config-table>
-	</div>
-</template>
-
 <script setup lang="ts">
-import { ref } from "vue";
 import { InfoFilled } from "@element-plus/icons-vue";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { ref } from "vue";
 import BaseConfigTable from "../components/BaseTable.vue";
 // import { productAttributeApi } from "@/api/product";
 
@@ -51,7 +38,7 @@ const formFields = [
 ];
 
 // 删除行的处理函数
-const handleRowDelete = (row) => {
+function handleRowDelete(row) {
 	ElMessageBox.confirm("确定要删除该产品属性吗？", "提示", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -74,7 +61,7 @@ const handleRowDelete = (row) => {
 		.catch(() => {
 			// 用户取消操作
 		});
-};
+}
 
 // API方法（预留）
 // const api = {
@@ -117,8 +104,21 @@ const mockData = [
 ];
 </script>
 
+<template>
+	<div class="product-attribute-page">
+		<BaseConfigTable
+			ref="baseTableRef"
+			title="产品属性配置"
+			:columns="columns"
+			:form-fields="formFields"
+			:table-data="mockData"
+		>
+		</BaseConfigTable>
+	</div>
+</template>
+
 <style scoped lang="scss">
 .product-attribute-page {
-	width: 100%;
+  width: 100%;
 }
 </style>

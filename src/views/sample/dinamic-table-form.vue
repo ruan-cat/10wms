@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import MiniExample from "components/dinamic-table-form/tests/mini-example.vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -7,8 +9,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import MiniExample from "components/dinamic-table-form/tests/mini-example.vue";
 </script>
 
 <template>

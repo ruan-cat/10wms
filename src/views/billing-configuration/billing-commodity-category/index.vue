@@ -1,4 +1,10 @@
 <script lang="js" setup>
+import Pagination from "@/components/Pagination/index.vue";
+import TableTitle from "@/components/table-title/TableTitle.vue";
+import ComponentsTable from "@/components/table/index.vue";
+import { Delete } from "@element-plus/icons-vue";
+import { ref } from "vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -6,11 +12,7 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-import TableTitle from "@/components/table-title/TableTitle.vue";
-import ComponentsTable from "@/components/table/index.vue";
-import { ref } from "vue";
-import { Delete } from "@element-plus/icons-vue";
-import Pagination from "@/components/Pagination/index.vue";
+
 const titleData = ref({
 	unfold: true,
 	rightButton: true,
@@ -94,13 +96,13 @@ const tableColumns = ref([
 
 <style lang="scss" scoped>
 .billing-commodity-category-root {
-	.title {
-		width: 100%;
-		border: 1px;
-		height: 2rem;
-		line-height: 2rem;
-		padding-left: 10px;
-		background-color: gainsboro;
-	}
+  .title {
+    width: 100%;
+    border: 1px;
+    height: 2rem;
+    line-height: 2rem;
+    padding-left: 10px;
+    background-color: gainsboro;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 import type { TemplatePromiseProps } from "@vueuse/core";
 import type { DialogProps } from "element-plus";
-import notUseElDialogProps from "./not-use-el-dialog-props";
+import type notUseElDialogProps from "./not-use-el-dialog-props";
 
 type OnDialogCloseParams<T> = Pick<TemplatePromiseProps<T>, "resolve" | "reject">;
 

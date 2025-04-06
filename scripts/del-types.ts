@@ -1,9 +1,9 @@
 // 删除多余的类型
 
-import { deleteAsync } from "del";
+import { resolve } from "node:path";
 import { consola } from "consola";
 
-import { dirname, resolve } from "node:path";
+import { deleteAsync } from "del";
 
 /**
  * 拼接路径

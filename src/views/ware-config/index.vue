@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { Box } from "@element-plus/icons-vue";
+
 definePage({
 	meta: {
 		menuType: "folder",

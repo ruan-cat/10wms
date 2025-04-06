@@ -14,10 +14,10 @@ const currBaseUrl = "/systemparameter";
 /**
  * 获取参数类型列表（条件+分页）
  */
-export const listSystemParameter = async (data, success, fail) => {
+export async function listSystemParameter(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "/query-all", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}/query-all`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -32,15 +32,15 @@ export const listSystemParameter = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 录入参数类型
  */
-export const addSystemParameter = async (data, success, fail) => {
+export async function addSystemParameter(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "/add", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}/add`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -55,15 +55,15 @@ export const addSystemParameter = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 修改参数类型
  */
-export const updateSystemParameter = async (data, success, fail) => {
+export async function updateSystemParameter(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "/modify", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}/modify`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -78,15 +78,15 @@ export const updateSystemParameter = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 删除参数类型（支持批量删除）
  */
-export const deleteSystemParameter = async (data, success, fail) => {
+export async function deleteSystemParameter(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.DELETE, currBaseUrl + "/delete-SystemParameter", data);
+		const res = await Request.requestJson(Request.DELETE, `${currBaseUrl}/delete-SystemParameter`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -101,15 +101,15 @@ export const deleteSystemParameter = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导出参数类型
  */
-export const exportSystemParameter = async (data, success, fail) => {
+export async function exportSystemParameter(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "export-SystemParameter", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}export-SystemParameter`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -124,15 +124,15 @@ export const exportSystemParameter = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导入参数类型
  */
-export const importSystemParameter = async (data, success, fail) => {
+export async function importSystemParameter(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.POST, currBaseUrl + "import-SystemParameter", data);
+		const res = await Request.requestForm(Request.POST, `${currBaseUrl}import-SystemParameter`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -147,4 +147,4 @@ export const importSystemParameter = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}

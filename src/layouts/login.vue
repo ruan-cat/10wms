@@ -1,6 +1,4 @@
-<script lang="ts" setup>
-import { ref, computed, watch } from "vue";
-</script>
+<script lang="ts" setup></script>
 
 <template>
 	<!-- 登录页面的布局框 -->
@@ -11,7 +9,7 @@ import { ref, computed, watch } from "vue";
 
 <style lang="scss" scoped>
 .login-root {
-	// width: 100vw;
-	// height: 100%;
+  // width: 100vw;
+  // height: 100%;
 }
 </style>

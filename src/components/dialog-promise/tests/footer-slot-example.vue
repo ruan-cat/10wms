@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { ref, computed, watch, useTemplateRef } from "vue";
-import { isNil } from "lodash-es";
-
+import type { DialogPromiseProps } from "components/dialog-promise/types";
 import ComponentsDialogPromise from "components/dialog-promise/index.vue";
-import { type DialogPromiseProps } from "components/dialog-promise/types";
+
+import { isNil } from "lodash-es";
+import { ref, useTemplateRef } from "vue";
 
 interface TestBuzi {
 	name: string;

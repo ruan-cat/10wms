@@ -1,24 +1,7 @@
-<template>
-	<el-upload action="no-action" :show-file-list="false" :http-request="uploadUseFormData">
-		<el-button size="small" type="primary">
-			<el-icon style="vertical-align: middle">
-				<icon-upload />
-			</el-icon>
-			<span style="vertical-align: middle">FormData上传文件</span>
-		</el-button>
-	</el-upload>
-	<div class="wrap-space"></div>
-	<el-upload ref="upload" action="no-action" :show-file-list="false" :http-request="uploadUseStream">
-		<el-button size="small" type="primary">
-			<el-icon style="vertical-align: middle">
-				<icon-upload />
-			</el-icon>
-			<span style="vertical-align: middle">Stream上传文件</span>
-		</el-button>
-	</el-upload>
-</template>
-
 <script lang="ts" setup>
+import Request from "@/apis/request";
+import { ElMessage } from "element-plus";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -27,9 +10,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import Request from "@/apis/request";
-import { ElMessage } from "element-plus";
 
 // 使用FormData的方式上传文件
 function uploadUseFormData(params) {
@@ -71,6 +51,26 @@ function uploadUseStream(params) {
 	);
 }
 </script>
+
+<template>
+	<el-upload action="no-action" :show-file-list="false" :http-request="uploadUseFormData">
+		<el-button size="small" type="primary">
+			<el-icon style="vertical-align: middle">
+				<icon-upload />
+			</el-icon>
+			<span style="vertical-align: middle">FormData上传文件</span>
+		</el-button>
+	</el-upload>
+	<div class="wrap-space"></div>
+	<el-upload ref="upload" action="no-action" :show-file-list="false" :http-request="uploadUseStream">
+		<el-button size="small" type="primary">
+			<el-icon style="vertical-align: middle">
+				<icon-upload />
+			</el-icon>
+			<span style="vertical-align: middle">Stream上传文件</span>
+		</el-button>
+	</el-upload>
+</template>
 
 <style scoped>
 .wrap-space {

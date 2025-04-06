@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { ref, useTemplateRef } from "vue";
 import ComponentsDialogPromise from "components/dialog-promise/index.vue";
+import { ref, useTemplateRef } from "vue";
 
 const props = ref<
 	DialogPromiseProps<{

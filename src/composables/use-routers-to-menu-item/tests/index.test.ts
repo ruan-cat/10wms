@@ -1,7 +1,6 @@
-import { test } from "vitest";
+import type { PartialPick } from "type-plus";
 
-import { PartialPick } from "type-plus";
-import type { RouteRecordRaw, RouteRecordNormalized } from "vue-router";
+import type { RouteRecordNormalized, RouteRecordRaw } from "vue-router";
 import { useRouterToMenuItem } from "composables/use-routers-to-menu-item/index";
 
 type Route = PartialPick<RouteRecordRaw, "redirect">;
@@ -783,7 +782,7 @@ const routes_v2: RouteRecordNormalized_Test[] = [
 	},
 ];
 
-test("将静态路由转换为侧边栏数组", () => {
+it("将静态路由转换为侧边栏数组", () => {
 	const resMenus = useRouterToMenuItem({
 		// @ts-ignore
 		routes: routes_v2,

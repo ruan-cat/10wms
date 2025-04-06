@@ -7,12 +7,15 @@ export default class Request {
 	static get GET() {
 		return 1;
 	}
+
 	static get POST() {
 		return 2;
 	}
+
 	static get PUT() {
 		return 3;
 	}
+
 	static get DELETE() {
 		return 4;
 	}
@@ -29,8 +32,8 @@ export default class Request {
 	static request(method, url, data, upType, options = null) {
 		// 组装参数
 		const config = {
-			url: url,
-			upType: upType,
+			url,
+			upType,
 			...options,
 		};
 		switch (method) {
@@ -87,12 +90,12 @@ export default class Request {
 	 * @returns {Promise} 请求发送后的Promise对象
 	 */
 	static postFile(url, data, options = null) {
-		//将data转换成FormData对象
+		// 将data转换成FormData对象
 		const formData = new FormData();
-		for (let key in data) {
+		for (const key in data) {
 			formData.append(key, data[key]);
 		}
-		//发送请求
+		// 发送请求
 		return Request.request(Request.POST, url, formData, http.upType.file, options);
 	}
 
@@ -106,7 +109,7 @@ export default class Request {
 	 */
 	static postFileStream(url, file, success, fail, options = null) {
 		// 读取文件
-		let reader = new FileReader();
+		const reader = new FileReader();
 		reader.readAsArrayBuffer(file);
 		reader.onloadend = function () {
 			// 读取文件失败

@@ -1,14 +1,11 @@
-import qs from "qs";
-import { merge, isNil } from "lodash-es";
-import type { AxiosRequestConfig } from "axios";
-import type { PartialPick } from "type-plus";
+import type { KeyAxiosRequestConfig, UseAxiosWrapperParams } from "@ruan-cat/utils/vueuse";
 
-import type { UseAxiosWrapperParams, KeyAxiosRequestConfig } from "@ruan-cat/utils/vueuse";
 import type { UseAxiosOptionsBase } from "@vueuse/integrations/useAxios";
-import { useAxiosWrapper } from "@ruan-cat/utils/vueuse";
-
-import { axiosInstance } from "./createAxiosInstance.ts";
+import type { PartialPick } from "type-plus";
 import type { AxiosRequestConfigBaseKey } from "./tools.ts";
+
+import { useAxiosWrapper } from "@ruan-cat/utils/vueuse";
+import { axiosInstance } from "./createAxiosInstance.ts";
 
 export * from "./tools.ts";
 

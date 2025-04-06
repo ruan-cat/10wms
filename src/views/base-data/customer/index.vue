@@ -1,4 +1,16 @@
 <script lang="ts" setup>
+import ComponentsTable from "components/table/index.vue";
+import { ElButton, ElMessage, ElMessageBox } from "element-plus";
+
+import { onMounted, ref, useTemplateRef } from "vue";
+import { cloneDeep, isEqual, isNil } from "lodash-es";
+import ComponentsDialogPromise from "components/dialog-promise/index.vue";
+import type { DialogPromiseProps } from "components/dialog-promise/types";
+import type { UploadFile } from "element-plus";
+import Pagination from "@/components/Pagination/index.vue";
+import Delete from "@/components/table-title/table-icon/Delete.vue";
+import Edit from "@/components/table-title/table-icon/Edit.vue";
+import { Download, Plus, Upload, View } from "@element-plus/icons-vue";
 definePage({
 	meta: {
 		menuType: "page",
@@ -6,24 +18,11 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-import ComponentsTable from "components/table/index.vue";
-import { ElButton, ElMessage, ElMessageBox } from "element-plus";
-
-import { ref, useTemplateRef, onMounted } from "vue";
-import { isEqual, isNil, cloneDeep } from "lodash-es";
-import ComponentsDialogPromise from "components/dialog-promise/index.vue";
-import { type DialogPromiseProps } from "components/dialog-promise/types";
-import Pagination from "@/components/Pagination/index.vue";
+import { read, utils, writeFileXLSX } from "xlsx";
 // 确保Element Plus的样式被导入
 import "element-plus/dist/index.css";
-import { Download, Plus, Upload, View } from "@element-plus/icons-vue";
-import Edit from "@/components/table-title/table-icon/Edit.vue";
-import Delete from "@/components/table-title/table-icon/Delete.vue";
-import type { FormInstance, UploadFile } from "element-plus";
-import { read, utils, writeFileXLSX } from "xlsx";
 
 // 导入API
-import { getshangpingApi } from "@/apis/base-data/index.js";
 
 // =============================弹窗部分=============================
 export interface OnConfirmParams<T> {
@@ -81,7 +80,7 @@ function hasChange() {
 }
 // 选中的行
 const selectedRows: Ref<TableData[]> = ref([]);
-const isViewMode = ref(false); //默认不是查看模式
+const isViewMode = ref(false); // 默认不是查看模式
 const dialogPromiseProps = ref<DialogPromiseProps<TestBuzi>>({
 	dialogProps: {
 		// title: "编码规则录入",
@@ -144,7 +143,7 @@ function openDialog() {
 }
 
 // 新的逻辑：编辑
-const handleEdit = () => {
+function handleEdit() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行编辑");
 		return;
@@ -162,10 +161,10 @@ const handleEdit = () => {
 	}; // 填充表单数据
 	isViewMode.value = false; // 编辑模式
 	openDialog(); // 打开弹窗
-};
+}
 
 // 新的逻辑：查看
-const handleView = () => {
+function handleView() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行查看");
 		return;
@@ -183,10 +182,10 @@ const handleView = () => {
 	}; // 填充表单数据
 	isViewMode.value = true; // 查看模式
 	openDialog(); // 打开弹窗
-};
+}
 
 // 新的逻辑：批量删除
-const handleBatchDelete = () => {
+function handleBatchDelete() {
 	if (selectedRows.value.length === 0) {
 		ElMessage.warning("请至少选择一条记录进行删除");
 		return;
@@ -204,14 +203,14 @@ const handleBatchDelete = () => {
 		.catch(() => {
 			// 取消删除
 		});
-};
+}
 
 // 录入逻辑（保持不变）
-const handleAdd = () => {
+function handleAdd() {
 	resetForm();
 	isViewMode.value = false; // 编辑模式
 	openDialog();
-};
+}
 
 // 导出
 const rows = ref([]);
@@ -309,7 +308,7 @@ const data = ref<TableData[]>([
 		example_number: "m4N6p8Q0r2S4t6u",
 	},
 ]);
-*/
+ */
 
 const componentsTableProps = ref<SimpleDataTableProps<TableData>>({
 	isIndex: true,
@@ -355,16 +354,16 @@ const currentData = ref({
 	pageSize: 10,
 });
 
-const handlePageChange = (data: { pageNum: number; pageSize: number } | { pageNum: number; pageSize: number }) => {
+function handlePageChange(data: { pageNum: number; pageSize: number } | { pageNum: number; pageSize: number }) {
 	currentData.value = data;
 	console.log("页码变化：", data);
-};
+}
 
 const importDialogVisible = ref(false);
 const fileList = ref<UploadFile[]>([]);
-const handleFileChange = (file: UploadFile) => {
+function handleFileChange(file: UploadFile) {
 	fileList.value = [file];
-};
+}
 </script>
 
 <template>
@@ -384,9 +383,9 @@ const handleFileChange = (file: UploadFile) => {
 			<ElButton type="success" @click="handleView">
 				<el-icon><View /></el-icon>查看</ElButton
 			>
-			<el-button @click="handleAdd">
+			<ElButton @click="handleAdd">
 				<el-icon><Upload /></el-icon>Excel模板导入
-			</el-button>
+			</ElButton>
 			<el-dialog v-model="importDialogVisible" title="Excel导入" width="500px">
 				<el-upload
 					class="upload-excel"
@@ -396,21 +395,21 @@ const handleFileChange = (file: UploadFile) => {
 					:limit="1"
 					:file-list="fileList"
 				>
-					<el-button type="primary">选择文件</el-button>
+					<ElButton type="primary">选择文件</ElButton>
 					<template #tip>
 						<div class="el-upload__tip">只能上传excel文件，且不超过10MB</div>
 					</template>
 				</el-upload>
 				<template #footer>
 					<span class="dialog-footer">
-						<el-button @click="importDialogVisible = false">取消</el-button>
-						<el-button type="primary" @click="importDialogVisible = false">确定</el-button>
+						<ElButton @click="importDialogVisible = false">取消</ElButton>
+						<ElButton type="primary" @click="importDialogVisible = false">确定</ElButton>
 					</span>
 				</template>
 			</el-dialog>
-			<el-button @click="exportFile">
+			<ElButton @click="exportFile">
 				<el-icon><Download /></el-icon>Excel导出
-			</el-button>
+			</ElButton>
 		</div>
 		<!-- 表单内容 -->
 		<ComponentsDialogPromise :="dialogPromiseProps" ref="dialog">

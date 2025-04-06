@@ -1,17 +1,5 @@
-<template>
-	<el-dialog :model-value="org" @update:model-value="handleDialogChange" draggable title="组织机构列表">
-		<el-tree style="max-width: 600px" :props="props" :data="data" show-checkbox @check-change="handleCheckChange" />
-		<template #footer>
-			<span class="dialog-footer">
-				<el-button type="primary" @click="btnInConfirm">确定</el-button>
-				<el-button @click="org = false">关闭</el-button>
-			</span>
-		</template>
-	</el-dialog>
-</template>
-
 <script lang="ts" setup>
-import { ref, onMounted, defineModel } from "vue";
+import { defineModel, ref } from "vue";
 
 // 使用 defineModel实现双向绑定
 const org = defineModel("org");
@@ -49,23 +37,35 @@ const data = ref([
 ]);
 
 // 处理可见性变化
-const handleDialogChange = (value) => {
+function handleDialogChange(value) {
 	console.log("点击关闭", value);
 	org.value = value;
-};
+}
 
 // 最里面对话框的确定按钮
-const btnInConfirm = () => {
+function btnInConfirm() {
 	departmentNames.value = departmentNamesList.value;
 	departmentNamesList.value = [];
 	org.value = false;
-};
+}
 
 // 节点复选框被点击时候触发
-const handleCheckChange = (data) => {
+function handleCheckChange(data) {
 	departmentNamesList.value.push(data.label);
 	console.log(data);
-};
+}
 </script>
+
+<template>
+	<el-dialog :model-value="org" @update:model-value="handleDialogChange" draggable title="组织机构列表">
+		<el-tree style="max-width: 600px" :props="props" :data="data" show-checkbox @check-change="handleCheckChange" />
+		<template #footer>
+			<span class="dialog-footer">
+				<el-button type="primary" @click="btnInConfirm">确定</el-button>
+				<el-button @click="org = false">关闭</el-button>
+			</span>
+		</template>
+	</el-dialog>
+</template>
 
 <style lang="scss" scoped></style>

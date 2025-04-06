@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref, useTemplateRef } from "vue";
+import type { BaseFormProps } from "components/base-form/index.vue";
+import ComponentsBaseForm from "components/base-form/index.vue";
 import { isNil } from "lodash-es";
 
-import ComponentsBaseForm, { type BaseFormProps } from "components/base-form/index.vue";
+import { ref, useTemplateRef } from "vue";
 
 interface TestBuzi {
 	age: number;

@@ -1,11 +1,7 @@
-<template>
-	<div>
-		<el-button type="primary" @click="executeCodePrint">代码模式打印</el-button>
-		<el-button type="primary" @click="executeTplPrint">拖拽模板打印</el-button>
-	</div>
-</template>
-
 <script lang="ts" setup>
+import { onMounted } from "vue";
+import { disAutoConnect, hiprint } from "vue-plugin-hiprint";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -14,9 +10,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import { onMounted } from "vue";
-import { disAutoConnect, hiprint } from "vue-plugin-hiprint";
 
 // 定义打印模板字符串对象
 let tplJson;
@@ -34,9 +27,9 @@ onMounted(async () => {
 
 // 下列方法都是没有拖拽设计页面的, 相当于代码模式, 使用代码设计页面
 function executeCodePrint() {
-	let printTemplate = new hiprint.PrintTemplate();
+	const printTemplate = new hiprint.PrintTemplate();
 	// 创建一个绘制面板
-	let panel = printTemplate.addPrintPanel({
+	const panel = printTemplate.addPrintPanel({
 		width: 100,
 		height: 130,
 		paperFooter: 340,
@@ -91,9 +84,16 @@ function executeCodePrint() {
 
 // 使用拖拽模板打印
 function executeTplPrint() {
-	let printTemplate = new hiprint.PrintTemplate({
+	const printTemplate = new hiprint.PrintTemplate({
 		template: tplJson,
 	});
 	printTemplate.print({ tname: "我是标题" });
 }
 </script>
+
+<template>
+	<div>
+		<el-button type="primary" @click="executeCodePrint">代码模式打印</el-button>
+		<el-button type="primary" @click="executeTplPrint">拖拽模板打印</el-button>
+	</div>
+</template>

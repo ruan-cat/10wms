@@ -1,6 +1,6 @@
 import AutoImport from "unplugin-auto-import/vite";
-import { VueRouterAutoImports } from "unplugin-vue-router";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+import { VueRouterAutoImports } from "unplugin-vue-router";
 
 export default AutoImport({
 	imports: [

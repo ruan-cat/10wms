@@ -1,3 +1,44 @@
+<script lang="ts" setup>
+import { ref } from "vue";
+
+const emit = defineEmits(["submit"]);
+const visible = ref(false);
+const isEdit = ref(false);
+const form = ref({
+	name: "",
+	icon: "",
+	type: "",
+	address: "",
+	service: "",
+	iconStyle: "",
+});
+
+function open(menu?: any) {
+	if (menu) {
+		form.value = { ...menu };
+		isEdit.value = true;
+	} else {
+		form.value = {
+			name: "",
+			icon: "",
+			type: "",
+			address: "",
+			service: "",
+			iconStyle: "",
+		};
+		isEdit.value = false;
+	}
+	visible.value = true;
+}
+
+function submit() {
+	emit("submit", form.value);
+	visible.value = false;
+}
+
+defineExpose({ open });
+</script>
+
 <template>
 	<el-dialog v-model="visible" :title="isEdit ? '编辑菜单' : '新增菜单'" width="30%">
 		<el-form :model="form" label-width="100px">
@@ -26,45 +67,3 @@
 		</template>
 	</el-dialog>
 </template>
-
-<script lang="ts" setup>
-import { ref } from "vue";
-
-const visible = ref(false);
-const isEdit = ref(false);
-const form = ref({
-	name: "",
-	icon: "",
-	type: "",
-	address: "",
-	service: "",
-	iconStyle: "",
-});
-
-const emit = defineEmits(["submit"]);
-
-function open(menu?: any) {
-	if (menu) {
-		form.value = { ...menu };
-		isEdit.value = true;
-	} else {
-		form.value = {
-			name: "",
-			icon: "",
-			type: "",
-			address: "",
-			service: "",
-			iconStyle: "",
-		};
-		isEdit.value = false;
-	}
-	visible.value = true;
-}
-
-function submit() {
-	emit("submit", form.value);
-	visible.value = false;
-}
-
-defineExpose({ open });
-</script>

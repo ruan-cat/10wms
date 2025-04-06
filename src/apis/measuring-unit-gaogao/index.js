@@ -14,7 +14,7 @@ const currBaseUrl = "/measurementunit";
 /**
  * 获取参数类型列表（条件+分页）
  */
-export const listMeasurementUnit = async (data, success, fail) => {
+export async function listMeasurementUnit(data, success, fail) {
 	/** 
 	success({
 		pageIndex: 1,
@@ -39,10 +39,10 @@ export const listMeasurementUnit = async (data, success, fail) => {
 		],
 		total: 100000,
 	});
-	*/
+	 */
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "/getunitlist", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}/getunitlist`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -57,15 +57,15 @@ export const listMeasurementUnit = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 录入参数类型
  */
-export const addMeasurementUnit = async (data, success, fail) => {
+export async function addMeasurementUnit(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "/insertunit", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}/insertunit`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -80,15 +80,15 @@ export const addMeasurementUnit = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 修改参数类型
  */
-export const updateMeasurementUnit = async (data, success, fail) => {
+export async function updateMeasurementUnit(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "/updateunit", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}/updateunit`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -103,15 +103,15 @@ export const updateMeasurementUnit = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 删除参数类型（支持批量删除）
  */
-export const deleteMeasurementUnit = async (data, success, fail) => {
+export async function deleteMeasurementUnit(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.DELETE, currBaseUrl + "/deleteunit", data);
+		const res = await Request.requestJson(Request.DELETE, `${currBaseUrl}/deleteunit`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -126,15 +126,15 @@ export const deleteMeasurementUnit = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导出参数类型
  */
-export const exportMeasurementUnit = async (data, success, fail) => {
+export async function exportMeasurementUnit(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "expo", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}expo`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -149,15 +149,15 @@ export const exportMeasurementUnit = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导入参数类型
  */
-export const importMeasurementUnit = async (data, success, fail) => {
+export async function importMeasurementUnit(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.POST, currBaseUrl + "import", data);
+		const res = await Request.requestForm(Request.POST, `${currBaseUrl}import`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -172,4 +172,4 @@ export const importMeasurementUnit = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}

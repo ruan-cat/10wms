@@ -1,10 +1,12 @@
 <!-- 这是点击查看全部后的组件 -->
 <script lang="ts" setup>
-import noticeDetail from "./notice-detail.vue";
-import { defineProps, defineEmits, ref, onMounted } from "vue";
+import { getMessageListAPI, getNoticeListAPI, updateNoticeStatusAPI } from "@/apis/notice-remind/index.js";
 import ComponentsTable from "@/components/table/index.vue";
-import { getNoticeListAPI, getMessageListAPI, updateNoticeStatusAPI } from "@/apis/notice-remind/index.js";
+import { defineEmits, defineProps, ref } from "vue";
+import noticeDetail from "./notice-detail.vue";
 
+const prop = defineProps(["visible", "status"]);
+const emit = defineEmits(["update:visible"]);
 const noticeId = ref("");
 const showDetail = ref(false);
 const dialogTitle = ref("");
@@ -17,7 +19,7 @@ const pageSize = ref(10);
 const total = ref(0);
 
 // 改变页面大小
-const handlePageSize = (val) => {
+function handlePageSize(val) {
 	console.log(val);
 	pageSize.value = val;
 	const params = {
@@ -25,10 +27,10 @@ const handlePageSize = (val) => {
 		pageSize: val,
 	};
 	getNoticeList(params);
-};
+}
 
 // 改变页码
-const handlePageIndex = (val) => {
+function handlePageIndex(val) {
 	console.log(val);
 	pageIndex.value = val;
 	const params = {
@@ -36,7 +38,7 @@ const handlePageIndex = (val) => {
 		pageSize: pageSize.value,
 	};
 	getNoticeList(params);
-};
+}
 
 // 下面是提供给tabledialog的数据
 const data1 = ref();
@@ -62,12 +64,8 @@ const tableProps2 = ref({
 	],
 });
 
-const prop = defineProps(["visible", "status"]);
-
-const emit = defineEmits(["update:visible"]);
-
 // 获取公告列表
-const getNoticeList = async (params) => {
+async function getNoticeList(params) {
 	const res = await getNoticeListAPI(
 		params || {
 			pageIndex: pageIndex.value,
@@ -85,10 +83,10 @@ const getNoticeList = async (params) => {
 		// 还得判断时间，注意不显示过期公告
 		total.value = res.data.total;
 	}
-};
+}
 
 // 获取消息列表
-const getMessageList = async () => {
+async function getMessageList() {
 	const res = await getMessageListAPI({
 		pageIndex: pageIndex.value,
 		pageSize: pageSize.value,
@@ -98,10 +96,10 @@ const getMessageList = async () => {
 		total.value = res.data.total;
 	}
 	// console.log(res);
-};
+}
 
 // 修改公告状态
-const updateNoticeStatus = async (id) => {
+async function updateNoticeStatus(id) {
 	const res = await updateNoticeStatusAPI({
 		noticeId: id,
 	});
@@ -109,7 +107,7 @@ const updateNoticeStatus = async (id) => {
 		ElMessage.success("修改成功"); // 修改阅读状态
 		getNoticeList();
 	}
-};
+}
 
 // 监听 visible 属性的变化
 watch(
@@ -123,24 +121,24 @@ watch(
 );
 
 // TODO 去往公告详情页
-const goNoticeDetail = (type, row) => {
+function goNoticeDetail(type, row) {
 	// 发生put请求修改公告状态 跳转详情 通过row获取传递的noticeid
 	// console.log(row.noticeId);
-	//假设传入id为1
+	// 假设传入id为1
 	noticeId.value = row.noticeId;
 	updateNoticeStatus(row.noticeId);
 	dialogTitle.value = type === 1 ? "通知公告详情" : "系统消息详情";
 	showDetail.value = true;
-};
+}
 
-//取消
-const handleCancel = () => {
+// 取消
+function handleCancel() {
 	emit("update:visible", false);
-};
+}
 
-const updateVisible = (value) => {
+function updateVisible(value) {
 	emit("update:visible", value);
-};
+}
 
 const paginationProps = ref<PaginationProps>({
 	// TODO: 使用带有参数的接口

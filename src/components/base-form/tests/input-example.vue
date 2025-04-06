@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import type { BaseFormProps } from "components/base-form/index.vue";
+import ComponentsBaseForm from "components/base-form/index.vue";
 
-import ComponentsBaseForm, { type BaseFormProps } from "components/base-form/index.vue";
+import { ref } from "vue";
 
 interface TestBuzi {
 	age: number;

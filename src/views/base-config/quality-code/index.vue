@@ -1,15 +1,4 @@
-<template>
-	<base-config-table
-		title="品质代码配置"
-		:columns="columns"
-		:form-fields="formFields"
-		:table-data="mockData"
-		:show-edit-button="false"
-	/>
-</template>
-
 <script setup lang="ts">
-import { reactive } from "vue";
 import { Medal } from "@element-plus/icons-vue";
 import BaseConfigTable from "../components/BaseTable.vue";
 // import { qualityCodeApi } from "@/api/quality";
@@ -81,6 +70,17 @@ const mockData = [
 	},
 ];
 </script>
+
+<template>
+	<BaseConfigTable
+		title="品质代码配置"
+		:columns="columns"
+		:form-fields="formFields"
+		:table-data="mockData"
+		:show-edit-button="false"
+	/>
+</template>
+
 <style scoped lang="scss">
 .title {
 	margin-bottom: 20px;

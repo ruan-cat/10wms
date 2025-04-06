@@ -1,12 +1,7 @@
-<template>
-	<el-table :data="rows" stripe>
-		<el-table-column prop="Index" label="编号" min-width="30%" />
-		<el-table-column prop="Name" label="名称" min-width="70%" />
-	</el-table>
-	<el-button type="primary" @click="exportFile">导出</el-button>
-</template>
-
 <script lang="ts" setup>
+import { onMounted, ref } from "vue";
+import { read, utils, writeFileXLSX } from "xlsx";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -15,9 +10,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import { ref, onMounted } from "vue";
-import { read, utils, writeFileXLSX } from "xlsx";
 const rows = ref([]);
 /**
  * 挂载的时候加载数据
@@ -41,11 +33,19 @@ function exportFile() {
 }
 </script>
 
+<template>
+	<el-table :data="rows" stripe>
+		<el-table-column prop="Index" label="编号" min-width="30%" />
+		<el-table-column prop="Name" label="名称" min-width="70%" />
+	</el-table>
+	<el-button type="primary" @click="exportFile">导出</el-button>
+</template>
+
 <style scoped>
 .el-table {
-	width: 100%;
+  width: 100%;
 }
 .el-button {
-	margin-top: 5px;
+  margin-top: 5px;
 }
 </style>

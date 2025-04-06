@@ -3,9 +3,9 @@
 	显示用户信息，可修改用户信息
 -->
 <script lang="ts" setup>
-import { ref, useTemplateRef, onMounted, defineExpose } from "vue";
-import { type DialogPromiseProps } from "components/dialog-promise/types";
-import { type BaseFormProps } from "components/base-form/index.vue";
+import type { BaseFormProps } from "components/base-form/index.vue";
+import type { DialogPromiseProps } from "components/dialog-promise/types";
+import { defineExpose, onMounted, ref, useTemplateRef } from "vue";
 
 /** 弹框组件配置 */
 const dialogPromiseProps = ref<DialogPromiseProps<{}>>({

@@ -1,9 +1,4 @@
-<template>
-	<base-config-table title="分类管理" :columns="columns" :form-fields="formFields" :table-data="mockData" />
-</template>
-
 <script setup lang="ts">
-import { reactive } from "vue";
 import { UserFilled } from "@element-plus/icons-vue";
 import BaseConfigTable from "../../base-config/components/BaseTable1.vue";
 // import { employmentStatusApi } from "@/api/personnel";
@@ -90,6 +85,10 @@ const mockData = [
 	},
 ];
 </script>
+
+<template>
+	<BaseConfigTable title="分类管理" :columns="columns" :form-fields="formFields" :table-data="mockData" />
+</template>
 
 <style scoped lang="scss">
 .title {

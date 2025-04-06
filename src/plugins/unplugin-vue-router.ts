@@ -1,4 +1,4 @@
-import { type Options } from "unplugin-vue-router";
+import type { Options } from "unplugin-vue-router";
 
 type GetRouteName = NonNullable<Options["getRouteName"]>;
 

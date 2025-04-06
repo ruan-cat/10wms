@@ -1,12 +1,12 @@
-import type { Ref } from "vue";
-
 import type { MenuItem } from "types/MenuItem";
 
-import type { RouterOptions, RouteRecordRaw, RouteRecordNormalized } from "vue-router";
+import type { Ref } from "vue";
 
-import { isEmpty, isUndefined, uniqueId, toNumber, cloneDeep, concat } from "lodash-es";
+import type { RouteRecordNormalized, RouteRecordRaw, RouterOptions } from "vue-router";
+
 import { isConditionsEvery, isConditionsSome } from "@ruan-cat/utils";
 import consola from "consola";
+import { cloneDeep, concat, isEmpty, isUndefined, toNumber, uniqueId } from "lodash-es";
 
 interface UseRouterToMenuItemParams {
 	/**
@@ -125,7 +125,7 @@ function isShouldJump(route: RouteRecordRaw) {
 
 /** 当前节点是否和 sample 示例页面有关？ @deprecated 设计冗余 */
 function isSamplePage(route: RouteRecordRaw) {
-	return route.path.indexOf("sample") !== -1;
+	return route.path.includes("sample");
 }
 
 /** 当前项目是否是开发环境模式？ @deprecated 设计冗余 */
@@ -169,7 +169,7 @@ function doChange(params: DoChangeParams) {
 
 			// 跳过当前的路由信息遍历 直接进入到下一层
 			doChange({
-				//@ts-ignore 将当前节点的下一层路由信息 传递下去递归
+				// @ts-ignore 将当前节点的下一层路由信息 传递下去递归
 				routes: route.children,
 				// 本节点没有做任何菜单处理 将本层的菜单信息 传递下去
 				menus: params.menus,

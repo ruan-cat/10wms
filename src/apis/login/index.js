@@ -1,5 +1,5 @@
-import Request from "../request";
 import { useUserStore } from "stores/user";
+import Request from "../request";
 
 // 定义一个功能模块基础url，方便替换
 const currBaseUrl = "/login/";
@@ -10,11 +10,11 @@ const currBaseUrl = "/login/";
  * @param success 登录成功回调
  * @param fail 登录失败回调
  */
-export const login = async (data, success, fail) => {
+export async function login(data, success, fail) {
 	const $store = useUserStore();
 	try {
 		// 发送登录请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "auth-login", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}auth-login`, data);
 		// 处理登录结果
 		if (res.data) {
 			// 记录Token到本地
@@ -33,4 +33,4 @@ export const login = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}

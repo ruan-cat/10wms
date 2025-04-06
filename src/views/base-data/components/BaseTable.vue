@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Plus, Edit, Delete, View, Upload, Download, Search } from "@element-plus/icons-vue";
-import { ref, computed, watch, onMounted } from "vue";
-import { ElMessage, ElMessageBox } from "element-plus";
 import type { FormInstance, UploadFile } from "element-plus";
+import { Delete, Download, Edit, Plus, Upload, View } from "@element-plus/icons-vue";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { computed, onMounted, ref, watch } from "vue";
 import Baseform from "../components/base-form/index.vue";
 
 interface Props {
@@ -42,8 +42,6 @@ interface Props {
 	};
 	immediate?: boolean;
 }
-const searchField = ref("");
-const searchKeyword = ref("");
 // 定义默认值
 const props = withDefaults(defineProps<Props>(), {
 	title: "基础配置",
@@ -51,7 +49,17 @@ const props = withDefaults(defineProps<Props>(), {
 	tableData: () => [],
 	showEditButton: false,
 });
-
+// 定义事件
+const emit = defineEmits([
+	"add-success",
+	"update-success",
+	"delete-success",
+	"import-success",
+	"export-success",
+	"row-click",
+]);
+const searchField = ref("");
+const searchKeyword = ref("");
 const titleData = ref({
 	unfold: true,
 	rightButton: true,
@@ -88,7 +96,7 @@ const titleData = ref({
 	],
 });
 
-const userChildClick = (icon) => {
+function userChildClick(icon) {
 	if (icon.name === "录入") {
 		handleAdd(multipleSelectRows);
 	}
@@ -107,17 +115,7 @@ const userChildClick = (icon) => {
 	if (icon.name === "右侧重置") {
 		handleReset();
 	}
-};
-
-// 定义事件
-const emit = defineEmits([
-	"add-success",
-	"update-success",
-	"delete-success",
-	"import-success",
-	"export-success",
-	"row-click",
-]);
+}
 
 // 表格数据
 const loading = ref(false);
@@ -194,7 +192,7 @@ onMounted(() => {
 });
 
 // 加载表格数据
-const fetchData = async () => {
+async function fetchData() {
 	loading.value = true;
 	try {
 		// 如果直接传入了tableData，则使用传入的数据
@@ -251,22 +249,22 @@ const fetchData = async () => {
 	} finally {
 		loading.value = false;
 	}
-};
+}
 
 // 表格选择事件
-const handleSelectionChange = (selection: any[]) => {
+function handleSelectionChange(selection: any[]) {
 	selectedRows.value = selection;
-};
+}
 
 // 新增事件
-const handleAdd = () => {
+function handleAdd() {
 	dialogType.value = "add";
 	dialogVisible.value = true;
 	formData.value = {};
-};
+}
 
 // 编辑事件
-const handleEdit = () => {
+function handleEdit() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行编辑");
 		return;
@@ -276,10 +274,10 @@ const handleEdit = () => {
 	currentId.value = selectedRows.value[0].id;
 	formData.value = { ...selectedRows.value[0] };
 	dialogVisible.value = true;
-};
+}
 
 // 查看事件
-const handleView = () => {
+function handleView() {
 	if (selectedRows.value.length !== 1) {
 		ElMessage.warning("请选择一条记录进行查看");
 		return;
@@ -288,18 +286,18 @@ const handleView = () => {
 	dialogType.value = "view";
 	formData.value = { ...selectedRows.value[0] };
 	dialogVisible.value = true;
-};
+}
 
 // 行编辑事件
-const handleRowEdit = (row: any) => {
+function handleRowEdit(row: any) {
 	dialogType.value = "edit";
 	currentId.value = row.id;
 	formData.value = { ...row };
 	dialogVisible.value = true;
-};
+}
 
 // 行删除事件
-const handleRowDelete = (row: any) => {
+function handleRowDelete(row: any) {
 	ElMessageBox.confirm("确定要删除此条记录吗？", "提示", {
 		confirmButtonText: "确定",
 		cancelButtonText: "取消",
@@ -325,10 +323,10 @@ const handleRowDelete = (row: any) => {
 		.catch(() => {
 			// 取消删除
 		});
-};
+}
 
 // 批量删除事件
-const handleBatchDelete = () => {
+function handleBatchDelete() {
 	if (selectedRows.value.length === 0) {
 		ElMessage.warning("请至少选择一条记录进行删除");
 		return;
@@ -360,10 +358,10 @@ const handleBatchDelete = () => {
 		.catch(() => {
 			// 取消删除
 		});
-};
+}
 
 // 导出事件
-const handleExport = async () => {
+async function handleExport() {
 	if (!props.api?.export) {
 		ElMessage.warning("导出功能未配置");
 		return;
@@ -390,21 +388,21 @@ const handleExport = async () => {
 		console.error("导出失败", error);
 		ElMessage.error("导出失败");
 	}
-};
+}
 
 // 导入事件
-const handleImport = () => {
+function handleImport() {
 	importDialogVisible.value = true;
 	fileList.value = [];
-};
+}
 
 // 文件变更事件
-const handleFileChange = (file: UploadFile) => {
+function handleFileChange(file: UploadFile) {
 	fileList.value = [file];
-};
+}
 
 // 上传Excel
-const uploadExcel = async () => {
+async function uploadExcel() {
 	if (fileList.value.length === 0) {
 		ElMessage.warning("请选择文件");
 		return;
@@ -432,10 +430,10 @@ const uploadExcel = async () => {
 		console.error("导入失败", error);
 		ElMessage.error("导入失败");
 	}
-};
+}
 
 // 提交表单
-const submitForm = async () => {
+async function submitForm() {
 	if (!formRef.value) return;
 
 	await formRef.value.validate(async (valid) => {
@@ -477,20 +475,20 @@ const submitForm = async () => {
 			}
 		}
 	});
-};
+}
 
 // 重置表单
-const resetForm = () => {
+function resetForm() {
 	if (formRef.value) {
 		formRef.value.resetFields();
 	}
 	formData.value = {};
 	currentId.value = "";
-};
-const handleSearch = () => {
+}
+function handleSearch() {
 	currentPage.value = 1;
 	fetchData();
-};
+}
 
 watch(
 	() => props.tableData,
@@ -653,76 +651,76 @@ defineExpose({
 
 <style scoped lang="scss">
 .base-config-table {
-	width: 100%;
+  width: 100%;
 
-	.header {
-		margin-bottom: 20px;
+  .header {
+    margin-bottom: 20px;
 
-		h2 {
-			font-size: 20px;
-			font-weight: 600;
-			color: #303133;
-			margin: 0;
-		}
-	}
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #303133;
+      margin: 0;
+    }
+  }
 
-	.tool-bar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 20px;
+  .tool-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 
-		.left-buttons {
-			display: flex;
-			gap: 10px;
-			flex-wrap: wrap;
-		}
+    .left-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-		.right-tools {
-			min-width: 200px;
-		}
-	}
+    .right-tools {
+      min-width: 200px;
+    }
+  }
 
-	.upload-excel {
-		display: flex;
-		justify-content: center;
+  .upload-excel {
+    display: flex;
+    justify-content: center;
 
-		.el-upload__tip {
-			margin-top: 8px;
-			color: #909399;
-		}
-	}
-	.tool-bar {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 20px;
+    .el-upload__tip {
+      margin-top: 8px;
+      color: #909399;
+    }
+  }
+  .tool-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 
-		.left-buttons {
-			display: flex;
-			gap: 10px;
-			flex-wrap: wrap;
-		}
+    .left-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-		.right-tools {
-			display: flex;
-			gap: 10px;
-			align-items: center;
+    .right-tools {
+      display: flex;
+      gap: 10px;
+      align-items: center;
 
-			.filter-select {
-				width: 240px;
-			}
+      .filter-select {
+        width: 240px;
+      }
 
-			.search-input {
-				width: 220px;
-			}
-		}
-	}
+      .search-input {
+        width: 220px;
+      }
+    }
+  }
 }
 
 .title {
-	width: 100%;
-	padding-bottom: 10px;
-	border-bottom: 1px solid #efefef;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #efefef;
 }
 </style>

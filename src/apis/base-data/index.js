@@ -16,7 +16,7 @@ import Request from "../request";
  * @returns 返回一个异步函数，用于加载商品列表
  */
 
-export const getshangpingApi = async (data, success, fail) => {
+export async function getshangpingApi(data, success, fail) {
 	// const $store = useUserStore();
 	try {
 		// 发送登录请求
@@ -26,7 +26,6 @@ export const getshangpingApi = async (data, success, fail) => {
 			// 记录Token到本地
 			// 执行成功回调
 			success(res.data);
-			return;
 		}
 	} catch (err) {
 		// 打印错误信息
@@ -34,28 +33,28 @@ export const getshangpingApi = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 录入消息模板
  */
-export const addMessageTemplateAPI = (obj) => {
+export function addMessageTemplateAPI(obj) {
 	return Request.request(Request.POST, "/msgmw/add-messageTemplate", obj, http.upType.json);
-};
+}
 
 /**
  * 修改消息模板
  */
-export const updateMessageTemplateAPI = (obj) => {
+export function updateMessageTemplateAPI(obj) {
 	return Request.request(Request.PUT, "/msgmw/update-messageTemplate", obj, http.upType.json);
-};
+}
 
 /**
  * 删除消息模板，通过勾选对应的消息模版删除(可多项勾选)
  */
-export const deleteMessageTemplateAPI = (obj) => {
+export function deleteMessageTemplateAPI(obj) {
 	return Request.request(Request.DELETE, "/msgmw/delete-messageTemplate", obj, http.upType.json);
-};
+}
 
 /**
  * =======================================================================================================================
@@ -65,16 +64,16 @@ export const deleteMessageTemplateAPI = (obj) => {
 /**
  * 获取消息列表（带条件分页）
  */
-export const getMessageCenterAPI = (obj) => {
+export function getMessageCenterAPI(obj) {
 	return Request.request(Request.GET, "/msgmw/messages", obj, http.upType.json);
-};
+}
 
 /**
  * 修改消息
  */
-export const updateMessageCenterAPI = (obj, id) => {
+export function updateMessageCenterAPI(obj, id) {
 	return Request.request(Request.PUT, `/msgmw/messages/${id}`, obj, http.upType.json);
-};
+}
 
 /**
  * =======================================================================================================================
@@ -85,30 +84,30 @@ export const updateMessageCenterAPI = (obj, id) => {
 /**
  * 获取业务配置列表（条件+分页）
  */
-export const getWorkSettingAPI = (obj) => {
+export function getWorkSettingAPI(obj) {
 	return Request.request(Request.POST, "/msgmw/query", obj, http.upType.json);
-};
+}
 
 /**
  * 录入业务配置
  */
-export const addWorkSettingAPI = (obj) => {
+export function addWorkSettingAPI(obj) {
 	return Request.request(Request.POST, "/msgmw/add", obj, http.upType.json);
-};
+}
 
 /**
  * 修改业务配置
  */
-export const updateWorkSettingAPI = (obj) => {
+export function updateWorkSettingAPI(obj) {
 	return Request.request(Request.PUT, "/msgmw/update", obj, http.upType.json);
-};
+}
 
 /**
  * 删除业务配置（支持批量）
  */
-export const deleteWorkSettingAPI = (obj) => {
+export function deleteWorkSettingAPI(obj) {
 	return Request.request(Request.DELETE, "/msgmw/delete", obj, http.upType.json);
-};
+}
 
 /**
  * =======================================================================================================================
@@ -119,27 +118,27 @@ export const deleteWorkSettingAPI = (obj) => {
 /**
  * 获取SQL列表(条件+分页)
  */
-export const getSqlListAPI = (obj) => {
+export function getSqlListAPI(obj) {
 	return Request.request(Request.GET, "/msgmw/query-sql-list", obj, http.upType.json);
-};
+}
 
 /**
  * 录入SQL
  */
-export const addSqlAPI = (obj) => {
+export function addSqlAPI(obj) {
 	return Request.request(Request.POST, "/msgmw/add-sql", obj, http.upType.json);
-};
+}
 
 /**
  * 修改SQL
  */
-export const updateSqlAPI = (obj) => {
+export function updateSqlAPI(obj) {
 	return Request.request(Request.PUT, "/msgmw/modify-sql", obj, http.upType.json);
-};
+}
 
 /**
  * 删除SQL
  */
-export const deleteSqlAPI = (obj) => {
+export function deleteSqlAPI(obj) {
 	return Request.request(Request.DELETE, "/msgmw/remove-sql", obj, http.upType.json);
-};
+}

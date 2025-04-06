@@ -1,21 +1,18 @@
-import { dirname, resolve } from "node:path";
-import { fileURLToPath, URL } from "node:url";
-import * as fs from "node:fs";
-
-import { type ConfigEnv, defineConfig, loadEnv } from "vite";
+import type { ConfigEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
-import AutoImport from "./src/plugins/unplugin-auto-import/index.ts";
-import Components from "./src/plugins/unplugin-vue-components/index.ts";
-import tsAlias from "./src/plugins/vite-plugin-ts-alias/index.ts";
 import Icons from "unplugin-icons/vite";
-
+import VueRouter from "unplugin-vue-router/vite";
+import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import vueDevTools from "vite-plugin-vue-devtools";
-import VueRouter from "unplugin-vue-router/vite";
-import MetaLayouts from "vite-plugin-vue-meta-layouts";
 
+import MetaLayouts from "vite-plugin-vue-meta-layouts";
+import AutoImport from "./src/plugins/unplugin-auto-import/index.ts";
+import Components from "./src/plugins/unplugin-vue-components/index.ts";
 import { getRouteName } from "./src/plugins/unplugin-vue-router.ts";
+
 import autoImport from "./src/plugins/vite-plugin-autogeneration-import-file.ts";
+import tsAlias from "./src/plugins/vite-plugin-ts-alias/index.ts";
 
 /**
  * 用全量导入的方式 获取类型
@@ -63,7 +60,7 @@ export default defineConfig(({ mode }) => {
 					target: "http://8.140.208.103:10001", // 网关
 					rewrite: (path) => path.replace(/^\/api/, ""),
 
-					//TODO[TEST_CODE]:使用Apifox云MOCK
+					// TODO[TEST_CODE]:使用Apifox云MOCK
 					// target: "https://apifoxmock.com/m1/5579661-5257590-default",
 					// rewrite: (path) => path.replace(/^\/api/, ""),
 				},

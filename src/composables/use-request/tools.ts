@@ -1,9 +1,9 @@
-import qs from "qs";
-import { merge, isNil } from "lodash-es";
-
+import type { UseAxiosOptionsBase } from "@vueuse/integrations/useAxios";
 import type { AxiosRequestConfig } from "axios";
 
-import type { UseAxiosOptionsBase } from "@vueuse/integrations/useAxios";
+import { isNil, merge } from "lodash-es";
+
+import qs from "qs";
 
 /**
  * http的接口传参方式
@@ -113,7 +113,7 @@ export function setHeaders(config: AxiosRequestConfig, upType: UpType = UpType.j
 	}
 	if (!isNil(config.data) && upType === UpType.file) {
 		const formData = new FormData();
-		for (let key in config.data) {
+		for (const key in config.data) {
 			formData.append(key, config.data[key]);
 		}
 		config.data = formData;

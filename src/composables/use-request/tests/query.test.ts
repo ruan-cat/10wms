@@ -1,8 +1,8 @@
-import { test } from "vitest";
+import { it } from "vitest";
 
 import { queryExample } from "./query.example.ts";
 
-test("使用 query 接口", async () => {
+it("使用 query 接口", async () => {
 	const { execute, data, isLoading, isFinished } = queryExample({
 		onSuccess(data) {
 			console.log("query onSuccess", data);

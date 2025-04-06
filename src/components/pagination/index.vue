@@ -1,9 +1,12 @@
 <script lang="ts" setup>
-import { ref } from "vue";
 import type { PaginationProps as ElPaginationProps } from "element-plus";
+import { ref } from "vue";
 
 /** 预设的分页栏属性 */
 type PresetPaginationProps = Partial<ElPaginationProps>;
+
+/** 对外暴露需要设置值的 props */
+const props = defineProps<PaginationProps>();
 
 /**
  * 预设的分页栏属性
@@ -32,9 +35,6 @@ export interface PaginationProps extends PresetPaginationProps {
 	 */
 	asyncFunc: (...args: any[]) => Promise<any>;
 }
-
-/** 对外暴露需要设置值的 props */
-const props = defineProps<PaginationProps>();
 
 /** 给分页栏组件批量赋值的 props 对象 */
 const toPaginationProps = computed(() => {

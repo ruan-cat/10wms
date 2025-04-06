@@ -1,9 +1,4 @@
-<template>
-	<base-config-table title="工作状态配置" :columns="columns" :form-fields="formFields" :table-data="mockData" />
-</template>
-
 <script setup lang="ts">
-import { reactive } from "vue";
 import { Clock } from "@element-plus/icons-vue";
 import BaseConfigTable from "../../base-config/components/BaseTable.vue";
 // import { workStatusApi } from "@/api/personnel";
@@ -83,6 +78,10 @@ const mockData = [
 	},
 ];
 </script>
+
+<template>
+	<BaseConfigTable title="工作状态配置" :columns="columns" :form-fields="formFields" :table-data="mockData" />
+</template>
 
 <style scoped lang="scss">
 .title {

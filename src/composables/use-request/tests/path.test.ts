@@ -1,11 +1,11 @@
-import { test } from "vitest";
+import { it } from "vitest";
 
 import { pathExample } from "./path.example.ts";
 
 /** 要被删除项的id 需要自己准备好 */
 const id = "wgwegherth";
 
-test("使用 path 接口", async () => {
+it("使用 path 接口", async () => {
 	const { execute, data, isLoading, isFinished } = pathExample({
 		onSuccess(data) {
 			console.log("path onSuccess", data);

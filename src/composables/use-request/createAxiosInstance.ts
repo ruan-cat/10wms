@@ -1,10 +1,9 @@
-import axios from "axios";
-import { AxiosError } from "axios";
-import qs from "qs";
-
-import type { Router } from "vue-router";
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import type { Router } from "vue-router";
+import axios, { AxiosError } from "axios";
+
 import { ElMessage } from "element-plus";
+import qs from "qs";
 
 import { HttpCode } from "./tools";
 
@@ -58,7 +57,7 @@ export function registerAxiosInstanceWithUseAxiosHook(router: Router, axiosInsta
 	axiosInstance.interceptors.request.use(
 		function onFulfilled(config) {
 			// 提交的时候携带登录凭证
-			let store = useUserStore();
+			const store = useUserStore();
 			// @ts-ignore
 			let token = store.getToken;
 
@@ -71,7 +70,7 @@ export function registerAxiosInstanceWithUseAxiosHook(router: Router, axiosInsta
 			}
 
 			if (token) {
-				config.headers["Authorization"] = `Bearer ${token}`;
+				config.headers.Authorization = `Bearer ${token}`;
 			}
 
 			/** 处理反向代理的虚拟地址问题 */
@@ -95,7 +94,7 @@ export function registerAxiosInstanceWithUseAxiosHook(router: Router, axiosInsta
 
 				for (const item of cfg) {
 					for (const regExp of item.regExps) {
-						if (new RegExp("^" + regExp).test(<string>config.url)) {
+						if (new RegExp(`^${regExp}`).test(<string>config.url)) {
 							/** 请求前缀 */
 							// let prefix = "";
 							// 如果是开发环境 这需要增加反向代理的前缀
@@ -142,7 +141,7 @@ export function registerAxiosInstanceWithUseAxiosHook(router: Router, axiosInsta
 			// HTTP响应状态码正常
 			if (response.status === 200) {
 				if ("code" in response.data) {
-					let store = useUserStore();
+					const store = useUserStore();
 					const data = response.data;
 
 					if (data.code === HttpCode.SUCCESS) {
@@ -159,7 +158,7 @@ export function registerAxiosInstanceWithUseAxiosHook(router: Router, axiosInsta
 
 					if (data.code === HttpCode.UNAUTHORIZED) {
 						// 判断是否是超时
-						if (typeof data.data === "string" && data.data.indexOf("Jwt expired at") >= 0) {
+						if (typeof data.data === "string" && data.data.includes("Jwt expired at")) {
 							// 刷新凭证
 							// @ts-ignore
 							await store.reloadToken();

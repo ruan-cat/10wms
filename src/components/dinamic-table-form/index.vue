@@ -1,15 +1,16 @@
 <script lang="ts" setup generic="T extends Record<string, any>">
-import { ref, defineProps, toRef, type Ref } from "vue";
-import { cloneDeep, remove, isEqual, isEmpty } from "lodash-es";
-
-import ComponentsTable, { type SimpleDataTableProps } from "components/table/index.vue";
-import type { SimpleDataTableColumn } from "components/table/types";
 import type {
 	_OmitSimpleDataTableProps,
-	EditableTableColumn,
 	DinamicTableFormEmit,
+	EditableTableColumn,
 } from "components/dinamic-table-form/types";
+import type { SimpleDataTableColumn } from "components/table/types";
+
+import type { Ref } from "vue";
+import ComponentsTable from "components/table/index.vue";
 import { ElMessage } from "element-plus";
+import { cloneDeep, isEmpty, isEqual, remove } from "lodash-es";
+import { defineProps, ref } from "vue";
 
 /**
  * 动态表格样式表单 props值
@@ -155,13 +156,13 @@ function getEditable(column: EditableTableColumn<T>) {
 
 <style lang="scss" scoped>
 .editable-table {
-	padding: 20px;
-	background: #fff;
-	box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
-	border-radius: 8px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
 .table-actions {
-	margin-bottom: 15px;
+  margin-bottom: 15px;
 }
 </style>

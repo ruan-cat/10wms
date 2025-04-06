@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { ref, defineExpose } from "vue";
 import ComponentsDialogPromise from "components/dialog-promise/index.vue";
+import { defineExpose, ref } from "vue";
+
 const props = ref<DialogPromiseProps<{}>>({
 	async onDialogClose({ reject, resolve }) {
 		resolve({});

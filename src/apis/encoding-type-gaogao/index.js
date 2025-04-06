@@ -14,10 +14,10 @@ const currBaseUrl = "/codetype/baseconfig";
 /**
  * 获取参数类型列表（条件+分页）
  */
-export const listCodeBaseConfig = async (data, success, fail) => {
+export async function listCodeBaseConfig(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "/query-encodingtype", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}/query-encodingtype`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -32,15 +32,15 @@ export const listCodeBaseConfig = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 录入参数类型
  */
-export const addCodeBaseConfig = async (data, success, fail) => {
+export async function addCodeBaseConfig(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.POST, currBaseUrl + "/add-encodingtype", data);
+		const res = await Request.requestJson(Request.POST, `${currBaseUrl}/add-encodingtype`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -55,15 +55,15 @@ export const addCodeBaseConfig = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 修改参数类型
  */
-export const updateCodeBaseConfig = async (data, success, fail) => {
+export async function updateCodeBaseConfig(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.PUT, currBaseUrl + "/modify-encodingtype", data);
+		const res = await Request.requestJson(Request.PUT, `${currBaseUrl}/modify-encodingtype`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -78,15 +78,15 @@ export const updateCodeBaseConfig = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 删除参数类型（支持批量删除）
  */
-export const deleteCodeBaseConfig = async (data, success, fail) => {
+export async function deleteCodeBaseConfig(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.DELETE, currBaseUrl + "/delete-encodingtype", data);
+		const res = await Request.requestJson(Request.DELETE, `${currBaseUrl}/delete-encodingtype`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -101,15 +101,15 @@ export const deleteCodeBaseConfig = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导出参数类型
  */
-export const exportCodeBaseConfig = async (data, success, fail) => {
+export async function exportCodeBaseConfig(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "export-encodingtype", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}export-encodingtype`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -124,15 +124,15 @@ export const exportCodeBaseConfig = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导入参数类型
  */
-export const importCodeBaseConfig = async (data, success, fail) => {
+export async function importCodeBaseConfig(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.POST, currBaseUrl + "import-encodingtype", data);
+		const res = await Request.requestForm(Request.POST, `${currBaseUrl}import-encodingtype`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -147,4 +147,4 @@ export const importCodeBaseConfig = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}

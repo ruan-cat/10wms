@@ -1,9 +1,9 @@
 import installHttp from "@/plugins/http";
 import http from "axios";
+import { createPinia } from "pinia";
+import { createApp } from "vue";
 // TODO 测试的时候需要修改成对应的服务器地址，一般修改成网关服务器地址
 http.defaults.baseURL = "https://apifoxmock.com/m1/5579661-5257590-default";
-import { createApp } from "vue";
-import { createPinia } from "pinia";
 
 export function withSetup(composable) {
 	let result;

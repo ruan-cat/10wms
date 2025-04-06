@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import { defineEmits, defineProps } from "vue";
+
+// 定义 Props
+defineProps<{
+	visible: boolean; // 控制弹框显示
+	messages: any[]; // 消息列表
+}>();
+
+// 定义 Emits
+const emit = defineEmits(["update:visible"]);
+
+// 关闭弹框
+function handleCancel() {
+	emit("update:visible", false);
+}
+
+// 更新 visible 状态
+function updateVisible(value: boolean) {
+	emit("update:visible", value);
+}
+</script>
+
 <template>
 	<el-dialog :model-value="visible" title="系统消息" width="600" draggable @update:model-value="updateVisible">
 		<!-- 表格 -->
@@ -18,37 +41,14 @@
 	</el-dialog>
 </template>
 
-<script setup lang="ts">
-import { defineProps, defineEmits } from "vue";
-
-// 定义 Props
-defineProps<{
-	visible: boolean; // 控制弹框显示
-	messages: any[]; // 消息列表
-}>();
-
-// 定义 Emits
-const emit = defineEmits(["update:visible"]);
-
-// 关闭弹框
-const handleCancel = () => {
-	emit("update:visible", false);
-};
-
-// 更新 visible 状态
-const updateVisible = (value: boolean) => {
-	emit("update:visible", value);
-};
-</script>
-
 <style lang="scss" scoped>
 .dialog-footer {
-	text-align: right;
+  text-align: right;
 }
 
 .empty-placeholder {
-	text-align: center;
-	padding: 20px;
-	color: #999;
+  text-align: center;
+  padding: 20px;
+  color: #999;
 }
 </style>

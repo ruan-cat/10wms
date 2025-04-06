@@ -1,8 +1,8 @@
-import { test } from "vitest";
+import { it } from "vitest";
 
 import { bodyExample } from "./body.example.ts";
 
-test("使用 body 接口", async () => {
+it("使用 body 接口", async () => {
 	const { execute, data, isLoading, isFinished } = bodyExample({
 		onSuccess(data) {
 			console.log("body onSuccess", data);

@@ -14,10 +14,10 @@ const currBaseUrl = "/autocode/baseconfig/automaticencoding";
 /**
  * 获取参数类型列表（条件+分页）
  */
-export const listAutoCoding = async (data, success, fail) => {
+export async function listAutoCoding(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "/queryall", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}/queryall`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -32,15 +32,15 @@ export const listAutoCoding = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 录入参数类型
  */
-export const addAutoCoding = async (data, success, fail) => {
+export async function addAutoCoding(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.POST, currBaseUrl + "/save", data);
+		const res = await Request.requestForm(Request.POST, `${currBaseUrl}/save`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -55,15 +55,15 @@ export const addAutoCoding = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 修改参数类型
  */
-export const updateAutoCoding = async (data, success, fail) => {
+export async function updateAutoCoding(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.POST, currBaseUrl + "/update", data);
+		const res = await Request.requestForm(Request.POST, `${currBaseUrl}/update`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -78,15 +78,15 @@ export const updateAutoCoding = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 删除参数类型（支持批量删除）
  */
-export const deleteAutoCoding = async (data, success, fail) => {
+export async function deleteAutoCoding(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestJson(Request.DELETE, currBaseUrl + "/delete", data);
+		const res = await Request.requestJson(Request.DELETE, `${currBaseUrl}/delete`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -101,15 +101,15 @@ export const deleteAutoCoding = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导出参数类型
  */
-export const exportAutoCoding = async (data, success, fail) => {
+export async function exportAutoCoding(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.GET, currBaseUrl + "export", data);
+		const res = await Request.requestForm(Request.GET, `${currBaseUrl}export`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -124,15 +124,15 @@ export const exportAutoCoding = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}
 
 /**
  * 导入参数类型
  */
-export const importAutoCoding = async (data, success, fail) => {
+export async function importAutoCoding(data, success, fail) {
 	try {
 		// 发送请求
-		const res = await Request.requestForm(Request.POST, currBaseUrl + "import", data);
+		const res = await Request.requestForm(Request.POST, `${currBaseUrl}import`, data);
 		// 处理结果
 		if (res.data) {
 			// 执行成功回调
@@ -147,4 +147,4 @@ export const importAutoCoding = async (data, success, fail) => {
 		// 执行失败回调
 		fail();
 	}
-};
+}

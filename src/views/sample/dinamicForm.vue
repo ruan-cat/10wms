@@ -1,7 +1,8 @@
-<template>
-	<dinamicForm @form-finish="onFinish" :series="series" />
-</template>
 <script setup lang="ts">
+import type { DynamicComponentConfig } from "@/components/base-form/types";
+import { reactive } from "vue";
+import dinamicForm from "../../components/base-form/index.vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -11,14 +12,10 @@ definePage({
 	},
 });
 
-import { reactive } from "vue";
-import dinamicForm from "../../components/base-form/index.vue";
-import { DynamicComponentConfig } from "@/components/base-form/types";
-
 // 表单配置
 const series = reactive<DynamicComponentConfig[]>([
 	{
-		type: "input", //标识组件的类型
+		type: "input", // 标识组件的类型
 		props: {
 			label: "出货人",
 			dataKey: "name", // 接受表单的值的key
@@ -36,7 +33,7 @@ const series = reactive<DynamicComponentConfig[]>([
 				{ label: "电子产品", value: 1 },
 				{ label: "日用品", value: 2 },
 				{ label: "食品", value: 3 },
-			], //select组件的options
+			], // select组件的options
 			responsive: { md: 12, lg: 8 },
 		},
 	},
@@ -69,7 +66,7 @@ const series = reactive<DynamicComponentConfig[]>([
 		props: {
 			label: "库存信息表",
 			dataKey: "countInfo",
-			tableData: [], //表格的初始值
+			tableData: [], // 表格的初始值
 			columns: [
 				{ dataKey: "address", label: "当前地址", editable: true },
 				{ dataKey: "supplyType", label: "供应类型", editable: true },
@@ -85,3 +82,7 @@ function onFinish(values: any) {
 	console.log("拿到了表单数据", values);
 }
 </script>
+
+<template>
+	<dinamicForm @form-finish="onFinish" :series="series" />
+</template>

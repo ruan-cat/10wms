@@ -1,3 +1,48 @@
+<script lang="ts" setup>
+import { ref } from "vue";
+
+interface User {
+	account: string;
+	name: string;
+	department: string;
+	role: string;
+	status: string;
+}
+
+const emit = defineEmits(["submit"]);
+const visible = ref(false);
+const isEdit = ref(false);
+const form = ref<User>({
+	account: "",
+	name: "",
+	department: "",
+	role: "",
+	status: "激活",
+});
+
+function open(user?: User) {
+	if (user) {
+		form.value = { ...user };
+		isEdit.value = true;
+	} else {
+		form.value = { account: "", name: "", department: "", role: "", status: "激活" };
+		isEdit.value = false;
+	}
+	visible.value = true;
+}
+
+function handleClose() {
+	visible.value = false;
+}
+
+function handleSubmit() {
+	emit("submit", form.value);
+	handleClose();
+}
+
+defineExpose({ open });
+</script>
+
 <template>
 	<el-dialog v-model="visible" :title="isEdit ? '编辑用户' : '新增用户'" @close="handleClose">
 		<el-form :model="form" label-width="80px">
@@ -30,49 +75,3 @@
 		</template>
 	</el-dialog>
 </template>
-
-<script lang="ts" setup>
-import { ref } from "vue";
-
-interface User {
-	account: string;
-	name: string;
-	department: string;
-	role: string;
-	status: string;
-}
-
-const visible = ref(false);
-const isEdit = ref(false);
-const form = ref<User>({
-	account: "",
-	name: "",
-	department: "",
-	role: "",
-	status: "激活",
-});
-
-const emit = defineEmits(["submit"]);
-
-function open(user?: User) {
-	if (user) {
-		form.value = { ...user };
-		isEdit.value = true;
-	} else {
-		form.value = { account: "", name: "", department: "", role: "", status: "激活" };
-		isEdit.value = false;
-	}
-	visible.value = true;
-}
-
-function handleClose() {
-	visible.value = false;
-}
-
-function handleSubmit() {
-	emit("submit", form.value);
-	handleClose();
-}
-
-defineExpose({ open });
-</script>

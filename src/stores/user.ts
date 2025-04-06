@@ -1,9 +1,9 @@
-import { defineStore } from "pinia";
-import { ref, computed } from "vue";
-import Request from "@/apis/request";
-
 import type { MenuItem } from "types/MenuItem";
 import type { User } from "types/User";
+import Request from "@/apis/request";
+
+import { defineStore } from "pinia";
+import { computed, ref } from "vue";
 
 export const useUserStore = defineStore("user", () => {
 	/** 记录token */
@@ -42,8 +42,8 @@ export const useUserStore = defineStore("user", () => {
 
 	/** 加载菜单 */
 	async function loadMenus() {
-		//TODO[TEST_CODE]:此处写测试数据设定
-		//this.menus = testMenus
+		// TODO[TEST_CODE]:此处写测试数据设定
+		// this.menus = testMenus
 
 		// 发送获取菜单请求
 		const data = await Request.requestForm(Request.GET, "/login/get-menus", null);
@@ -77,7 +77,7 @@ export const useUserStore = defineStore("user", () => {
 			clientId: import.meta.env.VITE_API_URL,
 		});
 
-		//设置Token相关属性
+		// 设置Token相关属性
 		setToken(data.data);
 	}
 

@@ -1,24 +1,23 @@
 <script lang="ts" setup>
-import { ref, computed } from "vue";
-import { storeToRefs } from "pinia";
+import type { TabPaneName } from "element-plus";
 
 // import { useUserStore } from "stores/user";
 // import { useTabStore } from "@/stores/tab";
 // import { useRouterToMenuItem } from "composables/use-routers-to-menu-item/index";
 
-import { Fold, Expand, Bell, Message, SwitchButton, Setting, User, WarnTriangleFilled } from "@element-plus/icons-vue";
-import { TabPaneName } from "element-plus";
+import { updateNoticeStatusAPI } from "@/apis/notice-remind";
+import { Expand, Fold } from "@element-plus/icons-vue";
 
-import TotalDialog from "./components/totalDialog.vue";
+import { storeToRefs } from "pinia";
 
+import { computed, ref } from "vue";
 import ChangePasswordDialog from "./components/ChangePasswordDialog.vue";
-import SystemMessageDialog from "./components/SystemMessageDialog.vue";
 import HomeStyleDialog from "./components/HomeStyleDialog.vue";
 import LogoutDialog from "./components/LogoutDialog.vue";
 
 import noticeDetail from "./components/notice-detail.vue";
-import { getUnreadNoticeListAPI } from "@/apis/notice-remind";
-import { updateNoticeStatusAPI } from "@/apis/notice-remind";
+import SystemMessageDialog from "./components/SystemMessageDialog.vue";
+import TotalDialog from "./components/totalDialog.vue";
 // 控制弹框
 const dialogVisible = ref(false);
 // 用来控制进入哪个dialog
@@ -53,14 +52,14 @@ const menus = computed(() => [
 
 const isCollapse = ref(false);
 
-const toggleCollapse = () => {
+function toggleCollapse() {
 	isCollapse.value = !isCollapse.value;
-};
+}
 
-/**所有没有子菜单的菜单项 */
+/** 所有没有子菜单的菜单项 */
 const minimalTabs = ref(extractMinimalMenus(menus.value));
 
-const handleMenuSelect = (menu: string) => {
+function handleMenuSelect(menu: string) {
 	// 检查tabs中是否已存在该menu对应的tab
 	const existingTab = tabs.value.find((tab) => tab.href === menu);
 	if (!existingTab) {
@@ -72,12 +71,13 @@ const handleMenuSelect = (menu: string) => {
 		}
 	}
 	setActiveTab(menu);
-};
+}
 
-const removeTab = (tabName: TabPaneName) => {
+function removeTab(tabName: TabPaneName) {
 	// 1. 查找目标标签页索引
 	const tabIndex = tabs.value.findIndex((tab) => tab.href === tabName);
-	if (tabIndex === -1) return;
+	if (tabIndex === -1) 
+return;
 	// 2. 预先计算要切换的标签页（在删除前）
 	let nextTab: MenuItem | null = null;
 	if (tabs.value.length > 1) {
@@ -102,14 +102,14 @@ const removeTab = (tabName: TabPaneName) => {
 			router.push("/home"); // 跳转默认路由
 		}
 	}
-};
+}
 
-const handleTabChange = (tab: TabPaneName) => {
+function handleTabChange(tab: TabPaneName) {
 	setActiveTab(tab);
 	router.push(tab as string);
-};
+}
 
-const handleCommand = (command: string, tabName: string) => {
+function handleCommand(command: string, tabName: string) {
 	switch (command) {
 		case "refresh":
 			router.go(0);
@@ -126,7 +126,8 @@ const handleCommand = (command: string, tabName: string) => {
 		}
 		case "closeElse": {
 			const currentTab = tabs.value.find((t) => t.href === tabName);
-			if (!currentTab) return;
+			if (!currentTab) 
+return;
 			// 过滤保留当前标签和首页
 			tabs.value = tabs.value.filter((t) => t.href === tabName || t.href === "/home");
 			setActiveTab(tabName);
@@ -135,7 +136,8 @@ const handleCommand = (command: string, tabName: string) => {
 		}
 		case "closeRight": {
 			const currentIndex = tabs.value.findIndex((t) => t.href === tabName);
-			if (currentIndex === -1) return;
+			if (currentIndex === -1) 
+return;
 			activeTab.value = tabName;
 			// 保留当前及左侧标签（slice含头不含尾）
 			tabs.value = tabs.value.slice(0, currentIndex + 1);
@@ -143,14 +145,15 @@ const handleCommand = (command: string, tabName: string) => {
 		}
 		case "closeLeft": {
 			const currentIndex = tabs.value.findIndex((t) => t.href === tabName);
-			if (currentIndex === -1) return;
+			if (currentIndex === -1) 
+return;
 			activeTab.value = tabName;
 			// 保留当前及右侧标签
 			tabs.value = tabs.value.slice(currentIndex);
 			break;
 		}
 	}
-};
+}
 
 // 传递的标题
 const dialogTitle = ref("");
@@ -168,11 +171,11 @@ onMounted(() => {
 /** 当前选中的风格 */
 const currentStyle = ref("ace");
 // 处理风格确认
-const handleStyleConfirm = (style: string) => {
+function handleStyleConfirm(style: string) {
 	currentStyle.value = style; // 更新当前风格
 	localStorage.setItem("homeStyle", style); // 将风格保存到 localStorage
 	console.log("选中的风格:", style);
-};
+}
 
 // 根据当前风格动态设置首页的 class
 const homeStyleClass = computed(() => {
@@ -180,7 +183,7 @@ const homeStyleClass = computed(() => {
 });
 
 // TODO 去往公告详情页
-const goNoticeDetail = async (type: string, id: string) => {
+async function goNoticeDetail(type: string, id: string) {
 	// 修改成已读
 	console.log(id, typeof id);
 	await updateNoticeStatusAPI({
@@ -191,7 +194,7 @@ const goNoticeDetail = async (type: string, id: string) => {
 	noticeId.value = id;
 	dialogTitle.value = type === "1" ? "通知公告详情" : "系统消息详情";
 	showDetail.value = true;
-};
+}
 </script>
 
 <template>
@@ -236,7 +239,7 @@ const goNoticeDetail = async (type: string, id: string) => {
 								</template>
 
 								<template v-else>
-									<el-sub-menu :index="item.id + ''">
+									<el-sub-menu :index="`${item.id}`">
 										<template #title>
 											<el-icon>
 												<component :is="item.icon" />

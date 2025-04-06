@@ -1,32 +1,6 @@
-<template>
-	<base-config-table
-		title="商品类目配置"
-		:columns="columns"
-		:form-fields="formFields"
-		:table-data="mockData"
-		@row-click="handleRowClick"
-	>
-		<template #column-categoryName="{ row }">
-			<div class="category-name-cell" :style="{ paddingLeft: `${(row._level || 0) * 20}px` }">
-				<el-icon v-if="row.hasChildren" @click.stop="toggleExpand(row)">
-					<ArrowRight class="expand-icon" :class="{ 'is-expanded': row.expanded }" />
-				</el-icon>
-				<el-icon v-else class="category-icon-placeholder"></el-icon>
-				<el-icon class="category-icon">
-					<FolderOpened v-if="row.hasChildren && row.expanded" />
-					<Folder v-else-if="row.hasChildren" />
-					<Document v-else />
-				</el-icon>
-				<span class="category-name">{{ row.categoryName }}</span>
-			</div>
-		</template>
-	</base-config-table>
-</template>
-
 <script setup lang="ts">
-import { reactive, ref, nextTick } from "vue";
-import { Goods } from "@element-plus/icons-vue";
-import { Document, Folder, FolderOpened, ArrowRight } from "@element-plus/icons-vue";
+import { ArrowRight, Document, Folder, FolderOpened, Goods } from "@element-plus/icons-vue";
+import { ref } from "vue";
 import BaseConfigTable from "../components/BaseTable.vue";
 // import { productCategoryApi } from "@/api/product";
 
@@ -248,15 +222,15 @@ const categoryAPIData = {
 const expandedRows = ref(new Set());
 
 // 处理行点击事件
-const handleRowClick = (row) => {
+function handleRowClick(row) {
 	// 点击行时也可以触发展开/折叠
 	if (row.hasChildren) {
 		toggleExpand(row);
 	}
-};
+}
 
 // 切换展开/折叠状态
-const toggleExpand = (row) => {
+function toggleExpand(row) {
 	if (!row.hasChildren) return;
 
 	row.expanded = !row.expanded;
@@ -275,9 +249,9 @@ const toggleExpand = (row) => {
 
 	// 强制刷新数据引用，确保视图更新
 	mockData.value = [...mockData.value];
-};
+}
 
-const expandCategory = (row) => {
+function expandCategory(row) {
 	// 获取子类目数据
 	const childrenData = categoryAPIData[row.id] || [];
 
@@ -292,9 +266,9 @@ const expandCategory = (row) => {
 		// 强制刷新数据引用，确保视图更新
 		mockData.value = [...mockData.value];
 	}
-};
+}
 
-const collapseCategory = (row) => {
+function collapseCategory(row) {
 	const startIndex = mockData.value.findIndex((item) => item.id === row.id);
 	if (startIndex === -1) return;
 	const toRemove = [];
@@ -326,7 +300,7 @@ const collapseCategory = (row) => {
 	for (let i = toRemove.length - 1; i >= 0; i--) {
 		mockData.value.splice(toRemove[i], 1);
 	}
-};
+}
 
 // API获取方法
 // const api = {
@@ -339,6 +313,31 @@ const collapseCategory = (row) => {
 // 	import: productCategoryApi.import,
 // };
 </script>
+
+<template>
+	<BaseConfigTable
+		title="商品类目配置"
+		:columns="columns"
+		:form-fields="formFields"
+		:table-data="mockData"
+		@row-click="handleRowClick"
+	>
+		<template #column-categoryName="{ row }">
+			<div class="category-name-cell" :style="{ paddingLeft: `${(row._level || 0) * 20}px` }">
+				<el-icon v-if="row.hasChildren" @click.stop="toggleExpand(row)">
+					<ArrowRight class="expand-icon" :class="{ 'is-expanded': row.expanded }" />
+				</el-icon>
+				<el-icon v-else class="category-icon-placeholder"></el-icon>
+				<el-icon class="category-icon">
+					<FolderOpened v-if="row.hasChildren && row.expanded" />
+					<Folder v-else-if="row.hasChildren" />
+					<Document v-else />
+				</el-icon>
+				<span class="category-name">{{ row.categoryName }}</span>
+			</div>
+		</template>
+	</BaseConfigTable>
+</template>
 
 <style scoped lang="scss">
 .category-name-cell {

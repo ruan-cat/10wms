@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+import FooterSlotExample from "components/dialog-promise/tests/footer-slot-example.vue";
+import MiniExample from "components/dialog-promise/tests/mini-example.vue";
+import SimpleFormExample from "components/dialog-promise/tests/simple-form-example.vue";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -7,10 +11,6 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import SimpleFormExample from "components/dialog-promise/tests/simple-form-example.vue";
-import FooterSlotExample from "components/dialog-promise/tests/footer-slot-example.vue";
-import MiniExample from "components/dialog-promise/tests/mini-example.vue";
 </script>
 
 <template>

@@ -1,12 +1,12 @@
-import { setupLayouts, createGetRoutes } from "virtual:meta-layouts";
-import { routes, handleHotUpdate } from "vue-router/auto-routes";
+import { isConditionsSome } from "@ruan-cat/utils";
+import { ElMessage } from "element-plus";
+import { storeToRefs } from "pinia";
+
+import { useUserStore } from "stores/user";
+import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
 import { createRouter, createWebHistory } from "vue-router/auto";
 
-import { storeToRefs } from "pinia";
-import { ElMessage } from "element-plus";
-import { useUserStore } from "stores/user";
-
-import { isConditionsSome } from "@ruan-cat/utils";
+import { handleHotUpdate, routes } from "vue-router/auto-routes";
 
 /**
  * 菜单类型
@@ -152,7 +152,7 @@ router.beforeEach(async function (to, from, next) {
 
 	// TODO[TEST_CODE]:放行示例模块访问
 	if (import.meta.env.DEV) {
-		if (to.path.indexOf("sample") !== -1) {
+		if (to.path.includes("sample")) {
 			next();
 			return;
 		}

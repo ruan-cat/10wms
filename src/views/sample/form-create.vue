@@ -1,8 +1,7 @@
-<template>
-	<fc-designer ref="designer" height="88vh" />
-</template>
-
 <script lang="ts" setup>
+import { ref } from "vue";
+import "element-plus/dist/index.css";
+
 definePage({
 	meta: {
 		menuType: "page",
@@ -11,8 +10,9 @@ definePage({
 		icon: "IconSetting",
 	},
 });
-
-import "element-plus/dist/index.css";
-import { ref } from "vue";
 const designer = ref(null);
 </script>
+
+<template>
+	<fc-designer ref="designer" height="88vh" />
+</template>

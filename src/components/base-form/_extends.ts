@@ -1,8 +1,7 @@
+import type { InputProps, ISelectProps } from "element-plus";
 /**
  * 本文件专门拓展继承element-plus各种表单组件的props属性
  */
-import type { ExtractPropTypes } from "vue";
-import type { InputProps, ISelectProps } from "element-plus";
 // import  {  SelectProps } from "element-plus";
 
 /**
@@ -21,7 +20,7 @@ export type BaseFormPropKey<T> = string & keyof T;
  * 该类型预期被继承 本类型旨在于框定每一个表单配置项都要填写的字段
  *
  * 目前该类型将会被其他中间类型继承
- * @private 暂不考虑该类型被其他组件使用
+ * @private
  */
 export interface _BaseFormItemProps<T> {
 	/** 表单字段 */
@@ -47,7 +46,7 @@ export interface _BaseFormItemProps<T> {
  * 输入框 props
  * @description
  * 继承了 element-plus 的`输入框`组件的 props
- * @private 请不要在业务组件内使用该类型
+ * @private
  */
 export type _InputProps<T> = _BaseFormItemProps<T> & Partial<InputProps>;
 
@@ -55,6 +54,6 @@ export type _InputProps<T> = _BaseFormItemProps<T> & Partial<InputProps>;
  * 选择框 props
  * @description
  * 继承了 element-plus 的`选择框`组件的 props
- * @private 请不要在业务组件内使用该类型
+ * @private
  */
 export type _SelectProps<T> = _BaseFormItemProps<T> & Partial<ISelectProps>;

@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { sysManagerAddUser, sysManagerDeleteUser, sysManagerResetPassword, sysManagerQueryDepartmentAll } from "./user";
+import { sysManagerAddUser, sysManagerDeleteUser, sysManagerQueryDepartmentAll, sysManagerResetPassword } from "./user";
 
 describe("用户管理接口实现", () => {
 	it("添加用户接口", async () => {

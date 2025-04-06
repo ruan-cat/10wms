@@ -1,6 +1,6 @@
-import { RequiredPick } from "type-plus";
-import { ParamsQueryKey, useRequest } from "composables/use-request/index";
-import { PageDTO } from "@/types/PageDTO";
+import type { ParamsQueryKey } from "composables/use-request/index";
+import type { RequiredPick } from "type-plus";
+import { useRequest } from "composables/use-request/index";
 
 /**
  * 分类对象

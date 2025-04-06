@@ -1,3 +1,52 @@
+<script setup lang="ts">
+import { ref } from "vue";
+
+// 发送父组件的数据
+const emit = defineEmits(["user-click"]);
+// 导入组件maps
+// // 导入title组件
+const addTitleComponent = import.meta.glob("@/components/table-title/title-compoents/*.vue");
+const componentMaps = Object.entries(addTitleComponent).reduce(
+	(acc, [path, component]) => {
+		// 从路径中提取文件名
+		const componentName = path.match(/\/([^/]+)\.vue$/)?.[1] || "";
+		acc[componentName] = defineAsyncComponent(component);
+		return acc;
+	},
+	{} as Record<string, Component>,
+);
+// // 导入icon组件
+const addIconComponent = import.meta.glob("@/components/table-title/table-icon/*.vue");
+const iconMaps = Object.entries(addIconComponent).reduce(
+	(acc, [path, component]) => {
+		// 从路径中提取文件名
+		const componentName = path.match(/\/([^/]+)\.vue$/)?.[1] || "";
+		acc[componentName] = defineAsyncComponent(component);
+		return acc;
+	},
+	{} as Record<string, Component>,
+);
+console.log("VUE : iconMaps :", iconMaps);
+
+// loc data
+const showTitle = ref(true);
+const triggerNumber = ref(0);
+// 动态绑定父组件的数据
+const transferTitleData = defineModel();
+/**
+ * @function userClick
+ * 触发用户点击事件
+ * @param {string} name - 被点击的组件的name
+ * @emits user-click
+ */
+function userClick(data: object) {
+	console.log("VUE : FUNC : userClick : data:", data);
+	emit("user-click", data);
+}
+
+// func
+</script>
+
 <template>
 	<div>
 		<div v-if="transferTitleData.unfold">
@@ -79,82 +128,35 @@
 		</div>
 	</div>
 </template>
-<script setup lang="ts">
-import { ref } from "vue";
 
-// 导入组件maps
-// // 导入title组件
-const addTitleComponent = import.meta.glob("@/components/table-title/title-compoents/*.vue");
-const componentMaps = Object.entries(addTitleComponent).reduce(
-	(acc, [path, component]) => {
-		// 从路径中提取文件名
-		const componentName = path.match(/\/([^/]+)\.vue$/)?.[1] || "";
-		acc[componentName] = defineAsyncComponent(component);
-		return acc;
-	},
-	{} as Record<string, Component>,
-);
-// // 导入icon组件
-const addIconComponent = import.meta.glob("@/components/table-title/table-icon/*.vue");
-const iconMaps = Object.entries(addIconComponent).reduce(
-	(acc, [path, component]) => {
-		// 从路径中提取文件名
-		const componentName = path.match(/\/([^/]+)\.vue$/)?.[1] || "";
-		acc[componentName] = defineAsyncComponent(component);
-		return acc;
-	},
-	{} as Record<string, Component>,
-);
-console.log("VUE : iconMaps :", iconMaps);
-
-// loc data
-const showTitle = ref(true);
-const triggerNumber = ref(0);
-// 动态绑定父组件的数据
-const transferTitleData = defineModel();
-// 发送父组件的数据
-const emit = defineEmits(["user-click"]);
-/**
- * @function userClick
- * 触发用户点击事件
- * @param {string} name - 被点击的组件的name
- * @emits user-click
- */
-const userClick = (data: object) => {
-	console.log("VUE : FUNC : userClick : data:", data);
-	emit("user-click", data);
-};
-
-// func
-</script>
 <style scoped>
 .animated-div {
-	background-color: gainsboro;
-	padding: 10px;
-	margin-top: 5px;
-	opacity: 1;
-	transform: translateY(0px);
-	transition:
-		transform 0.3s ease-out,
-		opacity 0.3s ease-out;
+  background-color: gainsboro;
+  padding: 10px;
+  margin-top: 5px;
+  opacity: 1;
+  transform: translateY(0px);
+  transition:
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out;
 }
 
 .titleAnimate-enter-active,
 .titleAnimate-leave-active {
-	transition:
-		transform 0.3s ease-out,
-		opacity 0.3s ease-out;
+  transition:
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out;
 }
 
 .titleAnimate-enter-from,
 .titleAnimate-leave-to {
-	opacity: 0;
-	transform: translateY(-10px);
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 .titleAnimate-enter-to,
 .titleAnimate-leave-from {
-	opacity: 1;
-	transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

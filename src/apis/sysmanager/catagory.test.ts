@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { sysmanagerCatagoryRemoveCatagory, sysmanagerCatagoryQueryCatagoryList } from "./catagory";
+import { sysmanagerCatagoryQueryCatagoryList, sysmanagerCatagoryRemoveCatagory } from "./catagory";
 
 describe("分类管理接口实现", () => {
 	it("新增分类接口", async () => {

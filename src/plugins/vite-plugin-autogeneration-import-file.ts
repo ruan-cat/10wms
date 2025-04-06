@@ -1,13 +1,13 @@
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath, URL } from "node:url";
 import * as fs from "node:fs";
+import { dirname, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+
+import consola from "consola";
+import { isUndefined, upperFirst } from "lodash-es";
+import { createPlugin, getName } from "vite-plugin-autogeneration-import-file";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-import { upperFirst, isUndefined } from "lodash-es";
-import { createPlugin, getName } from "vite-plugin-autogeneration-import-file";
-import consola from "consola";
 
 const { autoImport, resolver } = createPlugin();
 

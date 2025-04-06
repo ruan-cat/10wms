@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import ComponentsPagination, { type PaginationProps } from "components/pagination/index.vue";
+import type { PaginationProps } from "components/pagination/index.vue";
 import { sleep } from "@antfu/utils";
+import ComponentsPagination from "components/pagination/index.vue";
+import { ref } from "vue";
 
 async function asyncFunc() {
 	await sleep(1000);

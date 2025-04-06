@@ -1,3 +1,94 @@
+<script lang="ts" setup>
+import { defineProps, ref } from "vue";
+import * as XLSX from "xlsx";
+
+const props = defineProps({
+	uploadUrl: {
+		type: String,
+		default: "",
+	},
+}); // 接受父组件传递的参数 作为上传地址的url
+const excelData = ref([]);
+const columns = ref([]);
+const fileList = ref([]);
+const uploadRef = ref();
+const hasFile = ref(false); // 如果直接写fileList.length==0,当fileList为空数组时，上传成功后，excel-name-container元素中还会出现原有的文件序列，所以需要用ref来相应式地更新
+
+function handleExcel(file) {
+	try {
+		const reader = new FileReader();
+		reader.onload = (e) => {
+			const data = e.target.result;
+			const workbook = XLSX.read(data, { type: "array" });
+			const sheetName = workbook.SheetNames[0];
+			const sheet = workbook.Sheets[sheetName];
+			const jsonData = XLSX.utils.sheet_to_json(sheet);
+			columns.value = jsonData.length > 0 ? Object.keys(jsonData[0]) : [];
+			excelData.value = jsonData.splice(0, 50);
+			hasFile.value = true;
+		};
+		reader.readAsArrayBuffer(file.raw);
+	} catch (error) {
+		ElMessage.error(`文件解析失败，请检查文件格式${error}`);
+	}
+}
+
+function handleDelete(index) {
+	ElMessageBox.confirm("您确认要删除该文件吗?")
+		.then(() => {
+			fileList.value.splice(index, 1);
+			console.log(fileList.value.length);
+			if (fileList.value.length == 0) {
+				excelData.value = [];
+				columns.value = [];
+			} else {
+				if (index - 1 < 0) {
+					handleExcel(fileList.value[index]);
+				} else {
+					handleExcel(fileList.value[index - 1]);
+				}
+			}
+		})
+		.catch((e) => {
+			ElMessage.error(`删除失败,原因：${e}`);
+		});
+}
+function handleClick(item) {
+	handleExcel(item);
+}
+function handleSubmit() {
+	uploadRef.value.submit();
+}
+function handleFileChange(file) {
+	if (!file || !file.raw) return;
+	handleExcel(file);
+}
+
+function handleUpload(file) {
+	const validTypes = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"];
+	if (!validTypes.includes(file.type)) {
+		ElMessage.error("请上传 xlsx 或 xls 格式的文件哦");
+		return false;
+	}
+	return true;
+}
+function handleUploadSuccess(response, file, fileList) {
+	ElMessage.success("文件上传成功");
+	fileList.value = [];
+	excelData.value = [];
+	hasFile.value = false;
+	uploadRef.value.getBoundingClientRect(); // 强制刷新页面
+}
+
+function handleUploadError(e, file) {
+	ElMessage.error(`${file.name}上传失败,原因：${e}`);
+	excelData.value = [];
+	fileList.value = [];
+	hasFile.value = false;
+	uploadRef.value.getBoundingClientRect(); // 强制刷新页面
+}
+</script>
+
 <template>
 	<div class="excel-import">
 		<div class="excel-header">
@@ -61,97 +152,6 @@
 		<span class="tip">仅选取前50条数据，以供预览</span>
 	</div>
 </template>
-
-<script lang="ts" setup>
-import { ref, defineProps } from "vue";
-import * as XLSX from "xlsx";
-
-const props = defineProps({
-	uploadUrl: {
-		type: String,
-		default: "",
-	},
-}); //接受父组件传递的参数 作为上传地址的url
-const excelData = ref([]);
-const columns = ref([]);
-const fileList = ref([]);
-const uploadRef = ref();
-const hasFile = ref(false); //如果直接写fileList.length==0,当fileList为空数组时，上传成功后，excel-name-container元素中还会出现原有的文件序列，所以需要用ref来相应式地更新
-
-const handleExcel = (file) => {
-	try {
-		const reader = new FileReader();
-		reader.onload = (e) => {
-			const data = e.target.result;
-			const workbook = XLSX.read(data, { type: "array" });
-			const sheetName = workbook.SheetNames[0];
-			const sheet = workbook.Sheets[sheetName];
-			const jsonData = XLSX.utils.sheet_to_json(sheet);
-			columns.value = jsonData.length > 0 ? Object.keys(jsonData[0]) : [];
-			excelData.value = jsonData.splice(0, 50);
-			hasFile.value = true;
-		};
-		reader.readAsArrayBuffer(file.raw);
-	} catch (error) {
-		ElMessage.error("文件解析失败，请检查文件格式" + error);
-	}
-};
-
-const handleDelete = (index) => {
-	ElMessageBox.confirm("您确认要删除该文件吗?")
-		.then(() => {
-			fileList.value.splice(index, 1);
-			console.log(fileList.value.length);
-			if (fileList.value.length == 0) {
-				excelData.value = [];
-				columns.value = [];
-			} else {
-				if (index - 1 < 0) {
-					handleExcel(fileList.value[index]);
-				} else {
-					handleExcel(fileList.value[index - 1]);
-				}
-			}
-		})
-		.catch((e) => {
-			ElMessage.error("删除失败,原因：" + e);
-		});
-};
-const handleClick = (item) => {
-	handleExcel(item);
-};
-const handleSubmit = () => {
-	uploadRef.value.submit();
-};
-const handleFileChange = (file) => {
-	if (!file || !file.raw) return;
-	handleExcel(file);
-};
-
-const handleUpload = (file) => {
-	const validTypes = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "application/vnd.ms-excel"];
-	if (!validTypes.includes(file.type)) {
-		ElMessage.error("请上传 xlsx 或 xls 格式的文件哦");
-		return false;
-	}
-	return true;
-};
-const handleUploadSuccess = (response, file, fileList) => {
-	ElMessage.success("文件上传成功");
-	fileList.value = [];
-	excelData.value = [];
-	hasFile.value = false;
-	uploadRef.value.getBoundingClientRect(); //强制刷新页面
-};
-
-const handleUploadError = (e, file) => {
-	ElMessage.error(`${file.name}上传失败,原因：${e}`);
-	excelData.value = [];
-	fileList.value = [];
-	hasFile.value = false;
-	uploadRef.value.getBoundingClientRect(); //强制刷新页面
-};
-</script>
 
 <style lang="scss" scoped>
 .tip {

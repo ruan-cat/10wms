@@ -1,10 +1,9 @@
 import { fileURLToPath } from "node:url";
 
-import tsAlias from "vite-plugin-ts-alias";
 import AutoImport from "unplugin-auto-import/vite";
+import tsAlias from "vite-plugin-ts-alias";
 
-import { mergeConfig, defineConfig, configDefaults } from "vitest/config";
-import viteConfig from "./vite.config";
+import { configDefaults, defineConfig } from "vitest/config";
 
 // 定义测试配置
 const testConfig = defineConfig({

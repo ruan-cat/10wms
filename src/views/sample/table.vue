@@ -1,13 +1,4 @@
 <script lang="ts" setup>
-definePage({
-	meta: {
-		menuType: "page",
-		isSample: true,
-		text: "表格组件",
-		icon: "IconSetting",
-	},
-});
-
 // @ts-ignore
 import AutoImportMiniExample from "components/table/tests/auto-import-mini-example.vue";
 // @ts-ignore
@@ -16,6 +7,15 @@ import IsIndexExample from "components/table/tests/isIndex-example.vue";
 import IsMultipleSelectExample from "components/table/tests/isMultipleSelect-example.vue";
 // @ts-ignore
 import SlotExample from "components/table/tests/slot-example.vue";
+
+definePage({
+	meta: {
+		menuType: "page",
+		isSample: true,
+		text: "表格组件",
+		icon: "IconSetting",
+	},
+});
 </script>
 
 <template>

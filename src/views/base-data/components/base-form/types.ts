@@ -1,5 +1,5 @@
-import type { FormProps } from "element-plus";
 import type { DinamicTableFormProps } from "components/dinamic-table-form/index.vue";
+import type { FormProps } from "element-plus";
 
 /** 表单组件 可用的表单类型 */
 export type FormComponentType =
@@ -31,7 +31,7 @@ export interface ResponsiveConfig {
  * 移除掉部分字段的 FormProps
  * @description
  * 让基础表单组件可以使用 `<el-form>` 组件的全部props属性
- * @private 预期仅用于基础表单组件的props属性继承
+ * @private
  */
 export type _OmitFormProps = Omit<Partial<FormProps>, "rules">;
 
@@ -49,7 +49,7 @@ export type BaseFormPropKey<T> = string & keyof T;
  * 每一个表单配置项都具有的字段
  * @description
  * 该类型预期被继承 本类型旨在于框定每一个表单配置项都要填写的字段
- * @private 暂不考虑该类型被其他组件使用
+ * @private
  */
 interface _BaseFormItemProps<T> {
 	/** 表单字段 */
@@ -176,7 +176,7 @@ export interface columsItem {
  *
  * 用户会获取表单的数据 暂不需要考虑时时刻刻的双向数据绑定。
  */
-export interface BaseFormEmit<T extends Object> {
+export interface BaseFormEmit<T extends object> {
 	/**
 	 * 数据变更事件 时刻地将更改的数据返回给父级组件
 	 * @description

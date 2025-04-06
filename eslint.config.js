@@ -5,6 +5,9 @@ import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 
 export default antfu(
 	{
+		// 文件忽略
+		ignores: ["dist", "node_modules", "public"],
+
 		// 基础样式规则
 		stylistic: {
 			indent: 2,
@@ -18,7 +21,7 @@ export default antfu(
 			parserOptions: {
 				project: "tsconfig.json",
 				sourceType: "module",
-				tsconfigRootDir: __dirname,
+				// tsconfigRootDir: __dirname,
 			},
 		},
 

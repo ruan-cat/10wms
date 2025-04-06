@@ -1,157 +1,3 @@
-<template>
-	<div class="base-config-table">
-		<div class="header">
-			<h2>{{ title }}</h2>
-		</div>
-		<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
-		<div class="tool-bar">
-			<div class="left-buttons">
-				<el-button type="primary" plain @click="handleAdd">
-					<el-icon><Plus /></el-icon>录入
-				</el-button>
-				<el-button type="primary" plain @click="handleEdit">
-					<el-icon><Edit /></el-icon>编辑
-				</el-button>
-				<el-button type="danger" plain @click="handleBatchDelete">
-					<el-icon><Delete /></el-icon>批量删除
-				</el-button>
-				<el-button type="success" plain @click="handleView">
-					<el-icon><View /></el-icon>查看
-				</el-button>
-				<el-button plain @click="handleImport">
-					<el-icon><Upload /></el-icon>Excel模板导入
-				</el-button>
-				<el-button plain @click="handleExport">
-					<el-icon><Download /></el-icon>Excel导出
-				</el-button>
-			</div>
-			<div>
-				<Baseform></Baseform>
-				<el-button type="primary">查询</el-button>
-				<el-button type="primary">重置</el-button>
-			</div>
-		</div>
-
-		<el-table
-			v-loading="loading"
-			:data="props.tableData"
-			:row-key="(row) => row.id"
-			:tree-props="{
-				children: 'children',
-				hasChildren: 'hasChildren',
-			}"
-			:default-expand-all="false"
-			border
-			stripe
-			style="width: 100%"
-			@selection-change="handleSelectionChange"
-			@row-click="(row) => emit('row-click', row)"
-		>
-			<el-table-column type="selection" width="55" fixed="left" />
-			<el-table-column type="index" label="序号" width="60" fixed="left" />
-
-			<template v-for="col in props.columns" :key="col.prop">
-				<el-table-column
-					:prop="col.prop"
-					:label="col.label"
-					:width="col.width"
-					:sortable="col.sortable"
-					:show-overflow-tooltip="true"
-				>
-					<template v-if="col.slotName" #default="scope">
-						<slot :name="col.slotName" :row="scope.row" :$index="scope.$index" :column="col"></slot>
-					</template>
-				</el-table-column>
-			</template>
-			<el-table-column label="操作" width="150" fixed="right">
-				<template #default="scope">
-					<el-button v-if="props.showEditButton" type="primary" size="small" @click="handleRowEdit(scope.row)">
-						编辑
-					</el-button>
-					<el-button type="danger" size="small" @click="handleRowDelete(scope.row)"> 删除 </el-button>
-				</template>
-			</el-table-column>
-		</el-table>
-		<!-- 分页组件 -->
-		<div class="pagination-container">
-			<el-pagination
-				v-model:current-page="currentPage"
-				v-model:page-size="pageSize"
-				:page-sizes="[10, 20, 50, 100]"
-				:total="total"
-				layout="total, sizes, prev, pager, next, jumper"
-				@size-change="handleSizeChange"
-				@current-change="handleCurrentChange"
-			/>
-		</div>
-
-		<el-dialog
-			v-model="dialogVisible"
-			:title="dialogType === 'view' ? '查看' : dialogType === 'edit' ? '编辑' : '新增'"
-			width="600px"
-			@closed="resetForm"
-		>
-			<el-form ref="formRef" :model="formData" :rules="formRules" label-width="120px" :disabled="dialogType === 'view'">
-				<el-form-item v-for="field in formFields" :key="field.prop" :label="field.label" :prop="field.prop">
-					<!-- 根据字段类型渲染不同的表单控件 -->
-					<template v-if="field.type === 'select'">
-						<el-select v-model="formData[field.prop]" :placeholder="`请选择${field.label}`" style="width: 100%">
-							<el-option
-								v-for="option in field.options"
-								:key="option.value"
-								:label="option.label"
-								:value="option.value"
-							/>
-						</el-select>
-					</template>
-
-					<template v-else-if="field.type === 'number'">
-						<el-input-number v-model="formData[field.prop]" :placeholder="`请输入${field.label}`" style="width: 100%" />
-					</template>
-
-					<template v-else-if="field.type === 'textarea'">
-						<el-input v-model="formData[field.prop]" type="textarea" :rows="3" :placeholder="`请输入${field.label}`" />
-					</template>
-
-					<template v-else>
-						<el-input v-model="formData[field.prop]" :placeholder="`请输入${field.label}`" />
-					</template>
-				</el-form-item>
-			</el-form>
-
-			<template #footer>
-				<span class="dialog-footer">
-					<el-button @click="dialogVisible = false">取消</el-button>
-					<el-button v-if="dialogType !== 'view'" type="primary" @click="submitForm"> 确定 </el-button>
-				</span>
-			</template>
-		</el-dialog>
-
-		<!-- Excel导入弹窗 -->
-		<el-dialog v-model="importDialogVisible" title="Excel导入" width="500px">
-			<el-upload
-				class="upload-excel"
-				action="#"
-				:auto-upload="false"
-				:on-change="handleFileChange"
-				:limit="1"
-				:file-list="fileList"
-			>
-				<el-button type="primary">选择文件</el-button>
-				<template #tip>
-					<div class="el-upload__tip">只能上传excel文件，且不超过10MB</div>
-				</template>
-			</el-upload>
-			<template #footer>
-				<span class="dialog-footer">
-					<el-button @click="importDialogVisible = false">取消</el-button>
-					<el-button type="primary" @click="uploadExcel">确定</el-button>
-				</span>
-			</template>
-		</el-dialog>
-	</div>
-</template>
-
 <script setup lang="ts">
 import { Plus, Edit, Delete, View, Upload, Download, Search } from "@element-plus/icons-vue";
 import { ref, computed, watch, onMounted } from "vue";
@@ -412,16 +258,6 @@ const handleSelectionChange = (selection: any[]) => {
 	selectedRows.value = selection;
 };
 
-// 分页事件
-const handleSizeChange = () => {
-	currentPage.value = 1;
-	fetchData();
-};
-
-const handleCurrentChange = () => {
-	fetchData();
-};
-
 // 新增事件
 const handleAdd = () => {
 	dialogType.value = "add";
@@ -671,6 +507,150 @@ defineExpose({
 });
 </script>
 
+<template>
+	<div class="base-config-table">
+		<div class="header">
+			<h2>{{ title }}</h2>
+		</div>
+		<TableTitle v-model="titleData" class="title" @user-click="userChildClick" />
+		<div class="tool-bar">
+			<div class="left-buttons">
+				<el-button type="primary" plain @click="handleAdd">
+					<el-icon><Plus /></el-icon>录入
+				</el-button>
+				<el-button type="primary" plain @click="handleEdit">
+					<el-icon><Edit /></el-icon>编辑
+				</el-button>
+				<el-button type="danger" plain @click="handleBatchDelete">
+					<el-icon><Delete /></el-icon>批量删除
+				</el-button>
+				<el-button type="success" plain @click="handleView">
+					<el-icon><View /></el-icon>查看
+				</el-button>
+				<el-button plain @click="handleImport">
+					<el-icon><Upload /></el-icon>Excel模板导入
+				</el-button>
+				<el-button plain @click="handleExport">
+					<el-icon><Download /></el-icon>Excel导出
+				</el-button>
+			</div>
+			<div>
+				<Baseform></Baseform>
+				<el-button type="primary">查询</el-button>
+				<el-button type="primary">重置</el-button>
+			</div>
+		</div>
+
+		<el-table
+			v-loading="loading"
+			:data="props.tableData"
+			:row-key="(row) => row.id"
+			:tree-props="{
+				children: 'children',
+				hasChildren: 'hasChildren',
+			}"
+			:default-expand-all="false"
+			border
+			stripe
+			style="width: 100%"
+			@selection-change="handleSelectionChange"
+			@row-click="(row) => emit('row-click', row)"
+		>
+			<el-table-column type="selection" width="55" fixed="left" />
+			<el-table-column type="index" label="序号" width="60" fixed="left" />
+
+			<template v-for="col in props.columns" :key="col.prop">
+				<el-table-column
+					:prop="col.prop"
+					:label="col.label"
+					:width="col.width"
+					:sortable="col.sortable"
+					:show-overflow-tooltip="true"
+				>
+					<template v-if="col.slotName" #default="scope">
+						<slot :name="col.slotName" :row="scope.row" :$index="scope.$index" :column="col"></slot>
+					</template>
+				</el-table-column>
+			</template>
+			<el-table-column label="操作" width="150" fixed="right">
+				<template #default="scope">
+					<el-button v-if="props.showEditButton" type="primary" size="small" @click="handleRowEdit(scope.row)">
+						编辑
+					</el-button>
+					<el-button type="danger" size="small" @click="handleRowDelete(scope.row)"> 删除 </el-button>
+				</template>
+			</el-table-column>
+		</el-table>
+
+		<ComponentsPagination :="paginationProps" v-model:pageIndex="pageIndex" v-model:pageSize="pageSize" />
+
+		<el-dialog
+			v-model="dialogVisible"
+			:title="dialogType === 'view' ? '查看' : dialogType === 'edit' ? '编辑' : '新增'"
+			width="600px"
+			@closed="resetForm"
+		>
+			<el-form ref="formRef" :model="formData" :rules="formRules" label-width="120px" :disabled="dialogType === 'view'">
+				<el-form-item v-for="field in formFields" :key="field.prop" :label="field.label" :prop="field.prop">
+					<!-- 根据字段类型渲染不同的表单控件 -->
+					<template v-if="field.type === 'select'">
+						<el-select v-model="formData[field.prop]" :placeholder="`请选择${field.label}`" style="width: 100%">
+							<el-option
+								v-for="option in field.options"
+								:key="option.value"
+								:label="option.label"
+								:value="option.value"
+							/>
+						</el-select>
+					</template>
+
+					<template v-else-if="field.type === 'number'">
+						<el-input-number v-model="formData[field.prop]" :placeholder="`请输入${field.label}`" style="width: 100%" />
+					</template>
+
+					<template v-else-if="field.type === 'textarea'">
+						<el-input v-model="formData[field.prop]" type="textarea" :rows="3" :placeholder="`请输入${field.label}`" />
+					</template>
+
+					<template v-else>
+						<el-input v-model="formData[field.prop]" :placeholder="`请输入${field.label}`" />
+					</template>
+				</el-form-item>
+			</el-form>
+
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="dialogVisible = false">取消</el-button>
+					<el-button v-if="dialogType !== 'view'" type="primary" @click="submitForm"> 确定 </el-button>
+				</span>
+			</template>
+		</el-dialog>
+
+		<!-- Excel导入弹窗 -->
+		<el-dialog v-model="importDialogVisible" title="Excel导入" width="500px">
+			<el-upload
+				class="upload-excel"
+				action="#"
+				:auto-upload="false"
+				:on-change="handleFileChange"
+				:limit="1"
+				:file-list="fileList"
+			>
+				<el-button type="primary">选择文件</el-button>
+				<template #tip>
+					<div class="el-upload__tip">只能上传excel文件，且不超过10MB</div>
+				</template>
+			</el-upload>
+			<template #footer>
+				<span class="dialog-footer">
+					<el-button @click="importDialogVisible = false">取消</el-button>
+					<el-button type="primary" @click="uploadExcel">确定</el-button>
+				</span>
+			</template>
+		</el-dialog>
+	</div>
+</template>
+
 <style scoped lang="scss">
 .base-config-table {
 	width: 100%;
@@ -701,12 +681,6 @@ defineExpose({
 		.right-tools {
 			min-width: 200px;
 		}
-	}
-
-	.pagination-container {
-		margin-top: 20px;
-		display: flex;
-		justify-content: flex-end;
 	}
 
 	.upload-excel {

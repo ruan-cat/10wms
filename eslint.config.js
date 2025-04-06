@@ -25,14 +25,6 @@ export default antfu(
 		// Vue 支持
 		vue: true,
 
-		// JavaScript 配置
-		javascript: {
-			overrides: {
-				"jsdoc/require-description": "error",
-				"jsdoc/check-values": "error",
-			},
-		},
-
 		// 禁用 jsonc 和 yaml
 		jsonc: false,
 		yaml: false,
@@ -51,23 +43,11 @@ export default antfu(
 	// 自定义规则
 	{
 		rules: {
-			// JavaScript
-			"no-console": "off",
-			"no-debugger": "off",
-			"no-alert": "off",
-			"no-unused-vars": "off",
-			"no-undef": "off",
-			"no-unused-expressions": "off",
-			"no-restricted-syntax": "off",
-
 			// Vue
 			"vue/no-mutating-props": ["error"],
 			"vue/multi-word-component-names": "off",
 			"vue/attribute-hyphenation": "off",
 			"vue/attributes-order": "off",
-
-			// TypeScript
-			"@typescript-eslint/no-explicit-any": "off",
 		},
 	},
 

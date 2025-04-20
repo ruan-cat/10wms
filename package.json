@@ -21,7 +21,7 @@
 		"git:fetch": "git fetch -p",
 		"git:push": "git push --follow-tags",
 		"git:commit": "git-cz",
-		"vite:dev": "vite",
+		"vite:dev": "vite --mode development",
 		"clear:deps": "rimraf -g **/{node_modules,pnpm-lock.yaml}",
 		"clear:cache": "rimraf -g **/{dist,.turbo,.vercel,.cache,.temp}",
 		"changeset:add": "changeset add",

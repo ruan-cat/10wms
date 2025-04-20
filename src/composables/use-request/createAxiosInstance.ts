@@ -16,8 +16,7 @@ import { HttpCode } from "./tools";
  */
 export function createAxiosInstance() {
 	const instance = axios.create({
-		// TODO: 从环境变量内获取请求地址
-		baseURL: "https://apifoxmock.com/m1/5901227-5588101-default",
+		baseURL: import.meta.env.VITE_proxy_prefix,
 
 		/** 请求超时时间 */
 		timeout: 10000,

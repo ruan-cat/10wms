@@ -4,6 +4,12 @@ import AutoImport from "unplugin-auto-import/vite";
 import tsAlias from "vite-plugin-ts-alias";
 
 import { configDefaults, defineConfig } from "vitest/config";
+import { loadEnv } from "vite";
+
+// 提供类型声明 便于得到使用提示
+const env = loadEnv("development", process.cwd()) as unknown as ImportMetaEnv;
+const VITE_proxy_prefix = env.VITE_proxy_prefix;
+const VITE_base_url = env.VITE_base_url;
 
 // 定义测试配置
 const testConfig = defineConfig({
@@ -11,6 +17,17 @@ const testConfig = defineConfig({
 		environment: "jsdom",
 		exclude: [...configDefaults.exclude, "e2e/**"],
 		root: fileURLToPath(new URL("./", import.meta.url)),
+	},
+
+	server: {
+		proxy: {
+			// 对特定前缀的请求地址 做反向代理
+			[VITE_proxy_prefix]: {
+				changeOrigin: true,
+				target: VITE_base_url,
+				rewrite: (path) => path.replace(new RegExp("^" + VITE_proxy_prefix), ""),
+			},
+		},
 	},
 
 	plugins: [

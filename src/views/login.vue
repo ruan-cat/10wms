@@ -118,12 +118,17 @@ const rules = reactive({
 });
 
 // 页面加载时，从 localStorage 读取保存的用户名
-onMounted(() => {
+onMounted(async () => {
 	const savedUsername = localStorage.getItem("savedUsername");
 	if (savedUsername) {
 		formData.username = savedUsername;
 		formData.rememberUsername = true; // 自动勾选“记住用户名”
 	}
+
+	// TODO: 测试接口
+	const { execute, data } = sysManagerQueryDepartmentAll({});
+	await execute();
+	console.log("部门数据", data.value);
 });
 </script>
 

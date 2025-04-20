@@ -45,25 +45,20 @@ export default defineConfig(({ mode }) => {
 	const VITE_proxy_prefix = env.VITE_proxy_prefix;
 	const VITE_base_url = env.VITE_base_url;
 	const VITE_app_port = env.VITE_app_port;
-	const VITE_API_URL = env.VITE_API_URL;
 
 	return {
 		server: {
 			open: true,
 			host: "0.0.0.0",
-			port: 3000,
-			// FIXME: 该配置导致了类型不兼容 需要研究是不是vite版本导致类型声明对不上
-			// https: false,
+			port: Number(VITE_app_port),
 			proxy: {
-				"/api": {
+				// 对特定前缀的请求地址 做反向代理
+				[VITE_proxy_prefix]: {
 					changeOrigin: true,
-					target: "http://8.140.208.103:10001", // 网关
-					rewrite: (path) => path.replace(/^\/api/, ""),
-
-					// TODO[TEST_CODE]:使用Apifox云MOCK
-					// target: "https://apifoxmock.com/m1/5579661-5257590-default",
-					// rewrite: (path) => path.replace(/^\/api/, ""),
+					target: VITE_base_url,
+					rewrite: (path) => path.replace(new RegExp("^" + VITE_proxy_prefix), ""),
 				},
+
 				"/captcha": {
 					changeOrigin: true,
 					target: "http://8.140.208.103:10001",

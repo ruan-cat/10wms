@@ -61,7 +61,7 @@ interface ImportMetaEnv {
 	VITE_base_url: string;
 
 	/** 是否开启 Mock 服务 */
-	VITE_MOCK_DEV_SERVER: `${boolean}`;
+	VITE_MOCK_DEV_SERVER?: `${boolean}`;
 
 	/** 临时token */
 	VITE_temp_token?: string;

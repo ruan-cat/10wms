@@ -1,6 +1,7 @@
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import type { Router } from "vue-router";
 import axios, { AxiosError } from "axios";
+import consola from "consola";
 
 import { ElMessage } from "element-plus";
 import qs from "qs";
@@ -15,8 +16,10 @@ import { HttpCode } from "./tools";
  * @see https://apifox.com/apidoc/shared-c05cb8d7-e591-4d9c-aff8-11065a0ec1de/api-67132167
  */
 export function createAxiosInstance() {
+	const baseURL = import.meta.env.VITE_proxy_prefix;
+	// consola.box("当前的baseUrl ", baseURL);
 	const instance = axios.create({
-		baseURL: import.meta.env.VITE_proxy_prefix,
+		baseURL,
 
 		/** 请求超时时间 */
 		timeout: 10000,

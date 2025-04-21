@@ -5,6 +5,7 @@ import VueRouter from "unplugin-vue-router/vite";
 import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import vueDevTools from "vite-plugin-vue-devtools";
+import consola from "consola";
 
 import MetaLayouts from "vite-plugin-vue-meta-layouts";
 import AutoImport from "./src/plugins/unplugin-auto-import/index.ts";
@@ -25,6 +26,8 @@ import "./types/env.shim.d.ts";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
+	consola.box("当前的vite模式：", mode);
+
 	/**
 	 * 根据当前工作目录中的 `mode` 加载 .env 文件
 	 * @deprecated

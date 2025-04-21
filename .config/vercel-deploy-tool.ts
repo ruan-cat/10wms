@@ -9,7 +9,7 @@ export default <Config>{
 	vercelProjectId: "prj_0dbaKzhoqP9C3A7C4QDkzjSprN2L",
 	vercelToken: "",
 
-	// TODO: 后端接口尚未部署 不考虑反向代理
+	vercelJsonPath: "./vercel.reverse-proxy.json",
 	// TODO: 处理项目的404页面显示，让vercel项目可以自己显示出404
 	// vercelJsonPath: "./vercel.404.json",
 

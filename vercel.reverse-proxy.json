@@ -12,8 +12,8 @@
 	},
 	"rewrites": [
 		{
-			"source": "/api/:path*",
-			"destination": "http://8.154.39.107:10001/:path*"
+			"source": "/prod-api/:path*",
+			"destination": "https://m1.apifoxmock.com/m1/6142648-5834505-default/:path*"
 		}
 	]
 }

@@ -4,7 +4,7 @@ import qs from "qs";
 import { useUserStore } from "stores/user";
 
 // 配置axios基本属性
-http.defaults.baseURL = import.meta.env.VITE_API_URL;
+http.defaults.baseURL = import.meta.env.VITE_proxy_prefix;
 http.defaults.timeout = 10000;
 
 // 数据上传数据类型

@@ -60,6 +60,9 @@ interface ImportMetaEnv {
 	 */
 	VITE_base_url: string;
 
+	/** 是否要反向代理？ */
+	VITE_is_reverse_proxy?: `${boolean}`;
+
 	/** 是否开启 Mock 服务 */
 	VITE_MOCK_DEV_SERVER?: `${boolean}`;
 

@@ -16,7 +16,14 @@ import { HttpCode } from "./tools";
  * @see https://apifox.com/apidoc/shared-c05cb8d7-e591-4d9c-aff8-11065a0ec1de/api-67132167
  */
 export function createAxiosInstance() {
-	const baseURL = import.meta.env.VITE_proxy_prefix;
+	const VITE_is_reverse_proxy = import.meta.env?.VITE_is_reverse_proxy;
+	const VITE_proxy_prefix = import.meta.env.VITE_proxy_prefix;
+	const VITE_base_url = import.meta.env.VITE_base_url;
+	/**
+	 * 根据是否需要反向代理，配置请求地址
+	 */
+	const baseURL = VITE_is_reverse_proxy === "true" ? VITE_proxy_prefix : VITE_base_url;
+
 	// consola.box("当前的baseUrl ", baseURL);
 	const instance = axios.create({
 		baseURL,

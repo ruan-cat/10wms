@@ -3,8 +3,16 @@ import { ElMessage } from "element-plus";
 import qs from "qs";
 import { useUserStore } from "stores/user";
 
+const VITE_is_reverse_proxy = import.meta.env?.VITE_is_reverse_proxy;
+const VITE_proxy_prefix = import.meta.env.VITE_proxy_prefix;
+const VITE_base_url = import.meta.env.VITE_base_url;
+/**
+ * 根据是否需要反向代理，配置请求地址
+ */
+const baseURL = VITE_is_reverse_proxy === "true" ? VITE_proxy_prefix : VITE_base_url;
+
 // 配置axios基本属性
-http.defaults.baseURL = import.meta.env.VITE_proxy_prefix;
+http.defaults.baseURL = baseURL;
 http.defaults.timeout = 10000;
 
 // 数据上传数据类型

@@ -48,6 +48,7 @@ export default defineConfig(({ mode }) => {
 	const VITE_proxy_prefix = env.VITE_proxy_prefix;
 	const VITE_base_url = env.VITE_base_url;
 	const VITE_app_port = env.VITE_app_port;
+	const VITE_is_reverse_proxy = env.VITE_is_reverse_proxy;
 
 	return {
 		server: {
@@ -55,18 +56,25 @@ export default defineConfig(({ mode }) => {
 			host: "0.0.0.0",
 			port: Number(VITE_app_port),
 			proxy: {
-				// 对特定前缀的请求地址 做反向代理
-				[VITE_proxy_prefix]: {
-					changeOrigin: true,
-					target: VITE_base_url,
-					rewrite: (path) => path.replace(new RegExp("^" + VITE_proxy_prefix), ""),
+				// 默认有的反向代理配置
+				...{
+					"/captcha": {
+						changeOrigin: true,
+						target: "http://8.140.208.103:10001",
+						rewrite: (path) => path.replace(/^\/captcha/, ""),
+					},
 				},
-
-				"/captcha": {
-					changeOrigin: true,
-					target: "http://8.140.208.103:10001",
-					rewrite: (path) => path.replace(/^\/captcha/, ""),
-				},
+				// 是否需要对接口配置反向代理？
+				...(VITE_is_reverse_proxy === "true"
+					? {
+							// 对特定前缀的请求地址 做反向代理
+							[VITE_proxy_prefix]: {
+								changeOrigin: true,
+								target: VITE_base_url,
+								rewrite: (path) => path.replace(new RegExp("^" + VITE_proxy_prefix), ""),
+							},
+						}
+					: {}),
 			},
 		},
 

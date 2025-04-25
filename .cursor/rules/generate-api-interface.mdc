@@ -15,9 +15,18 @@ alwaysApply: false
 
 @Folders src\composables\use-request
 
-## MCP 上下文
+## 从 MCP 内获取接口上下文
 
 你应当自主阅读 mcp 服务器提供 API 文档，本次的对话的核心任务就是阅读 MCP 服务器提供的数据，并转换成符合我期望的 api 请求函数。
+
+请主动地调用MCP服务器给你提供的工具
+
+## 阅读LLM.txt文档
+
+如果你在获取数据上遇到困难，比如无法有效读取返回值类型时。请你主动地访问以下网站，阅读接口文档的全部对应链接。
+
+- https://01s-10wms-clone.apifox.cn/llms.txt
+
 
 ## 工作范围
 

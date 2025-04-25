@@ -1,5 +1,11 @@
 import { describe, it } from "vitest";
-import { sysmanagerCatagoryQueryCatagoryList, sysmanagerCatagoryRemoveCatagory } from "./catagory";
+import {
+	sysmanagerCatagoryAddCatagory,
+	sysmanagerCatagoryModifyCatagory,
+	sysmanagerCatagoryQueryCatagoryList,
+	sysmanagerCatagoryQueryCatagoryTree,
+	sysmanagerCatagoryRemoveCatagory,
+} from "./catagory";
 
 describe("分类管理接口实现", () => {
 	it("新增分类接口", async () => {
@@ -60,6 +66,16 @@ describe("分类管理接口实现", () => {
 				id: "",
 			},
 		});
+		console.log("查看简单的 data.value ", data.value);
+	});
+
+	it("分类名称树查询接口", async () => {
+		const { execute, data } = sysmanagerCatagoryQueryCatagoryTree({
+			onSuccess(data) {
+				console.log("分类名称树查询接口 onSuccess", data);
+			},
+		});
+		await execute();
 		console.log("查看简单的 data.value ", data.value);
 	});
 });

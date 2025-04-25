@@ -176,3 +176,50 @@ export function sysmanagerCatagoryRemoveCatagory<T = string>(options: UseAxiosOp
 		},
 	});
 }
+
+/**
+ * 分类树节点对象
+ */
+export interface CatagoryTreeNode {
+	/**
+	 * 子节点数组
+	 */
+	children?: CatagoryTreeNode[];
+	/**
+	 * 图标的唯一编号
+	 */
+	iconId?: string;
+	/**
+	 * 分类的唯一编号
+	 */
+	categoryId?: string;
+	/**
+	 * 分类名称
+	 */
+	name?: string;
+	/**
+	 * 上级id
+	 */
+	tnPid?: string;
+	/**
+	 * 是否有子节点
+	 */
+	haveChildren?: boolean;
+}
+
+/**
+ * 分类名称树查询接口
+ * @description
+ * 获取分类的层级结构数据
+ */
+export function sysmanagerCatagoryQueryCatagoryTree<T = CatagoryTreeNode[]>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsQueryKey, T>({
+		url: "/sysmanager/catagory/query-catagory-tree",
+		options,
+		httpParamWay: "query",
+		config: {
+			method: "GET",
+			data: {},
+		},
+	});
+}

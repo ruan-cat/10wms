@@ -3,7 +3,7 @@ description:
 globs: 
 alwaysApply: false
 ---
-# 生成 API 文档
+# 根据MCP服务来生成 API 文档
 
 在本次对话中，你的任务是生成 API 请求接口。请根据 API 文档，你将根据我提供给你的关键词，生成接口。
 

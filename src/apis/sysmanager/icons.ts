@@ -29,12 +29,14 @@ export interface IconAddModel {
 
 /**
  * 图标录入接口
+ * 上传内容包含图片文件， 故需要增加 `upType: UpType.file` 配置。
  */
 export function sysmanagerIconsAdd<T = string>(options: UseAxiosOptionsJsonVO<T>) {
 	return useRequest<ParamsBodyKey, T, IconAddModel>({
 		url: "/sysmanager/icons/add",
 		options,
 		httpParamWay: "body",
+		upType: UpType.file,
 		config: {
 			method: "POST",
 			data: {
@@ -101,15 +103,12 @@ export interface IconAllQueryParams {
  * 图标列表查询接口
  * @description
  * 查询系统中的图标列表
- *
- * 上传内容包含图片文件， 故需要增加 `upType: UpType.file` 配置。
  */
 export function sysmanagerIconsAll<T = PageDTO<IconListModel>>(options: UseAxiosOptionsJsonVO<T>) {
 	return useRequest<ParamsQueryKey, T, IconAllQueryParams>({
 		url: "/sysmanager/icons/all",
 		options,
 		httpParamWay: "query",
-		upType: UpType.file,
 		config: {
 			method: "GET",
 			data: {

@@ -1,22 +1,48 @@
-import { it } from "vitest";
-import { sysmanagerIconsAdd } from "./icons";
+import { describe, it } from "vitest";
+import { sysmanagerIconsAdd, sysmanagerIconsAll } from "./icons";
 
-it("图标录入接口测试", async () => {
-	const { execute, data, isLoading, isFinished } = sysmanagerIconsAdd({
-		onSuccess(data) {
-			console.log("图标录入成功", data);
-		},
+describe("图标接口测试", () => {
+	it("图标录入接口测试", async () => {
+		const { execute, data } = sysmanagerIconsAdd({
+			onSuccess(data) {
+				console.log("图标录入成功", data);
+			},
+		});
+
+		// 调用接口
+		await execute({
+			data: {
+				file: undefined, // 在实际应用中应该使用文件上传控件获取的文件
+				iconclas: "default",
+				name: "测试图标",
+				type: 1, // 1系统图标/2菜单图标/3桌面图标
+			},
+		});
+
+		console.log("图标录入响应数据:", data.value);
 	});
 
-	// 调用接口
-	await execute({
-		data: {
-			file: undefined, // 在实际应用中应该使用文件上传控件获取的文件
-			iconclas: "default",
-			name: "测试图标",
-			type: 1, // 1系统图标/2菜单图标/3桌面图标
-		},
-	});
+	it("图标列表查询接口测试", async () => {
+		const { execute, data } = sysmanagerIconsAll({
+			onSuccess(data) {
+				console.log("图标列表查询成功", data);
+			},
+		});
 
-	console.log("图标录入响应数据:", data.value);
+		// 调用接口
+		await execute({
+			data: {
+				name: "默认", // 可选参数，根据图标名称查询
+				pageIndex: 1, // 查询页码
+				pageSize: 10, // 查询条数
+			},
+		});
+
+		console.log("图标列表数据:", data.value);
+		// 可以访问分页数据
+		if (data.value && data.value.data) {
+			console.log("总记录数:", data.value.data.total);
+			console.log("图标列表:", data.value.data.rows);
+		}
+	});
 });

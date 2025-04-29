@@ -5,6 +5,7 @@ import {
 	sysmanagerIconsDelete,
 	sysmanagerIconsModify,
 	sysmanagerIconsNames,
+	sysmanagerIconsGetById,
 } from "./icons";
 
 describe("图标接口测试", () => {
@@ -108,6 +109,29 @@ describe("图标接口测试", () => {
 		// 可以访问图标名称列表数据
 		if (data.value) {
 			console.log("图标名称列表:", data.value);
+		}
+	});
+
+	it("根据id回显图标编辑数据接口测试", async () => {
+		const iconId = "test-icon-id"; // 测试用的图标ID
+		const { execute, data } = sysmanagerIconsGetById({
+			onSuccess(data) {
+				console.log("获取图标编辑数据成功", data);
+			},
+		});
+
+		// 调用接口，使用path参数方式
+		await execute({
+			url: `/sysmanager/icons/${iconId}`,
+		});
+
+		console.log("图标编辑数据:", data.value);
+		// 可以访问图标编辑数据
+		if (data.value && data.value.data) {
+			console.log("图标名称:", data.value.data.name);
+			console.log("图标样式:", data.value.data.iconclas);
+			console.log("图标类型:", data.value.data.type);
+			console.log("图标路径:", data.value.data.url);
 		}
 	});
 });

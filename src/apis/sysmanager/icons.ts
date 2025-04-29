@@ -1,4 +1,4 @@
-import type { ParamsBodyKey, UseAxiosOptionsJsonVO, ParamsQueryKey } from "composables/use-request";
+import type { ParamsBodyKey, UseAxiosOptionsJsonVO, ParamsQueryKey, ParamsPathKey } from "composables/use-request";
 import type { PageDTO } from "src/types/PageDTO";
 import { useRequest } from "composables/use-request";
 
@@ -241,6 +241,52 @@ export function sysmanagerIconsNames<T = IconNameListModel[]>(options: UseAxiosO
 			data: {
 				type: undefined,
 			},
+		},
+	});
+}
+
+/**
+ * 图标编辑数据模型
+ */
+export interface IconEditModel {
+	/**
+	 * 图标文件
+	 */
+	file?: File;
+
+	/**
+	 * 图标样式
+	 */
+	iconclas: string;
+
+	/**
+	 * 图标名称
+	 */
+	name: string;
+
+	/**
+	 * 图标类型: 1系统图标/2菜单图标/3桌面图标
+	 */
+	type: number;
+
+	/**
+	 * 图标路径
+	 */
+	url: string;
+}
+
+/**
+ * 根据id回显图标编辑数据接口
+ * @description 根据图标ID获取图标详细信息，用于编辑回显
+ */
+export function sysmanagerIconsGetById<T = IconEditModel>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsPathKey, T, { id: string }>({
+		url: "/sysmanager/icons/{id}",
+		options,
+		httpParamWay: "path",
+		config: {
+			url: "/sysmanager/icons/{id}",
+			method: "GET",
 		},
 	});
 }

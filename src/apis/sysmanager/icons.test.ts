@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { sysmanagerIconsAdd, sysmanagerIconsAll } from "./icons";
+import { sysmanagerIconsAdd, sysmanagerIconsAll, sysmanagerIconsDelete } from "./icons";
 
 describe("图标接口测试", () => {
 	it("图标录入接口测试", async () => {
@@ -44,5 +44,22 @@ describe("图标接口测试", () => {
 			console.log("总记录数:", data.value.data.total);
 			console.log("图标列表:", data.value.data.rows);
 		}
+	});
+
+	it("图标删除接口测试", async () => {
+		const { execute, data } = sysmanagerIconsDelete({
+			onSuccess(data) {
+				console.log("图标删除成功", data);
+			},
+		});
+
+		// 调用接口
+		await execute({
+			data: {
+				id: "test-icon-id", // 要删除的图标ID
+			},
+		});
+
+		console.log("图标删除响应数据:", data.value);
 	});
 });

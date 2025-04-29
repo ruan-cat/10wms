@@ -119,3 +119,21 @@ export function sysmanagerIconsAll<T = PageDTO<IconListModel>>(options: UseAxios
 		},
 	});
 }
+
+/**
+ * 图标删除接口
+ * @description 根据图标ID删除图标
+ */
+export function sysmanagerIconsDelete<T = string>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsQueryKey, T, { id: string }>({
+		url: "/sysmanager/icons/delete",
+		options,
+		httpParamWay: "query",
+		config: {
+			method: "DELETE",
+			data: {
+				id: "",
+			},
+		},
+	});
+}

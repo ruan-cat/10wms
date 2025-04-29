@@ -1,5 +1,5 @@
 import { describe, it } from "vitest";
-import { sysmanagerIconsAdd, sysmanagerIconsAll, sysmanagerIconsDelete } from "./icons";
+import { sysmanagerIconsAdd, sysmanagerIconsAll, sysmanagerIconsDelete, sysmanagerIconsModify } from "./icons";
 
 describe("图标接口测试", () => {
 	it("图标录入接口测试", async () => {
@@ -61,5 +61,26 @@ describe("图标接口测试", () => {
 		});
 
 		console.log("图标删除响应数据:", data.value);
+	});
+
+	it("图标编辑接口测试", async () => {
+		const { execute, data } = sysmanagerIconsModify({
+			onSuccess(data) {
+				console.log("图标编辑成功", data);
+			},
+		});
+
+		// 调用接口
+		await execute({
+			data: {
+				id: "test-icon-id", // 要编辑的图标ID
+				iconclas: "new-icon-class", // 新的图标样式
+				name: "新图标名称", // 新的图标名称
+				type: 1, // 1系统图标/2菜单图标/3桌面图标
+				url: "new/icon/path.png", // 新的图标路径
+			},
+		});
+
+		console.log("图标编辑响应数据:", data.value);
 	});
 });

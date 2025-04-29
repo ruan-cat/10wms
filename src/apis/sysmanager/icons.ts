@@ -137,3 +137,55 @@ export function sysmanagerIconsDelete<T = string>(options: UseAxiosOptionsJsonVO
 		},
 	});
 }
+
+/**
+ * 图标编辑参数
+ */
+export interface IconModifyParams {
+	/**
+	 * 图标ID
+	 */
+	id: string;
+
+	/**
+	 * 图标样式
+	 */
+	iconclas?: string;
+
+	/**
+	 * 图标名称
+	 */
+	name?: string;
+
+	/**
+	 * 图标类型: 1系统图标/2菜单图标/3桌面图标
+	 */
+	type?: number;
+
+	/**
+	 * 图标路径
+	 */
+	url?: string;
+}
+
+/**
+ * 图标编辑接口
+ * @description 编辑图标信息
+ */
+export function sysmanagerIconsModify<T = string>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsQueryKey, T, IconModifyParams>({
+		url: "/sysmanager/icons/modify",
+		options,
+		httpParamWay: "query",
+		config: {
+			method: "POST",
+			data: {
+				id: "",
+				iconclas: undefined,
+				name: undefined,
+				type: undefined,
+				url: undefined,
+			},
+		},
+	});
+}

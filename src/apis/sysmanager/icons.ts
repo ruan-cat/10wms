@@ -143,6 +143,11 @@ export function sysmanagerIconsDelete<T = string>(options: UseAxiosOptionsJsonVO
  */
 export interface IconModifyParams {
 	/**
+	 * 图标文件
+	 */
+	file?: File;
+
+	/**
 	 * 图标ID
 	 */
 	id: string;
@@ -177,9 +182,11 @@ export function sysmanagerIconsModify<T = string>(options: UseAxiosOptionsJsonVO
 		url: "/sysmanager/icons/modify",
 		options,
 		httpParamWay: "query",
+		upType: UpType.file,
 		config: {
 			method: "POST",
 			data: {
+				file: undefined,
 				id: "",
 				iconclas: undefined,
 				name: undefined,

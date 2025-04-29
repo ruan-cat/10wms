@@ -1,5 +1,11 @@
 import { describe, it } from "vitest";
-import { sysmanagerIconsAdd, sysmanagerIconsAll, sysmanagerIconsDelete, sysmanagerIconsModify } from "./icons";
+import {
+	sysmanagerIconsAdd,
+	sysmanagerIconsAll,
+	sysmanagerIconsDelete,
+	sysmanagerIconsModify,
+	sysmanagerIconsNames,
+} from "./icons";
 
 describe("图标接口测试", () => {
 	it("图标录入接口测试", async () => {
@@ -82,5 +88,26 @@ describe("图标接口测试", () => {
 		});
 
 		console.log("图标编辑响应数据:", data.value);
+	});
+
+	it("图标名称列表查询接口测试", async () => {
+		const { execute, data } = sysmanagerIconsNames({
+			onSuccess(data) {
+				console.log("图标名称列表查询成功", data);
+			},
+		});
+
+		// 调用接口
+		await execute({
+			data: {
+				type: 1, // 可选参数，1系统图标/2菜单图标/3桌面图标
+			},
+		});
+
+		console.log("图标名称列表数据:", data.value);
+		// 可以访问图标名称列表数据
+		if (data.value) {
+			console.log("图标名称列表:", data.value);
+		}
 	});
 });

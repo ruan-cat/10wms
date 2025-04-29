@@ -196,3 +196,51 @@ export function sysmanagerIconsModify<T = string>(options: UseAxiosOptionsJsonVO
 		},
 	});
 }
+
+/**
+ * 图标名称列表数据模型
+ */
+export interface IconNameListModel {
+	/**
+	 * 图标样式
+	 */
+	iconclas: string;
+
+	/**
+	 * 唯一标识
+	 */
+	id: string;
+
+	/**
+	 * 图标名称
+	 */
+	name: string;
+}
+
+/**
+ * 图标名称列表查询参数
+ */
+export interface IconNamesQueryParams {
+	/**
+	 * 图标类型: 1系统图标/2菜单图标/3桌面图标
+	 */
+	type?: number;
+}
+
+/**
+ * 图标名称列表查询接口
+ * @description 查询系统中的图标名称列表
+ */
+export function sysmanagerIconsNames<T = IconNameListModel[]>(options: UseAxiosOptionsJsonVO<T>) {
+	return useRequest<ParamsQueryKey, T, IconNamesQueryParams>({
+		url: "/sysmanager/icons/names",
+		options,
+		httpParamWay: "query",
+		config: {
+			method: "GET",
+			data: {
+				type: undefined,
+			},
+		},
+	});
+}

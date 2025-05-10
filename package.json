@@ -23,7 +23,7 @@
 		"test": "vitest --ui --watch --api.port=4000",
 		"format": "prettier --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore",
 		"update-package": "pnpm dlx vp-update",
-		"create-code-workspace:": "node --import=tsx ./scripts/generate.code-workspace.ts",
+		"create-code-workspace": "node --import=tsx ./scripts/generate.code-workspace.ts --name=10wms-项目改造工作区",
 		"deploy-vercel": "node --import=tsx ./scripts/vercel-deploy-tool.ts",
 		"automd": "automd",
 		"preinstall": "npx only-allow pnpm && npm run corepack:pnpm",

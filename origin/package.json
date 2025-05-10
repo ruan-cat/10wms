@@ -3,11 +3,9 @@
 	"version": "0.6.0",
 	"type": "module",
 	"description": "01星球大项目-10WMS项目。这里是WMS系统后台前端代码。",
-	"packageManager": "pnpm@9.5.0",
+	"packageManager": "pnpm@9.15.0",
 	"engines": {
-		"node": ">=20.15.0",
-		"vscode": "^1.22.0",
-		"pnpm": ">=9.5.0"
+		"node": ">=22.14.0"
 	},
 	"scripts": {
 		"dev": "turbo vite:dev",

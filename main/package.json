@@ -1,6 +1,6 @@
 {
   "name": "@ruan-cat-10wms/main",
-  "description": "",
+  "description": "基于vue-pure-admin的10WMS项目主应用",
   "version": "6.0.0",
   "private": true,
   "type": "module",

@@ -11,6 +11,7 @@
 		// 使用 git-graph 插件 实现git提交分支图的查看
 		"mhutchie.git-graph",
 		"christian-kohler.npm-intellisense",
+		"christian-kohler.path-intellisense",
 		"sdras.vue-vscode-snippets",
 		"hollowtree.vue-snippets",
 		// UI交互增强插件 TODO高亮
@@ -18,7 +19,15 @@
 		// UI交互增强插件 TODO树统计
 		"Gruntfuggly.todo-tree",
 		// UI交互增强插件 自动导入文件的智能跳转
-		"antfu.goto-alias"
+		"antfu.goto-alias",
+		"antfu.iconify",
+		"warmthsea.vscode-custom-code-color",
+		"lokalise.i18n-ally",
+		"csstools.postcss",
+		"redhat.vscode-yaml",
+		"bradlc.vscode-tailwindcss",
+		"vscode-icons-team.vscode-icons",
+		"mikestead.dotenv",
 	],
 	"unwantedRecommendations": [
 		// 不使用该插件 该插件事实上被官方弃用了

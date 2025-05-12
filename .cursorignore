@@ -30,6 +30,7 @@ Dockerfile
 .prettierrc.js
 CHANGELOG.*.md
 CHANGELOG.md
+stylelint.config.js
 
 # 忽略环境变量
 .env
@@ -43,6 +44,22 @@ dist
 locales
 public
 assets
+
+# 本次项目内 忽略样式文件夹 不考虑让AI索引并修改样式
+style
+# 忽略文档配置 不考虑让AI参与文档制作
+.vitepress
+
+# 决定全面地忽略旧版项目
+origin/**/*
+# # 忽略接口 不需要对这些接口做生成与改造 只负责生成
+# origin/src/apis
+# # 不需要了解旧版手动封装的组件
+# origin/src/components
+# # 不需要考虑路由转换的功能
+# origin/src/composables/use-routers-to-menu-item
+# # 忽略全部的文档 不需要阅读旧版架构下面设计的文档
+# origin/src/docs
 
 # 忽略全部的例子 避免过度索引
 examples

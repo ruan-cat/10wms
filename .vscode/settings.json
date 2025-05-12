@@ -164,4 +164,6 @@
 		"v-ripple"
 	],
 	"vscodeCustomCodeColor.highlightValueColor": "#b392f0",
+	"search.indexing.maxFileSize": 524288000,
+	"search.indexing.batchSize": 1000
 }

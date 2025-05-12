@@ -238,3 +238,5 @@ login:
   purePassWordSureReg: 请输入确认密码
   purePassWordDifferentReg: 两次密码不一致!
   purePassWordUpdateReg: 修改密码成功
+test:
+  nihao: 你好，这是测试片段

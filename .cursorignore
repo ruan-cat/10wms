@@ -1,0 +1,43 @@
+
+*/**/.turbo
+*/**/.vercel
+
+*/**/.vitepress/dist
+*/**/.vitepress/cache
+
+node_modules
+
+scripts
+
+auto-imports.d.ts
+10wms-项目改造工作区.code-workspace
+pnpm-lock.yaml
+typedoc.config.mjs
+
+# 各个monorepo参考项目内要忽略的配置文件
+.dockerignore
+.editorconfig
+.gitattributes
+.prettierignore
+.stylelintignore
+.lintstagedrc
+.gitpod.yml
+.npmrc
+.browserslistrc
+.cursorignore
+Dockerfile
+
+# 忽略环境变量
+.env
+.env.*
+
+# 参考项目忽略的文件夹
+.github
+.husky
+.vscode
+dist
+locales
+public
+
+# 忽略精简版项目
+examples/pure-admin-thin

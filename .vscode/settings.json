@@ -1,6 +1,10 @@
 {
 	// 将npm的脚本显示出来 确保大家可以快速预览到npm命令，用界面点击实现项目启动、打包等行为。
 	"npm.enableRunFromFolder": true,
+	// 设置文件关联 规定 .cursorignore 被是被为 ignore 文件
+	"files.associations": {
+		".cursorignore": "ignore"
+	},
 	// 参考资料 https://github.com/mhutchie/vscode-git-graph/blob/develop/README.md
 	"git-graph.customBranchGlobPatterns": [
 		{

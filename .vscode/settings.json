@@ -56,7 +56,14 @@
 	// Disable the default formatter, use eslint instead
 	// 与antfu不同的是，我们使用prettier作为格式化工具。
 	"prettier.enable": true,
+	// 不考虑立刻格式化 避免出现冲突
+	"editor.formatOnType": false,
+	// 复制粘贴进来的内容 有时候需要维持其本身的格式 故不考虑立刻格式化
+	"editor.formatOnPaste": false,
+	// 保存时 格式化
 	"editor.formatOnSave": true,
+	// 不提供自动保存的功能 避免出现操作误导 必须清晰指出当前文件被修改了
+	"files.autoSave": "off",
 	// "editor.defaultFormatter": "dbaeumer.vscode-eslint",
 	// Auto fix
 	"editor.codeActionsOnSave": {

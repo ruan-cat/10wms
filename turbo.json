@@ -1,4 +1,11 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"tasks": {}
+	"tasks": {
+		"do-format": {
+			"cache": false,
+			"dependsOn": [
+				"^format"
+			]
+		}
+	}
 }

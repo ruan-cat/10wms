@@ -13,7 +13,7 @@
 		"deploy": "node --import=tsx ./scripts/deploy.ts --env-path=.env.production",
 		"preview": "vite preview",
 		"test": "vitest --ui --watch --api.port=4000",
-		"format": "prettier --write .",
+		"format": "prettier --config=../prettier.config.js --write .",
 		"docs:dev": "turbo do-docs-dev",
 		"docs:build": "turbo do-docs-build",
 		"git:fetch": "git fetch -p",

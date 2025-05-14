@@ -18,7 +18,7 @@
 		"git:push": "git push --follow-tags",
 		"build:docs": "turbo build:docs",
 		"test": "vitest --ui --watch --api.port=4000",
-		"format": "prettier --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore",
+		"turbo:format": "turbo do-format",
 		"create-code-workspace": "node --import=tsx ./scripts/generate.code-workspace.ts --name=10wms-项目改造工作区",
 		"deploy-vercel": "node --import=tsx ./scripts/vercel-deploy-tool.ts",
 		"preinstall": "npx only-allow pnpm && npm run corepack:pnpm",
@@ -30,7 +30,8 @@
 		"clear:cache": "rimraf -g '**/{dist,.turbo,.vercel,.cache,.temp}'",
 		"changeset:init": "changeset init",
 		"changeset:publish": "changeset publish",
-		"turbo:publish": "turbo do-publish"
+		"turbo:publish": "turbo do-publish",
+		"format:*": "prettier --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^4.3.0",

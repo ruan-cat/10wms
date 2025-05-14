@@ -1,5 +1,7 @@
 {
-	"$schema": "https://turbo.build/schema.json",
+	"extends": [
+		"//"
+	],
 	"tasks": {
 		"rm:types": {
 			"cache": false
@@ -7,7 +9,9 @@
 		"vite:dev": {
 			"cache": false,
 			"persistent": true,
-			"dependsOn": ["rm:types"]
+			"dependsOn": [
+				"rm:types"
+			]
 		},
 		"typedoc": {
 			"cache": false

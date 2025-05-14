@@ -145,6 +145,31 @@ node -v
 
 :::
 
+## 配置 npm 镜像源
+
+接下来我们需要设置镜像源。否则我们安装依赖时容易出错。
+
+```bash
+npm config set registry https://registry.npmmirror.com/
+npm config set COREPACK_NPM_REGISTRY https://registry.npmmirror.com/
+```
+
+::: tip 为 npx 准备全局镜像源
+
+我们项目会运行 `npx only-allow pnpm` 命令，该命令会安装一次性的 `only-allow` 包，如果没有安装，那么项目就会出现卡死，类似于下面这样：
+
+![2025-05-14-21-30-12](https://gh-img-store.ruan-cat.com/01s-docs/10wms/2025-05-14-21-30-12.png)
+
+项目会长期无反应。
+
+:::
+
+::: tip 为 corepack 准备镜像源
+
+具体细节可以阅读[该笔记](https://notes.ruan-cat.com/corepack/#准备镜像源)。
+
+:::
+
 ## 安装项目依赖
 
 在终端内输入以下命令：

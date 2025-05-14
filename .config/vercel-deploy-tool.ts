@@ -27,7 +27,7 @@ export default <Config>{
 		// wms 前端技术文档
 		{
 			type: "userCommands",
-			targetCWD: ".origin/src",
+			targetCWD: "./origin/src",
 			outputDirectory: ".vitepress/dist",
 			// url: domains["10wms"] as unknown as string[],
 			url: ["01s-10wms-frontend-docs.ruancat6312.top"],

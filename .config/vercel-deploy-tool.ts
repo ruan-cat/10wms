@@ -9,7 +9,8 @@ export default <Config>{
 	vercelProjectId: "prj_0dbaKzhoqP9C3A7C4QDkzjSprN2L",
 	vercelToken: "",
 
-	vercelJsonPath: "./vercel.reverse-proxy.json",
+	// 暂不需要反向代理
+	// vercelJsonPath: "./vercel.reverse-proxy.json",
 	// TODO: 处理项目的404页面显示，让vercel项目可以自己显示出404
 	// vercelJsonPath: "./vercel.404.json",
 
@@ -17,20 +18,20 @@ export default <Config>{
 		// wms 主项目 预发布环境
 		{
 			type: "userCommands",
-			targetCWD: "./",
+			targetCWD: "./origin",
 			outputDirectory: "dist",
 			url: domains["10wms"] as unknown as string[],
-			userCommands: ["pnpm -C=./ build"],
+			userCommands: ["pnpm -C=./origin build"],
 		},
 
 		// wms 前端技术文档
 		{
 			type: "userCommands",
-			targetCWD: "./src",
+			targetCWD: ".origin/src",
 			outputDirectory: ".vitepress/dist",
 			// url: domains["10wms"] as unknown as string[],
 			url: ["01s-10wms-frontend-docs.ruancat6312.top"],
-			userCommands: ["pnpm -C=./ docs:build"],
+			userCommands: ["pnpm -C=./origin docs:build"],
 		},
 	],
 };

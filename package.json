@@ -18,7 +18,7 @@
 		"git:push": "git push --follow-tags",
 		"build:docs": "turbo build:docs",
 		"test": "vitest --ui --watch --api.port=4000",
-		"turbo:format": "turbo do-format",
+		"format": "pnpm -r format",
 		"create-code-workspace": "node --import=tsx ./scripts/generate.code-workspace.ts --name=10wms-项目改造工作区",
 		"deploy-vercel": "node --import=tsx ./scripts/vercel-deploy-tool.ts",
 		"preinstall": "npx only-allow pnpm && npm run corepack:pnpm",

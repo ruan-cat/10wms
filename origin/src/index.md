@@ -72,7 +72,7 @@ order: 10
 
 ::: details vscode 插件清单
 
-<<< ../.vscode/settings.json
+<<< ../.vscode/extensions.json
 
 :::
 

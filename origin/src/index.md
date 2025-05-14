@@ -166,7 +166,7 @@ npm config set COREPACK_NPM_REGISTRY https://registry.npmmirror.com/
 
 ::: tip 为 corepack 准备镜像源
 
-具体细节可以阅读[该笔记](https://notes.ruan-cat.com/corepack/#准备镜像源)。
+具体细节可以阅读[该笔记](https://notes.ruan-cat.com/corepack/#全局配置)。
 
 :::
 

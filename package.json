@@ -60,6 +60,7 @@
 		"eslint-plugin-prettier": "^5.2.3",
 		"js-yaml": "^4.1.0",
 		"lodash-es": "^4.17.21",
+		"only-allow": "^1.2.1",
 		"pkg-types": "^2.0.1",
 		"prettier": "^3.5.3",
 		"prettier-plugin-lint-md": "^1.0.1",

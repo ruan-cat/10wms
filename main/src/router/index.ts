@@ -21,8 +21,21 @@ import {
 	/** @see https://pure-admin.cn/pages/routerMenu/#如何只要静态路由 */
 	addPathMatch,
 } from "./utils";
-import { type Router, type RouteRecordRaw, type RouteComponent, createRouter } from "vue-router";
+import {
+	type Router,
+	type RouteRecordRaw,
+	type RouteComponent,
+	// 使用 unplugin-vue-router 自动化路由插件 故不使用原版路由提供的函数
+	// createRouter
+} from "vue-router";
 import { type DataInfo, userKey, removeToken, multipleTabsKey } from "@/utils/auth";
+
+// 自动化路由插件
+import { createRouter } from "vue-router/auto";
+import { handleHotUpdate, routes } from "vue-router/auto-routes";
+
+// 自动化布局插件
+import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax

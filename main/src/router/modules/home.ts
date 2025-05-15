@@ -30,7 +30,7 @@ const oldHomeRoute = {
 /**
  * 按照布局组件的要求来改造路由
  */
-const newHomeRoute = {
+const newHomeRoute1 = {
 	path: "/welcome",
 	name: "Welcome",
 	component: () => import("@/views/welcome/index.vue"),
@@ -40,5 +40,32 @@ const newHomeRoute = {
 	},
 } satisfies RouteConfigsTable;
 
-export default oldHomeRoute;
-// export default newHomeRoute;
+const newHomeRoute2 = {
+	path: "/",
+	name: "Home",
+	// 业务变更 按照布局组件要求 路由不应该配置任何布局组件
+	// component: Layout,
+	redirect: "/welcome",
+	meta: {
+		icon: "ep/home-filled",
+		title: $t("menus.pureHome"),
+		rank: RouterOrderEnums.home,
+		layout: "index",
+	},
+	children: [
+		{
+			path: "/welcome",
+			name: "Welcome",
+			component: () => import("@/views/welcome/index.vue"),
+			meta: {
+				title: $t("menus.pureHome"),
+				showLink: VITE_HIDE_HOME === "true" ? false : true,
+				// layout: "index",
+			},
+		},
+	],
+} satisfies RouteConfigsTable;
+
+// export default oldHomeRoute;
+// export default newHomeRoute1;
+export default newHomeRoute2;

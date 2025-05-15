@@ -10,11 +10,13 @@ export default [
 			title: $t("menus.pureLogin"),
 			showLink: false,
 			rank: 101,
+			layout: "simple",
 		},
 	},
 	{
 		path: "/redirect",
-		component: Layout,
+		// 业务变更 按照布局组件要求 路由不应该配置任何布局组件
+		// component: Layout,
 		meta: {
 			title: $t("status.pureLoad"),
 			showLink: false,
@@ -47,6 +49,7 @@ export default [
 			title: $t("buttons.pureAccountSettings"),
 			showLink: false,
 			rank: 104,
+			layout: "simple",
 		},
 	},
 ] satisfies Array<RouteConfigsTable>;

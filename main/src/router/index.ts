@@ -71,8 +71,18 @@ export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
 	),
 );
 
-/** 初始的静态路由，用于退出登录时重置路由 */
-const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(constantRoutes);
+// 改造前
+// const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(constantRoutes);
+/**
+ * 初始的静态路由，用于退出登录时重置路由
+ * @description
+ * 改造后：
+ *
+ * 在对接 布局组件后 此处的路由需要经过 setupLayouts 处理
+ * 使其可以正确渲染布局组件
+ * 用于处理用户退出登录后重新登陆系统时 页面出现布局页丢失的bug。
+ */
+const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(setupLayouts(constantRoutes));
 
 /** 用于渲染菜单，保持原始层级 */
 export const constantMenus: Array<RouteComponent> = ascending(

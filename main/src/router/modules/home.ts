@@ -50,6 +50,7 @@ const newHomeRoute2 = {
 		icon: "ep/home-filled",
 		title: $t("menus.pureHome"),
 		rank: RouterOrderEnums.home,
+		// TODO: 补充布局插件所需要的额外属性
 		layout: "index",
 	},
 	children: [
@@ -60,7 +61,6 @@ const newHomeRoute2 = {
 			meta: {
 				title: $t("menus.pureHome"),
 				showLink: VITE_HIDE_HOME === "true" ? false : true,
-				// layout: "index",
 			},
 		},
 	],

@@ -10,6 +10,7 @@ export default [
 			title: $t("menus.pureLogin"),
 			showLink: false,
 			rank: 101,
+			// TODO: 补充布局插件所需要的额外属性
 			layout: "simple",
 		},
 	},
@@ -49,6 +50,7 @@ export default [
 			title: $t("buttons.pureAccountSettings"),
 			showLink: false,
 			rank: 104,
+			// TODO: 补充布局插件所需要的额外属性
 			layout: "simple",
 		},
 	},

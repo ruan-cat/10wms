@@ -88,7 +88,13 @@ export function getPluginsList(
 		}),
 
 		/** @see https://github.com/dishait/vite-plugin-vue-meta-layouts/blob/main/README_EN.md#config */
-		MetaLayouts(),
+		MetaLayouts({
+			// 本项目的路由文件夹名称为 layout
+			target: "src/layout",
+			// 为了避免影响其他地方 故设置默认布局的名称为 index
+			defaultLayout: "index",
+			skipTopLevelRouteLayout: true,
+		}),
 
 		/** 自动导入插件 */
 		AutoImport({

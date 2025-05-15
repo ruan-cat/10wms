@@ -27,6 +27,9 @@ const oldHomeRoute = {
 	],
 } satisfies RouteConfigsTable;
 
+/**
+ * 按照布局组件的要求来改造路由
+ */
 const newHomeRoute = {
 	path: "/welcome",
 	name: "Welcome",
@@ -37,5 +40,5 @@ const newHomeRoute = {
 	},
 } satisfies RouteConfigsTable;
 
-// export default oldHomeRoute;
-export default newHomeRoute;
+export default oldHomeRoute;
+// export default newHomeRoute;

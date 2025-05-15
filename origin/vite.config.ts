@@ -151,7 +151,13 @@ export default defineConfig(({ mode }) => {
 			vue(),
 
 			/** @see https://github.com/dishait/vite-plugin-vue-meta-layouts/blob/main/README_EN.md#config */
-			MetaLayouts(),
+			MetaLayouts({
+				/**
+				 * 忽略掉全部 components 文件夹下面的组件 避免识别成布局组件
+				 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/unplugin-vue-router/vite.config.ts#L13
+				 */
+				excludes: ["**/components/**/*.vue"],
+			}),
 
 			// 自动生成类型声明文件插件
 			autoImport,

@@ -94,6 +94,11 @@ export function getPluginsList(
 			// 为了避免影响其他地方 故设置默认布局的名称为 index
 			defaultLayout: "index",
 			skipTopLevelRouteLayout: true,
+			/**
+			 * 忽略掉全部 components 文件夹下面的组件 避免识别成布局组件
+			 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/unplugin-vue-router/vite.config.ts#L13
+			 */
+			excludes: ["**/components/**/*.vue"],
 		}),
 
 		/** 自动导入插件 */

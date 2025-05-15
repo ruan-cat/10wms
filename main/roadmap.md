@@ -6,6 +6,10 @@
 
 使用 [unplugin-vue-router](https://uvr.esm.is/) 实现自动化路由，仅仅对新增的业务代码，实现页面组件的路由导航。
 
+```bash
+pnpm -F=@ruan-cat-10wms/main i -D unplugin-vue-router vite-plugin-vue-meta-layouts
+```
+
 ## view 目录下的特定组件也被认定为自动导入的全局组件
 
 ## 自己封装的组件归属在特定的目录内，避免冲突

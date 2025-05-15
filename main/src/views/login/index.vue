@@ -25,7 +25,9 @@ import { useDataThemeChange } from "@/layout/hooks/useDataThemeChange";
 
 /** @see https://pure-admin.cn/pages/routerMenu/#如何只要静态路由 */
 // import { initRouter, getTopMenu } from "@/router/utils";
-// import { useUserStoreHook } from "@/store/modules/user";
+// 很多逻辑需要使用该工具 故继续配置
+import { useUserStoreHook } from "@/store/modules/user";
+
 import { setToken } from "@/utils/auth";
 import { addPathMatch, getTopMenu } from "@/router/utils";
 import { usePermissionStoreHook } from "@/store/modules/permission";

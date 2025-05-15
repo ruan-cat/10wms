@@ -135,10 +135,10 @@ export function getPluginsList(
 					"lodash-es": ["isUndefined", "isEmpty", "cloneDeep", "merge", "uniqueId"],
 				},
 			],
-			ignore: ["vue-router"],
+			ignore: ["vue-router", "src/views/**/svg/**"],
 			dirs: [
 				{
-					glob: "src/**/*",
+					glob: "src/**/*,!src/views/**/svg/**",
 					types: true,
 				},
 			],

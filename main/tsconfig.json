@@ -54,7 +54,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "types/*.d.ts",
-    "vite.config.ts"
+    "vite.config.ts",
   ],
   "exclude": [
     "dist",

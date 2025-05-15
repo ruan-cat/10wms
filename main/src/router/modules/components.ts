@@ -1,5 +1,6 @@
 import { $t } from "@/plugins/i18n";
-import { components } from "@/router/enums";
+// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+// import { components } from "@/router/enums";
 
 export default {
 	path: "/components",

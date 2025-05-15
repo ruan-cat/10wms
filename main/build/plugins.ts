@@ -143,7 +143,9 @@ export function getPluginsList(
 				},
 			],
 			dts: "./types/auto-imports.d.ts",
-			resolvers: [ElementPlusResolver()],
+
+			// TODO: 稍后补充安装element-plus
+			// resolvers: [ElementPlusResolver()],
 		}),
 
 		// jsx、tsx语法支持

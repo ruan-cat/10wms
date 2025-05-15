@@ -1,4 +1,5 @@
-import { vueflow } from "@/router/enums";
+// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+// import { vueflow } from "@/router/enums";
 
 export default {
 	path: "/vue-flow",

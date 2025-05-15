@@ -3,10 +3,22 @@
 import type { RouteComponent, RouteLocationNormalized } from "vue-router";
 import type { FunctionalComponent } from "vue";
 
+/**
+ * 使用了 自动布局插件 故此处手动声明清楚可以使用的布局类型
+ * @description
+ * 这里有一个坑 此处写的字符串 本质上是layout文件夹下面的文件名
+ * 未来更改vue文件名时，此处不一定会及时更新到位
+ * 一律以 `layout文件夹下面的文件名` 为准
+ */
+type LayoutEnums = // 默认布局
+
+		| "index"
+		// 简单布局
+		| "simple";
+
 declare global {
 	interface ToRouteType extends RouteLocationNormalized {
 		meta: CustomizeRouteMeta;
-
 		// 警告 报错不存在 路由名称 name 可能需要导入自动化路由的name
 	}
 
@@ -58,6 +70,9 @@ declare global {
 		 * 而通过设置`activePath`指定激活菜单即可获得高亮，`activePath`为指定激活菜单的`path`）
 		 */
 		activePath?: string;
+
+		/** 为路由的 meta 对象增加 自动布局插件 所需要的配置 */
+		layout?: LayoutEnums;
 	}
 
 	/**
@@ -98,6 +113,9 @@ declare global {
 			showLink?: boolean;
 			/** 菜单升序排序，值越高排的越后（只针对顶级路由）`可选` */
 			rank?: number;
+
+			/** 为路由的 meta 对象增加 自动布局插件 所需要的配置 */
+			layout?: LayoutEnums;
 		};
 		/** 子路由配置项 */
 		children?: Array<RouteChildrenConfigsTable>;
@@ -107,5 +125,8 @@ declare global {
 // https://router.vuejs.org/zh/guide/advanced/meta.html#typescript
 declare module "vue-router" {
 	// eslint-disable-next-line
-	interface RouteMeta extends CustomizeRouteMeta {}
+	interface RouteMeta extends CustomizeRouteMeta {
+		/** 为路由的 meta 对象增加 自动布局插件 所需要的配置 */
+		layout?: LayoutEnums;
+	}
 }

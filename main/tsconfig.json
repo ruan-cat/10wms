@@ -36,7 +36,16 @@
       "element-plus/global",
       "@pureadmin/table/volar",
       "unplugin-icons/types/vue",
-      "@pureadmin/descriptions/volar"
+      "@pureadmin/descriptions/volar",
+      // 保证自动导入插件提供了充足的类型
+      "unplugin-auto-import",
+      /**
+        自动化路由插件 准备类型识别
+        https://uvr.esm.is/introduction.html#setup
+      */
+      "unplugin-vue-router/client",
+      // 自动化布局插件 准备类型识别
+      "vite-plugin-vue-meta-layouts/client",
     ]
   },
   "include": [

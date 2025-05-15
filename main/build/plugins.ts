@@ -78,6 +78,10 @@ export function getPluginsList(
 				},
 			},
 		}),
+
+		/** @see https://github.com/dishait/vite-plugin-vue-meta-layouts/blob/main/README_EN.md#config */
+		// MetaLayouts(),
+
 		// jsx、tsx语法支持
 		vueJsx(),
 		VueI18nPlugin({

@@ -1,5 +1,6 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { markdown } from "@/router/enums";
 
 export default {
@@ -8,7 +9,7 @@ export default {
 	meta: {
 		icon: "ri/markdown-line",
 		title: $t("menus.pureMarkdown"),
-		rank: markdown,
+		rank: RouterOrderEnums.markdown,
 	},
 	children: [
 		{

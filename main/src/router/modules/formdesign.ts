@@ -1,5 +1,6 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { formdesign } from "@/router/enums";
 
 const IFrame = () => import("@/layout/frame.vue");
@@ -10,7 +11,7 @@ export default {
 	meta: {
 		icon: "ri/terminal-window-line",
 		title: $t("menus.pureFormDesign"),
-		rank: formdesign,
+		rank: RouterOrderEnums.formdesign,
 	},
 	children: [
 		{

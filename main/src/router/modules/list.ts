@@ -1,15 +1,15 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { list } from "@/router/enums";
 
 export default {
 	path: "/list",
 	redirect: "/list/card",
 	meta: {
-		icon: "ri/list-check",
+		icon: "ri/list-unordered",
 		title: $t("menus.pureList"),
-		// TODO: 处理此处的类型报错
-		rank: list,
+		rank: RouterOrderEnums.list,
 	},
 	children: [
 		{

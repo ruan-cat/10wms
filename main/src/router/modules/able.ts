@@ -1,6 +1,5 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
-// import { able } from "@/router/enums";
+import { RouterOrderEnums } from "@/router/enums";
 
 export default {
 	path: "/able",
@@ -8,7 +7,7 @@ export default {
 	meta: {
 		icon: "ri/ubuntu-fill",
 		title: $t("menus.pureAble"),
-		rank: able,
+		rank: RouterOrderEnums.able,
 	},
 	children: [
 		{

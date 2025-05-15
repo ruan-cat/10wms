@@ -1,4 +1,5 @@
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { ppt } from "@/router/enums";
 
 const IFrame = () => import("@/layout/frame.vue");
@@ -9,7 +10,7 @@ export default {
 	meta: {
 		icon: "ri/file-ppt-2-line",
 		title: "PPT",
-		rank: ppt,
+		rank: RouterOrderEnums.ppt,
 	},
 	children: [
 		{

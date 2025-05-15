@@ -1,15 +1,16 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { error } from "@/router/enums";
 
 export default {
 	path: "/error",
 	redirect: "/error/403",
 	meta: {
-		icon: "ri/information-line",
+		icon: "ep/warning",
 		// showLink: false,
-		title: $t("menus.pureAbnormal"),
-		rank: error,
+		title: $t("menus.pureError"),
+		rank: RouterOrderEnums.error,
 	},
 	children: [
 		{

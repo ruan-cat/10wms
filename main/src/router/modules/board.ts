@@ -1,5 +1,6 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { board } from "@/router/enums";
 
 const IFrame = () => import("@/layout/frame.vue");
@@ -10,7 +11,7 @@ export default {
 	meta: {
 		icon: "ri/artboard-line",
 		title: $t("menus.pureBoard"),
-		rank: board,
+		rank: RouterOrderEnums.board,
 	},
 	children: [
 		{
@@ -19,8 +20,7 @@ export default {
 			component: IFrame,
 			meta: {
 				title: $t("menus.pureBoard"),
-				keepAlive: true,
-				frameSrc: "https://songlh.top/paint-board/",
+				extraIcon: "IF-pure-iconfont-new svg",
 			},
 		},
 	],

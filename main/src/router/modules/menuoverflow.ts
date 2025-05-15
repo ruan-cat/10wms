@@ -1,5 +1,6 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { menuoverflow } from "@/router/enums";
 
 export default {
@@ -7,7 +8,7 @@ export default {
 	redirect: "/menuoverflow/index",
 	meta: {
 		title: $t("menus.pureMenuOverflow"),
-		rank: menuoverflow,
+		rank: RouterOrderEnums.menuoverflow,
 	},
 	children: [
 		{

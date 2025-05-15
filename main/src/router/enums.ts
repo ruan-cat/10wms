@@ -1,6 +1,13 @@
 // 完整版菜单比较多，将 rank 抽离出来，在此方便维护
 
-const home = 0, // 平台规定只有 home 路由的 rank 才能为 0 ，所以后端在返回 rank 的时候需要从非 0 开始
+/**
+ * 路由排序枚举
+ * @description
+ * 现在已经使用的自动导入插件 为了避免出现重名导入失败 这里改写变量存储方案
+ * 改成导出一个变量的形式
+ */
+export enum RouterOrderEnums {
+	home = 0, // 平台规定只有 home 路由的 rank 才能为 0 ，所以后端在返回 rank 的时候需要从非 0 开始
 	chatai = 1,
 	vueflow = 2,
 	ganttastic = 3,
@@ -27,35 +34,5 @@ const home = 0, // 平台规定只有 home 路由的 rank 才能为 0 ，所以�
 	ppt = 24,
 	mind = 25,
 	guide = 26,
-	menuoverflow = 27;
-
-export {
-	home,
-	chatai,
-	vueflow,
-	ganttastic,
-	components,
-	able,
-	table,
-	form,
-	list,
-	result,
-	error,
-	frame,
-	nested,
-	permission,
-	system,
-	monitor,
-	tabs,
-	about,
-	codemirror,
-	markdown,
-	editor,
-	flowchart,
-	formdesign,
-	board,
-	ppt,
-	mind,
-	guide,
-	menuoverflow,
-};
+	menuoverflow = 27,
+}

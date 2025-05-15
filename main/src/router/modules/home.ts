@@ -1,5 +1,6 @@
 import { $t } from "@/plugins/i18n";
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { home } from "@/router/enums";
 
 const { VITE_HIDE_HOME } = import.meta.env;
@@ -13,7 +14,7 @@ export default {
 	meta: {
 		icon: "ep/home-filled",
 		title: $t("menus.pureHome"),
-		rank: home,
+		rank: RouterOrderEnums.home,
 	},
 	children: [
 		{

@@ -1,4 +1,5 @@
-// 业务变更 为了适应自动导入插件 故此处注释掉手动导入的枚举
+import { RouterOrderEnums } from "@/router/enums";
+
 // import { vueflow } from "@/router/enums";
 
 export default {
@@ -7,7 +8,7 @@ export default {
 	meta: {
 		icon: "ep/set-up",
 		title: "vue-flow",
-		rank: vueflow,
+		rank: RouterOrderEnums.vueflow,
 	},
 	children: [
 		{

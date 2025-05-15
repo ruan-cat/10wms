@@ -32,19 +32,37 @@ import { getAsyncRoutes } from "@/api/routes";
 
 function handRank(routeInfo: any) {
 	const { name, path, parentId, meta } = routeInfo;
-	return isAllEmpty(parentId)
+	// console.log(" in meta , ", routeInfo);
+
+	if (isUndefined(meta)) {
+		// 在自动化路由的情况下 如果连meta信息都没有 就当做是没有rank配置
+		// 为了后续处理正确 这里返回为true 让其他函数处理路由提供的rank
+		return true;
+	}
+
+	const res = isAllEmpty(parentId)
 		? isAllEmpty(meta?.rank) || (meta?.rank === 0 && name !== "Home" && path !== "/")
 			? true
 			: false
 		: false;
+
+	// console.log("handRank", res);
+	return res;
 }
 
 /** 按照路由中meta下的rank等级升序来排序路由 */
 function ascending(arr: any[]) {
 	arr.forEach((v, index) => {
 		// 当rank不存在时，根据顺序自动创建，首页路由永远在第一位
-		if (handRank(v)) v.meta.rank = index + 2;
+		if (handRank(v)) {
+			// 在自动化路由的情况下 如果连meta信息都没有 就手动先增加一个空对象
+			if (isUndefined(v?.meta)) {
+				v.meta = {};
+			}
+			v.meta.rank = index + 2;
+		}
 	});
+
 	return arr.sort((a: { meta: { rank: number } }, b: { meta: { rank: number } }) => {
 		return a?.meta.rank - b?.meta.rank;
 	});
@@ -103,6 +121,8 @@ function getParentPaths(value: string, routes: RouteRecordRaw[], key = "path") {
 
 /** 查找对应 `path` 的路由信息 */
 function findRouteByPath(path: string, routes: RouteRecordRaw[]) {
+	console.log("in findRouteByPath", path, routes);
+
 	let res = routes.find((item: { path: string }) => item.path == path);
 	if (res) {
 		return isProxy(res) ? toRaw(res) : res;

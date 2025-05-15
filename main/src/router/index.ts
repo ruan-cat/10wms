@@ -32,10 +32,13 @@ import { type DataInfo, userKey, removeToken, multipleTabsKey } from "@/utils/au
 
 // 自动化路由插件
 import { createRouter } from "vue-router/auto";
-import { handleHotUpdate, routes } from "vue-router/auto-routes";
+import { handleHotUpdate, routes as autoRoutes } from "vue-router/auto-routes";
 
 // 自动化布局插件
 import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
+
+/** 是否开启自动化路由？ */
+const isAutoRoutes = false;
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
@@ -54,14 +57,28 @@ Object.keys(modules).forEach((key) => {
 
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
-	formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
+	// 在没有自动路由前的写法
+	// formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
+
+	// 增加自动路由后的写法
+	formatFlatteningRoutes(
+		buildHierarchyTree(
+			ascending(
+				// 根据自动化路由做判断
+				(isAutoRoutes ? autoRoutes : routes).flat(Infinity),
+			),
+		),
+	),
 );
 
 /** 初始的静态路由，用于退出登录时重置路由 */
 const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(constantRoutes);
 
 /** 用于渲染菜单，保持原始层级 */
-export const constantMenus: Array<RouteComponent> = ascending(routes.flat(Infinity)).concat(...remainingRouter);
+export const constantMenus: Array<RouteComponent> = ascending(
+	// 根据自动化路由做判断
+	(isAutoRoutes ? autoRoutes : routes).flat(Infinity),
+).concat(...remainingRouter);
 
 /** 不参与菜单的路由 */
 export const remainingPaths = Object.keys(remainingRouter).map((v) => {
@@ -71,7 +88,12 @@ export const remainingPaths = Object.keys(remainingRouter).map((v) => {
 /** 创建路由实例 */
 export const router: Router = createRouter({
 	history: getHistoryMode(import.meta.env.VITE_ROUTER_HISTORY),
-	routes: constantRoutes.concat(...(remainingRouter as any)),
+
+	// 改造之前
+	// routes: constantRoutes.concat(...(remainingRouter as any)),
+	// 改造之后
+	routes: setupLayouts(constantRoutes.concat(...(remainingRouter as any))),
+
 	strict: true,
 	scrollBehavior(to, from, savedPosition) {
 		return new Promise((resolve) => {
@@ -94,7 +116,14 @@ export function resetRouter() {
 		router.addRoute(route);
 	}
 	router.options.routes = formatTwoStageRoutes(
-		formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
+		formatFlatteningRoutes(
+			buildHierarchyTree(
+				ascending(
+					// 根据自动化路由做判断
+					(isAutoRoutes ? autoRoutes : routes).flat(Infinity),
+				),
+			),
+		),
 	);
 	usePermissionStoreHook().clearAllCachePage();
 }
@@ -184,6 +213,8 @@ router.beforeEach((to: ToRouteType, _from, next) => {
 					usePermissionStoreHook().handleWholeMenus([]);
 					addPathMatch();
 					if (!useMultiTagsStoreHook().getMultiTagsCache) {
+						console.log("newInitRouter to", to);
+
 						const { path } = to;
 						const route = findRouteByPath(path, router.options.routes[0].children);
 						getTopMenu(true);

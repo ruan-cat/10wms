@@ -16,6 +16,10 @@ pnpm -F=@ruan-cat-10wms/main i -D unplugin-vue-router vite-plugin-vue-meta-layou
 
 - https://uvr.esm.is/introduction.html#auto-imports
 
+### 配置布局组件
+
+你好，我需要改造本项目，使其可以对接布局插件。请为我规划合适的改造计划。
+
 ## view 目录下的特定组件也被认定为自动导入的全局组件
 
 ## 自己封装的组件归属在特定的目录内，避免冲突

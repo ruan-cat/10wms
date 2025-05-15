@@ -1,12 +1,10 @@
 import { $t } from "@/plugins/i18n";
 import { RouterOrderEnums } from "@/router/enums";
 
-// import { home } from "@/router/enums";
-
 const { VITE_HIDE_HOME } = import.meta.env;
 const Layout = () => import("@/layout/index.vue");
 
-export default {
+const oldHomeRoute = {
 	path: "/",
 	name: "Home",
 	component: Layout,
@@ -28,3 +26,16 @@ export default {
 		},
 	],
 } satisfies RouteConfigsTable;
+
+const newHomeRoute = {
+	path: "/welcome",
+	name: "Welcome",
+	component: () => import("@/views/welcome/index.vue"),
+	meta: {
+		title: $t("menus.pureHome"),
+		showLink: VITE_HIDE_HOME === "true" ? false : true,
+	},
+} satisfies RouteConfigsTable;
+
+// export default oldHomeRoute;
+export default newHomeRoute;

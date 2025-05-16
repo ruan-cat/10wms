@@ -109,6 +109,7 @@ export function getPluginsList(
 		 * @description
 		 * vueDevTools 必须在 createHtmlPlugin 的前面导入
 		 *
+		 * @see https://devtools.vuejs.org/help/troubleshooting#devtools-vite-plugin-doesn-t-render-as-expected
 		 * @see https://github.com/vuejs/devtools/issues/278#issuecomment-2167415057
 		 */
 		vueDevTools(),

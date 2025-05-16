@@ -45,6 +45,27 @@ export function getPluginsList(
 		tailwindcss(),
 
 		/**
+		 * 布局插件
+		 * @description 注意到布局插件源码demo的写法 这里把布局组件移动到 `路由插件` 上面。
+		 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/unplugin-vue-router/vite.config.ts#L11-L17
+		 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/vite-plugin-pages/vite.config.ts#L8
+		 *
+		 * @see https://github.com/dishait/vite-plugin-vue-meta-layouts/blob/main/README_EN.md#config
+		 */
+		MetaLayouts({
+			// 本项目的路由文件夹名称为 layout
+			target: "src/layout",
+			// 为了避免影响其他地方 故设置默认布局的名称为 index
+			defaultLayout: "index",
+			skipTopLevelRouteLayout: true,
+			/**
+			 * 忽略掉全部 components 文件夹下面的组件 避免识别成布局组件
+			 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/unplugin-vue-router/vite.config.ts#L13
+			 */
+			excludes: ["**/components/**/*.vue"],
+		}),
+
+		/**
 		 * 类型化路由插件
 		 * @description
 		 * 其定义位置必须在 `@vitejs/plugin-vue` 插件之前。
@@ -63,6 +84,8 @@ export function getPluginsList(
 					// src: "src/views/10wms",
 					// src: "src/views",
 					src: "src/pages",
+					path: "10wms-pages-",
+					// path: "/10wms-pages-",
 					exclude: [
 						// TODO: 做出自定义配置
 						...[
@@ -89,20 +112,6 @@ export function getPluginsList(
 					isCustomElement: (tag) => tag === "deep-chat",
 				},
 			},
-		}),
-
-		/** @see https://github.com/dishait/vite-plugin-vue-meta-layouts/blob/main/README_EN.md#config */
-		MetaLayouts({
-			// 本项目的路由文件夹名称为 layout
-			target: "src/layout",
-			// 为了避免影响其他地方 故设置默认布局的名称为 index
-			defaultLayout: "index",
-			skipTopLevelRouteLayout: true,
-			/**
-			 * 忽略掉全部 components 文件夹下面的组件 避免识别成布局组件
-			 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/unplugin-vue-router/vite.config.ts#L13
-			 */
-			excludes: ["**/components/**/*.vue"],
 		}),
 
 		/**

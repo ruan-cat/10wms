@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 definePage({
-	path: "/10wms-test-a",
 	meta: {
-		title: "A页面-菜单",
+		title: "A页面-001",
 		icon: "ri/list-unordered",
 	},
 });
@@ -12,7 +11,7 @@ import { ref, computed, watch } from "vue";
 
 <template>
 	<section class="index-root">
-		<h2>测试用的A页面- 预期应该看不到</h2>
+		<h2>测试用的A页面- 001 作为业务页面</h2>
 	</section>
 </template>
 

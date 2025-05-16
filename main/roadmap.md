@@ -20,6 +20,10 @@ pnpm -F=@ruan-cat-10wms/main i -D unplugin-vue-router vite-plugin-vue-meta-layou
 
 你好，我需要改造本项目，使其可以对接布局插件。请为我规划合适的改造计划。
 
+### 配置自动路由组件
+
+具体明细见 `use-unplugin-vue-router.prompt.md` 文件。
+
 ## view 目录下的特定组件也被认定为自动导入的全局组件
 
 ## 自己封装的组件归属在特定的目录内，避免冲突
@@ -31,3 +35,11 @@ pnpm -F=@ruan-cat-10wms/main i -D unplugin-vue-router vite-plugin-vue-meta-layou
 ## 测试全局 vitest 测试套件
 
 ## 导入封装好的接口请求工具
+
+## 改造后的注意事项
+
+本项目改造了 pure-admin，部分规则有所变化。
+
+### 实现业务的页面一律在 pages 文件夹下
+
+pages 文件夹将会使用自动路由功能。views 文件夹下面的页面，仅仅被当做是案例页面，未来不会被打包。

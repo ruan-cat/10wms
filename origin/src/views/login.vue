@@ -1,4 +1,14 @@
 <script lang="ts" setup>
+// 定义页面路由信息
+definePage({
+	name: "Login",
+	path: "/",
+	meta: {
+		layout: "login",
+		menuType: "ignore", // 登录页不属于菜单侧边栏的一部分
+	},
+});
+
 import { login } from "@/apis/login";
 import Verify from "@/components/verifition/Verify.vue"; // 登录表单数据
 import { Hide, Lock, User, View } from "@element-plus/icons-vue";
@@ -9,16 +19,6 @@ import { useRouter } from "vue-router";
 
 // 使用 i18n
 const { t, locale } = useI18n();
-
-// 定义页面路由信息
-definePage({
-	name: "Login",
-	path: "/",
-	meta: {
-		layout: "login",
-		menuType: "ignore", // 登录页不属于菜单侧边栏的一部分
-	},
-});
 
 const sampleRouterStore = useSampleRouterStore();
 const { setClickShowSampleLink } = sampleRouterStore;

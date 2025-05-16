@@ -22,6 +22,8 @@
 		"antfu.iconify",
 		// UI交互增强插件 自定义代码颜色
 		"warmthsea.vscode-custom-code-color",
+		// UI交互增强插件 vscode的图标主题
+		"PKief.material-icon-theme",
 		"lokalise.i18n-ally",
 		"csstools.postcss",
 		"redhat.vscode-yaml",

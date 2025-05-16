@@ -38,6 +38,9 @@ import { handleHotUpdate, routes as autoRoutes } from "vue-router/auto-routes";
 // 自动化布局插件
 import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
 
+// 无法实现 需要现有路由对象 才有路由数组
+// const routesMetaLayouts = createGetRoutes();
+
 /**
  * 是否开启自动化路由？
  * FIXME: 开启自动化路由后 导致死循环 不清楚如何配置。
@@ -58,6 +61,11 @@ const routes = [];
 Object.keys(modules).forEach((key) => {
 	routes.push(modules[key].default);
 });
+
+/** 扁平化的 自动路由 */
+const flattenAutoRoutes = formatFlatteningRoutes(buildHierarchyTree(ascending(autoRoutes.flat(Infinity))));
+consola.warn(" 经过系统函数处理过的 扁平的自动路由？ flattenAutoRoutes = ", flattenAutoRoutes);
+
 autoRoutes.forEach((route) => {
 	routes.push(route);
 });

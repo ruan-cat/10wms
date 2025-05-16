@@ -57,9 +57,9 @@ const routes = [];
 Object.keys(modules).forEach((key) => {
 	routes.push(modules[key].default);
 });
-// autoRoutes.forEach((route) => {
-// 	routes.push(route);
-// });
+autoRoutes.forEach((route) => {
+	routes.push(route);
+});
 console.warn("routes = ", routes);
 console.warn("autoRoutes = ", autoRoutes);
 

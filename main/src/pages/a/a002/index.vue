@@ -2,7 +2,7 @@
 definePage({
 	meta: {
 		title: "A页面-002",
-		icon: "ri/list-unordered",
+		icon: "f7:menu",
 	},
 });
 

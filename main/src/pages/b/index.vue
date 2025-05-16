@@ -2,7 +2,7 @@
 definePage({
 	meta: {
 		title: "测试用的B页面",
-		icon: "ri/list-unordered",
+		icon: "f7:menu",
 	},
 });
 

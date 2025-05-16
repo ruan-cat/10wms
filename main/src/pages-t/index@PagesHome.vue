@@ -6,7 +6,7 @@ definePage({
 	path: "/10wms-test-welcome",
 	meta: {
 		title: "来自pages的首页",
-		icon: "ri/list-unordered",
+		icon: "f7:menu",
 	},
 });
 

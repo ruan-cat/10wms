@@ -37,7 +37,8 @@ stylelint.config.js
 .env.*
 
 # 参考项目忽略的文件夹
-.github
+# 其中 根目录的 .github 文件夹不做忽略
+examples/**/.github
 .husky
 .vscode
 dist

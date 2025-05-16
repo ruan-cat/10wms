@@ -1,5 +1,17 @@
 <!-- 本组件就是原来的 dashboard 控制台面板组件 -->
 <script lang="ts" setup>
+definePage({
+	// 首页的默认路由名称为home
+	name: "home",
+	// 认定此处的路由地址为写死home
+	path: "/home",
+	meta: {
+		menuType: "page",
+		text: "首页",
+		icon: "no-use-any-icon",
+	},
+});
+
 import {
 	getGoodsToUpInRecentDaysAPI4,
 	getPickingGoodsCountAPI,
@@ -31,17 +43,6 @@ import { LabelLayout, UniversalTransition } from "echarts/features";
 import { CanvasRenderer } from "echarts/renderers";
 import { onMounted, onUnmounted, ref } from "vue";
 
-definePage({
-	// 首页的默认路由名称为home
-	name: "home",
-	// 认定此处的路由地址为写死home
-	path: "/home",
-	meta: {
-		menuType: "page",
-		text: "首页",
-		icon: "no-use-any-icon",
-	},
-});
 // 注册必须的组件
 echarts.use([
 	TitleComponent,

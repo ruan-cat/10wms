@@ -104,6 +104,14 @@ export function getPluginsList(
 				},
 			],
 			getRouteName,
+
+			/** @see https://uvr.esm.is/guide/extending-routes.html#extending-routes-in-config */
+			async extendRoute(route) {
+				route.addToMeta({
+					title: "默认标题（VueRouter）",
+					icon: "solar:question-circle-bold",
+				});
+			},
 		}),
 
 		vue({

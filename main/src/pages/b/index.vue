@@ -1,4 +1,11 @@
 <script lang="ts" setup>
+definePage({
+	meta: {
+		title: "测试用的B页面",
+		icon: "ri/list-unordered",
+	},
+});
+
 import { ref, computed, watch } from "vue";
 </script>
 

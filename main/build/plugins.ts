@@ -60,8 +60,9 @@ export function getPluginsList(
 					 * 文档建议是写在pages内
 					 * src: "src/pages",
 					 */
-					src: "src/views/10wms",
+					// src: "src/views/10wms",
 					// src: "src/views",
+					src: "src/pages",
 					exclude: [
 						// TODO: 做出自定义配置
 						...[

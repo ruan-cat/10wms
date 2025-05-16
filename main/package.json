@@ -77,6 +77,7 @@
     "china-area-data": "^5.0.1",
     "codemirror": "^5.65.19",
     "codemirror-editor-vue3": "^2.8.0",
+    "consola": "^3.4.0",
     "cropperjs": "^1.6.2",
     "dayjs": "^1.11.13",
     "deep-chat": "^2.2.0",

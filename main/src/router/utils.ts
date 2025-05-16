@@ -35,6 +35,7 @@ function handRank(routeInfo: any) {
 	// console.log(" in meta , ", routeInfo);
 
 	if (isUndefined(meta)) {
+		console.log("in meta is undefined", routeInfo);
 		// 在自动化路由的情况下 如果连meta信息都没有 就当做是没有rank配置
 		// 为了后续处理正确 这里返回为true 让其他函数处理路由提供的rank
 		return true;
@@ -70,6 +71,8 @@ function ascending(arr: any[]) {
 
 /** 过滤meta中showLink为false的菜单 */
 function filterTree(data: RouteComponent[]) {
+	console.log("递归函数 filterTree", data);
+
 	const newTree = cloneDeep(data).filter((v: { meta: { showLink: boolean } }) => v.meta?.showLink !== false);
 	newTree.forEach((v: { children }) => v.children && (v.children = filterTree(v.children)));
 	return newTree;
@@ -89,6 +92,8 @@ function isOneOfArray(a: Array<string>, b: Array<string>) {
 
 /** 从localStorage里取出当前登录用户的角色roles，过滤无权限的菜单 */
 function filterNoPermissionTree(data: RouteComponent[]) {
+	console.log(" 递归函数： filterNoPermissionTree ", data);
+
 	const currentRoles = storageLocal().getItem<DataInfo<number>>(userKey)?.roles ?? [];
 	const newTree = cloneDeep(data).filter((v: any) => isOneOfArray(v.meta?.roles, currentRoles));
 	newTree.forEach((v: any) => v.children && (v.children = filterNoPermissionTree(v.children)));
@@ -121,7 +126,7 @@ function getParentPaths(value: string, routes: RouteRecordRaw[], key = "path") {
 
 /** 查找对应 `path` 的路由信息 */
 function findRouteByPath(path: string, routes: RouteRecordRaw[]) {
-	console.log("in findRouteByPath", path, routes);
+	console.log("递归函数 findRouteByPath", path, routes);
 
 	let res = routes.find((item: { path: string }) => item.path == path);
 	if (res) {

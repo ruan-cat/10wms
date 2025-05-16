@@ -37,7 +37,10 @@ import { handleHotUpdate, routes as autoRoutes } from "vue-router/auto-routes";
 // 自动化布局插件
 import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
 
-/** 是否开启自动化路由？ */
+/**
+ * 是否开启自动化路由？
+ * FIXME: 开启自动化路由后 导致死循环 不清楚如何配置。
+ */
 const isAutoRoutes = false;
 
 /** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
@@ -58,17 +61,17 @@ Object.keys(modules).forEach((key) => {
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
 	// 在没有自动路由前的写法
-	// formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
+	formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
 
 	// 增加自动路由后的写法
-	formatFlatteningRoutes(
-		buildHierarchyTree(
-			ascending(
-				// 根据自动化路由做判断
-				(isAutoRoutes ? autoRoutes : routes).flat(Infinity),
-			),
-		),
-	),
+	// formatFlatteningRoutes(
+	// 	buildHierarchyTree(
+	// 		ascending(
+	// 			// 根据自动化路由做判断
+	// 			(isAutoRoutes ? autoRoutes : routes).flat(Infinity),
+	// 		),
+	// 	),
+	// ),
 );
 
 // 改造前
@@ -86,8 +89,9 @@ const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(setupLayouts(constan
 
 /** 用于渲染菜单，保持原始层级 */
 export const constantMenus: Array<RouteComponent> = ascending(
+	routes.flat(Infinity),
 	// 根据自动化路由做判断
-	(isAutoRoutes ? autoRoutes : routes).flat(Infinity),
+	// (isAutoRoutes ? autoRoutes : routes).flat(Infinity),
 ).concat(...remainingRouter);
 
 /** 不参与菜单的路由 */
@@ -101,7 +105,7 @@ export const router: Router = createRouter({
 
 	// 改造之前
 	// routes: constantRoutes.concat(...(remainingRouter as any)),
-	// 改造之后
+	// 改造之后 按照布局插件的要求增加特定的函数 实现自动补全布局组件
 	routes: setupLayouts(constantRoutes.concat(...(remainingRouter as any))),
 
 	strict: true,
@@ -129,8 +133,9 @@ export function resetRouter() {
 		formatFlatteningRoutes(
 			buildHierarchyTree(
 				ascending(
+					routes.flat(Infinity),
 					// 根据自动化路由做判断
-					(isAutoRoutes ? autoRoutes : routes).flat(Infinity),
+					// (isAutoRoutes ? autoRoutes : routes).flat(Infinity),
 				),
 			),
 		),

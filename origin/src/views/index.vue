@@ -1,768 +1,360 @@
-<!-- 本组件就是原来的 dashboard 控制台面板组件 -->
 <script lang="ts" setup>
+// 定义页面路由信息
 definePage({
-	// 首页的默认路由名称为home
-	name: "home",
-	// 认定此处的路由地址为写死home
-	path: "/home",
+	name: "Login",
+	path: "/",
+	// redirect: "/login",
 	meta: {
-		menuType: "page",
-		text: "首页",
-		icon: "no-use-any-icon",
+		layout: "login",
+		menuType: "ignore", // 登录页不属于菜单侧边栏的一部分
 	},
 });
 
-import {
-	getGoodsToUpInRecentDaysAPI4,
-	getPickingGoodsCountAPI,
-	getShelfGoodsCountAPI2,
-	getTopDownGoodsCountAPI3,
-	getTopShelfGoodsCountAPI1,
-	getWaitPickGoodsCountAPI,
-	getWaitReceiveGoodsCountAPI,
-	getWaitShelfGoodsCountAPI,
-} from "@/apis/dashboard";
+import { login } from "@/apis/login";
+import Verify from "@/components/verifition/Verify.vue"; // 登录表单数据
+import { Hide, Lock, User, View } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
+import { onMounted, reactive, ref } from "vue";
+import { useI18n } from "vue-i18n"; // 引入 useI18n
+import { useRouter } from "vue-router";
 
-import { BarChart, LineChart, PieChart } from "echarts/charts";
-// 引入标题，提示框，直角坐标系，数据集，内置数据转换器组件，组件后缀都为 Component
-import {
-	DatasetComponent,
-	GridComponent,
-	LegendComponent,
-	TitleComponent,
-	ToolboxComponent,
-	TooltipComponent,
-	TransformComponent,
-} from "echarts/components";
+// 使用 i18n
+const { t, locale } = useI18n();
 
-// 引入 echarts 核心模块，核心模块提供了 echarts 使用必须要的接口。
-import * as echarts from "echarts/core";
-// 标签自动布局、全局过渡动画等特性
-import { LabelLayout, UniversalTransition } from "echarts/features";
-// 引入 Canvas 渲染器，注意引入 CanvasRenderer 或者 SVGRenderer 是必须的一步
-import { CanvasRenderer } from "echarts/renderers";
-import { onMounted, onUnmounted, ref } from "vue";
+const sampleRouterStore = useSampleRouterStore();
+const { setClickShowSampleLink } = sampleRouterStore;
+const { isShowSampleLink } = storeToRefs(sampleRouterStore);
 
-// 注册必须的组件
-echarts.use([
-	TitleComponent,
-	TooltipComponent,
-	GridComponent,
-	DatasetComponent,
-	TransformComponent,
-	BarChart,
-	LabelLayout,
-	UniversalTransition,
-	CanvasRenderer,
-	LegendComponent,
-	PieChart,
-	LineChart,
-	ToolboxComponent,
-]);
+// 获取router对象
+const $router = useRouter();
 
-const time = ref(new Date().toLocaleString());
-// 待收货
-const waitReceiveGoodsCount = ref(null);
-// 待上架
-const waitShelfGoodsCount = ref(null);
-// 待拣货
-const waitPickGoodsCount = ref(null);
-// 拣货中
-const pickingGoodsCount = ref(null);
+const formData = reactive({
+	username: "",
+	password: "",
+	rememberUsername: false, // 记住用户名
+});
 
-// 待收货
-async function getWaitReceiveGoodsCount() {
-	const res = await getWaitReceiveGoodsCountAPI();
-	if (res.code === 10000) {
-		waitReceiveGoodsCount.value = res.data.goodsNumber;
-		console.log("待收获", waitReceiveGoodsCount.value);
+// 验证码组件引用
+const verify = ref(null);
+
+// 验证码类型
+const captchaType = ref("clickWord"); // 默认使用滑动验证码
+const showPassword = ref(false); // 控制密码显示状态
+
+/**
+ * 验证码开关状态（默认根据环境变量设置）
+ * @description
+ * 截止 2025-3-24 ，大项目已经结束。故不提供验证码功能。
+ * 回退至 apifox 开发阶段。
+ */
+const captchaEnabled = ref(false);
+
+/**
+ * 执行登录
+ * @param {string} code 验证码字符串
+ */
+function doLogin(code) {
+	console.log("登录请求参数:", { ...formData, code }); // 调试信息
+	login(
+		{
+			...formData,
+			code: captchaEnabled.value ? code : null, // 如果验证码关闭，则不发送验证码
+		},
+		() => {
+			// 登录成功
+			if (formData.rememberUsername) {
+				// 保存用户名到 localStorage
+				localStorage.setItem("savedUsername", formData.username);
+			} else {
+				// 清除 localStorage 中的用户名
+				localStorage.removeItem("savedUsername");
+			}
+			$router.push("/home");
+			ElMessage.success("登录成功，前往首页");
+		},
+		() => {
+			// 登录失败
+			ElMessage.error("账号或密码错误");
+		},
+	);
+}
+
+/**
+ * 提交登录表单
+ */
+
+function submitForm() {
+	if (captchaEnabled.value) {
+		verify.value.show(); // 显示点击文字验证码
+	} else {
+		// 如果验证码关闭，直接执行登录
+		doLogin(null);
 	}
 }
 
-// 待上架
-async function getWaitShelfGoodsCount() {
-	const res = await getWaitShelfGoodsCountAPI();
-	if (res.code === 10000) {
-		waitShelfGoodsCount.value = res.data.goodsNumber;
-		console.log("待上架", waitShelfGoodsCount.value);
-	}
+/**
+ * 验证码验证通过后的回调
+ * @param {object} res 验证码验证结果
+ */
+function handleSuccess(res) {
+	// 验证码验证通过后，执行登录
+	doLogin(res.captchaVerification);
 }
 
-// 待拣货
-async function getWaitPickGoodsCount() {
-	const res = await getWaitPickGoodsCountAPI();
-	if (res.code === 10000) {
-		waitPickGoodsCount.value = +res.data.goodsNumber;
-		console.log("待拣货", waitPickGoodsCount.value);
-	}
+function togglePasswordVisibility() {
+	console.log("Toggle password visibility"); // 调试信息
+	showPassword.value = !showPassword.value;
 }
 
-// 拣货中
-async function getPickingGoodsCount() {
-	const res = await getPickingGoodsCountAPI();
-	if (res.code === 10000) {
-		pickingGoodsCount.value = +res.data.goodsNumber;
-		console.log("拣货中", pickingGoodsCount.value);
-	}
-}
-const data1 = ref([]);
-const data11 = ref([]);
-const data2 = ref([]);
-const data22 = ref([]);
-const data3 = ref([]);
-const data33 = ref([]);
-const data4 = ref([]);
-const data44 = ref([]);
+// 表单验证规则
+const rules = reactive({
+	username: [
+		{ required: true, message: t("login.username"), trigger: "blur" },
+		{ min: 3, max: 10, message: "账号长度在 3 到 10 个字符", trigger: "blur" },
+	],
+	password: [
+		{ required: true, message: t("login.password"), trigger: "blur" },
+		{ min: 6, max: 16, message: "密码长度在 6 到 16 个字符", trigger: "blur" },
+	],
+});
 
-// 上架商品数量Top6
-async function getTopShelfGoodsCount1() {
-	const res = await getTopShelfGoodsCountAPI1();
-	if (res.code === 10000) {
-		data1.value = res.data.map((item) => item.goodsName);
-		data11.value = res.data.map((item) => ({
-			value: Number(item.totalGoodsQua), // 确保 value 是数字类型
-			name: item.goodsName,
-		}));
-	}
-}
-
-// 七天内下架商品数量
-async function getShelfGoodsCount2() {
-	const res = await getShelfGoodsCountAPI2();
-	if (res.code === 10000) {
-		data2.value = res.data.map((item) => item.createDateDay);
-		data22.value = res.data.map((item) => item.totalGoodsUpQua);
-	}
-}
-
-// 下架商品数量Top6
-async function getTopDownGoods3() {
-	const res = await getTopDownGoodsCountAPI3();
-	if (res.code === 10000) {
-		data3.value = res.data.map((item) => item.goodsName);
-		data33.value = res.data.map((item) => Number(item.totalGoodsQua));
-	}
-}
-// 七天内上架商品数量
-async function getGoodsToUpInRecentDays4() {
-	const res = await getGoodsToUpInRecentDaysAPI4();
-	if (res.code === 10000) {
-		data4.value = res.data.map((item) => item.createDateDay);
-		data44.value = res.data.map((item) => item.totalGoodsUpQua);
-	}
-}
-
-let timer;
-// 时间格式化
-function formatDate() {
-	const now = new Date(); // 获取当前时间
-
-	const year = now.getFullYear(); // 获取年份
-	const month = now.getMonth() + 1; // 获取月份（注意：月份从0开始，需加1）
-	const day = now.getDate(); // 获取日期
-	const hours = now.getHours(); // 获取小时
-	const minutes = now.getMinutes(); // 获取分钟
-	const seconds = now.getSeconds(); // 获取秒钟
-
-	// 格式化为"xx年xx月xx日 xx点xx分xx秒"
-	const formattedDate = `${year}年${month}月${day}日 ${hours}点${minutes}分${seconds}秒`;
-
-	return formattedDate;
-}
-let myChart1;
-let myChart2;
-let myChart3;
-let myChart4;
+// 页面加载时，从 localStorage 读取保存的用户名
 onMounted(async () => {
-	timer = setInterval(() => {
-		time.value = formatDate();
-	}, 1000);
-	getWaitReceiveGoodsCount();
-	getWaitShelfGoodsCount();
-	getWaitPickGoodsCount();
-	getPickingGoodsCount();
-	// 初始化图表容器
-	myChart1 = echarts.init(document.getElementById("one"));
-	myChart2 = echarts.init(document.getElementById("two"));
-	myChart3 = echarts.init(document.getElementById("three"));
-	myChart4 = echarts.init(document.getElementById("four"));
-	await getTopShelfGoodsCount1(); // 没数据
-	await getShelfGoodsCount2(); // 没数据
-	await getTopDownGoods3();
-	await getGoodsToUpInRecentDays4();
-	// 数据加载完成后设置图表选项
-	setPieChartOptions1();
-	setPieChartOptions2();
-	setPieChartOptions3();
-	setPieChartOptions4();
-});
+	const savedUsername = localStorage.getItem("savedUsername");
+	if (savedUsername) {
+		formData.username = savedUsername;
+		formData.rememberUsername = true; // 自动勾选“记住用户名”
+	}
 
-onUnmounted(() => {
-	clearInterval(timer);
+	// TODO: 测试接口
+	const { execute, data } = sysManagerQueryDepartmentAll({});
+	await execute();
+	console.log("部门数据", data.value);
 });
-
-function setPieChartOptions1() {
-	if (myChart1 && data11.value.length > 0) {
-		myChart1.resize({ width: 360, height: 340 });
-		myChart1.setOption({
-			title: {
-				text: "上架数量前6",
-				left: "center",
-				top: "5%",
-				textStyle: {
-					fontFamily: "Arial",
-					fontSize: 13,
-					fontWeight: "normal",
-					color: "rgb(62, 87, 111)",
-				},
-			},
-			tooltip: {
-				trigger: "item",
-				formatter: "{a} <br/>{b}: {c} ({d}%)",
-			},
-			toolbox: {
-				show: true,
-				orient: "horizontal",
-				itemSize: 20,
-				feature: {
-					mytool: {
-						show: true,
-						title: "打印",
-						icon: "image://data:image/svg+xml;base64,PHN2ZyB0PSIxNzQwMzIzMzk1ODQwMyIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwLWlkPSI2NTkwIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MjggMjg4SDk2djM4NGgxNjB2MjI0aDUxMlY2NzJoMTYwek03MDQgODMySDMyMFY1NDRoMzg0eiBtMTYwLTIyNGgtOTZ2LTEyOEgyNTZ2MTI4aC05NlYzNTJoNzA0ek0zMjAgMTkyaDM4NHY2NGg2NFYxMjhIMjU2djEyOGg2NHYtNjR6IiBmaWxsPSIjMzMzMzMzIiBwLWlkPSI2NTkxIj48L3BhdGg+PHBhdGggZD0iTTM4NCA2MDhoMjU2djY0SDM4NHpNMzg0IDcwNGgyNTZ2NjRIMzg0eiIgZmlsbD0iIzMzMzMzMyIgcC1pZD0iNjU5MiI+PC9wYXRoPjxwYXRoIGQ9Ik04MDAgNDE2bS0zMiAwYTMyIDMyIDAgMSAwIDY0IDAgMzIgMzIgMCAxIDAtNjQgMFoiIGZpbGw9IiMzMzMzMzMiIHAtaWQ9IjY1OTMiPjwvcGF0aD48L3N2Zz4=", // 使用Base64编码的SVG图标
-						onclick() {
-							window.print();
-						},
-					},
-					saveAsImage: {
-						show: true,
-						title: "保存为图片",
-						type: "png",
-						name: "chart",
-						excludeComponents: ["toolbox"],
-					},
-				},
-			},
-			legend: {
-				orient: "horizontal",
-				bottom: 0,
-				left: "center",
-				data: data1.value,
-				borderWidth: 0.5,
-				borderColor: "#000",
-				padding: 4,
-				backgroundColor: "#f1f4f5",
-				borderRadius: 5,
-			},
-			series: [
-				{
-					name: "上架数量",
-					type: "pie",
-					radius: "50%",
-					data: data11.value,
-					emphasis: {
-						itemStyle: {
-							shadowBlur: 10,
-							shadowOffsetX: 0,
-							shadowColor: "rgba(0, 0, 0, 0.5)",
-						},
-					},
-					label: {
-						show: true,
-						formatter: (params) => `${params.value.toFixed(1)}`, // 显示名称、值和百分比，保留一位小数
-					},
-				},
-			],
-		});
-	}
-}
-function setPieChartOptions2() {
-	if (myChart2 && data2.value.length > 0) {
-		myChart2.resize({ width: 320, height: 340 });
-		myChart2.setOption({
-			title: {
-				text: "近七日下架数",
-				left: "center",
-				top: "5%", // 距离顶部 10%
-				textStyle: {
-					fontFamily: " Arial", // 设置字体
-					fontSize: 13, // 设置字体大小
-					fontWeight: "normal", // 设置字体粗细
-					color: "rgb(62, 87, 111)", // 设置字体颜色
-				},
-			},
-			tooltip: {
-				trigger: "axis",
-			},
-			toolbox: {
-				show: true,
-				orient: "horizontal",
-				itemSize: 20,
-				feature: {
-					// 添加自定义打印按钮
-					mytool: {
-						show: true, // 显示自定义按钮
-						title: "打印", // 按钮的提示文字
-						icon: "image://data:image/svg+xml;base64,PHN2ZyB0PSIxNzQwMzIzMzk1ODQwMyIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwLWlkPSI2NTkwIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MjggMjg4SDk2djM4NGgxNjB2MjI0aDUxMlY2NzJoMTYwek03MDQgODMySDMyMFY1NDRoMzg0eiBtMTYwLTIyNGgtOTZ2LTEyOEgyNTZ2MTI4aC05NlYzNTJoNzA0ek0zMjAgMTkyaDM4NHY2NGg2NFYxMjhIMjU2djEyOGg2NHYtNjR6IiBmaWxsPSIjMzMzMzMzIiBwLWlkPSI2NTkxIj48L3BhdGg+PHBhdGggZD0iTTM4NCA2MDhoMjU2djY0SDM4NHpNMzg0IDcwNGgyNTZ2NjRIMzg0eiIgZmlsbD0iIzMzMzMzMyIgcC1pZD0iNjU5MiI+PC9wYXRoPjxwYXRoIGQ9Ik04MDAgNDE2bS0zMiAwYTMyIDMyIDAgMSAwIDY0IDAgMzIgMzIgMCAxIDAtNjQgMFoiIGZpbGw9IiMzMzMzMzMiIHAtaWQ9IjY1OTMiPjwvcGF0aD48L3N2Zz4=", // 使用Base64编码的SVG图标
-						onclick() {
-							// 打印图表内容
-							window.print(); // 触发浏览器打印对话框
-						},
-					},
-					saveAsImage: {
-						show: true,
-						title: "保存为图片",
-						type: "png",
-						name: "chart", // 图片文件名
-						excludeComponents: ["toolbox"], // 排除 toolbox 组件
-					},
-				},
-			},
-			legend: {
-				data: ["近七日下架量"],
-				bottom: 0,
-				left: "center",
-				borderWidth: 0.5, // 设置边框宽度
-				borderColor: "#000", // 设置边框颜色
-				padding: 5, // 设置内边距
-				backgroundColor: "#f1f4f5", // 设置背景颜色（可选）
-				borderRadius: 5, // 设置圆角半径
-			},
-			xAxis: {
-				type: "category",
-				boundaryGap: false,
-				data: data2.value,
-				axisLine: {
-					show: true,
-					onZero: false, // 设置 x 轴不在 y 轴的 0 刻度处显示
-					zeroAxisIndex: 0, // 指定零轴索引（这里只有一个 y 轴，所以是 0 ）
-				},
-				axisLabel: {
-					interval: 0, // 显示所有标签
-					formatter: (value) => {
-						const parts = value.split("-");
-						return [`{a|${parts[0]}}`, `{b|${parts[1]}-${parts[2]}}`].join("\n"); // 使用换行符
-					},
-					rich: {
-						a: {
-							lineHeight: 20,
-							align: "center",
-							fontSize: 12,
-						},
-						b: {
-							lineHeight: 20,
-							align: "center",
-							fontSize: 12,
-						},
-					},
-				},
-			},
-			yAxis: {
-				type: "value",
-				name: "Y-values",
-				nameLocation: "middle",
-				nameRotate: 90,
-				nameGap: 32,
-				min: -200,
-				max: 600,
-			},
-			series: [
-				{
-					name: "近七日下架量",
-					type: "line",
-					// data: [10, 30, 2, 1, 10, 580, 0],
-					data: data22.value,
-					itemStyle: {
-						color: "#4E8BC1",
-					},
-					lineStyle: {
-						width: 2,
-					},
-					symbol: "circle", // 数据点的形状
-					symbolSize: 6, // 数据点的大小
-				},
-			],
-		});
-	}
-}
-function setPieChartOptions3() {
-	if (myChart3 && data3.value.length > 0) {
-		myChart3.resize({ width: 350, height: 350 });
-		myChart3.setOption({
-			title: {
-				text: "下架数量前6",
-				left: "center",
-				top: "5%", // 距离顶部 10%
-				textStyle: {
-					fontFamily: " Arial", // 设置字体
-					fontSize: 13, // 设置字体大小
-					fontWeight: "normal", // 设置字体粗细
-					color: "rgb(62, 87, 111)", // 设置字体颜色
-				},
-			},
-			toolbox: {
-				show: true,
-				orient: "horizontal",
-				itemSize: 20,
-				feature: {
-					// 添加自定义打印按钮
-					mytool: {
-						show: true, // 显示自定义按钮
-						title: "打印", // 按钮的提示文字
-						icon: "image://data:image/svg+xml;base64,PHN2ZyB0PSIxNzQwMzIzMzk1ODQwMyIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwLWlkPSI2NTkwIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MjggMjg4SDk2djM4NGgxNjB2MjI0aDUxMlY2NzJoMTYwek03MDQgODMySDMyMFY1NDRoMzg0eiBtMTYwLTIyNGgtOTZ2LTEyOEgyNTZ2MTI4aC05NlYzNTJoNzA0ek0zMjAgMTkyaDM4NHY2NGg2NFYxMjhIMjU2djEyOGg2NHYtNjR6IiBmaWxsPSIjMzMzMzMzIiBwLWlkPSI2NTkxIj48L3BhdGg+PHBhdGggZD0iTTM4NCA2MDhoMjU2djY0SDM4NHpNMzg0IDcwNGgyNTZ2NjRIMzg0eiIgZmlsbD0iIzMzMzMzMyIgcC1pZD0iNjU5MiI+PC9wYXRoPjxwYXRoIGQ9Ik04MDAgNDE2bS0zMiAwYTMyIDMyIDAgMSAwIDY0IDAgMzIgMzIgMCAxIDAtNjQgMFoiIGZpbGw9IiMzMzMzMzMiIHAtaWQ9IjY1OTMiPjwvcGF0aD48L3N2Zz4=", // 使用Base64编码的SVG图标
-						onclick() {
-							// 打印图表内容
-							window.print(); // 触发浏览器打印对话框
-						},
-					},
-					saveAsImage: {
-						show: true,
-						title: "保存为图片",
-						type: "png",
-						name: "chart", // 图片文件名
-						excludeComponents: ["toolbox"], // 排除 toolbox 组件
-					},
-				},
-			},
-			tooltip: {},
-			legend: {
-				show: true, // 是否显示
-				data: ["下架数量前6"],
-				bottom: "5%",
-				left: "center",
-				borderWidth: 0.5, // 设置边框宽度
-				borderColor: "#000", // 设置边框颜色
-				padding: 5, // 设置内边距
-				backgroundColor: "#f1f4f5", // 设置背景颜色（可选）
-				borderRadius: 5, // 设置圆角半径
-			},
-			xAxis: {
-				type: "category",
-				data: data3.value,
-				axisLabel: {
-					interval: 0,
-				},
-			},
-			yAxis: {
-				type: "value",
-				name: "Y-values",
-				nameLocation: "middle",
-				nameRotate: 90,
-				nameGap: 35,
-			},
-			series: [
-				{
-					name: "下架数量前6",
-					type: "bar",
-					data: data33.value,
-					label: {
-						show: true,
-						position: "top",
-						formatter: (params) => `${params.value.toFixed(1)}`, // 显示名称、值和百分比，保留一位小数
-					},
-				},
-			],
-		});
-	}
-}
-function setPieChartOptions4() {
-	if (myChart4 && data4.value.length > 0) {
-		myChart4.resize({ width: 320, height: 340 });
-		myChart4.setOption({
-			title: {
-				text: "近七日上架数",
-				left: "center",
-				top: "5%", // 距离顶部 10%
-				textStyle: {
-					fontFamily: " Arial", // 设置字体
-					fontSize: 13, // 设置字体大小
-					fontWeight: "normal", // 设置字体粗细
-					color: "rgb(62, 87, 111)", // 设置字体颜色
-				},
-			},
-			tooltip: {
-				trigger: "axis",
-			},
-			toolbox: {
-				show: true,
-				orient: "horizontal",
-				itemSize: 20,
-				feature: {
-					// 添加自定义打印按钮
-					mytool: {
-						show: true, // 显示自定义按钮
-						title: "打印", // 按钮的提示文字
-						icon: "image://data:image/svg+xml;base64,PHN2ZyB0PSIxNzQwMzIzMzk1ODQwMyIgY2xhc3M9Imljb24iIHZpZXdCb3g9IjAgMCAxMDI0IDEwMjQiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBwLWlkPSI2NTkwIiB3aWR0aD0iMzIiIGhlaWdodD0iMzIiPjxwYXRoIGQ9Ik05MjggMjg4SDk2djM4NGgxNjB2MjI0aDUxMlY2NzJoMTYwek03MDQgODMySDMyMFY1NDRoMzg0eiBtMTYwLTIyNGgtOTZ2LTEyOEgyNTZ2MTI4aC05NlYzNTJoNzA0ek0zMjAgMTkyaDM4NHY2NGg2NFYxMjhIMjU2djEyOGg2NHYtNjR6IiBmaWxsPSIjMzMzMzMzIiBwLWlkPSI2NTkxIj48L3BhdGg+PHBhdGggZD0iTTM4NCA2MDhoMjU2djY0SDM4NHpNMzg0IDcwNGgyNTZ2NjRIMzg0eiIgZmlsbD0iIzMzMzMzMyIgcC1pZD0iNjU5MiI+PC9wYXRoPjxwYXRoIGQ9Ik04MDAgNDE2bS0zMiAwYTMyIDMyIDAgMSAwIDY0IDAgMzIgMzIgMCAxIDAtNjQgMFoiIGZpbGw9IiMzMzMzMzMiIHAtaWQ9IjY1OTMiPjwvcGF0aD48L3N2Zz4=", // 使用Base64编码的SVG图标
-						onclick() {
-							// 打印图表内容
-							window.print(); // 触发浏览器打印对话框
-						},
-					},
-					saveAsImage: {
-						show: true,
-						title: "保存为图片",
-						type: "png",
-						name: "chart", // 图片文件名
-						excludeComponents: ["toolbox"], // 排除 toolbox 组件
-					},
-				},
-			},
-			legend: {
-				data: ["近七日上架量"],
-				bottom: 0,
-				left: "center",
-				borderWidth: 0.5, // 设置边框宽度
-				borderColor: "#000", // 设置边框颜色
-				padding: 5, // 设置内边距
-				backgroundColor: "#f1f4f5", // 设置背景颜色（可选）
-				borderRadius: 5, // 设置圆角半径
-			},
-			xAxis: {
-				type: "category",
-				boundaryGap: false,
-				data: data4.value,
-				axisLine: {
-					show: true,
-					onZero: false, // 设置 x 轴不在 y 轴的 0 刻度处显示
-					zeroAxisIndex: 0, // 指定零轴索引（这里只有一个 y 轴，所以是 0 ）
-				},
-				axisLabel: {
-					interval: 0, // 显示所有标签
-					formatter: (value) => {
-						const parts = value.split("-");
-						return [`{a|${parts[0]}}`, `{b|${parts[1]}-${parts[2]}}`].join("\n"); // 使用换行符
-					},
-					rich: {
-						a: {
-							lineHeight: 20,
-							align: "center",
-							fontSize: 12,
-						},
-						b: {
-							lineHeight: 20,
-							align: "center",
-							fontSize: 12,
-						},
-					},
-				},
-			},
-			yAxis: {
-				type: "value",
-				name: "Y-values",
-				nameLocation: "middle",
-				nameRotate: 90,
-				nameGap: 32,
-				min: -200,
-				max: 600,
-			},
-			series: [
-				{
-					name: "近七日上架量",
-					type: "line",
-					// data: [10, 30, 2, 1, 10, 580, 0],
-					data: data44.value,
-					itemStyle: {
-						color: "#4E8BC1",
-					},
-					lineStyle: {
-						width: 2,
-					},
-					symbol: "circle", // 数据点的形状
-					symbolSize: 6, // 数据点的大小
-				},
-			],
-		});
-	}
-}
 </script>
 
 <template>
-	<div class="container">
-		<div class="header">
-			<p>欢迎您使用WMS，现在时间:{{ time }}</p>
-			<p>您有 10391 件商品需要做库存调整，请及时调整</p>
-		</div>
-		<div class="body">
-			<div class="card">
-				<div class="up">
-					<div class="icon" style="background-color: rgb(242, 166, 84)">
-						<div class="iconfont icon-gouwuche"></div>
+	<div class="video-background">
+		<!-- 不再使用背景视频 太占用仓库空间了 -->
+		<!-- <video autoplay muted loop class="video">
+			<source src="/login.mp4" type="video/mp4" />
+		</video> -->
+		<div>
+			<div class="login">
+				<h1>{{ t("login.title") }}</h1>
+				<el-form ref="formRef" :model="formData" :rules="rules" style="max-width: 600px">
+					<div class="yh">
+						<img src="../../public/favicon.ico" alt="" />
+						<h2>&nbsp;&nbsp;用户登录</h2>
 					</div>
-					<span>待收货</span>
-				</div>
-				<div class="down">
-					<div class="box1">
-						<div class="iconfont icon-xiangshang1"></div>
-						<span>{{ waitReceiveGoodsCount || "0" }}</span>
-					</div>
-					<div class="box2">
-						<span>待收获件数</span>
-					</div>
-				</div>
-			</div>
-			<div class="card">
-				<div class="up">
-					<div class="icon" style="background-color: rgb(249, 104, 104)">
-						<div class="iconfont icon-renminbi1688"></div>
-					</div>
-					<span>待上架</span>
-				</div>
-				<div class="down">
-					<div class="box1">
-						<div class="iconfont icon-xiangshang1"></div>
-						<span>{{ waitShelfGoodsCount || "0" }}</span>
-					</div>
-					<div class="box2">
-						<span>待上架件数</span>
-					</div>
-				</div>
-			</div>
-			<div class="card">
-				<div class="up">
-					<div class="icon" style="background-color: rgb(70, 190, 138)">
-						<div class="iconfont icon-xiaoyanjing"></div>
-					</div>
-					<span>待拣货</span>
-				</div>
-				<div class="down">
-					<div class="box1">
-						<div class="iconfont icon-xiangshang1"></div>
-						<span>{{ waitPickGoodsCount || "0" }}</span>
-					</div>
-					<div class="box2">
-						<span>待拣货件数</span>
-					</div>
-				</div>
-			</div>
-			<div class="card">
-				<div class="up">
-					<div class="icon" style="background-color: rgb(98, 168, 234)">
-						<div class="iconfont icon-xiaoren"></div>
-					</div>
-					<span>拣货中</span>
-				</div>
-				<div class="down">
-					<div class="box1">
-						<div class="iconfont icon-xiangshang1"></div>
-						<span>{{ pickingGoodsCount || "0" }}</span>
-					</div>
-					<div class="box2">
-						<span>拣货中件数</span>
-					</div>
+					<hr />
+					<el-form-item prop="username">
+						<el-input v-model="formData.username" :prefix-icon="User" :placeholder="t('login.username')" />
+					</el-form-item>
+
+					<el-form-item label="" prop="password" class="custom-input">
+						<el-input
+							v-model="formData.password"
+							:type="showPassword ? 'text' : 'password'"
+							:prefix-icon="Lock"
+							:placeholder="t('login.password')"
+						>
+							<template #suffix>
+								<el-icon @click="togglePasswordVisibility">
+									<component :is="showPassword ? View : Hide" />
+								</el-icon>
+							</template>
+						</el-input>
+					</el-form-item>
+
+					<!-- 记住用户名和登录按钮 -->
+					<el-form-item>
+						<section style="display: flex; align-items: center; justify-content: space-between; width: 100%">
+							<el-checkbox v-model="formData.rememberUsername">{{ t("login.rememberMe") }}</el-checkbox>
+							<el-button type="primary" class="iconfont icon-key" @click="submitForm">
+								&nbsp;&nbsp;{{ t("login.loginButton") }}
+							</el-button>
+						</section>
+					</el-form-item>
+
+					<!-- TODO[TEST_CODE]:测试代码后期发布需要删除 -->
+					<el-form-item>
+						<router-link v-if="isShowSampleLink" to="/sample" @click.native="setClickShowSampleLink(true)">
+							进入示例演示页面
+						</router-link>
+					</el-form-item>
+				</el-form>
+
+				<div class="lang">
+					<h1>语言 <i class="iconfont icon-arrowright"></i></h1>
+					<!-- 语言切换 -->
+					<el-select v-model="locale" class="custom-select">
+						<el-option label="中文" value="zh" />
+						<el-option label="English" value="en" />
+					</el-select>
 				</div>
 			</div>
-		</div>
-		<div class="footer">
-			<div id="one"></div>
-			<div id="two"></div>
-			<div id="three"></div>
-			<div id="four"></div>
 		</div>
 	</div>
+
+	<!-- 验证码组件 -->
+	<Verify
+		ref="verify"
+		mode="pop"
+		:captcha-type="captchaType"
+		:img-size="{ width: '400px', height: '200px' }"
+		@success="handleSuccess"
+	></Verify>
 </template>
 
-<style scoped>
-* {
-	margin: 0;
-	padding: 0;
+<style>
+.video-background {
+	position: relative;
+	width: 100%;
+	height: 100vh;
+	overflow: hidden;
 }
-
-.container {
+.yh {
 	display: flex;
-	flex-direction: column;
-	background-color: #f2f2f2;
+	margin-bottom: 10px;
 }
-.header {
-	margin: 5px 5px 30px 5px;
-	width: 99%;
-	height: 120px;
-	background-color: #fff;
-	display: flex; /* 添加 Flexbox */
-	flex-direction: column; /* 设置为列方向 */
-	justify-content: center; /* 垂直居中 */
-	align-items: flex-start; /* 左对齐 */
-}
-
-.header p {
-	padding-left: 50px;
-	font-size: 18px;
-	color: rgb(55, 71, 79);
-}
-
-.body {
-	margin: 5px 5px 30px 5px;
-	width: 99%;
-	height: 150px;
-	background-color: #fff;
-	display: flex;
-}
-
-.card {
-	padding: 20px;
+.video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
 	height: 100%;
-	width: 25%;
-	background-color: #fff;
-	border-right: 1px solid #f1f4f5;
-	display: flex;
-	flex-direction: column;
+	object-fit: cover;
+	z-index: -1; /* 将视频置于底层 */
 }
-.card .up {
-	height: 50%;
-	width: 100%;
-	display: flex;
-}
-.card .up span {
-	color: #76838f;
-	font-size: 12px;
-	margin-left: 20px;
-	height: 50px;
-	line-height: 40px;
-}
-.icon {
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
+::v-deep .el-input__inner {
+	font-size: 16px;
+	height: 35px;
+	padding: 10px 10px;
 }
 
-.icon div {
-	font-size: 12px;
+.login {
+	position: relative;
+	z-index: 1; /* 将表单内容置于视频上方 */
+	text-align: center;
 	color: white;
-	line-height: 40px;
-	text-align: center;
-}
+	padding-top: 50px;
+	width: 390px; /* 固定宽度 */
+	margin: 0 auto; /* 居中 */
 
-.card .down {
-	text-align: center;
+	h1 {
+		margin-bottom: 20px;
+		font-size: 30px;
+		color: rgba(80, 80, 90);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		.iconfont {
+			margin-left: 10px; /* 调整图标与文本的间距 */
+		}
+	}
+
+	.el-form {
+		width: 390px;
+		height: 340px;
+		background-color: rgba(234, 238, 242);
+		margin: 0 auto;
+		padding: 50px;
+		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+		h2 {
+			margin-bottom: 1px;
+			font-size: 20px;
+			color: rgba(66, 139, 202);
+		}
+
+		.el-form-item {
+			margin-top: 20px;
+
+			.el-button {
+				background-color: rgba(66, 139, 202, 0.8);
+				color: rgba(255, 255, 255);
+				border: none;
+				width: 90px;
+				height: 40px;
+				font-size: 16px;
+			}
+		}
+
+		/* 记住用户名和登录按钮的样式 */
+		.el-form-item:last-child {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-top: 20px;
+
+			.el-checkbox {
+				margin-right: 105px; /* 调整复选框和按钮之间的间距 */
+			}
+
+			.el-button {
+				margin-left: 0;
+			}
+		}
+	}
+}
+.lang {
+	width: 390px; /* 与 .login 的宽度一致 */
+	margin: 0 auto; /* 居中 */
+	background-color: rgba(66, 139, 202, 0.8);
 	display: flex;
-	flex-direction: column;
+	align-items: center;
+	justify-content: space-between; /* 让内容分布在两端 */
+	padding: 10px; /* 添加内边距 */
+
+	h1 {
+		color: rgba(255, 238, 153);
+		font-size: 15px;
+		flex-shrink: 0; /* 防止文本过长挤压下拉框 */
+		display: flex;
+		align-items: center;
+		margin: 0; /* 去掉默认的 margin */
+
+		.iconfont {
+			margin-left: 10px; /* 调整图标与文本的间距 */
+		}
+	}
 }
-.box1 {
-	display: flex;
-	width: 100%;
-	justify-content: center;
+/* 自定义下拉框样式 */
+.custom-select {
+	width: 11vh; /* 设置宽度 */
+	margin-left: 10px; /* 调整与 h1 的间距 */
+}
+/* 下拉框弹出层宽度 */
+.custom-select ::v-deep .el-select-dropdown {
+	width: 11vh; /* 与输入框宽度一致 */
+}
+/* 下拉框输入框样式 */
+.custom-select ::v-deep .el-input__inner {
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	color: #333;
+	font-size: 14px;
+	padding: 8px 12px;
 }
 
-.box1 .iconfont {
-	font-size: 12px;
-	color: #f96868;
+/* 下拉框选项样式 */
+.custom-select ::v-deep .el-select-dropdown__item {
+	color: #555;
+	font-size: 14px;
+	padding: 8px 12px;
 }
 
-.box1 span {
-	color: #76838f;
-	font-size: 30px;
-	line-height: 30px;
-	margin-left: 5px;
+/* 下拉框选项悬停样式 */
+.custom-select ::v-deep .el-select-dropdown__item:hover {
+	background-color: #f5f5f5;
+	color: #000;
 }
 
-.box2 span {
-	color: #a3afb7;
-	font-size: 12px;
-}
-
-.footer {
-	margin: 5px 5px 5px 0px;
-	width: 99%;
-	height: 350px;
-	background-color: #fff;
-	display: flex;
+/* 下拉框选项选中样式 */
+.custom-select ::v-deep .el-select-dropdown__item.selected {
+	background-color: #e0f0ff;
+	color: #007bff;
 }
 </style>

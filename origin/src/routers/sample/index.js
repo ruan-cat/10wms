@@ -11,15 +11,15 @@ const routes = [
 			},
 			{
 				path: "/sample/excel",
-				component: () => import("@/views/sample/excel/Excel.vue"),
+				component: () => import("views/sample/excel/index.vue"),
 			},
 			{
 				path: "/sample/print",
-				component: () => import("@/views/sample/print/Print.vue"),
+				component: () => import("views/sample/print/index.vue"),
 			},
 			{
 				path: "/sample/editor",
-				component: () => import("@/views/sample/editor/Editor.vue"),
+				component: () => import("views/sample/editor/index.vue"),
 			},
 			{
 				path: "/sample/pdfobject",
@@ -27,7 +27,7 @@ const routes = [
 			},
 			{
 				path: "/sample/echarts",
-				component: () => import("@/views/sample/echarts/Echarts.vue"),
+				component: () => import("views/sample/echarts/index.vue"),
 			},
 			{
 				path: "/sample/formcreate",
@@ -35,7 +35,7 @@ const routes = [
 			},
 			{
 				path: "/sample/flow",
-				component: () => import("@/views/sample/flow/Flow.vue"),
+				component: () => import("views/sample/flow/index.vue"),
 			},
 			{
 				path: "/sample/dinamicForm",

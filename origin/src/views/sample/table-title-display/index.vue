@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TableTitle from "@/components/table-title/TableTitle.vue";
+import TableTitle from "components/table-title/TableTitle.vue";
 // 路由
 // 组件导入
 import { ref } from "vue";

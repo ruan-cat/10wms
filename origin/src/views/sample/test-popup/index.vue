@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Popup from "@/components/popup/Popup.vue";
+import Popup from "components/popup/Popup.vue";
 import { ElButton } from "element-plus";
 import { ref } from "vue";
 

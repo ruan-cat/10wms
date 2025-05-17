@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Request from "@/apis/request";
+import Request from "apis/request";
 import { ElMessage } from "element-plus";
 
 definePage({

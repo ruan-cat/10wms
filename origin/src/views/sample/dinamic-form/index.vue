@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { DynamicComponentConfig } from "@/components/base-form/types";
+import type { DynamicComponentConfig } from "components/base-form/types.ts";
 import { reactive } from "vue";
-import dinamicForm from "../../components/base-form/index.vue";
+import dinamicForm from "components/base-form/index.vue";
 
 definePage({
 	meta: {

@@ -596,13 +596,18 @@ export const autoRouterData = [
 	},
 	{
 		path: "/home",
-		name: "home",
-		meta: {
-			menuType: "page",
-			text: "首页",
-			icon: "no-use-any-icon",
-		},
-		alias: [],
+		children: [
+			{
+				path: "",
+				name: "home",
+				meta: {
+					menuType: "page",
+					text: "首页",
+					icon: "no-use-any-icon",
+				},
+				alias: [],
+			},
+		],
 	},
 	{
 		path: "/inventory-management",

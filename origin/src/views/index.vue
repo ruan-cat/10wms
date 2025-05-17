@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 // 定义页面路由信息
 definePage({
+	/**
+	 * 固定为大写的login 便于其他工具实现具名路由跳转
+	 */
 	name: "Login",
-	path: "/",
+	// path: "/",
 	// redirect: "/login",
 	meta: {
 		layout: "login",

@@ -2,9 +2,14 @@
 <script lang="ts" setup>
 definePage({
 	// 首页的默认路由名称为home
-	name: "home",
+	// name: "home",
 	// 认定此处的路由地址为写死home
-	path: "/home",
+	// path: "/home",
+	//
+	/**
+	 * 重构文件位置后 不需要再手动指定上述参数了
+	 * 上述参数由 基于文件的路由 自动生成
+	 */
 	meta: {
 		menuType: "page",
 		text: "首页",

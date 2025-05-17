@@ -9,7 +9,8 @@ import { createRouter, createWebHistory } from "vue-router/auto";
 
 import { handleHotUpdate, routes } from "vue-router/auto-routes";
 
-consola.warn(" 查看自动路由的结果 routes = ", routes);
+const autoRoutes = cloneDeep(routes);
+consola.warn(" 查看自动路由的结果 autoRoutes = ", autoRoutes);
 
 /**
  * 菜单类型

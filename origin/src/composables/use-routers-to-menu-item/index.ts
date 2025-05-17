@@ -13,8 +13,9 @@ interface UseRouterToMenuItemParams {
 	 * 路由
 	 * @description
 	 * 这里期望传递的是有自动化路由工具生成出来的 静态路由 数组
+	 *
+	 * routes: RouterOptions["routes"];
 	 */
-	// routes: RouterOptions["routes"];
 	routes: RouteRecordNormalized[];
 
 	/**
@@ -29,7 +30,6 @@ interface UseRouterToMenuItemParams {
 }
 
 interface RecursiveTraversalParams {
-	// routes: RouterOptions["routes"];
 	routes: RouteRecordNormalized[];
 
 	/** 父级传递的path地址 */

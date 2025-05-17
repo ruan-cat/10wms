@@ -1,4 +1,5 @@
 import { isConditionsSome } from "@ruan-cat/utils";
+import consola from "consola";
 import { ElMessage } from "element-plus";
 import { storeToRefs } from "pinia";
 
@@ -7,6 +8,8 @@ import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
 import { createRouter, createWebHistory } from "vue-router/auto";
 
 import { handleHotUpdate, routes } from "vue-router/auto-routes";
+
+consola.warn(" 查看自动路由的结果 routes = ", routes);
 
 /**
  * 菜单类型

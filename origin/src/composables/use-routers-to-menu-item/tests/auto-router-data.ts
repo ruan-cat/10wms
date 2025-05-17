@@ -218,11 +218,11 @@ export const autoRouterData = [
 				],
 			},
 			{
-				path: "Commodity-detail",
+				path: "commodity-detail",
 				children: [
 					{
 						path: "",
-						name: "base-data-Commodity-detail",
+						name: "base-data-commodity-detail",
 						meta: {
 							menuType: "page",
 							text: "商品明细",
@@ -278,11 +278,11 @@ export const autoRouterData = [
 				],
 			},
 			{
-				path: "Third-customer",
+				path: "third-customer",
 				children: [
 					{
 						path: "",
-						name: "base-data-Third-customer",
+						name: "base-data-third-customer",
 						meta: {
 							menuType: "page",
 							text: "第三方客户",
@@ -605,11 +605,11 @@ export const autoRouterData = [
 		alias: [],
 	},
 	{
-		path: "/Inventory-management",
+		path: "/inventory-management",
 		children: [
 			{
 				path: "",
-				name: "Inventory-management",
+				name: "inventory-management",
 				meta: {
 					menuType: "folder",
 					text: "盘点管理",
@@ -622,7 +622,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-comprehensive-inventory",
+						name: "inventory-management-comprehensive-inventory",
 						meta: {
 							menuType: "page",
 							text: "综合盘点",
@@ -637,7 +637,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-differentialposting",
+						name: "inventory-management-differentialposting",
 						meta: {
 							menuType: "page",
 							text: "盘点差异过账",
@@ -652,7 +652,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-double-quotation",
+						name: "inventory-management-double-quotation",
 						meta: {
 							menuType: "page",
 							text: "复盘",
@@ -667,7 +667,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-inventory",
+						name: "inventory-management-inventory",
 						meta: {
 							menuType: "page",
 							text: "盘点",
@@ -682,7 +682,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-inventory-difference",
+						name: "inventory-management-inventory-difference",
 						meta: {
 							menuType: "page",
 							text: "盘点差异",
@@ -697,7 +697,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-moveInventory",
+						name: "inventory-management-moveInventory",
 						meta: {
 							menuType: "page",
 							text: "动碰盘",
@@ -712,7 +712,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-moving-count",
+						name: "inventory-management-moving-count",
 						meta: {
 							menuType: "page",
 							text: "动仓盘点",
@@ -727,7 +727,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-shelf-adjustment",
+						name: "inventory-management-shelf-adjustment",
 						meta: {
 							menuType: "page",
 							text: "上架调整",
@@ -742,7 +742,7 @@ export const autoRouterData = [
 				children: [
 					{
 						path: "",
-						name: "Inventory-management-takedown-adjustment",
+						name: "inventory-management-takedown-adjustment",
 						meta: {
 							menuType: "page",
 							text: "下架调整",
@@ -882,11 +882,11 @@ export const autoRouterData = [
 				alias: [],
 			},
 			{
-				path: "Academic-code",
+				path: "academic-code",
 				children: [
 					{
 						path: "",
-						name: "personnel-config-Academic-code",
+						name: "personnel-config-academic-code",
 						meta: {
 							menuType: "page",
 							text: "学历代码",
@@ -918,11 +918,11 @@ export const autoRouterData = [
 				],
 			},
 			{
-				path: "Gender-code",
+				path: "gender-code",
 				children: [
 					{
 						path: "",
-						name: "personnel-config-Gender-code",
+						name: "personnel-config-gender-code",
 						meta: {
 							menuType: "page",
 							text: "性别代码",
@@ -1107,8 +1107,8 @@ export const autoRouterData = [
 				path: "area-information",
 				children: [
 					{
-						path: "area-information",
-						name: "regional-allocation-area-information-area-information",
+						path: "",
+						name: "regional-allocation-area-information",
 						meta: {
 							menuType: "page",
 							text: "大区信息",
@@ -1125,8 +1125,8 @@ export const autoRouterData = [
 				path: "city-type",
 				children: [
 					{
-						path: "city-type",
-						name: "regional-allocation-city-type-city-type",
+						path: "",
+						name: "regional-allocation-city-type",
 						meta: {
 							menuType: "page",
 							text: "城市分类",
@@ -1143,8 +1143,8 @@ export const autoRouterData = [
 				path: "district-information",
 				children: [
 					{
-						path: "district-information",
-						name: "regional-allocation-district-information-district-information",
+						path: "",
+						name: "regional-allocation-district-information",
 						meta: {
 							menuType: "page",
 							text: "片区信息",
@@ -1161,8 +1161,8 @@ export const autoRouterData = [
 				path: "regional-information",
 				children: [
 					{
-						path: "regional-information",
-						name: "regional-allocation-regional-information-regional-information",
+						path: "",
+						name: "regional-allocation-regional-information",
 						meta: {
 							menuType: "page",
 							text: "地区信息",
@@ -1193,124 +1193,179 @@ export const autoRouterData = [
 			},
 			{
 				path: "dialog-promise",
-				name: "sample-dialog-promise",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "命令式弹框",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-dialog-promise",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "命令式弹框",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
+			},
+			{
+				path: "dinamic-form",
+				children: [
+					{
+						path: "",
+						name: "sample-dinamic-form",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "动态表单演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "dinamic-table-form",
-				name: "sample-dinamic-table-form",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "动态表格样式表单",
-					icon: "IconSetting",
-				},
-				alias: [],
-			},
-			{
-				path: "dinamicForm",
-				name: "sample-dinamicForm",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "动态表单演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-dinamic-table-form",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "动态表格样式表单",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "echarts",
-				name: "sample-echarts",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "图表演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-echarts",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "图表演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "editor",
-				name: "sample-editor",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "富文本框演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-editor",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "富文本框演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "excel",
-				name: "sample-excel",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "Excel演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-excel",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "Excel演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "exporter",
-				name: "sample-exporter",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "下载导出按钮演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-exporter",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "下载导出按钮演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "file-upload",
-				name: "sample-file-upload",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "文件上传",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-file-upload",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "文件上传",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "flow",
-				name: "sample-flow",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "流程图编辑器演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-flow",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "流程图编辑器演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "form-create",
-				name: "sample-form-create",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "可视化表单演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-form-create",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "可视化表单演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "pagination",
-				name: "sample-pagination",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "分页栏组件",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-pagination",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "分页栏组件",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "pdf-object",
@@ -1325,47 +1380,67 @@ export const autoRouterData = [
 			},
 			{
 				path: "print",
-				name: "sample-print",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "打印演示",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-print",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "打印演示",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
 				path: "table",
-				name: "sample-table",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "表格组件",
-					icon: "IconSetting",
-				},
-				alias: [],
+				children: [
+					{
+						path: "",
+						name: "sample-table",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "表格组件",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
-				path: "TableTitleDisplay",
-				name: "sample-TableTitleDisplay",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "表格标题栏",
-					icon: "IconSetting",
-				},
-				alias: [],
+				path: "table-title-display",
+				children: [
+					{
+						path: "",
+						name: "sample-table-title-display",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "表格标题栏",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 			{
-				path: "TestPopup",
-				name: "sample-TestPopup",
-				meta: {
-					menuType: "page",
-					isSample: true,
-					text: "弹窗组件",
-					icon: "IconSetting",
-				},
-				alias: [],
+				path: "test-popup",
+				children: [
+					{
+						path: "",
+						name: "sample-test-popup",
+						meta: {
+							menuType: "page",
+							isSample: true,
+							text: "弹窗组件",
+							icon: "IconSetting",
+						},
+						alias: [],
+					},
+				],
 			},
 		],
 	},
@@ -1446,11 +1521,11 @@ export const autoRouterData = [
 				],
 			},
 			{
-				path: "MenuManagement",
+				path: "menu-management",
 				children: [
 					{
 						path: "",
-						name: "system-manage-MenuManagement",
+						name: "system-manage-menu-management",
 						meta: {
 							menuType: "page",
 							text: "菜单管理",

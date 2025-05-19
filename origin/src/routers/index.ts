@@ -13,7 +13,8 @@ import { disposalAutoRouter } from "@ruan-cat/utils/unplugin-vue-router";
 
 const autoRoutes = cloneDeep(routes);
 const cleanedAutoRoutes = disposalAutoRouter(autoRoutes);
-consola.warn(" 查看自动路由的结果 cleanedAutoRoutes = ", cleanedAutoRoutes);
+consola.warn(" 查看 原版自动路由的结果 autoRoutes = ", autoRoutes);
+consola.error(" 查看 整理自动路由的结果 cleanedAutoRoutes = ", cleanedAutoRoutes);
 
 /**
  * 菜单类型
@@ -127,7 +128,14 @@ if (import.meta.env.DEV) {
 // 定义一个路由对象
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
+	// 用原版的自动路由
 	routes: setupLayouts(routes),
+	/**
+	 * 用整理后的自动路由来注册
+	 * 警告 这是不对的 会导致注册失败
+	 * 应该按照文档要求 用原版的路由完成注册
+	 */
+	// routes: setupLayouts(cleanedAutoRoutes),
 });
 
 /**

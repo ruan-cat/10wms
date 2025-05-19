@@ -34,6 +34,56 @@ import consola from "consola";
 import { isEmpty } from "lodash-es";
 import { isConditionsEvery } from "@ruan-cat/utils";
 
+/** @see https://uvr.esm.is/guide/extending-routes.html#extending-routes-in-config */
+async function extendRoute(route) {
+	type EditableTreeNode = typeof route;
+	// consola.log("  extendRoute = ", route);
+
+	// if (route.path === "") {
+	// 	route.path = `${route.fullPath}/index`;
+	// } else {
+	// 	route.path = `${route.fullPath}`;
+	// }
+
+	/** 生成含有index尾缀的路径 */
+	function makeIndexSuffixPath(path: string) {
+		return `${path}/index`;
+	}
+
+	function hasOnlyOneChild(route: EditableTreeNode) {
+		return route?.children?.length === 1;
+	}
+
+	function hasParent(route: EditableTreeNode) {
+		return !isEmpty(route?.parent);
+	}
+
+	// 当前路由下面只有一个子路由？
+	if (hasOnlyOneChild(route)) {
+		const currentPath = route.path;
+		const redirectPath = makeIndexSuffixPath(currentPath);
+		// 警告 无法实现 不提供该属性来设置
+		// route.redirect = redirectPath;
+		route.path = route.fullPath;
+	}
+
+	// 当前路由有父级 且 父级只有一个子路由
+	if (hasParent(route) && hasOnlyOneChild(route?.parent)) {
+		const parent = route.parent;
+		const parentPath = parent.fullPath;
+		route.path = makeIndexSuffixPath(parentPath);
+	}
+
+	// route.path = `${route.fullPath}`;
+
+	route.addToMeta({
+		title: "默认标题（VueRouter）",
+		icon: "solar:question-circle-bold",
+	});
+
+	consola.warn("  extendRoute = ", route.fullPath);
+}
+
 export function getPluginsList(
 	VITE_CDN: boolean,
 	VITE_COMPRESSION: ViteCompression,
@@ -88,7 +138,8 @@ export function getPluginsList(
 					// src: "src/views/10wms",
 					// src: "src/views",
 					src: "src/pages",
-					path: "10wms-pages-",
+					// 目前不需要路由前缀来区分标识了
+					// path: "10wms-pages-",
 					// path: "/10wms-pages-",
 					exclude: [
 						// TODO: 做出自定义配置
@@ -108,56 +159,7 @@ export function getPluginsList(
 				},
 			],
 			getRouteName,
-
-			/** @see https://uvr.esm.is/guide/extending-routes.html#extending-routes-in-config */
-			async extendRoute(route) {
-				type EditableTreeNode = typeof route;
-				// consola.log("  extendRoute = ", route);
-
-				// if (route.path === "") {
-				// 	route.path = `${route.fullPath}/index`;
-				// } else {
-				// 	route.path = `${route.fullPath}`;
-				// }
-
-				/** 生成含有index尾缀的路径 */
-				function makeIndexSuffixPath(path: string) {
-					return `${path}/index`;
-				}
-
-				function hasOnlyOneChild(route: EditableTreeNode) {
-					return route?.children?.length === 1;
-				}
-
-				function hasParent(route: EditableTreeNode) {
-					return !isEmpty(route?.parent);
-				}
-
-				// 当前路由下面只有一个子路由？
-				if (hasOnlyOneChild(route)) {
-					const currentPath = route.path;
-					const redirectPath = makeIndexSuffixPath(currentPath);
-					// 警告 无法实现 不提供该属性来设置
-					// route.redirect = redirectPath;
-					route.path = route.fullPath;
-				}
-
-				// 当前路由有父级 且 父级只有一个子路由
-				if (hasParent(route) && hasOnlyOneChild(route?.parent)) {
-					const parent = route.parent;
-					const parentPath = parent.fullPath;
-					route.path = makeIndexSuffixPath(parentPath);
-				}
-
-				// route.path = `${route.fullPath}`;
-
-				route.addToMeta({
-					title: "默认标题（VueRouter）",
-					icon: "solar:question-circle-bold",
-				});
-
-				consola.warn("  extendRoute = ", route.fullPath);
-			},
+			// extendRoute
 		}),
 
 		vue({

@@ -38,6 +38,8 @@ import { handleHotUpdate, routes as autoRoutes } from "vue-router/auto-routes";
 // 自动化布局插件
 import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
 
+import { disposalAutoRouter } from "@ruan-cat/utils/unplugin-vue-router";
+
 // 无法实现 需要现有路由对象 才有路由数组
 // const routesMetaLayouts = createGetRoutes();
 
@@ -64,13 +66,18 @@ Object.keys(modules).forEach((key) => {
 
 /** 扁平化的 自动路由 */
 const flattenAutoRoutes = formatFlatteningRoutes(buildHierarchyTree(ascending(autoRoutes.flat(Infinity))));
-consola.warn(" 经过系统函数处理过的 扁平的自动路由？ flattenAutoRoutes = ", flattenAutoRoutes);
+// consola.warn(" 经过系统函数处理过的 扁平的自动路由？ flattenAutoRoutes = ", flattenAutoRoutes);
 
-autoRoutes.forEach((route) => {
+/** 整理后的 自动路由 */
+// @ts-ignore
+const cleanedAutoRoutes = disposalAutoRouter(autoRoutes);
+consola.warn(" 经过处理过的 自动路由？ cleanedAutoRoutes = ", cleanedAutoRoutes);
+
+cleanedAutoRoutes.forEach((route) => {
 	routes.push(route);
 });
-console.warn("routes = ", routes);
-console.warn("autoRoutes = ", autoRoutes);
+console.warn(" 查看增加数据后的路由 routes = ", routes);
+// console.warn("autoRoutes = ", autoRoutes);
 
 /** 导出处理后的静态路由（三级及以上的路由全部拍成二级） */
 export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(

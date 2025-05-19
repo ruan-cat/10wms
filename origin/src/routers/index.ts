@@ -9,8 +9,11 @@ import { createRouter, createWebHistory } from "vue-router/auto";
 
 import { handleHotUpdate, routes } from "vue-router/auto-routes";
 
+import { disposalAutoRouter } from "@ruan-cat/utils/unplugin-vue-router";
+
 const autoRoutes = cloneDeep(routes);
-consola.warn(" 查看自动路由的结果 autoRoutes = ", autoRoutes);
+const cleanedAutoRoutes = disposalAutoRouter(autoRoutes);
+consola.warn(" 查看自动路由的结果 cleanedAutoRoutes = ", cleanedAutoRoutes);
 
 /**
  * 菜单类型

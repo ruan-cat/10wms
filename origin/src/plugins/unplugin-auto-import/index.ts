@@ -12,12 +12,31 @@ export default AutoImport({
 			"@vueuse/integrations/useAxios": ["useAxios"],
 		},
 		{
-			"@ruan-cat/utils": ["isConditionsEvery", "isConditionsSome"],
+			"@ruan-cat/utils": [
+				"isConditionsEvery",
+				"isConditionsSome",
+				"UpType",
+				"HttpCode",
+				"MapContentTypeUpType",
+				"useRequestIn01s",
+			],
 		},
 
 		{
 			from: "@ruan-cat/utils",
-			imports: ["Prettify", "ToNumberLike"],
+			imports: [
+				"Prettify",
+				"ToNumberLike",
+				"ParamsPathKey",
+				"ParamsQueryKey",
+				"ParamsBodyKey",
+				"HttpParamWay",
+				"AxiosRequestConfigBaseKey",
+				"UseAxiosOptionsJsonVO",
+				"UseAxiosOptionsImmediate",
+				"JsonVO",
+				"PageDTO",
+			],
 			type: true,
 		},
 

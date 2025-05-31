@@ -45,16 +45,16 @@ export default defineConfig(({ mode }) => {
 
 	// 提供类型声明 便于得到使用提示
 	const env = loadEnv(mode, process.cwd()) as unknown as ImportMetaEnv;
-	const VITE_proxy_prefix = env.VITE_proxy_prefix;
-	const VITE_base_url = env.VITE_base_url;
-	const VITE_app_port = env.VITE_app_port;
-	const VITE_is_reverse_proxy = env.VITE_is_reverse_proxy;
+	const VITE_PROXY_PREFIX = env.VITE_PROXY_PREFIX;
+	const VITE_BASE_URL = env.VITE_BASE_URL;
+	const VITE_APP_PORT = env.VITE_APP_PORT;
+	const VITE_IS_REVERSE_PROXY = env.VITE_IS_REVERSE_PROXY;
 
 	return {
 		server: {
 			open: true,
 			host: "0.0.0.0",
-			port: Number(VITE_app_port),
+			port: Number(VITE_APP_PORT),
 			proxy: {
 				// 默认有的反向代理配置
 				...{
@@ -65,13 +65,13 @@ export default defineConfig(({ mode }) => {
 					},
 				},
 				// 是否需要对接口配置反向代理？
-				...(VITE_is_reverse_proxy === "true"
+				...(VITE_IS_REVERSE_PROXY === "true"
 					? {
 							// 对特定前缀的请求地址 做反向代理
-							[VITE_proxy_prefix]: {
+							[VITE_PROXY_PREFIX]: {
 								changeOrigin: true,
-								target: VITE_base_url,
-								rewrite: (path) => path.replace(new RegExp("^" + VITE_proxy_prefix), ""),
+								target: VITE_BASE_URL,
+								rewrite: (path) => path.replace(new RegExp("^" + VITE_PROXY_PREFIX), ""),
 							},
 						}
 					: {}),

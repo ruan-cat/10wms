@@ -44,24 +44,24 @@ interface ImportMetaEnv {
 	 * @example
 	 * "8080"
 	 */
-	VITE_app_port: `${number}`;
+	VITE_APP_PORT: `${number}`;
 
 	/**
 	 * API 基础路径(代理前缀)
 	 * @example
 	 * "/dev-api"
 	 */
-	VITE_proxy_prefix: string;
+	VITE_PROXY_PREFIX: string;
 
 	/**
 	 * API 地址。即接口请求最终的服务器地址。
 	 * @example
 	 * "https://pcapi-xiaotuxian-front-devtest.itheima.net"
 	 */
-	VITE_base_url: string;
+	VITE_BASE_URL: string;
 
 	/** 是否要反向代理？ */
-	VITE_is_reverse_proxy?: `${boolean}`;
+	VITE_IS_REVERSE_PROXY?: `${boolean}`;
 
 	/** 是否开启 Mock 服务 */
 	VITE_MOCK_DEV_SERVER?: `${boolean}`;

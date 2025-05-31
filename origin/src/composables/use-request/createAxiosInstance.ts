@@ -1,12 +1,11 @@
 import type { AxiosInstance, AxiosRequestConfig } from "axios";
 import type { Router } from "vue-router";
 import axios, { AxiosError } from "axios";
-import consola from "consola";
 
 import { ElMessage } from "element-plus";
 import qs from "qs";
 
-import { HttpCode } from "./tools";
+import { HttpCode } from "@ruan-cat/utils/vueuse/useAxios-for-01s/index.ts";
 
 /**
  * 创建axios实例
@@ -16,15 +15,14 @@ import { HttpCode } from "./tools";
  * @see https://apifox.com/apidoc/shared-c05cb8d7-e591-4d9c-aff8-11065a0ec1de/api-67132167
  */
 export function createAxiosInstance() {
-	const VITE_is_reverse_proxy = import.meta.env?.VITE_is_reverse_proxy;
-	const VITE_proxy_prefix = import.meta.env.VITE_proxy_prefix;
-	const VITE_base_url = import.meta.env.VITE_base_url;
+	const VITE_IS_REVERSE_PROXY = import.meta.env?.VITE_IS_REVERSE_PROXY;
+	const VITE_PROXY_PREFIX = import.meta.env.VITE_PROXY_PREFIX;
+	const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 	/**
 	 * 根据是否需要反向代理，配置请求地址
 	 */
-	const baseURL = VITE_is_reverse_proxy === "true" ? VITE_proxy_prefix : VITE_base_url;
+	const baseURL = VITE_IS_REVERSE_PROXY === "true" ? VITE_PROXY_PREFIX : VITE_BASE_URL;
 
-	// consola.box("当前的baseUrl ", baseURL);
 	const instance = axios.create({
 		baseURL,
 
@@ -110,14 +108,14 @@ export function registerAxiosInstanceWithUseAxiosHook(router: Router, axiosInsta
 							// 开发环境需要反向代理
 							// 在生产环境，也需要nginx提供的反向代理
 							// if (import.meta.env.MODE === "development") {
-							// 	prefix = import.meta.env.VITE_proxy_prefix;
+							// 	prefix = import.meta.env.VITE_PROXY_PREFIX;
 							// } else {
 							// 	prefix = "";
 							// }
 							// config.baseURL = `${prefix}${item.target}`;
 
 							// 增加虚拟前缀
-							config.baseURL = `${import.meta.env.VITE_proxy_prefix}${item.target}`;
+							config.baseURL = `${import.meta.env.VITE_PROXY_PREFIX}${item.target}`;
 							break;
 						}
 					}

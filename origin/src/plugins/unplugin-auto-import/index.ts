@@ -8,25 +8,15 @@ export default AutoImport({
 		"@vueuse/core",
 		"vue",
 		"pinia",
-		{
-			"@vueuse/integrations/useAxios": ["useAxios"],
-		},
-		{
-			"@ruan-cat/utils": [
-				"isConditionsEvery",
-				"isConditionsSome",
-				"UpType",
-				"HttpCode",
-				"MapContentTypeUpType",
-				"useRequestIn01s",
-			],
-		},
+		{ "@vueuse/integrations/useAxios": ["useAxios"] },
+		{ "@ruan-cat/utils": ["isConditionsEvery", "isConditionsSome"] },
+		{ type: true, from: "@ruan-cat/utils", imports: ["Prettify", "ToNumberLike"] },
 
+		// useAxios-for-01s 类型
 		{
-			from: "@ruan-cat/utils",
+			type: true,
+			from: "@ruan-cat/utils/vueuse/useAxios-for-01s/index.ts",
 			imports: [
-				"Prettify",
-				"ToNumberLike",
 				"ParamsPathKey",
 				"ParamsQueryKey",
 				"ParamsBodyKey",
@@ -37,7 +27,16 @@ export default AutoImport({
 				"JsonVO",
 				"PageDTO",
 			],
-			type: true,
+		},
+
+		// useAxios-for-01s 函数与变量
+		{
+			"@ruan-cat/utils/vueuse/useAxios-for-01s/index.ts": [
+				"UpType",
+				"HttpCode",
+				"MapContentTypeUpType",
+				"useRequestIn01s",
+			],
 		},
 
 		// 导入二次封装时使用的vueuse类型

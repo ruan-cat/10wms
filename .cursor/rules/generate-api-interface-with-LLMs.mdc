@@ -88,3 +88,5 @@ export function sysManagerModifyUserDetail<T = string>(options: UseAxiosOptionsJ
 
 1. 当目标接口的参数请求方式为 query 时，请不要添加多余的 params 参数。
 2. 当接口请求的返回参数含有 PageDTO 时，不要生成该类型。直接使用已经有的全局 PageDTO 类型即可。
+3. 生成的泛型T，不要包裹多余的 `JsonVO<T>` 泛型。
+4. 当你生成分页接口时，应该主动的使用 PageDTO 泛型来包裹返回值。

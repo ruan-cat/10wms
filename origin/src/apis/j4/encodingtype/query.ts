@@ -1,5 +1,3 @@
-import { ParamsQueryKey, UseAxiosOptionsJsonVO } from "composables/use-request";
-
 /**
  * 编码类型查询参数
  * @description

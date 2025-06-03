@@ -1,12 +1,3 @@
-import type {
-	ParamsBodyKey,
-	ParamsPathKey,
-	ParamsQueryKey,
-	UseAxiosOptionsJsonVO,
-} from "composables/use-request/index";
-import type { RequiredPick } from "type-plus";
-import { useRequest } from "composables/use-request/index";
-
 /**
  * 用户详情对象
  * @description

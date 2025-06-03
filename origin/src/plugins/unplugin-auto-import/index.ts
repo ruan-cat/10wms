@@ -53,7 +53,6 @@ export default AutoImport({
 			type: true,
 		},
 
-		// import { RequiredPick, PartialPick } from "type-plus";
 		{
 			from: "type-plus",
 			imports: ["RequiredPick", "PartialPick"],

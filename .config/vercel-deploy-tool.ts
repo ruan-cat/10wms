@@ -22,6 +22,7 @@ export default <Config>{
 			isNeedVercelBuild: false,
 			url: domains["10wms"] as unknown as string[],
 		},
+
 		// wms 前端技术文档 静态写法
 		{
 			type: "static",
@@ -29,6 +30,7 @@ export default <Config>{
 			// isNeedVercelBuild: false,
 			url: ["01s-10wms-frontend-docs.ruancat6312.top"],
 		},
+
 		/** 部署命令调度版本 */
 		// // wms 主项目 预发布环境
 		// {

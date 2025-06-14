@@ -126,7 +126,7 @@ onMounted(async () => {
 	const savedUsername = localStorage.getItem("savedUsername");
 	if (savedUsername) {
 		formData.username = savedUsername;
-		formData.rememberUsername = true; // 自动勾选“记住用户名”
+		formData.rememberUsername = true; // 自动勾选"记住用户名"
 	}
 
 	// TODO: 测试接口
@@ -142,7 +142,8 @@ onMounted(async () => {
 		<!-- <video autoplay muted loop class="video">
 			<source src="/login.mp4" type="video/mp4" />
 		</video> -->
-		<div>
+
+		<section class="color-login-container">
 			<div class="login">
 				<h1>{{ t("login.title") }}</h1>
 				<el-form ref="formRef" :model="formData" :rules="rules" style="max-width: 600px">
@@ -197,7 +198,7 @@ onMounted(async () => {
 					</el-select>
 				</div>
 			</div>
-		</div>
+		</section>
 	</div>
 
 	<!-- 验证码组件 -->
@@ -210,17 +211,49 @@ onMounted(async () => {
 	></Verify>
 </template>
 
-<style>
+<style lang="scss">
+// 变量定义
+$primary-color: rgba(66, 139, 202, 0.8);
+$bg-color: rgba(234, 238, 242);
+$text-color: rgba(80, 80, 90);
+$white-color: rgba(255, 255, 255);
+$yellow-color: rgba(255, 238, 153);
+$form-width: 390px;
+$form-height: 340px;
+
 .video-background {
 	position: relative;
 	width: 100%;
 	height: 100vh;
 	overflow: hidden;
 }
+
+.color-login-container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradientShift 15s ease infinite;
+
+	@keyframes gradientShift {
+		0% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+	}
+}
+
 .yh {
 	display: flex;
 	margin-bottom: 10px;
 }
+
 .video {
 	position: absolute;
 	top: 0;
@@ -230,6 +263,7 @@ onMounted(async () => {
 	object-fit: cover;
 	z-index: -1; /* 将视频置于底层 */
 }
+
 ::v-deep .el-input__inner {
 	font-size: 16px;
 	height: 35px;
@@ -242,13 +276,13 @@ onMounted(async () => {
 	text-align: center;
 	color: white;
 	padding-top: 50px;
-	width: 390px; /* 固定宽度 */
+	width: $form-width; /* 固定宽度 */
 	margin: 0 auto; /* 居中 */
 
 	h1 {
 		margin-bottom: 20px;
 		font-size: 30px;
-		color: rgba(80, 80, 90);
+		color: $text-color;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -259,59 +293,61 @@ onMounted(async () => {
 	}
 
 	.el-form {
-		width: 390px;
-		height: 340px;
-		background-color: rgba(234, 238, 242);
+		width: $form-width;
+		height: $form-height;
+		background-color: $bg-color;
 		margin: 0 auto;
 		padding: 50px;
 		box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+
 		h2 {
 			margin-bottom: 1px;
 			font-size: 20px;
-			color: rgba(66, 139, 202);
+			color: $primary-color;
 		}
 
 		.el-form-item {
 			margin-top: 20px;
 
 			.el-button {
-				background-color: rgba(66, 139, 202, 0.8);
-				color: rgba(255, 255, 255);
+				background-color: $primary-color;
+				color: $white-color;
 				border: none;
 				width: 90px;
 				height: 40px;
 				font-size: 16px;
 			}
-		}
 
-		/* 记住用户名和登录按钮的样式 */
-		.el-form-item:last-child {
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
-			margin-top: 20px;
+			/* 记住用户名和登录按钮的样式 */
+			&:last-child {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				margin-top: 20px;
 
-			.el-checkbox {
-				margin-right: 105px; /* 调整复选框和按钮之间的间距 */
-			}
+				.el-checkbox {
+					margin-right: 105px; /* 调整复选框和按钮之间的间距 */
+				}
 
-			.el-button {
-				margin-left: 0;
+				.el-button {
+					margin-left: 0;
+				}
 			}
 		}
 	}
 }
+
 .lang {
-	width: 390px; /* 与 .login 的宽度一致 */
+	width: $form-width; /* 与 .login 的宽度一致 */
 	margin: 0 auto; /* 居中 */
-	background-color: rgba(66, 139, 202, 0.8);
+	background-color: $primary-color;
 	display: flex;
 	align-items: center;
 	justify-content: space-between; /* 让内容分布在两端 */
 	padding: 10px; /* 添加内边距 */
 
 	h1 {
-		color: rgba(255, 238, 153);
+		color: $yellow-color;
 		font-size: 15px;
 		flex-shrink: 0; /* 防止文本过长挤压下拉框 */
 		display: flex;
@@ -323,41 +359,44 @@ onMounted(async () => {
 		}
 	}
 }
+
 /* 自定义下拉框样式 */
 .custom-select {
 	width: 11vh; /* 设置宽度 */
 	margin-left: 10px; /* 调整与 h1 的间距 */
-}
-/* 下拉框弹出层宽度 */
-.custom-select ::v-deep .el-select-dropdown {
-	width: 11vh; /* 与输入框宽度一致 */
-}
-/* 下拉框输入框样式 */
-.custom-select ::v-deep .el-input__inner {
-	background-color: #f0f0f0;
-	border: 1px solid #ccc;
-	border-radius: 8px;
-	color: #333;
-	font-size: 14px;
-	padding: 8px 12px;
-}
 
-/* 下拉框选项样式 */
-.custom-select ::v-deep .el-select-dropdown__item {
-	color: #555;
-	font-size: 14px;
-	padding: 8px 12px;
-}
+	/* 下拉框弹出层宽度 */
+	::v-deep .el-select-dropdown {
+		width: 11vh; /* 与输入框宽度一致 */
+	}
 
-/* 下拉框选项悬停样式 */
-.custom-select ::v-deep .el-select-dropdown__item:hover {
-	background-color: #f5f5f5;
-	color: #000;
-}
+	/* 下拉框输入框样式 */
+	::v-deep .el-input__inner {
+		background-color: #f0f0f0;
+		border: 1px solid #ccc;
+		border-radius: 8px;
+		color: #333;
+		font-size: 14px;
+		padding: 8px 12px;
+	}
 
-/* 下拉框选项选中样式 */
-.custom-select ::v-deep .el-select-dropdown__item.selected {
-	background-color: #e0f0ff;
-	color: #007bff;
+	/* 下拉框选项样式 */
+	::v-deep .el-select-dropdown__item {
+		color: #555;
+		font-size: 14px;
+		padding: 8px 12px;
+
+		/* 下拉框选项悬停样式 */
+		&:hover {
+			background-color: #f5f5f5;
+			color: #000;
+		}
+
+		/* 下拉框选项选中样式 */
+		&.selected {
+			background-color: #e0f0ff;
+			color: #007bff;
+		}
+	}
 }
 </style>

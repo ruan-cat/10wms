@@ -15,6 +15,8 @@ import { getRouteName } from "./src/plugins/unplugin-vue-router.ts";
 import autoImport from "./src/plugins/vite-plugin-autogeneration-import-file.ts";
 import tsAlias from "./src/plugins/vite-plugin-ts-alias/index.ts";
 
+import vercel from "vite-plugin-vercel";
+
 /**
  * 用全量导入的方式 获取类型
  * 这些类型不能写成export导入的形式，会导致全局类型声明失效
@@ -191,6 +193,8 @@ export default defineConfig(({ mode }) => {
 			}),
 
 			tsAlias,
+
+			vercel(),
 		],
 	};
 });

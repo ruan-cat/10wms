@@ -15,23 +15,36 @@ export default <Config>{
 	// vercelJsonPath: "./vercel.404.json",
 
 	deployTargets: [
-		// wms 主项目 预发布环境
+		// wms 主项目 预发布环境 静态写法
 		{
-			type: "userCommands",
+			type: "static",
 			targetCWD: "./origin",
-			outputDirectory: "dist",
+			isNeedVercelBuild: false,
 			url: domains["10wms"] as unknown as string[],
-			userCommands: ["pnpm -C=./origin build"],
 		},
-
-		// wms 前端技术文档
+		// wms 前端技术文档 静态写法
 		{
-			type: "userCommands",
-			targetCWD: "./origin/src",
-			outputDirectory: ".vitepress/dist",
-			// url: domains["10wms"] as unknown as string[],
+			type: "static",
+			targetCWD: "./origin/src/.vitepress/dist",
+			// isNeedVercelBuild: false,
 			url: ["01s-10wms-frontend-docs.ruancat6312.top"],
-			userCommands: ["pnpm -C=./origin docs:build"],
 		},
+		/** 部署命令调度版本 */
+		// // wms 主项目 预发布环境
+		// {
+		// 	type: "userCommands",
+		// 	targetCWD: "./origin",
+		// 	outputDirectory: "dist",
+		// 	url: domains["10wms"] as unknown as string[],
+		// 	userCommands: ["pnpm -C=./origin build"],
+		// },
+		// // wms 前端技术文档
+		// {
+		// 	type: "userCommands",
+		// 	targetCWD: "./origin/src",
+		// 	outputDirectory: ".vitepress/dist",
+		// 	url: ["01s-10wms-frontend-docs.ruancat6312.top"],
+		// 	userCommands: ["pnpm -C=./origin docs:build"],
+		// },
 	],
 };

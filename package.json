@@ -20,7 +20,7 @@
 		"test": "vitest --ui --watch --api.port=4000",
 		"format": "pnpm -r format",
 		"create-code-workspace": "node --import=tsx ./scripts/generate.code-workspace.ts --name=10wms-项目改造工作区",
-		"deploy-vercel": "node --import=tsx ./scripts/vercel-deploy-tool.ts",
+		"deploy-vercel": "turbo do-deploy-vercel",
 		"preinstall": "npx only-allow pnpm && npm run corepack:pnpm",
 		"corepack:pnpm": "corepack enable && corepack install",
 		"commit": "git-cz",
@@ -32,7 +32,8 @@
 		"changeset:publish": "changeset publish",
 		"turbo:publish": "turbo do-publish",
 		"up-ruan-cat": "pnpm update '@ruan-cat/*' --latest && pnpm -r up-ruan-cat",
-		"format:*": "prettier --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore"
+		"format:*": "prettier --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore",
+		"do-deploy-vercel": "node --import=tsx ./scripts/vercel-deploy-tool.ts"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^4.3.0",

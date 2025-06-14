@@ -1,4 +1,25 @@
 {
 	"$schema": "https://turbo.build/schema.json",
-	"tasks": {}
+	"tasks": {
+		"//#do-10wms-origin-build": {
+			"cache": true,
+			"dependsOn": [
+				"@ruan-cat-10wms/wms-frontend-origin#build",
+				"@ruan-cat-10wms/wms-frontend-origin#docs:build"
+			]
+		},
+		"//#do-deploy-vercel": {
+			"cache": false,
+			"dependsOn": [
+				"@ruan-cat-10wms/wms-frontend-origin#do-build",
+				"@ruan-cat-10wms/wms-frontend-origin#do-docs-build"
+			]
+		},
+		"deploy-vercel": {
+			"cache": false,
+			"dependsOn": [
+				"do-deploy-vercel"
+			]
+		}
+	}
 }

@@ -107,6 +107,7 @@
 		"vite-plugin-autogeneration-import-file": "^3.0.0",
 		"vite-plugin-html": "^3.2.2",
 		"vite-plugin-ts-alias": "^0.1.1",
+		"vite-plugin-vercel": "^9.0.7",
 		"vite-plugin-vue-devtools": "^7.7.2",
 		"vite-plugin-vue-meta-layouts": "^0.5.1",
 		"vitepress": "^1.6.3",

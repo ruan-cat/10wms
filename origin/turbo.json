@@ -21,7 +21,16 @@
 			"persistent": true
 		},
 		"do-docs-build": {
-			"cache": true
+			"cache": true,
+			"outputs": [
+				"src/.vitepress/dist/**"
+			]
+		},
+		"do-build": {
+			"cache": true,
+			"outputs": [
+				"dist/**"
+			]
 		}
 	}
 }

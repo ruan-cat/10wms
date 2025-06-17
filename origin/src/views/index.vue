@@ -137,7 +137,7 @@ onMounted(async () => {
 	// TODO: 测试接口
 	const { execute: getNoUpGoodsExecute } = getNoUpGoods({});
 	await getNoUpGoodsExecute({
-		data: {
+		params: {
 			pageIndex: 2,
 			pageSize: 20,
 		},

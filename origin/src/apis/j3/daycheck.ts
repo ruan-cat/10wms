@@ -104,7 +104,7 @@ export function getNoUpGoods<T = NoUpGoodsDTO[]>(options: UseAxiosOptionsJsonVO<
 		httpParamWay: "query",
 		config: {
 			method: "GET",
-			data: {
+			params: {
 				pageIndex: 1,
 				pageSize: 10,
 			},

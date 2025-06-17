@@ -134,6 +134,9 @@ export function registerAxiosInstanceWithUseAxiosHook(router: Router, axiosInsta
 	// 响应拦截处理
 	axiosInstance.interceptors.response.use(
 		async function onFulfilled(response) {
+			// TODO: 测试打印
+			console.warn(" ?  response  ", response);
+
 			/**
 			 * 不解包的原始数据
 			 * @description

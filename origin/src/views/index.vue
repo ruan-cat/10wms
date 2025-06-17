@@ -133,6 +133,15 @@ onMounted(async () => {
 	const { execute, data } = sysManagerQueryDepartmentAll({});
 	await execute();
 	console.log("部门数据", data.value);
+
+	// TODO: 测试接口
+	const { execute: getNoUpGoodsExecute } = getNoUpGoods({});
+	await getNoUpGoodsExecute({
+		data: {
+			pageIndex: 2,
+			pageSize: 20,
+		},
+	});
 });
 </script>
 

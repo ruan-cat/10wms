@@ -24,7 +24,7 @@
 		"clear:cache": "rimraf -g '**/{dist,.turbo,.vercel,.cache,.temp}'",
 		"changeset:add": "changeset add",
 		"changeset:version": "changeset version && changeset tag",
-		"up-ruan-cat": "pnpm update '@ruan-cat/*' --latest",
+		"up-ruan-cat": "pnpm up '@ruan-cat/*@latest'",
 		"lint": "eslint --fix .",
 		"corepack:pnpm": "corepack enable && corepack prepare pnpm@9.5.0 --activate",
 		"notuse-preinstall": "npx only-allow pnpm && npm run corepack:pnpm",

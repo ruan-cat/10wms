@@ -28,7 +28,7 @@
     "prepare": "husky",
     "preinstall": "npx only-allow pnpm",
     "format": "pnpm lint:prettier",
-    "up-ruan-cat": "pnpm up '@ruan-cat/*@latest'"
+    "notuse-up-ruan-cat": "pnpm up '@ruan-cat/*@latest'"
   },
   "keywords": [
     "vue-pure-admin",

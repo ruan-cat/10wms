@@ -136,7 +136,6 @@ export default autoImport([
 		// 监听的文件夹
 		dir: pathResolve("./src/components"),
 		// 生成的文件
-		// toFile: pathResolve("./types/components-in-components-path.d.ts"),
 		toFile: "./types/components-in-components-path.d.ts",
 		// 文件生成模板
 		template: defaultAutoImportTemplate,

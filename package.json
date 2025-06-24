@@ -30,7 +30,7 @@
 		"changeset:init": "changeset init",
 		"changeset:publish": "changeset publish",
 		"turbo:publish": "turbo do-publish",
-		"up-ruan-cat": "pnpm -w up '@ruan-cat/*@latest'",
+		"up-ruan-cat": "pnpm -w up '@ruan-cat/*@latest' && pnpm -r up '@ruan-cat/*@latest'",
 		"format:*": "prettier --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore",
 		"do-deploy-vercel": "node --import=tsx ./scripts/vercel-deploy-tool.ts"
 	},

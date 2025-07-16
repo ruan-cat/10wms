@@ -27,8 +27,7 @@ export default <Config>{
 		{
 			type: "static",
 			targetCWD: "./origin/src/.vitepress/dist",
-			// isNeedVercelBuild: false,
-			url: ["01s-10wms-frontend-docs.ruancat6312.top"],
+			url: domains["10wms-doc"] as unknown as string[],
 		},
 
 		/** 部署命令调度版本 */

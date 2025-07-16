@@ -23,7 +23,7 @@ const userConfig = setUserConfig({
 		socialLinks: [
 			{
 				icon: "github",
-				link: "https://codeup.aliyun.com/zero-one-star/zero-awei/zero-one-10wms",
+				link: "https://github.com/ruan-cat/10wms",
 			},
 		],
 	},

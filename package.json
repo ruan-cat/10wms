@@ -21,7 +21,7 @@
 		"changeset:version": "changeset version && changeset tag",
 		"git:push": "git push --follow-tags",
 		"build:docs": "turbo build:docs",
-		"create-code-workspace": "node --import=tsx ./scripts/generate.code-workspace.ts --name=10wms-项目改造工作区",
+		"create-code-workspace": "tsx ./scripts/generate.code-workspace.ts --name=10wms-项目改造工作区",
 		"preinstall": "npx only-allow pnpm && npm run corepack:pnpm",
 		"corepack:pnpm": "corepack enable && corepack install",
 		"git:fetch": "git fetch -p",
@@ -33,7 +33,7 @@
 		"turbo:publish": "turbo do-publish",
 		"up-ruan-cat": "pnpm -w up '@ruan-cat/*@latest' && pnpm -r up '@ruan-cat/*@latest'",
 		"format:*": "prettier --experimental-cli --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore",
-		"do-deploy-vercel": "node --import=tsx ./scripts/vercel-deploy-tool.ts"
+		"do-deploy-vercel": "tsx ./scripts/vercel-deploy-tool.ts"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^4.17.0",

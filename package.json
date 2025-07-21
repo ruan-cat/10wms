@@ -7,7 +7,7 @@
 	"description": "阮喵喵10wms项目的monorepo根目录。用来实现一个后台项目的升级改造。",
 	"main": "index.js",
 	"type": "module",
-	"packageManager": "pnpm@9.15.9",
+	"packageManager": "pnpm@10.13.1",
 	"engines": {
 		"node": ">=22.14.0"
 	},
@@ -34,6 +34,19 @@
 		"up-ruan-cat": "pnpm -w up '@ruan-cat/*@latest' && pnpm -r up '@ruan-cat/*@latest'",
 		"format:*": "prettier --experimental-cli --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore",
 		"do-deploy-vercel": "tsx ./scripts/vercel-deploy-tool.ts"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@parcel/watcher",
+			"@tailwindcss/oxide",
+			"core-js",
+			"core-js-pure",
+			"es5-ext",
+			"esbuild",
+			"typeit",
+			"vue-demi",
+			"vue3-danmaku"
+		]
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^4.17.0",

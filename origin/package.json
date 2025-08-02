@@ -3,7 +3,7 @@
 	"version": "0.6.0",
 	"type": "module",
 	"description": "01星球大项目-10WMS项目。这里是WMS系统后台前端代码。",
-	"packageManager": "pnpm@9.15.9",
+	"packageManager": "pnpm@10.14.0",
 	"engines": {
 		"node": ">=22.14.0"
 	},
@@ -106,7 +106,7 @@
 		"vite": "^6.3.5",
 		"vite-plugin-autogeneration-import-file": "^3.0.0",
 		"vite-plugin-html": "^3.2.2",
-		"vite-plugin-ts-alias": "^0.1.1",
+		"@ruan-cat/vite-plugin-ts-alias": "^0.1.0",
 		"vite-plugin-vercel": "^9.0.7",
 		"vite-plugin-vue-devtools": "^7.7.7",
 		"vite-plugin-vue-meta-layouts": "^0.5.1",

@@ -4,7 +4,7 @@
   "version": "6.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.15.9",
+  "packageManager": "pnpm@10.14.0",
   "engines": {
     "node": ">=22.14.0"
   },

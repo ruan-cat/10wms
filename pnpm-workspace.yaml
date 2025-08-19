@@ -8,3 +8,15 @@ packages:
   - "main"
   # 用于参考的例子 交给AI阅读并动态拼接
   - "examples/*"
+
+# pnpm 工作区配置
+onlyBuiltDependencies:
+  - "@parcel/watcher"
+  - "@tailwindcss/oxide"
+  - "core-js"
+  - "core-js-pure"
+  - "es5-ext"
+  - "esbuild"
+  - "typeit"
+  - "vue-demi"
+  - "vue3-danmaku"

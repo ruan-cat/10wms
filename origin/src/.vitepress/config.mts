@@ -8,9 +8,10 @@ import {
 import AutoImport from "../plugins/unplugin-auto-import/index.ts";
 import tsAlias from "../plugins/vite-plugin-ts-alias/index.ts";
 
-// TODO: 待修复 写法在高版本内变更了
-//  将 claude agents 移动到指定的文件目录内
-copyClaudeAgents("origin/src/docs/claude");
+// 将 claude agents 移动到指定的文件目录内
+copyClaudeAgents({
+	target: "origin/src/docs/claude",
+});
 
 // 为文档添加自动生成的changelog
 addChangelog2doc({

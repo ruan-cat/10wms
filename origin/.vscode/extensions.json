@@ -27,7 +27,7 @@
 		"redhat.vscode-yaml",
 		"bradlc.vscode-tailwindcss",
 		"vscode-icons-team.vscode-icons",
-		"mikestead.dotenv",
+		"mikestead.dotenv"
 	],
 	"unwantedRecommendations": [
 		// 不使用该插件 该插件事实上被官方弃用了

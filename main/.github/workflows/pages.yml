@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - pages
-      
+
 jobs:
   deploy:
     concurrency: ci-${{ github.ref }}

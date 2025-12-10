@@ -27,15 +27,11 @@ const app = createApp(App);
 // 自定义指令
 import * as directives from "@/directives";
 Object.keys(directives).forEach(key => {
-  app.directive(key, (directives as { [key: string]: Directive })[key]);
+	app.directive(key, (directives as { [key: string]: Directive })[key]);
 });
 
 // 全局注册@iconify/vue图标库
-import {
-  IconifyIconOffline,
-  IconifyIconOnline,
-  FontIcon
-} from "./components/ReIcon";
+import { IconifyIconOffline, IconifyIconOnline, FontIcon } from "./components/ReIcon";
 app.component("IconifyIconOffline", IconifyIconOffline);
 app.component("IconifyIconOnline", IconifyIconOnline);
 app.component("FontIcon", FontIcon);
@@ -53,12 +49,12 @@ import VueTippy from "vue-tippy";
 app.use(VueTippy);
 
 getPlatformConfig(app).then(async config => {
-  setupStore(app);
-  app.use(router);
-  await router.isReady();
-  injectResponsiveStorage(app, config);
-  app.use(MotionPlugin).use(useElementPlus).use(Table);
-  // .use(PureDescriptions)
-  // .use(useEcharts);
-  app.mount("#app");
+	setupStore(app);
+	app.use(router);
+	await router.isReady();
+	injectResponsiveStorage(app, config);
+	app.use(MotionPlugin).use(useElementPlus).use(Table);
+	// .use(PureDescriptions)
+	// .use(useEcharts);
+	app.mount("#app");
 });

@@ -5,19 +5,19 @@
  * 温馨提示：如果您使用的第三方库是全局引入，也就是引入到 src/main.ts 文件里，就不需要再添加到 include 里了，因为 vite 会自动将它们缓存到 node_modules/.vite
  */
 const include = [
-  "qs",
-  "mitt",
-  "dayjs",
-  "axios",
-  "pinia",
-  "vue-types",
-  "js-cookie",
-  "vue-tippy",
-  "pinyin-pro",
-  "sortablejs",
-  "@vueuse/core",
-  "@pureadmin/utils",
-  "responsive-storage"
+	"qs",
+	"mitt",
+	"dayjs",
+	"axios",
+	"pinia",
+	"vue-types",
+	"js-cookie",
+	"vue-tippy",
+	"pinyin-pro",
+	"sortablejs",
+	"@vueuse/core",
+	"@pureadmin/utils",
+	"responsive-storage"
 ];
 
 /**

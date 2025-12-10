@@ -3,16 +3,11 @@
 	"tasks": {
 		"//#do-deploy-vercel": {
 			"cache": false,
-			"dependsOn": [
-				"@ruan-cat-10wms/wms-frontend-origin#do-build",
-				"@ruan-cat-10wms/wms-frontend-origin#do-docs-build"
-			]
+			"dependsOn": ["@ruan-cat-10wms/wms-frontend-origin#do-build", "@ruan-cat-10wms/wms-frontend-origin#do-docs-build"]
 		},
 		"//#deploy-vercel": {
 			"cache": false,
-			"dependsOn": [
-				"//#do-deploy-vercel"
-			]
+			"dependsOn": ["//#do-deploy-vercel"]
 		}
 	}
 }

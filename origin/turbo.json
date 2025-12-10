@@ -1,7 +1,5 @@
 {
-	"extends": [
-		"//"
-	],
+	"extends": ["//"],
 	"tasks": {
 		"rm:types": {
 			"cache": false
@@ -9,9 +7,7 @@
 		"vite:dev": {
 			"cache": false,
 			"persistent": true,
-			"dependsOn": [
-				"rm:types"
-			]
+			"dependsOn": ["rm:types"]
 		},
 		"typedoc": {
 			"cache": false
@@ -22,15 +18,11 @@
 		},
 		"do-docs-build": {
 			"cache": true,
-			"outputs": [
-				"src/.vitepress/dist/**"
-			]
+			"outputs": ["src/.vitepress/dist/**"]
 		},
 		"do-build": {
 			"cache": true,
-			"outputs": [
-				"dist/**"
-			]
+			"outputs": ["dist/**"]
 		}
 	}
 }

@@ -1,6 +1,6 @@
 // vercel-deploy-tool.config.ts (新文件名)
 import { defineConfig } from "@ruan-cat/vercel-deploy-tool";
-import { domains } from "@ruan-cat/domains";
+import { getDomains } from "@ruan-cat/domains";
 
 export default defineConfig({
 	// 01星球专门的vercel部署项目
@@ -15,14 +15,14 @@ export default defineConfig({
 			type: "static",
 			targetCWD: "./origin",
 			isNeedVercelBuild: false,
-			url: domains["10wms"] as unknown as string[],
+			url: getDomains("10wms"),
 		},
 
 		// wms 前端技术文档 静态写法
 		{
 			type: "static",
 			targetCWD: "./origin/src/.vitepress/dist",
-			url: domains["10wms-doc"] as unknown as string[],
+			url: getDomains("10wms-doc"),
 		},
 	],
 });

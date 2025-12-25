@@ -28,6 +28,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 这是一个名为"阮喵喵 10wms 项目"的 monorepo，用于实现一个 WMS（仓库管理系统）后台项目的升级改造。项目包含原始版本（origin）、主要改造版本（main）和示例代码（examples）。
 
+## 术语说明
+
+- 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。
+- 原项目： 即 `origin` 目录内的项目。
+
 ## 代码/编码格式要求
 
 ### 1. markdown 文档的 table 编写格式
@@ -279,3 +284,12 @@ pnpm up-taze
 - Main 项目使用 Tailwind CSS + SCSS
 - Origin 项目主要使用 CSS + SCSS
 - 都集成了 Element Plus 组件库
+
+## 及时获取项目使用框架的文档与信息
+
+### 项目基架模板 `vue-pure-admin`
+
+在本仓库内，又被称呼为 `pure-admin` 模板。
+
+- 仓库： https://github.com/pure-admin/vue-pure-admin
+- 文档： https://pure-admin.cn/

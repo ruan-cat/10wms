@@ -30,8 +30,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 术语说明
 
-- 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。
-- 原项目： 即 `origin` 目录内的项目。
+- 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。也被称呼为`本项目`。
+- 原项目： 即 `origin` 目录内的项目。也被称呼为`旧项目`。
 
 ## 代码/编码格式要求
 

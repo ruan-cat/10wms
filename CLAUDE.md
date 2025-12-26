@@ -227,7 +227,7 @@ apps\admin\src\pages\property-manage\expense-manage\reminder-for-overdue-payment
 
 本项目使用 openspec 来制定长任务执行规范。
 
-### 7.1. 更新 openspec 的规范文件后应该及时运行校验命令，并根据校验反馈，使得 openspec 规范文件满足格式要求
+### 6.1. 更新 openspec 的规范文件后应该及时运行校验命令，并根据校验反馈，使得 openspec 规范文件满足格式要求
 
 比如你修改了 `migrate-static-data-to-nitro-query` 这款任务的规范文件后，你应该及时运行以下命令来检查文件是否满足规范：
 
@@ -241,7 +241,7 @@ openspec validate migrate-static-data-to-nitro-query --strict
 openspec validate {任务名称} --strict
 ```
 
-### 7.2. 执行长任务时的策略与注意事项
+### 6.2. 执行长任务时的策略与注意事项
 
 1. **及时更新任务文件**： **必须要**及时更新对应任务的 `tasks.md` 任务进度文件。避免出现大批量完成任务后，没有更新进度文件的情况，带来严重的误解。
 2. 启动**多个子代理**分模块并行完成任务： 务必要启动多个在后台运行的子代理，同时完成 openspec 设定的一系列繁杂的任务。以便加快速度。你应该至少同时启用至少 4 个子代理。并根据情况，主动增加足够数量的子代理完成任务。

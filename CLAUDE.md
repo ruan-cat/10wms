@@ -24,16 +24,16 @@ Keep this managed block so 'openspec update' can refresh the instructions.
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 项目概述
+## 1. 项目概述
 
 这是一个名为"阮喵喵 10wms 项目"的 monorepo，用于实现一个 WMS（仓库管理系统）后台项目的升级改造。项目包含原始版本（origin）、主要改造版本（main）和示例代码（examples）。
 
-## 术语说明
+## 2. 术语说明
 
 - 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。也被称呼为`本项目`。
 - 原项目： 即 `origin` 目录内的项目。也被称呼为`旧项目`。
 
-## 代码/编码格式要求
+## 3. 代码/编码格式要求
 
 ### 1. markdown 文档的 table 编写格式
 
@@ -116,7 +116,7 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 1. 主动添加**数字**序号，便于我阅读文档。
 2. 主动**维护正确的数字序号顺序**。如果你处理的 markdown 文档，其手动添加的序号顺序不对，请你及时的更新序号顺序。
 
-## 报告编写规范
+## 4. 报告编写规范
 
 在大多数情况下，你的更改是**不需要**编写任何说明报告的。但是每当你需要编写报告时，请你首先遵循以下要求：
 
@@ -140,7 +140,7 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 
 - 报告语言： 默认用简体中文。
 
-## 6. 主从代理的相关规范
+## 5. 主从代理的相关规范
 
 ### 6.1. 主代理新建子代理的类型
 
@@ -223,7 +223,7 @@ apps\admin\src\pages\property-manage\expense-manage\reminder-for-overdue-payment
   - 子代理应该严格按照主代理给定的要求来完成任务。
   - 以报告文件的形式，向主代理反馈工作成果。
 
-## 7. 执行 openspec 系列长任务时的注意事项
+## 6. 执行 openspec 系列长任务时的注意事项
 
 本项目使用 openspec 来制定长任务执行规范。
 
@@ -255,7 +255,7 @@ openspec validate {任务名称} --strict
    - 你应该阅读文件来完成更改，而不是使用不稳定的，容易带来语法错误的，删改不干净不合理的批处理脚本，来完成任务。
    - 你应该新建多个子代理，主代理用具体的子代理来完成大规模的修改任务。
 
-## 工作区结构
+## 7. 工作区结构
 
 项目采用 pnpm workspaces 管理，包含以下子项目：
 
@@ -263,7 +263,7 @@ openspec validate {任务名称} --strict
 - **main/**: 当前的主项目，基于 vue-pure-admin 重构
 - **examples/**: 用于参考的示例项目
 
-## 常用命令
+## 8. 常用命令
 
 ### 开发环境
 
@@ -335,7 +335,7 @@ pnpm up-ruan-cat
 pnpm up-taze
 ```
 
-## 架构设计
+## 9. 架构设计
 
 ### Main 项目（基于 vue-pure-admin）
 
@@ -364,7 +364,7 @@ pnpm up-taze
 - **构建工具**: Turbo（用于 monorepo 构建优化）
 - **部署**: Vercel（使用自定义部署脚本）
 
-## 开发注意事项
+## 10. 开发注意事项
 
 ### 包管理
 
@@ -400,7 +400,7 @@ pnpm up-taze
 - Origin 项目主要使用 CSS + SCSS
 - 都集成了 Element Plus 组件库
 
-## 及时获取项目使用框架的文档与信息
+## 11. 及时获取项目使用框架的文档与信息
 
 ### 项目基架模板 `vue-pure-admin`
 

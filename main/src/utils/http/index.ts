@@ -4,6 +4,8 @@ import { stringify } from "qs";
 import NProgress from "../progress";
 import { getToken, formatToken } from "@/utils/auth";
 import { useUserStoreHook } from "@/store/modules/user";
+import { ElMessage } from "element-plus";
+import type { Router } from "vue-router";
 
 // 相关配置请参考：www.axios-js.com/zh-cn/docs/#axios-request-config-1
 const defaultConfig: AxiosRequestConfig = {
@@ -173,3 +175,160 @@ class PureHttp {
 }
 
 export const http = new PureHttp();
+
+/** HTTP 状态码枚举 */
+export enum HttpCode {
+	/** 暂未登录或TOKEN已经过期 */
+	UNAUTHORIZED = 401,
+	/** 没有相关权限 */
+	FORBIDDEN = 403,
+	/** 访问页面未找到 */
+	NOT_FOUND = 404,
+	/** 服务器错误 */
+	SERVER_ERROR = 9994,
+	/** 上传参数异常 */
+	PARAMS_INVALID = 9995,
+	/** ContentType错误 */
+	CONTENT_TYPE_ERR = 9996,
+	/** 功能尚未实现 */
+	API_UN_IMPL = 9997,
+	/** 服务器繁忙 */
+	SERVER_BUSY = 9998,
+	/** 操作失败 */
+	FAIL = 9999,
+	/** 操作成功 */
+	SUCCESS = 10000,
+}
+
+/** 数据上传类型枚举 */
+export enum UpType {
+	/** 表单类型 */
+	FORM = 0,
+	/** JSON类型 */
+	JSON = 1,
+	/** 文件类型 */
+	FILE = 3,
+	/** 文件流类型 */
+	STREAM = 4,
+}
+
+/**
+ * 自定义 HTTP 类，适配 Origin 项目的拦截器逻辑
+ */
+class CustomHttp extends PureHttp {
+	private router: Router | null = null;
+
+	/**
+	 * 设置路由实例
+	 */
+	setRouter(router: Router) {
+		this.router = router;
+	}
+
+	/**
+	 * 请求前回调
+	 */
+	beforeRequestCallback(config: PureHttpRequestConfig) {
+		// 添加 token
+		const userStore = useUserStoreHook();
+		const tokenData = getToken();
+
+		if (tokenData?.accessToken) {
+			config.headers["Authorization"] = formatToken(tokenData.accessToken);
+		}
+
+		// 处理 Content-Type
+		const upType = (config as any).upType;
+		if (upType === UpType.JSON) {
+			config.headers["Content-Type"] = "application/json;charset=UTF-8";
+		} else if (upType === UpType.FILE) {
+			config.headers["Content-Type"] = "multipart/form-data";
+		} else if (upType === UpType.STREAM) {
+			config.headers["Content-Type"] = "application/octet-stream";
+		} else if (upType === UpType.FORM) {
+			config.headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8";
+			if (config.data) {
+				config.data = stringify(config.data, { arrayFormat: "repeat" });
+			}
+		}
+
+		return config;
+	}
+
+	/**
+	 * 响应后回调
+	 */
+	beforeResponseCallback(response: PureHttpResponse) {
+		const { data, status } = response;
+
+		// HTTP 响应状态码正常
+		if (status === 200) {
+			if ("code" in data) {
+				const userStore = useUserStoreHook();
+
+				switch (data.code) {
+					case HttpCode.SUCCESS:
+						// 操作成功，返回数据
+						return data;
+
+					case HttpCode.FORBIDDEN:
+						// 权限不足
+						ElMessage.error("权限不够，请联系管理员");
+						throw new Error(data.message || "权限不足");
+
+					case HttpCode.UNAUTHORIZED:
+						// 判断是否是 token 过期
+						if (typeof data.data === "string" && data.data.includes("Jwt expired at")) {
+							// Token 过期，刷新 token
+							userStore
+								.handRefreshToken({ refreshToken: getToken()?.refreshToken })
+								.then(() => {
+									// 刷新成功后跳转到首页
+									if (this.router) {
+										this.router.push("/home");
+									}
+								})
+								.catch(() => {
+									// 刷新失败，跳转到登录页
+									if (this.router) {
+										this.router.push("/login");
+									}
+								});
+						} else {
+							// 未登录或登录失效
+							if (this.router) {
+								this.router.push("/login");
+							}
+							// 清除用户数据
+							userStore.logOut();
+						}
+						throw new Error(data.message || "未授权");
+
+					case HttpCode.NOT_FOUND:
+						ElMessage.warning(data.message || "404访问页面不存在");
+						throw new Error(data.message || "404");
+
+					case HttpCode.CONTENT_TYPE_ERR:
+					case HttpCode.PARAMS_INVALID:
+						ElMessage.warning(data.message || "请求参数或请求头错误");
+						throw new Error(data.message || "参数错误");
+
+					default:
+						// 其他错误
+						if (data.message) {
+							ElMessage.error(data.message);
+						}
+						throw new Error(data.message || "操作失败");
+				}
+			}
+			return data;
+		} else if (status === 404) {
+			ElMessage.warning("404访问页面不存在");
+			throw new Error("404");
+		} else {
+			throw new Error(`HTTP ${status}`);
+		}
+	}
+}
+
+export const customHttp = new CustomHttp();

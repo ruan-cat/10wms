@@ -11,10 +11,9 @@ import type { FunctionalComponent } from "vue";
  * 一律以 `layout文件夹下面的文件名` 为准
  */
 type LayoutEnums = // 默认布局
-
-		| "index"
-		// 简单布局
-		| "simple";
+	| "index"
+	// 简单布局
+	| "simple";
 
 declare global {
 	interface ToRouteType extends RouteLocationNormalized {
@@ -73,6 +72,16 @@ declare global {
 
 		/** 为路由的 meta 对象增加 自动布局插件 所需要的配置 */
 		layout?: LayoutEnums;
+
+		// ========== Origin 兼容字段 ==========
+		/** 菜单类型（Origin 兼容）`可选` */
+		menuType?: "page" | "folder" | "ignore";
+		/** 菜单文本（Origin 兼容，等同于 title）`可选` */
+		text?: string;
+		/** 菜单排序（Origin 兼容）`可选` */
+		order?: number;
+		/** 是否为示例页面（Origin 兼容）`可选` */
+		isSample?: boolean;
 	}
 
 	/**

@@ -32,7 +32,10 @@
 		"turbo:publish": "turbo do-publish",
 		"up-ruan-cat": "pnpm -w up '@ruan-cat/*@latest' && pnpm -r up '@ruan-cat/*@latest'",
 		"format:*": "prettier --experimental-cli --write . --ignore-path ./.config/.prettierignore --ignore-path .gitignore",
-		"do-deploy-vercel": "vercel-deploy-tool deploy"
+		"do-deploy-vercel": "vercel-deploy-tool deploy",
+		"migration:check-deps": "tsx scripts/migration/check-dependencies.ts",
+		"migration:transform": "tsx scripts/migration/transform-code.ts",
+		"migration:track": "tsx scripts/migration/track-progress.ts"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config": "^4.19.0",
@@ -62,6 +65,7 @@
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-config-turbo": "^2.7.2",
 		"eslint-plugin-prettier": "^5.5.4",
+		"fast-check": "^4.5.2",
 		"js-yaml": "^4.1.1",
 		"lodash-es": "^4.17.22",
 		"only-allow": "^1.2.2",

@@ -1,294 +1,424 @@
-<script setup lang="ts">
-import { useRole } from "./utils/hook";
-import { ref, computed, nextTick, onMounted } from "vue";
-import { PureTableBar } from "@/components/RePureTableBar";
-import { useRenderIcon } from "@/components/ReIcon/src/hooks";
-import { delay, subBefore, deviceDetection, useResizeObserver } from "@pureadmin/utils";
+<template>
+	<div class="role-management">
+		<!-- 搜索表单 -->
+		<el-card shadow="never" class="mb-4">
+			<el-form :model="searchForm" inline>
+				<el-form-item label="角色名称">
+					<el-input v-model="searchForm.roleName" placeholder="请输入角色名称" clearable style="width: 200px" />
+				</el-form-item>
+				<el-form-item label="角色编码">
+					<el-input v-model="searchForm.roleCode" placeholder="请输入角色编码" clearable style="width: 200px" />
+				</el-form-item>
+				<el-form-item label="状态">
+					<el-select v-model="searchForm.status" placeholder="请选择状态" clearable style="width: 120px">
+						<el-option label="启用" :value="1" />
+						<el-option label="禁用" :value="0" />
+					</el-select>
+				</el-form-item>
+				<el-form-item>
+					<el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
+					<el-button :icon="Refresh" @click="handleReset">重置</el-button>
+				</el-form-item>
+			</el-form>
+		</el-card>
 
-// import Database from "~icons/ri/database-2-line";
-// import More from "~icons/ep/more-filled";
-import Delete from "~icons/ep/delete";
-import EditPen from "~icons/ep/edit-pen";
-import Refresh from "~icons/ep/refresh";
-import Menu from "~icons/ep/menu";
-import AddFill from "~icons/ri/add-circle-line";
-import Close from "~icons/ep/close";
-import Check from "~icons/ep/check";
+		<!-- 操作按钮 -->
+		<el-card shadow="never" class="mb-4">
+			<el-button type="primary" :icon="Plus" @click="handleAdd">新增角色</el-button>
+			<el-button type="danger" :icon="Delete" :disabled="!selectedRows.length" @click="handleBatchDelete">
+				批量删除
+			</el-button>
+		</el-card>
+
+		<!-- 表格 -->
+		<el-card shadow="never">
+			<el-table
+				v-loading="loading"
+				:data="tableData"
+				border
+				stripe
+				@selection-change="handleSelectionChange"
+				style="width: 100%"
+			>
+				<el-table-column type="selection" width="55" align="center" />
+				<el-table-column type="index" label="序号" width="60" align="center" />
+				<el-table-column prop="roleName" label="角色名称" min-width="150" show-overflow-tooltip />
+				<el-table-column prop="roleCode" label="角色编码" min-width="150" show-overflow-tooltip />
+				<el-table-column prop="description" label="角色描述" min-width="200" show-overflow-tooltip />
+				<el-table-column label="状态" width="80" align="center">
+					<template #default="{ row }">
+						<el-tag :type="row.status === 1 ? 'success' : 'danger'">
+							{{ row.status === 1 ? "启用" : "禁用" }}
+						</el-tag>
+					</template>
+				</el-table-column>
+				<el-table-column prop="createTime" label="创建时间" width="160" show-overflow-tooltip />
+				<el-table-column label="操作" width="280" align="center" fixed="right">
+					<template #default="{ row }">
+						<el-button type="primary" link :icon="Edit" @click="handleEdit(row)">编辑</el-button>
+						<el-button type="warning" link :icon="Setting" @click="handlePermission(row)">权限设置</el-button>
+						<el-button :type="row.status === 1 ? 'danger' : 'success'" link @click="handleToggleStatus(row)">
+							{{ row.status === 1 ? "禁用" : "启用" }}
+						</el-button>
+						<el-popconfirm title="确定删除该角色吗？" @confirm="handleDelete(row)">
+							<template #reference>
+								<el-button type="danger" link :icon="Delete">删除</el-button>
+							</template>
+						</el-popconfirm>
+					</template>
+				</el-table-column>
+			</el-table>
+
+			<!-- 分页 -->
+			<el-pagination
+				v-model:current-page="pagination.pageIndex"
+				v-model:page-size="pagination.pageSize"
+				:total="pagination.total"
+				:page-sizes="[10, 20, 50, 100]"
+				layout="total, sizes, prev, pager, next, jumper"
+				class="mt-4"
+				@size-change="fetchData"
+				@current-change="fetchData"
+			/>
+		</el-card>
+
+		<!-- 新增/编辑对话框 -->
+		<el-dialog
+			v-model="dialogVisible"
+			:title="dialogTitle"
+			width="600px"
+			:close-on-click-modal="false"
+			destroy-on-close
+		>
+			<el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px">
+				<el-form-item label="角色名称" prop="roleName">
+					<el-input v-model="formData.roleName" placeholder="请输入角色名称" />
+				</el-form-item>
+				<el-form-item label="角色编码" prop="roleCode">
+					<el-input v-model="formData.roleCode" placeholder="请输入角色编码" :disabled="isEdit" />
+				</el-form-item>
+				<el-form-item label="角色描述">
+					<el-input v-model="formData.description" type="textarea" :rows="3" placeholder="请输入角色描述" />
+				</el-form-item>
+				<el-form-item label="状态">
+					<el-radio-group v-model="formData.status">
+						<el-radio :value="1">启用</el-radio>
+						<el-radio :value="0">禁用</el-radio>
+					</el-radio-group>
+				</el-form-item>
+			</el-form>
+			<template #footer>
+				<el-button @click="dialogVisible = false">取消</el-button>
+				<el-button type="primary" :loading="submitLoading" @click="handleSubmit">确定</el-button>
+			</template>
+		</el-dialog>
+
+		<!-- 权限设置对话框 -->
+		<el-dialog v-model="permissionVisible" title="权限设置" width="600px" :close-on-click-modal="false">
+			<el-tree
+				ref="treeRef"
+				:data="menuTree"
+				:props="{ label: 'title', children: 'children' }"
+				node-key="id"
+				show-checkbox
+				default-expand-all
+				:default-checked-keys="checkedMenuIds"
+			/>
+			<template #footer>
+				<el-button @click="permissionVisible = false">取消</el-button>
+				<el-button type="primary" :loading="submitLoading" @click="handlePermissionSubmit">确定</el-button>
+			</template>
+		</el-dialog>
+	</div>
+</template>
+
+<script setup lang="ts">
+import { ref, reactive, onMounted } from "vue";
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from "element-plus";
+import { Search, Refresh, Plus, Edit, Delete, Setting } from "@element-plus/icons-vue";
+import {
+	getRoleList,
+	addRole,
+	updateRole,
+	deleteRole,
+	batchDeleteRole,
+	updateRoleStatus,
+	assignPermission,
+	getRolePermissions,
+	type RoleInfo,
+	type RoleQueryParams,
+	type AddRoleParams,
+} from "@/api/system/role";
+import { getMenuList, type MenuDTO } from "@/api/system/menu";
 
 defineOptions({
 	name: "SystemRole",
 });
 
-const iconClass = computed(() => {
-	return [
-		"w-[22px]",
-		"h-[22px]",
-		"flex",
-		"justify-center",
-		"items-center",
-		"outline-hidden",
-		"rounded-[4px]",
-		"cursor-pointer",
-		"transition-colors",
-		"hover:bg-[#0000000f]",
-		"dark:hover:bg-[#ffffff1f]",
-		"dark:hover:text-[#ffffffd9]",
-	];
+/** 搜索表单 */
+const searchForm = reactive<RoleQueryParams>({
+	pageIndex: 1,
+	pageSize: 10,
+	roleName: "",
+	roleCode: "",
+	status: undefined,
 });
 
-const treeRef = ref();
-const formRef = ref();
-const tableRef = ref();
-const contentRef = ref();
-const treeHeight = ref();
+/** 表格数据 */
+const tableData = ref<RoleInfo[]>([]);
+const loading = ref(false);
+const selectedRows = ref<RoleInfo[]>([]);
 
-const {
-	form,
-	isShow,
-	curRow,
-	loading,
-	columns,
-	rowStyle,
-	dataList,
-	treeData,
-	treeProps,
-	isLinkage,
-	pagination,
-	isExpandAll,
-	isSelectAll,
-	treeSearchValue,
-	// buttonClass,
-	onSearch,
-	resetForm,
-	openDialog,
-	handleMenu,
-	handleSave,
-	handleDelete,
-	filterMethod,
-	transformI18n,
-	onQueryChanged,
-	// handleDatabase,
-	handleSizeChange,
-	handleCurrentChange,
-	handleSelectionChange,
-} = useRole(treeRef);
+/** 分页 */
+const pagination = reactive({
+	pageIndex: 1,
+	pageSize: 10,
+	total: 0,
+});
+
+/** 对话框 */
+const dialogVisible = ref(false);
+const dialogTitle = ref("");
+const isEdit = ref(false);
+const submitLoading = ref(false);
+
+/** 表单 */
+const formRef = ref<FormInstance>();
+const formData = reactive<Partial<AddRoleParams>>({
+	roleName: "",
+	roleCode: "",
+	description: "",
+	status: 1,
+});
+
+/** 表单验证规则 */
+const formRules: FormRules = {
+	roleName: [
+		{ required: true, message: "请输入角色名称", trigger: "blur" },
+		{ min: 2, max: 50, message: "角色名称长度为2-50位", trigger: "blur" },
+	],
+	roleCode: [
+		{ required: true, message: "请输入角色编码", trigger: "blur" },
+		{ min: 2, max: 50, message: "角色编码长度为2-50位", trigger: "blur" },
+		{
+			pattern: /^[A-Z_]+$/,
+			message: "角色编码只能包含大写字母和下划线",
+			trigger: "blur",
+		},
+	],
+};
+
+/** 权限设置 */
+const permissionVisible = ref(false);
+const treeRef = ref();
+const menuTree = ref<MenuDTO[]>([]);
+const checkedMenuIds = ref<string[]>([]);
+const currentRoleId = ref("");
+
+/** 获取数据 */
+async function fetchData() {
+	loading.value = true;
+	try {
+		const params: RoleQueryParams = {
+			pageIndex: pagination.pageIndex,
+			pageSize: pagination.pageSize,
+			...searchForm,
+		};
+		const res = await getRoleList(params);
+		tableData.value = res.rows || [];
+		pagination.total = res.total || 0;
+	} catch (error) {
+		ElMessage.error("获取角色列表失败");
+	} finally {
+		loading.value = false;
+	}
+}
+
+/** 获取菜单树 */
+async function fetchMenuTree() {
+	try {
+		const res = await getMenuList();
+		menuTree.value = res || [];
+	} catch (error) {
+		console.error("获取菜单树失败", error);
+	}
+}
+
+/** 搜索 */
+function handleSearch() {
+	pagination.pageIndex = 1;
+	fetchData();
+}
+
+/** 重置搜索 */
+function handleReset() {
+	searchForm.roleName = "";
+	searchForm.roleCode = "";
+	searchForm.status = undefined;
+	pagination.pageIndex = 1;
+	fetchData();
+}
+
+/** 表格选择 */
+function handleSelectionChange(rows: RoleInfo[]) {
+	selectedRows.value = rows;
+}
+
+/** 新增 */
+function handleAdd() {
+	isEdit.value = false;
+	dialogTitle.value = "新增角色";
+	Object.assign(formData, {
+		roleName: "",
+		roleCode: "",
+		description: "",
+		status: 1,
+	});
+	dialogVisible.value = true;
+}
+
+/** 编辑 */
+function handleEdit(row: RoleInfo) {
+	isEdit.value = true;
+	dialogTitle.value = "编辑角色";
+	Object.assign(formData, {
+		id: row.id,
+		roleName: row.roleName,
+		roleCode: row.roleCode,
+		description: row.description,
+		status: row.status,
+	});
+	dialogVisible.value = true;
+}
+
+/** 提交表单 */
+async function handleSubmit() {
+	if (!formRef.value) return;
+
+	await formRef.value.validate(async (valid) => {
+		if (!valid) return;
+
+		submitLoading.value = true;
+		try {
+			if (isEdit.value) {
+				// 编辑
+				await updateRole(formData as AddRoleParams & { id: string });
+				ElMessage.success("编辑成功");
+			} else {
+				// 新增
+				await addRole(formData as AddRoleParams);
+				ElMessage.success("新增成功");
+			}
+			dialogVisible.value = false;
+			fetchData();
+		} catch (error) {
+			ElMessage.error(isEdit.value ? "编辑失败" : "新增失败");
+		} finally {
+			submitLoading.value = false;
+		}
+	});
+}
+
+/** 删除 */
+async function handleDelete(row: RoleInfo) {
+	try {
+		await deleteRole(row.id);
+		ElMessage.success("删除成功");
+		fetchData();
+	} catch (error) {
+		ElMessage.error("删除失败");
+	}
+}
+
+/** 批量删除 */
+async function handleBatchDelete() {
+	if (selectedRows.value.length === 0) {
+		ElMessage.warning("请选择要删除的角色");
+		return;
+	}
+
+	try {
+		await ElMessageBox.confirm("确定删除选中的角色吗？", "提示", {
+			type: "warning",
+		});
+
+		const ids = selectedRows.value.map((row) => row.id);
+		await batchDeleteRole(ids);
+		ElMessage.success("删除成功");
+		fetchData();
+	} catch (error) {
+		if (error !== "cancel") {
+			ElMessage.error("删除失败");
+		}
+	}
+}
+
+/** 切换状态 */
+async function handleToggleStatus(row: RoleInfo) {
+	const newStatus = row.status === 1 ? 0 : 1;
+	const action = newStatus === 1 ? "启用" : "禁用";
+
+	try {
+		await ElMessageBox.confirm(`确定${action}该角色吗？`, "提示", {
+			type: "warning",
+		});
+
+		await updateRoleStatus(row.id, newStatus);
+		ElMessage.success(`${action}成功`);
+		fetchData();
+	} catch (error) {
+		if (error !== "cancel") {
+			ElMessage.error(`${action}失败`);
+		}
+	}
+}
+
+/** 权限设置 */
+async function handlePermission(row: RoleInfo) {
+	currentRoleId.value = row.id;
+
+	try {
+		// 获取角色已有权限
+		const permissions = await getRolePermissions(row.id);
+		checkedMenuIds.value = permissions || [];
+		permissionVisible.value = true;
+	} catch (error) {
+		ElMessage.error("获取角色权限失败");
+	}
+}
+
+/** 提交权限设置 */
+async function handlePermissionSubmit() {
+	if (!treeRef.value) return;
+
+	submitLoading.value = true;
+	try {
+		// 获取选中的节点（包括半选中的父节点）
+		const checkedKeys = treeRef.value.getCheckedKeys();
+		const halfCheckedKeys = treeRef.value.getHalfCheckedKeys();
+		const menuIds = [...checkedKeys, ...halfCheckedKeys];
+
+		await assignPermission({
+			roleId: currentRoleId.value,
+			menuIds,
+		});
+		ElMessage.success("权限设置成功");
+		permissionVisible.value = false;
+	} catch (error) {
+		ElMessage.error("权限设置失败");
+	} finally {
+		submitLoading.value = false;
+	}
+}
 
 onMounted(() => {
-	useResizeObserver(contentRef, async () => {
-		await nextTick();
-		delay(60).then(() => {
-			treeHeight.value = parseFloat(subBefore(tableRef.value.getTableDoms().tableWrapper.style.height, "px"));
-		});
-	});
+	fetchData();
+	fetchMenuTree();
 });
 </script>
 
-<template>
-	<div class="main">
-		<el-form
-			ref="formRef"
-			:inline="true"
-			:model="form"
-			class="search-form bg-bg_color w-full pl-8 pt-[12px] overflow-auto"
-		>
-			<el-form-item label="角色名称：" prop="name">
-				<el-input v-model="form.name" placeholder="请输入角色名称" clearable class="w-[180px]!" />
-			</el-form-item>
-			<el-form-item label="角色标识：" prop="code">
-				<el-input v-model="form.code" placeholder="请输入角色标识" clearable class="w-[180px]!" />
-			</el-form-item>
-			<el-form-item label="状态：" prop="status">
-				<el-select v-model="form.status" placeholder="请选择状态" clearable class="w-[180px]!">
-					<el-option label="已启用" value="1" />
-					<el-option label="已停用" value="0" />
-				</el-select>
-			</el-form-item>
-			<el-form-item>
-				<el-button type="primary" :icon="useRenderIcon('ri/search-line')" :loading="loading" @click="onSearch">
-					搜索
-				</el-button>
-				<el-button :icon="useRenderIcon(Refresh)" @click="resetForm(formRef)"> 重置 </el-button>
-			</el-form-item>
-		</el-form>
-
-		<div ref="contentRef" :class="['flex', deviceDetection() ? 'flex-wrap' : '']">
-			<PureTableBar
-				:class="[isShow && !deviceDetection() ? 'w-[60vw]!' : 'w-full']"
-				style="transition: width 220ms cubic-bezier(0.4, 0, 0.2, 1)"
-				title="角色管理（仅演示，操作后不生效）"
-				:columns="columns"
-				@refresh="onSearch"
-			>
-				<template #buttons>
-					<el-button type="primary" :icon="useRenderIcon(AddFill)" @click="openDialog()"> 新增角色 </el-button>
-				</template>
-				<template v-slot="{ size, dynamicColumns }">
-					<pure-table
-						ref="tableRef"
-						align-whole="center"
-						showOverflowTooltip
-						table-layout="auto"
-						:loading="loading"
-						:size="size"
-						adaptive
-						:row-style="rowStyle"
-						:adaptiveConfig="{ offsetBottom: 108 }"
-						:data="dataList"
-						:columns="dynamicColumns"
-						:pagination="{ ...pagination, size }"
-						:header-cell-style="{
-							background: 'var(--el-fill-color-light)',
-							color: 'var(--el-text-color-primary)',
-						}"
-						@selection-change="handleSelectionChange"
-						@page-size-change="handleSizeChange"
-						@page-current-change="handleCurrentChange"
-					>
-						<template #operation="{ row }">
-							<el-button
-								class="reset-margin"
-								link
-								type="primary"
-								:size="size"
-								:icon="useRenderIcon(EditPen)"
-								@click="openDialog('修改', row)"
-							>
-								修改
-							</el-button>
-							<el-popconfirm :title="`是否确认删除角色名称为${row.name}的这条数据`" @confirm="handleDelete(row)">
-								<template #reference>
-									<el-button class="reset-margin" link type="primary" :size="size" :icon="useRenderIcon(Delete)">
-										删除
-									</el-button>
-								</template>
-							</el-popconfirm>
-							<el-button
-								class="reset-margin"
-								link
-								type="primary"
-								:size="size"
-								:icon="useRenderIcon(Menu)"
-								@click="handleMenu(row)"
-							>
-								权限
-							</el-button>
-							<!-- <el-dropdown>
-              <el-button
-                class="ml-3 mt-[2px]"
-                link
-                type="primary"
-                :size="size"
-                :icon="useRenderIcon(More)"
-              />
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item>
-                    <el-button
-                      :class="buttonClass"
-                      link
-                      type="primary"
-                      :size="size"
-                      :icon="useRenderIcon(Menu)"
-                      @click="handleMenu"
-                    >
-                      菜单权限
-                    </el-button>
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    <el-button
-                      :class="buttonClass"
-                      link
-                      type="primary"
-                      :size="size"
-                      :icon="useRenderIcon(Database)"
-                      @click="handleDatabase"
-                    >
-                      数据权限
-                    </el-button>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown> -->
-						</template>
-					</pure-table>
-				</template>
-			</PureTableBar>
-
-			<div v-if="isShow" class="min-w-[calc(100vw-60vw-268px)]! w-full mt-2 px-2 pb-2 bg-bg_color ml-2 overflow-auto">
-				<div class="flex justify-between w-full px-3 pt-5 pb-4">
-					<div class="flex">
-						<span :class="iconClass">
-							<IconifyIconOffline
-								v-tippy="{
-									content: '关闭',
-								}"
-								class="dark:text-white"
-								width="18px"
-								height="18px"
-								:icon="Close"
-								@click="handleMenu"
-							/>
-						</span>
-						<span :class="[iconClass, 'ml-2']">
-							<IconifyIconOffline
-								v-tippy="{
-									content: '保存菜单权限',
-								}"
-								class="dark:text-white"
-								width="18px"
-								height="18px"
-								:icon="Check"
-								@click="handleSave"
-							/>
-						</span>
-					</div>
-					<p class="font-bold truncate">
-						菜单权限
-						{{ `${curRow?.name ? `（${curRow.name}）` : ""}` }}
-					</p>
-				</div>
-				<el-input
-					v-model="treeSearchValue"
-					placeholder="请输入菜单进行搜索"
-					class="mb-1"
-					clearable
-					@input="onQueryChanged"
-				/>
-				<div class="flex flex-wrap">
-					<el-checkbox v-model="isExpandAll" label="展开/折叠" />
-					<el-checkbox v-model="isSelectAll" label="全选/全不选" />
-					<el-checkbox v-model="isLinkage" label="父子联动" />
-				</div>
-				<el-tree-v2
-					ref="treeRef"
-					show-checkbox
-					:data="treeData"
-					:props="treeProps"
-					:height="treeHeight"
-					:check-strictly="!isLinkage"
-					:filter-method="filterMethod"
-				>
-					<template #default="{ node }">
-						<span>{{ transformI18n(node.label) }}</span>
-					</template>
-				</el-tree-v2>
-			</div>
-		</div>
-	</div>
-</template>
-
-<style lang="scss" scoped>
-:deep(.el-dropdown-menu__item i) {
-	margin: 0;
-}
-
-.main-content {
-	margin: 24px 24px 0 !important;
-}
-
-.search-form {
-	:deep(.el-form-item) {
-		margin-bottom: 12px;
-	}
+<style scoped lang="scss">
+.role-management {
+	padding: 16px;
 }
 </style>

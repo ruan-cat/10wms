@@ -32,6 +32,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。也被称呼为`本项目`。
 - 原项目： 即 `origin` 目录内的项目。也被称呼为`旧项目`。
+- `报告地址`： 即 `main\src\docs\reports` 目录。全部的报告文件都应该存放到这个目录内。
 
 ## 3. 代码/编码格式要求
 
@@ -120,7 +121,7 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 
 在大多数情况下，你的更改是**不需要**编写任何说明报告的。但是每当你需要编写报告时，请你首先遵循以下要求：
 
-- 报告地址： 默认在 `openspec\reports` 文件夹内编写报告。
+- 报告文件存放位置： 默认在 `报告地址` 文件夹内编写报告。
 - 报告文件格式： `*.md` 通常是 markdown 文件格式。
 - 报告文件名称命名要求：
   1. 前缀以日期命名。包括年月日。日期格式 `YYYY-MM-DD` 。
@@ -222,6 +223,13 @@ apps\admin\src\pages\property-manage\expense-manage\reminder-for-overdue-payment
 - `子代理的职责`：
   - 子代理应该严格按照主代理给定的要求来完成任务。
   - 以报告文件的形式，向主代理反馈工作成果。
+
+## 6. kiro 报告文件存储规范
+
+1. 在具体的 `.kiro\specs` 文件夹内，应该只存放最基础的文件，其他的报告文件，应该存储到 `报告地址` 内。以下是 `kiro` 文件夹规范最基础的文件：
+   - `.kiro\specs\{任务名称}\requirements.md`
+   - `.kiro\specs\{任务名称}\design.md`
+   - `.kiro\specs\{任务名称}\tasks.md`
 
 ## 6. 执行 openspec 系列长任务时的注意事项
 

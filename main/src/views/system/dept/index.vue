@@ -21,7 +21,7 @@
 
 		<!-- 操作按钮 -->
 		<el-card shadow="never" class="mb-4">
-			<el-button type="primary" :icon="Plus" @click="handleAdd()">新增部门</el-button>
+			<el-button v-perms="['system:dept:add']" type="primary" :icon="Plus" @click="handleAdd()">新增部门</el-button>
 			<el-button :icon="Refresh" @click="fetchData">刷新</el-button>
 		</el-card>
 
@@ -54,11 +54,15 @@
 				<el-table-column prop="createTime" label="创建时间" width="160" show-overflow-tooltip />
 				<el-table-column label="操作" width="220" align="center" fixed="right">
 					<template #default="{ row }">
-						<el-button type="primary" link :icon="Plus" @click="handleAdd(row)">新增</el-button>
-						<el-button type="primary" link :icon="Edit" @click="handleEdit(row)">编辑</el-button>
+						<el-button v-perms="['system:dept:add']" type="primary" link :icon="Plus" @click="handleAdd(row)">
+							新增
+						</el-button>
+						<el-button v-perms="['system:dept:edit']" type="primary" link :icon="Edit" @click="handleEdit(row)">
+							编辑
+						</el-button>
 						<el-popconfirm title="确定删除该部门吗？" @confirm="handleDelete(row)">
 							<template #reference>
-								<el-button type="danger" link :icon="Delete">删除</el-button>
+								<el-button v-perms="['system:dept:delete']" type="danger" link :icon="Delete">删除</el-button>
 							</template>
 						</el-popconfirm>
 					</template>

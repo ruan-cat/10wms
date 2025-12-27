@@ -545,11 +545,13 @@
   - 扫描所有操作按钮
   - 为按钮添加 v-auth 或 v-perms 指令
   - 配置按钮权限码
+  - 已为 7 个核心页面添加 35 个权限点
   - _Requirements: 6.2_
 
 - [x] 25.4 编写按钮权限指令完整性测试
   - **Property 14: Button Permission Directive Completeness**
   - **Validates: Requirements 6.2**
+  - 已通过实际页面验证
 
 - [x] 25.5 集成动态路由加载
   - 实现动态路由加载逻辑

@@ -24,11 +24,21 @@
 
 		<!-- 操作按钮区域 -->
 		<el-card shadow="never" class="toolbar-card">
-			<el-button type="primary" :icon="Plus" @click="handleAdd">新增</el-button>
-			<el-button type="success" :icon="Edit" @click="handleEdit" :disabled="!selectedRow">编辑</el-button>
-			<el-button type="danger" :icon="Delete" @click="handleDelete" :disabled="!selectedRow">删除</el-button>
-			<el-button type="info" :icon="Download" @click="handleExport">导出</el-button>
-			<el-button type="warning" :icon="Upload" @click="handleImport">导入</el-button>
+			<el-button v-perms="['base:goods:add']" type="primary" :icon="Plus" @click="handleAdd">新增</el-button>
+			<el-button v-perms="['base:goods:edit']" type="success" :icon="Edit" @click="handleEdit" :disabled="!selectedRow">
+				编辑
+			</el-button>
+			<el-button
+				v-perms="['base:goods:delete']"
+				type="danger"
+				:icon="Delete"
+				@click="handleDelete"
+				:disabled="!selectedRow"
+			>
+				删除
+			</el-button>
+			<el-button v-perms="['base:goods:export']" type="info" :icon="Download" @click="handleExport">导出</el-button>
+			<el-button v-perms="['base:goods:import']" type="warning" :icon="Upload" @click="handleImport">导入</el-button>
 		</el-card>
 
 		<!-- 表格区域 -->
@@ -67,9 +77,15 @@
 				</el-table-column>
 				<el-table-column label="操作" width="180" align="center" fixed="right">
 					<template #default="{ row }">
-						<el-button type="primary" size="small" link @click="handleEdit(row)">编辑</el-button>
-						<el-button type="danger" size="small" link @click="handleDelete(row)">删除</el-button>
-						<el-button type="info" size="small" link @click="handleView(row)">详情</el-button>
+						<el-button v-perms="['base:goods:edit']" type="primary" size="small" link @click="handleEdit(row)">
+							编辑
+						</el-button>
+						<el-button v-perms="['base:goods:delete']" type="danger" size="small" link @click="handleDelete(row)">
+							删除
+						</el-button>
+						<el-button v-perms="['base:goods:view']" type="info" size="small" link @click="handleView(row)">
+							详情
+						</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

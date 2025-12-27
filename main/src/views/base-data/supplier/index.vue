@@ -279,9 +279,9 @@ onMounted(() => {
 		<el-card shadow="never" class="table-card">
 			<!-- 工具栏 -->
 			<div class="toolbar">
-				<el-button type="primary" @click="handleAdd">新增</el-button>
-				<el-button @click="handleImport">导入</el-button>
-				<el-button @click="handleExport">导出</el-button>
+				<el-button v-perms="['base:supplier:add']" type="primary" @click="handleAdd">新增</el-button>
+				<el-button v-perms="['base:supplier:import']" @click="handleImport">导入</el-button>
+				<el-button v-perms="['base:supplier:export']" @click="handleExport">导出</el-button>
 			</div>
 
 			<!-- 表格 -->
@@ -311,11 +311,13 @@ onMounted(() => {
 				</el-table-column>
 				<el-table-column label="操作" width="240" fixed="right" align="center">
 					<template #default="{ row }">
-						<el-button link type="primary" @click="handleEdit(row)">编辑</el-button>
-						<el-button link type="primary" @click="handleToggleStatus(row)">
+						<el-button v-perms="['base:supplier:edit']" link type="primary" @click="handleEdit(row)"> 编辑 </el-button>
+						<el-button v-perms="['base:supplier:status']" link type="primary" @click="handleToggleStatus(row)">
 							{{ row.status === 1 ? "禁用" : "启用" }}
 						</el-button>
-						<el-button link type="danger" @click="handleDelete(row)">删除</el-button>
+						<el-button v-perms="['base:supplier:delete']" link type="danger" @click="handleDelete(row)">
+							删除
+						</el-button>
 					</template>
 				</el-table-column>
 			</el-table>

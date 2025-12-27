@@ -24,8 +24,14 @@
 
 		<!-- 操作按钮 -->
 		<el-card shadow="never" class="mb-4">
-			<el-button type="primary" :icon="Plus" @click="handleAdd">新增角色</el-button>
-			<el-button type="danger" :icon="Delete" :disabled="!selectedRows.length" @click="handleBatchDelete">
+			<el-button v-perms="['system:role:add']" type="primary" :icon="Plus" @click="handleAdd">新增角色</el-button>
+			<el-button
+				v-perms="['system:role:delete']"
+				type="danger"
+				:icon="Delete"
+				:disabled="!selectedRows.length"
+				@click="handleBatchDelete"
+			>
 				批量删除
 			</el-button>
 		</el-card>
@@ -55,14 +61,29 @@
 				<el-table-column prop="createTime" label="创建时间" width="160" show-overflow-tooltip />
 				<el-table-column label="操作" width="280" align="center" fixed="right">
 					<template #default="{ row }">
-						<el-button type="primary" link :icon="Edit" @click="handleEdit(row)">编辑</el-button>
-						<el-button type="warning" link :icon="Setting" @click="handlePermission(row)">权限设置</el-button>
-						<el-button :type="row.status === 1 ? 'danger' : 'success'" link @click="handleToggleStatus(row)">
+						<el-button v-perms="['system:role:edit']" type="primary" link :icon="Edit" @click="handleEdit(row)">
+							编辑
+						</el-button>
+						<el-button
+							v-perms="['system:role:permission']"
+							type="warning"
+							link
+							:icon="Setting"
+							@click="handlePermission(row)"
+						>
+							权限设置
+						</el-button>
+						<el-button
+							v-perms="['system:role:status']"
+							:type="row.status === 1 ? 'danger' : 'success'"
+							link
+							@click="handleToggleStatus(row)"
+						>
 							{{ row.status === 1 ? "禁用" : "启用" }}
 						</el-button>
 						<el-popconfirm title="确定删除该角色吗？" @confirm="handleDelete(row)">
 							<template #reference>
-								<el-button type="danger" link :icon="Delete">删除</el-button>
+								<el-button v-perms="['system:role:delete']" type="danger" link :icon="Delete">删除</el-button>
 							</template>
 						</el-popconfirm>
 					</template>
@@ -157,8 +178,8 @@ defineOptions({
 
 /** 搜索表单 */
 const searchForm = reactive<RoleQueryParams>({
-	pageIndex: 1,
-	pageSize: 10,
+	page: 1,
+	size: 10,
 	roleName: "",
 	roleCode: "",
 	status: undefined,
@@ -220,12 +241,12 @@ async function fetchData() {
 	loading.value = true;
 	try {
 		const params: RoleQueryParams = {
-			pageIndex: pagination.pageIndex,
-			pageSize: pagination.pageSize,
+			page: pagination.pageIndex,
+			size: pagination.pageSize,
 			...searchForm,
 		};
 		const res = await getRoleList(params);
-		tableData.value = res.rows || [];
+		tableData.value = res.list || [];
 		pagination.total = res.total || 0;
 	} catch (error) {
 		ElMessage.error("获取角色列表失败");

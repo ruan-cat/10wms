@@ -2,7 +2,7 @@
 	<div class="menu-management">
 		<!-- 操作按钮 -->
 		<el-card shadow="never" class="mb-4">
-			<el-button type="primary" :icon="Plus" @click="handleAdd()">新增菜单</el-button>
+			<el-button v-perms="['system:menu:add']" type="primary" :icon="Plus" @click="handleAdd()">新增菜单</el-button>
 			<el-button :icon="Refresh" @click="fetchData">刷新</el-button>
 		</el-card>
 
@@ -48,11 +48,15 @@
 				<el-table-column prop="permission" label="权限标识" min-width="150" show-overflow-tooltip />
 				<el-table-column label="操作" width="220" align="center" fixed="right">
 					<template #default="{ row }">
-						<el-button type="primary" link :icon="Plus" @click="handleAdd(row)">新增</el-button>
-						<el-button type="primary" link :icon="Edit" @click="handleEdit(row)">编辑</el-button>
+						<el-button v-perms="['system:menu:add']" type="primary" link :icon="Plus" @click="handleAdd(row)">
+							新增
+						</el-button>
+						<el-button v-perms="['system:menu:edit']" type="primary" link :icon="Edit" @click="handleEdit(row)">
+							编辑
+						</el-button>
 						<el-popconfirm title="确定删除该菜单吗？" @confirm="handleDelete(row)">
 							<template #reference>
-								<el-button type="danger" link :icon="Delete">删除</el-button>
+								<el-button v-perms="['system:menu:delete']" type="danger" link :icon="Delete">删除</el-button>
 							</template>
 						</el-popconfirm>
 					</template>

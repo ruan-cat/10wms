@@ -1,6 +1,5 @@
 <script lang="ts" setup generic="T extends Object">
 import type { DialogPromiseProps } from "./types";
-
 import { createTemplatePromise, useToggle } from "@vueuse/core";
 
 const props = defineProps<DialogPromiseProps<T>>();
@@ -24,33 +23,33 @@ defineExpose({
 
 <template>
 	<TemplatePromise v-slot="{ promise, resolve, reject, args }">
-		<ElDialog
+		<el-dialog
 			class="dialog-promise-root"
 			:model-value="isOpen"
 			:draggable="true"
 			:destroy-on-close="true"
 			:before-close="async () => await props.onDialogClose({ resolve, reject })"
-			:="props.dialogProps"
+			v-bind="props.dialogProps"
 		>
 			<template #header>
-				<slot name="header"> </slot>
+				<slot name="header" />
 			</template>
 
 			<template #default>
-				<slot name="default"> 默认的弹框内容，请传递你的弹框内容。 </slot>
+				<slot name="default">默认的弹框内容，请传递你的弹框内容。</slot>
 			</template>
 
 			<template #footer>
 				<slot name="footer" :resolve="resolve" :reject="reject">
-					<ElButton type="danger" @click="props.onDialogClose({ resolve, reject })"> 关闭弹框 </ElButton>
+					<el-button type="danger" @click="props.onDialogClose({ resolve, reject })"> 关闭弹框 </el-button>
 				</slot>
 			</template>
-		</ElDialog>
+		</el-dialog>
 	</TemplatePromise>
 </template>
 
 <style lang="scss" scoped>
 .dialog-promise-root {
-	/** 使用 Pure-Admin 的主题变量，确保在亮色和暗色主题下都能正常显示 */
+	// Pure-Admin 样式适配
 }
 </style>

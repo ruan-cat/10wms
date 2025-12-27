@@ -36,11 +36,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 3. 代码/编码格式要求
 
-### 1. markdown 文档的 table 编写格式
+### 3.1 markdown 文档的 table 编写格式
 
 每当你在 markdown 文档内编写表格时，表格的格式一定是**居中对齐**的，必须满足**居中对齐**的格式要求。
 
-### 2. markdown 文档的 vue 组件代码片段编写格式
+### 3.2 markdown 文档的 vue 组件代码片段编写格式
 
 错误写法：
 
@@ -76,7 +76,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 </template>
 ```
 
-### 3. javascript / typescript 的代码注释写法
+### 3.3 javascript / typescript 的代码注释写法
 
 代码注释写法应该写成 jsdoc 格式。而不是单纯的双斜杠注释。比如：
 
@@ -110,14 +110,14 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 }
 ```
 
-### 4. markdown 的多级标题要主动提供序号
+### 3.4 markdown 的多级标题要主动提供序号
 
 对于每一份 markdown 文件的`二级标题`和`三级标题`，你都应该要：
 
 1. 主动添加**数字**序号，便于我阅读文档。
 2. 主动**维护正确的数字序号顺序**。如果你处理的 markdown 文档，其手动添加的序号顺序不对，请你及时的更新序号顺序。
 
-## 4. 报告编写规范
+## 5. 报告编写规范
 
 在大多数情况下，你的更改是**不需要**编写任何说明报告的。但是每当你需要编写报告时，请你首先遵循以下要求：
 
@@ -141,7 +141,7 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 
 - 报告语言： 默认用简体中文。
 
-## 5. 主从代理的相关规范
+## 6. 主从代理的相关规范
 
 ### 6.1. 主代理新建子代理的类型
 
@@ -224,18 +224,18 @@ apps\admin\src\pages\property-manage\expense-manage\reminder-for-overdue-payment
   - 子代理应该严格按照主代理给定的要求来完成任务。
   - 以报告文件的形式，向主代理反馈工作成果。
 
-## 6. kiro 报告文件存储规范
+## 7. kiro 报告文件存储规范
 
 1. 在具体的 `.kiro\specs` 文件夹内，应该只存放最基础的文件，其他的报告文件，应该存储到 `报告地址` 内。以下是 `kiro` 文件夹规范最基础的文件：
    - `.kiro\specs\{任务名称}\requirements.md`
    - `.kiro\specs\{任务名称}\design.md`
    - `.kiro\specs\{任务名称}\tasks.md`
 
-## 6. 执行 openspec 系列长任务时的注意事项
+## 8. 执行 openspec 系列长任务时的注意事项
 
 本项目使用 openspec 来制定长任务执行规范。
 
-### 6.1. 更新 openspec 的规范文件后应该及时运行校验命令，并根据校验反馈，使得 openspec 规范文件满足格式要求
+### 8.1. 更新 openspec 的规范文件后应该及时运行校验命令，并根据校验反馈，使得 openspec 规范文件满足格式要求
 
 比如你修改了 `migrate-static-data-to-nitro-query` 这款任务的规范文件后，你应该及时运行以下命令来检查文件是否满足规范：
 
@@ -249,7 +249,7 @@ openspec validate migrate-static-data-to-nitro-query --strict
 openspec validate {任务名称} --strict
 ```
 
-### 6.2. 执行长任务时的策略与注意事项
+### 8.2. 执行长任务时的策略与注意事项
 
 1. **及时更新任务文件**： **必须要**及时更新对应任务的 `tasks.md` 任务进度文件。避免出现大批量完成任务后，没有更新进度文件的情况，带来严重的误解。
 2. 启动**多个子代理**分模块并行完成任务： 务必要启动多个在后台运行的子代理，同时完成 openspec 设定的一系列繁杂的任务。以便加快速度。你应该至少同时启用至少 4 个子代理。并根据情况，主动增加足够数量的子代理完成任务。
@@ -263,7 +263,7 @@ openspec validate {任务名称} --strict
    - 你应该阅读文件来完成更改，而不是使用不稳定的，容易带来语法错误的，删改不干净不合理的批处理脚本，来完成任务。
    - 你应该新建多个子代理，主代理用具体的子代理来完成大规模的修改任务。
 
-## 7. 工作区结构
+## 9. 工作区结构
 
 项目采用 pnpm workspaces 管理，包含以下子项目：
 
@@ -271,9 +271,9 @@ openspec validate {任务名称} --strict
 - **main/**: 当前的主项目，基于 vue-pure-admin 重构
 - **examples/**: 用于参考的示例项目
 
-## 8. 常用命令
+## 10. 常用命令
 
-### 开发环境
+### 10.1 开发环境
 
 ```bash
 # 在main项目中启动开发服务器
@@ -285,7 +285,7 @@ cd main && pnpm vite:dev
 cd origin && pnpm dev
 ```
 
-### 构建和部署
+### 10.2 构建和部署
 
 ```bash
 # 构建所有项目
@@ -301,7 +301,7 @@ cd origin && pnpm build
 pnpm deploy-vercel
 ```
 
-### 测试
+### 10.3 测试
 
 ```bash
 # 运行测试（在根目录）
@@ -312,7 +312,7 @@ pnpm test
 cd origin && pnpm test
 ```
 
-### 代码质量
+### 10.4 代码质量
 
 ```bash
 # 格式化所有项目代码
@@ -328,7 +328,7 @@ cd main && pnpm lint:stylelint
 cd main && pnpm typecheck
 ```
 
-### 依赖管理
+### 10.5 依赖管理
 
 ```bash
 # 清理依赖和缓存
@@ -343,9 +343,9 @@ pnpm up-ruan-cat
 pnpm up-taze
 ```
 
-## 9. 架构设计
+## 11. 架构设计
 
-### Main 项目（基于 vue-pure-admin）
+### 11.1 Main 项目（基于 vue-pure-admin）
 
 - **技术栈**: Vue 3 + TypeScript + Vite + Element Plus + Tailwind CSS + Pinia
 - **核心特性**:
@@ -356,7 +356,7 @@ pnpm up-taze
   - 图表可视化(echarts)
   - 动画效果(@vueuse/motion)
 
-### Origin 项目（原始版本）
+### 11.2 Origin 项目（原始版本）
 
 - **技术栈**: Vue 3 + TypeScript + Vite + Element Plus + Pinia
 - **核心特性**:
@@ -365,52 +365,52 @@ pnpm up-taze
   - 富文本编辑器(@wangeditor/editor)
   - 文档系统(vitepress)
 
-### 构建配置
+### 11.3 构建配置
 
 - **包管理器**: pnpm v10.16.1（严格要求）
 - **Node 版本**: >=22.14.0
 - **构建工具**: Turbo（用于 monorepo 构建优化）
 - **部署**: Vercel（使用自定义部署脚本）
 
-## 10. 开发注意事项
+## 12. 开发注意事项
 
-### 包管理
+### 12.1 包管理
 
 - 必须使用 pnpm 作为包管理器
 - 项目配置了`onlyBuiltDependencies`来控制需要编译的依赖
 
-### 代码规范
+### 12.2 代码规范
 
 - 使用@antfu/eslint-config 作为 ESLint 配置
 - 集成 Prettier 进行代码格式化
 - 使用 Stylelint 进行样式检查
 - 配置了 commitlint 进行提交信息规范
 
-### 构建和打包
+### 12.3 构建和打包
 
 - Main 项目使用较大的内存配置（开发 4GB，构建 8GB）
 - 支持多环境构建（development、staging、production）
 - 集成 bundle analyzer 和压缩插件
 
-### 国际化支持
+### 12.4 国际化支持
 
 - Main 项目完整支持国际化
 - Origin 项目使用 vue-i18n rc 版本
 
-### 状态管理
+### 12.5 状态管理
 
 - 两个项目都使用 Pinia 作为状态管理
 - Origin 项目额外配置了持久化插件
 
-### 样式系统
+### 12.6 样式系统
 
 - Main 项目使用 Tailwind CSS + SCSS
 - Origin 项目主要使用 CSS + SCSS
 - 都集成了 Element Plus 组件库
 
-## 11. 及时获取项目使用框架的文档与信息
+## 13. 及时获取项目使用框架的文档与信息
 
-### 项目基架模板 `vue-pure-admin`
+### 13.1 项目基架模板 `vue-pure-admin`
 
 在本仓库内，又被称呼为 `pure-admin` 模板。
 

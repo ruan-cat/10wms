@@ -1,4 +1,4 @@
-# 状态管理功能测试结果
+﻿# 2025-12-27 状态管理功能测试结果
 
 ## 测试概述
 
@@ -209,3 +209,4 @@
   - `main/src/store/modules/user.test.ts`
   - `main/src/store/modules/user-hook.test.ts`
 - Store 实现位置: `main/src/store/modules/user.ts`
+

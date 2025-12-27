@@ -1,4 +1,4 @@
-# 2025-12-27 分页组件评估
+﻿# 2025-12-27 2025-12-27 分页组件评估
 
 ## 1. Origin 分页组件分析
 
@@ -248,3 +248,4 @@ async function loadData(pageIndex: number, pageSize: number) {
 - 调整导入路径
 - 适配样式系统
 - 编写单元测试
+

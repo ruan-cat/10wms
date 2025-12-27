@@ -1,4 +1,4 @@
-# 路由元信息规范文档
+﻿# 2025-12-27 路由元信息规范文档
 
 ## 概述
 
@@ -312,3 +312,4 @@ function convertPureAdminRouteToOrigin(pureAdminRoute: RouteConfigsTable): any {
 - [Vue Router 官方文档](https://router.vuejs.org/)
 - [Pure-Admin 路由配置](https://yiming_chang.gitee.io/pure-admin-doc/pages/routerMenu/)
 - [TypeScript 类型声明](https://www.typescriptlang.org/docs/handbook/declaration-files/introduction.html)
+

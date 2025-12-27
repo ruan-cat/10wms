@@ -1,4 +1,4 @@
-# HTTP 请求功能测试结果
+﻿# 2025-12-27 HTTP 请求功能测试结果
 
 ## 测试概述
 
@@ -218,3 +218,4 @@ HTTP 请求层的核心逻辑已通过属性测试验证，包括：
 - 属性测试使用 fast-check 库，每个测试运行 100 次迭代
 - 测试文件位置: `main/src/utils/http/index.test.ts`
 - 测试 API 位置: `main/src/api/test.ts`
+

@@ -1,4 +1,4 @@
-# 路由守卫适配文档
+﻿# 2025-12-27 路由守卫适配文档
 
 ## 概述
 
@@ -364,3 +364,4 @@ Origin 的数据加载是异步的，需要使用 `await` 等待加载完成。
 
 - [Vue Router 导航守卫](https://router.vuejs.org/zh/guide/advanced/navigation-guards.html)
 - [Pure-Admin 路由配置](https://yiming_chang.gitee.io/pure-admin-doc/pages/routerMenu/)
+

@@ -1,4 +1,4 @@
-# Checkpoint: 基础设施验证
+﻿# 2025-12-27 Checkpoint: 基础设施验证
 
 ## 检查点概述
 
@@ -303,3 +303,4 @@ pnpm migration:track show
 - 特殊功能组件
 
 预计时间: 2-3 周
+

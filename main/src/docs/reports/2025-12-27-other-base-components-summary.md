@@ -1,4 +1,4 @@
-# 其他基础组件迁移总结
+﻿# 2025-12-27 其他基础组件迁移总结
 
 ## 1. 迁移概述
 
@@ -395,3 +395,4 @@ async function handleClose({ resolve, reject }) {
 - 打印功能（vue-plugin-hiprint）
 - 富文本编辑器（@wangeditor/editor）
 - 自定义业务组件（dinamic-table-form）
+

@@ -1,4 +1,4 @@
-# Origin 到 Pure-Admin 迁移完成总结
+﻿# 2025-12-28 Origin 到 Pure-Admin 迁移完成总结
 
 ## 1. 项目概述
 
@@ -387,3 +387,4 @@ await addUser({ username: "test", password: "123456" });
 4. 更新和完善文档
 
 迁移工作已经完成了基础部分，为后续的实际迁移工作提供了坚实的基础和详细的指导。
+

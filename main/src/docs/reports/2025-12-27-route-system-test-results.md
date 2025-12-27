@@ -1,4 +1,4 @@
-# 路由系统功能测试结果
+﻿# 2025-12-27 路由系统功能测试结果
 
 ## 测试概述
 
@@ -254,3 +254,4 @@
 - 文档位置:
   - `.kiro/specs/origin-to-pure-admin-migration/route-meta-specification.md`
   - `.kiro/specs/origin-to-pure-admin-migration/route-guard-adaptation.md`
+

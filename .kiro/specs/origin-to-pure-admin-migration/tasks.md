@@ -219,7 +219,7 @@
   - 测试组件功能
   - _Requirements: 2.3, 7.5_
 
-- [ ] 11. Checkpoint - 公共组件验证
+- [x] 11. Checkpoint - 公共组件验证
   - Ensure all tests pass, ask the user if questions arise.
 
 - [x] 12. API 层迁移
@@ -395,7 +395,7 @@
   - 测试库存查询核心流程
   - _Requirements: 4.4, 8.2_
 
-- [ ] 18. Checkpoint - P0 和 P1 模块验证
+- [x] 18. Checkpoint - P0 和 P1 模块验证
   - Ensure all tests pass, ask the user if questions arise.
 
 - [x] 19. 业务模块迁移 - P2: 出库管理模块
@@ -406,8 +406,9 @@
   - 测试拣货管理功能
   - _Requirements: 4.5_
 
-- [ ] 20. 业务模块迁移 - P2: 日常检查模块
-- [ ] 20.1 迁移异常发货模块
+- [x] 20. 业务模块迁移 - P2: 日常检查模块
+
+- [x] 20.1 迁移异常发货模块
   - 创建 main/src/views/daily-check/abnormal-delivery 目录
   - 迁移异常发货页面
   - 适配组件和 API
@@ -445,7 +446,8 @@
   - 测试产品类别功能
   - _Requirements: 4.13_
 
-- [ ] 22. 业务模块迁移 - P3: 其他辅助模块
+- [-] 22. 业务模块迁移 - P3: 其他辅助模块
+
 - [ ] 22.1 迁移计费配置模块
   - 创建 main/src/views/billing 目录
   - 迁移计费模式页面
@@ -478,14 +480,14 @@
   - 测试人员配置功能
   - _Requirements: 4.10_
 
-- [ ] 22.5 迁移仓库配置模块
+- [x] 22.5 迁移仓库配置模块
   - 创建 main/src/views/warehouse 目录
   - 迁移订单类型页面
   - 适配组件和 API
   - 测试仓库配置功能
   - _Requirements: 4.11_
 
-- [ ] 22.6 迁移客户报表模块
+- [x] 22.6 迁移客户报表模块
   - 创建 main/src/views/report 目录
   - 迁移库存报表页面
   - 迁移有效期预警页面

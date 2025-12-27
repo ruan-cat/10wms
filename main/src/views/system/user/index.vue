@@ -24,8 +24,14 @@
 
 		<!-- 操作按钮 -->
 		<el-card shadow="never" class="mb-4">
-			<el-button type="primary" :icon="Plus" @click="handleAdd">新增用户</el-button>
-			<el-button type="danger" :icon="Delete" :disabled="!selectedRows.length" @click="handleBatchDelete">
+			<el-button v-perms="['system:user:add']" type="primary" :icon="Plus" @click="handleAdd">新增用户</el-button>
+			<el-button
+				v-perms="['system:user:delete']"
+				type="danger"
+				:icon="Delete"
+				:disabled="!selectedRows.length"
+				@click="handleBatchDelete"
+			>
 				批量删除
 			</el-button>
 		</el-card>
@@ -66,9 +72,20 @@
 				<el-table-column prop="createTime" label="创建时间" width="160" show-overflow-tooltip />
 				<el-table-column label="操作" width="280" align="center" fixed="right">
 					<template #default="{ row }">
-						<el-button type="primary" link :icon="Edit" @click="handleEdit(row)">编辑</el-button>
-						<el-button type="warning" link :icon="Key" @click="handleResetPassword(row)">重置密码</el-button>
+						<el-button v-perms="['system:user:edit']" type="primary" link :icon="Edit" @click="handleEdit(row)">
+							编辑
+						</el-button>
 						<el-button
+							v-perms="['system:user:resetPwd']"
+							type="warning"
+							link
+							:icon="Key"
+							@click="handleResetPassword(row)"
+						>
+							重置密码
+						</el-button>
+						<el-button
+							v-perms="['system:user:status']"
 							:type="row.status === '1' ? 'danger' : 'success'"
 							link
 							:icon="row.status === '1' ? Lock : Unlock"
@@ -78,7 +95,7 @@
 						</el-button>
 						<el-popconfirm title="确定删除该用户吗？" @confirm="handleDelete(row)">
 							<template #reference>
-								<el-button type="danger" link :icon="Delete">删除</el-button>
+								<el-button v-perms="['system:user:delete']" type="danger" link :icon="Delete">删除</el-button>
 							</template>
 						</el-popconfirm>
 					</template>

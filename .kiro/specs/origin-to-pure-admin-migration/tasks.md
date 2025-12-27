@@ -529,44 +529,46 @@
   - **Property 12: Layout Mode Compatibility**
   - **Validates: Requirements 5.3**
 
-- [ ] 25. 权限系统集成
-- [ ] 25.1 转换权限数据结构
+- [x] 25. 权限系统集成
+
+- [x] 25.1 转换权限数据结构
   - 分析 Origin 的菜单权限数据结构
   - 转换为 Pure-Admin 的权限数据结构
   - 实现数据转换工具
   - _Requirements: 6.1_
 
-- [ ] 25.2 编写权限数据结构转换测试
+- [x] 25.2 编写权限数据结构转换测试
   - **Property 13: Permission Data Structure Transformation**
   - **Validates: Requirements 6.1**
 
-- [ ] 25.3 添加按钮权限指令
+- [x] 25.3 添加按钮权限指令
   - 扫描所有操作按钮
   - 为按钮添加 v-auth 或 v-perms 指令
   - 配置按钮权限码
   - _Requirements: 6.2_
 
-- [ ] 25.4 编写按钮权限指令完整性测试
+- [x] 25.4 编写按钮权限指令完整性测试
   - **Property 14: Button Permission Directive Completeness**
   - **Validates: Requirements 6.2**
 
-- [ ] 25.5 集成动态路由加载
+- [x] 25.5 集成动态路由加载
   - 实现动态路由加载逻辑
+
   - 根据用户权限过滤路由
   - 测试动态路由功能
   - _Requirements: 6.3_
 
-- [ ] 25.6 编写动态路由加载属性测试
+- [x] 25.6 编写动态路由加载属性测试
   - **Property 15: Dynamic Route Loading Correctness**
   - **Validates: Requirements 6.3**
 
-- [ ] 25.7 实现访问控制
+- [x] 25.7 实现访问控制
   - 实现路由级别访问控制
   - 实现按钮级别访问控制
   - 测试访问控制功能
   - _Requirements: 6.4_
 
-- [ ] 25.8 编写访问控制属性测试
+- [x] 25.8 编写访问控制属性测试
   - **Property 16: Access Control Correctness**
   - **Validates: Requirements 6.4**
 

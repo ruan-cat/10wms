@@ -24,17 +24,23 @@ Keep this managed block so 'openspec update' can refresh the instructions.
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 项目概述
+## 1. 项目概述
 
 这是一个名为"阮喵喵 10wms 项目"的 monorepo，用于实现一个 WMS（仓库管理系统）后台项目的升级改造。项目包含原始版本（origin）、主要改造版本（main）和示例代码（examples）。
 
-## 代码/编码格式要求
+## 2. 术语说明
 
-### 1. markdown 文档的 table 编写格式
+- 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。也被称呼为`本项目`。
+- 原项目： 即 `origin` 目录内的项目。也被称呼为`旧项目`。
+- `报告地址`： 即 `main\src\docs\reports` 目录。全部的报告文件都应该存放到这个目录内。
+
+## 3. 代码/编码格式要求
+
+### 3.1 markdown 文档的 table 编写格式
 
 每当你在 markdown 文档内编写表格时，表格的格式一定是**居中对齐**的，必须满足**居中对齐**的格式要求。
 
-### 2. markdown 文档的 vue 组件代码片段编写格式
+### 3.2 markdown 文档的 vue 组件代码片段编写格式
 
 错误写法：
 
@@ -70,7 +76,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 </template>
 ```
 
-### 3. javascript / typescript 的代码注释写法
+### 3.3 javascript / typescript 的代码注释写法
 
 代码注释写法应该写成 jsdoc 格式。而不是单纯的双斜杠注释。比如：
 
@@ -104,18 +110,18 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 }
 ```
 
-### 4. markdown 的多级标题要主动提供序号
+### 3.4 markdown 的多级标题要主动提供序号
 
 对于每一份 markdown 文件的`二级标题`和`三级标题`，你都应该要：
 
 1. 主动添加**数字**序号，便于我阅读文档。
 2. 主动**维护正确的数字序号顺序**。如果你处理的 markdown 文档，其手动添加的序号顺序不对，请你及时的更新序号顺序。
 
-## 报告编写规范
+## 5. 报告编写规范
 
 在大多数情况下，你的更改是**不需要**编写任何说明报告的。但是每当你需要编写报告时，请你首先遵循以下要求：
 
-- 报告地址： 默认在 `openspec\reports` 文件夹内编写报告。
+- 报告文件存放位置： 默认在 `报告地址` 文件夹内编写报告。
 - 报告文件格式： `*.md` 通常是 markdown 文件格式。
 - 报告文件名称命名要求：
   1. 前缀以日期命名。包括年月日。日期格式 `YYYY-MM-DD` 。
@@ -135,7 +141,129 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 
 - 报告语言： 默认用简体中文。
 
-## 工作区结构
+## 6. 主从代理的相关规范
+
+### 6.1. 主代理新建子代理的类型
+
+主代理新建的子代理**必须**是**后台运行**的子代理。
+
+### 6.2. 主代理新建子代理的时机
+
+什么情况下应该新建子代理？在以下的几种情况下，主代理应该及时新建子代理来完成任务：
+
+- 大规模的代码探索与信息收集任务。
+- 访问 url 获取文档信息的任务。
+- 指定严格顺序的代码修改任务。
+- 报告编写任务。
+- 进度文件更新与编写任务。
+
+### 6.3. 基于`业务路径`做任务划分时的主代理与子代理任务划分规范
+
+根据业务路径的`三级路由`，做出细致的子代理任务划分，避免子代理一次性完成过多任务。
+
+有部分`业务路径`的`二级路由`，包含了数量较多的模块，在你划分子代理任务时，你首先应该要全面深刻的阅读 `apps\admin\src\router\rank\rank-route-keys.ts` 所提供的二级路由和三级路由，让子代理只负责 2~3 个具体的三级路由，而不是把一整块三级路由的全部路径对应的修改任务，都交给一个子代理来完成。这很容易出现子代理执行失败的故障。
+
+一个具体的子代理任务划分例子如下：
+
+假定我们要对 `propertyManage.expenseManage` 这款`二级路由`下面全部的`三级路由`对应的`后台项目`的 `form.ts` 文件做处理，统一增加固定的类型导入代码段 `import type { Mode } from "@/composables/use-mode";` ，你作为主代理，面对如下数目的`三级路由`。
+
+```txt
+	// propertyManage.expenseManage 三级路由
+	"propertyManage.expenseManage.waterAndElectricityMeterReading",
+	"propertyManage.expenseManage.vehicleCharge",
+	"propertyManage.expenseManage.reminderForOverduePayments",
+	"propertyManage.expenseManage.reprintVoucher",
+	"propertyManage.expenseManage.overduePaymentInformation",
+	"propertyManage.expenseManage.paymentReview",
+	"propertyManage.expenseManage.refundReview",
+	"propertyManage.expenseManage.houseCharge",
+	"propertyManage.expenseManage.meterReadingType",
+	"propertyManage.expenseManage.discountType",
+	"propertyManage.expenseManage.expenseSummaryTable",
+	"propertyManage.expenseManage.discountApply",
+	"propertyManage.expenseManage.discountSetting",
+	"propertyManage.expenseManage.contracteCharge",
+	"propertyManage.expenseManage.expenseItemSetting",
+	"propertyManage.expenseManage.cancelFee",
+```
+
+很明显，根据业务路径的三级路由，所映射的全部 `form.ts` 文件路径大致如下：
+
+```txt
+apps\admin\src\pages\property-manage\expense-manage\water-and-electricity-meter-reading\components\form.ts
+apps\admin\src\pages\property-manage\expense-manage\vehicle-charge\components\form.ts
+apps\admin\src\pages\property-manage\expense-manage\reminder-for-overdue-payments\components\form.ts
+...剩余的form.ts路径
+```
+
+那么你应该划分 6 个子代理，去完成这些任务：
+
+1. 1 号子代理
+   - waterAndElectricityMeterReading
+   - vehicleCharge
+   - reminderForOverduePayments
+2. 2 号子代理
+   - reprintVoucher
+   - overduePaymentInformation
+   - paymentReview
+3. 以此类推...
+
+### 6.4. 主从代理`调度设计`、`职责说明`与`通信反馈`规范
+
+主从代理的调度设计：
+
+- `主代理的职责`：
+  - 阅读、理解、思考、推理全部的任务要求： 主代理应该负责全面的，完整的阅读任务所要求阅读的 md 文档和提示词。如果是执行 openspec 的任务，那么就按照要求，对应的阅读对应任务的 openspec 目录下全部的 markdown 文档任务要求。
+  - 任务细粒度拆分： 并按照业务路由的路径做任务拆分，新建足够数量的子代理。
+  - 将必要的上下文和任务要求传达给子代理。
+  - 收集子代理反馈： 要求子代理按照报告编写规范，在指定目录内，以统一的报告格式，以文件的形式传达处理结果和上下文。
+  - 临时设计报告格式： 主代理为了更好的收集子代理的反馈，可以临时简单设计一个报告格式，并要求子代理严格按照报告格式来反馈结果。
+  - 监听子代理基于报告文档的反馈： 并持续监听，定期收集来自子代理的处理反馈。
+  - 设计验收标准并检查子代理的处理结果： 如果你发现子代理的处理质量偏差过大，请重新开启一个子代理来完成任务。直接重做相关任务。
+- `子代理的职责`：
+  - 子代理应该严格按照主代理给定的要求来完成任务。
+  - 以报告文件的形式，向主代理反馈工作成果。
+
+## 7. kiro 报告文件存储规范
+
+1. 在具体的 `.kiro\specs` 文件夹内，应该只存放最基础的文件，其他的报告文件，应该存储到 `报告地址` 内。以下是 `kiro` 文件夹规范最基础的文件：
+   - `.kiro\specs\{任务名称}\requirements.md`
+   - `.kiro\specs\{任务名称}\design.md`
+   - `.kiro\specs\{任务名称}\tasks.md`
+
+## 8. 执行 openspec 系列长任务时的注意事项
+
+本项目使用 openspec 来制定长任务执行规范。
+
+### 8.1. 更新 openspec 的规范文件后应该及时运行校验命令，并根据校验反馈，使得 openspec 规范文件满足格式要求
+
+比如你修改了 `migrate-static-data-to-nitro-query` 这款任务的规范文件后，你应该及时运行以下命令来检查文件是否满足规范：
+
+```bash
+openspec validate migrate-static-data-to-nitro-query --strict
+```
+
+更加通用的命令格式为：
+
+```bash
+openspec validate {任务名称} --strict
+```
+
+### 8.2. 执行长任务时的策略与注意事项
+
+1. **及时更新任务文件**： **必须要**及时更新对应任务的 `tasks.md` 任务进度文件。避免出现大批量完成任务后，没有更新进度文件的情况，带来严重的误解。
+2. 启动**多个子代理**分模块并行完成任务： 务必要启动多个在后台运行的子代理，同时完成 openspec 设定的一系列繁杂的任务。以便加快速度。你应该至少同时启用至少 4 个子代理。并根据情况，主动增加足够数量的子代理完成任务。
+3. 回复文本语言： 务必用**中文**回复用户。
+4. 上下文合并后重新阅读一次任务要求： 为了避免你在自动合并上下文的时候，给后续的任务带来明显的幻觉，你应该及时的重新阅读 openspec 的任务规范要求。
+5. 连续的，持续的执行长任务：
+   - 你应该一次性完成 `tasks.md` 所记录的全部任务。你应该同时新建多个子代理，做出合理的任务划分，一次性完成任务。
+   - 不要在完成一个任务的时候就停下来询问用户。这种停顿方式很低效率，你要避免这种执行方式。
+6. **禁止**编写脚本完成批处理任务：
+   - **不允许**你编写任何 Python、typescript、javascript，或 bash 脚本，完成大批量代码删改之类的任务。
+   - 你应该阅读文件来完成更改，而不是使用不稳定的，容易带来语法错误的，删改不干净不合理的批处理脚本，来完成任务。
+   - 你应该新建多个子代理，主代理用具体的子代理来完成大规模的修改任务。
+
+## 9. 工作区结构
 
 项目采用 pnpm workspaces 管理，包含以下子项目：
 
@@ -143,9 +271,9 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 - **main/**: 当前的主项目，基于 vue-pure-admin 重构
 - **examples/**: 用于参考的示例项目
 
-## 常用命令
+## 10. 常用命令
 
-### 开发环境
+### 10.1 开发环境
 
 ```bash
 # 在main项目中启动开发服务器
@@ -157,7 +285,7 @@ cd main && pnpm vite:dev
 cd origin && pnpm dev
 ```
 
-### 构建和部署
+### 10.2 构建和部署
 
 ```bash
 # 构建所有项目
@@ -173,7 +301,7 @@ cd origin && pnpm build
 pnpm deploy-vercel
 ```
 
-### 测试
+### 10.3 测试
 
 ```bash
 # 运行测试（在根目录）
@@ -184,7 +312,7 @@ pnpm test
 cd origin && pnpm test
 ```
 
-### 代码质量
+### 10.4 代码质量
 
 ```bash
 # 格式化所有项目代码
@@ -200,7 +328,7 @@ cd main && pnpm lint:stylelint
 cd main && pnpm typecheck
 ```
 
-### 依赖管理
+### 10.5 依赖管理
 
 ```bash
 # 清理依赖和缓存
@@ -215,9 +343,9 @@ pnpm up-ruan-cat
 pnpm up-taze
 ```
 
-## 架构设计
+## 11. 架构设计
 
-### Main 项目（基于 vue-pure-admin）
+### 11.1 Main 项目（基于 vue-pure-admin）
 
 - **技术栈**: Vue 3 + TypeScript + Vite + Element Plus + Tailwind CSS + Pinia
 - **核心特性**:
@@ -228,7 +356,7 @@ pnpm up-taze
   - 图表可视化(echarts)
   - 动画效果(@vueuse/motion)
 
-### Origin 项目（原始版本）
+### 11.2 Origin 项目（原始版本）
 
 - **技术栈**: Vue 3 + TypeScript + Vite + Element Plus + Pinia
 - **核心特性**:
@@ -237,45 +365,54 @@ pnpm up-taze
   - 富文本编辑器(@wangeditor/editor)
   - 文档系统(vitepress)
 
-### 构建配置
+### 11.3 构建配置
 
 - **包管理器**: pnpm v10.16.1（严格要求）
 - **Node 版本**: >=22.14.0
 - **构建工具**: Turbo（用于 monorepo 构建优化）
 - **部署**: Vercel（使用自定义部署脚本）
 
-## 开发注意事项
+## 12. 开发注意事项
 
-### 包管理
+### 12.1 包管理
 
 - 必须使用 pnpm 作为包管理器
 - 项目配置了`onlyBuiltDependencies`来控制需要编译的依赖
 
-### 代码规范
+### 12.2 代码规范
 
 - 使用@antfu/eslint-config 作为 ESLint 配置
 - 集成 Prettier 进行代码格式化
 - 使用 Stylelint 进行样式检查
 - 配置了 commitlint 进行提交信息规范
 
-### 构建和打包
+### 12.3 构建和打包
 
 - Main 项目使用较大的内存配置（开发 4GB，构建 8GB）
 - 支持多环境构建（development、staging、production）
 - 集成 bundle analyzer 和压缩插件
 
-### 国际化支持
+### 12.4 国际化支持
 
 - Main 项目完整支持国际化
 - Origin 项目使用 vue-i18n rc 版本
 
-### 状态管理
+### 12.5 状态管理
 
 - 两个项目都使用 Pinia 作为状态管理
 - Origin 项目额外配置了持久化插件
 
-### 样式系统
+### 12.6 样式系统
 
 - Main 项目使用 Tailwind CSS + SCSS
 - Origin 项目主要使用 CSS + SCSS
 - 都集成了 Element Plus 组件库
+
+## 13. 及时获取项目使用框架的文档与信息
+
+### 13.1 项目基架模板 `vue-pure-admin`
+
+在本仓库内，又被称呼为 `pure-admin` 模板。
+
+- 仓库： https://github.com/pure-admin/vue-pure-admin
+- 文档： https://pure-admin.cn/

@@ -495,7 +495,7 @@
   - 测试客户报表功能
   - _Requirements: 4.12_
 
-- [ ] 23. Checkpoint - 所有业务模块验证
+- [x] 23. Checkpoint - 所有业务模块验证
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 24. 样式系统迁移和适配
@@ -980,4 +980,293 @@
   - 记录路由配置清理完成情况
   - 记录页面结构调整完成情况
   - 记录遇到的问题和解决方案
+  - _Requirements: All_
+
+- [x] 39. 补全缺失页面迁移 - P1 高优先级页面
+
+- [x] 39.1 迁移基础配置模块 P1 页面
+  - 迁移计量单位页面 (measuring-unit)
+  - 迁移产品类别页面 (product-category)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.13_
+
+- [x] 39.2 迁移基础数据模块 P1 页面
+  - 迁移商品详情页面 (goods-detail)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.2_
+
+- [x] 39.3 迁移库存管理模块 P1 页面
+  - 迁移综合库存查询页面 (comprehensive-inventory)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.4_
+
+- [x] 39.4 迁移采购管理模块 P1 页面
+  - 迁移批量收货页面 (batch-receiving)
+  - 迁移库存查询页面 (stock-inquiry)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.3_
+
+- [x] 39.5 迁移系统管理模块 P1 页面
+  - 迁移字典管理页面 (dictionary)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.1_
+
+- [x] 39.6 为 P1 页面创建路由配置
+  - 更新 base-config.ts 路由（添加计量单位、产品类别）
+  - 更新 base-data.ts 路由（添加商品详情）
+  - 更新 inventory.ts 路由（添加综合库存查询）
+  - 更新 purchase.ts 路由（添加批量收货、库存查询）
+  - 更新 system.ts 路由（添加字典管理）
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 40. 补全缺失页面迁移 - P2 中优先级页面（基础配置模块）
+
+- [x] 40.1 迁移基础配置模块剩余页面（第一批）
+  - 迁移编码类型页面 (encoding-type)
+  - 迁移房型类型页面 (flat-type)
+  - 迁移参数类型页面 (parameter-type)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.13_
+
+- [x] 40.2 迁移基础配置模块剩余页面（第二批）
+  - 迁移产品属性页面 (product-attribute)
+  - 迁移质量代码页面 (quality-code)
+  - 迁移质检状态配置页面 (quality-inspection-status)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.13_
+
+- [x] 40.3 迁移基础配置模块剩余页面（第三批）
+  - 迁移系统参数页面 (system-parameter)
+  - 迁移基础配置公共组件库 (components) - 暂不处理
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.13_
+
+- [x] 40.4 更新基础配置模块路由配置
+  - 更新 base-config.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 41. 补全缺失页面迁移 - P2 中优先级页面（基础数据模块）
+
+- [ ] 41.1 迁移基础数据模块剩余页面
+  - 迁移 RFID 管理页面 (rfid)
+  - 迁移第三方客户页面 (third-customer)
+  - 迁移基础数据公共组件库 (components)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.2_
+
+- [ ] 41.2 更新基础数据模块路由配置
+  - 更新 base-data.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 42. 补全缺失页面迁移 - P2 中优先级页面（计费配置模块）
+
+- [ ] 42.1 迁移计费配置模块页面（第一批）
+  - 迁移计费商品类别配置页面 (billing-commodity-category)
+  - 迁移计费日期配置页面 (billing-date)
+  - 迁移合同计费方式配置页面 (contract-billing-method)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.7_
+
+- [ ] 42.2 迁移计费配置模块页面（第二批）
+  - 迁移客户计费配置管理页面 (customer-billing-configuration)
+  - 迁移费用名称配置页面 (expense-name)
+  - 迁移费用类型配置页面 (expense-type)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.7_
+
+- [ ] 42.3 迁移计费配置模块页面（第三批）
+  - 迁移计量类型配置页面 (measurement-type)
+  - 迁移价格类型配置页面 (price-type)
+  - 迁移入库费率配置页面 (warehousing-rate)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.7_
+
+- [ ] 42.4 更新计费配置模块路由配置
+  - 更新 billing.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 43. 补全缺失页面迁移 - P2 中优先级页面（日常检查模块）
+
+- [ ] 43.1 迁移日常检查模块剩余页面
+  - 迁移收货未上架页面 (received-unsold)
+  - 迁移发货延迟预警页面 (shipment-delay-warn)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.6_
+
+- [ ] 43.2 更新日常检查模块路由配置
+  - 更新 daily-check.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 44. 补全缺失页面迁移 - P2 中优先级页面（库存管理模块）
+
+- [ ] 44.1 迁移库存管理模块剩余页面（第一批）
+  - 迁移差异过账管理页面 (differentialposting)
+  - 迁移双重报价管理页面 (double-quotation)
+  - 迁移库存差异管理页面 (inventory-difference)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.4_
+
+- [ ] 44.2 迁移库存管理模块剩余页面（第二批）
+  - 迁移移库管理页面 (move-inventory)
+  - 迁移移库盘点页面 (moving-count)
+  - 迁移上架调整页面 (shelf-adjustment)
+  - 迁移下架调整页面 (takedown-adjustment)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.4_
+
+- [ ] 44.3 更新库存管理模块路由配置
+  - 更新 inventory.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 45. 补全缺失页面迁移 - P2 中优先级页面（出库管理模块）
+
+- [ ] 45.1 迁移出库管理模块剩余页面
+  - 迁移出库类型页面 (types)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.5_
+
+- [ ] 45.2 更新出库管理模块路由配置
+  - 更新 outbound.ts 路由（添加出库类型）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 46. 补全缺失页面迁移 - P2 中优先级页面（采购管理模块）
+
+- [ ] 46.1 迁移采购管理模块剩余页面（第一批）
+  - 迁移客户采购管理页面 (client-purchase)
+  - 迁移其他入库管理页面 (other-warehousing)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.3_
+
+- [ ] 46.2 迁移采购管理模块剩余页面（第二批）
+  - 迁移采购通知单详情页面 (purchase-notification-details)
+  - 迁移收货未上架库存页面 (received-unlisted-stock)
+  - 迁移收货登记管理页面 (receiving-register)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.3_
+
+- [ ] 46.3 更新采购管理模块路由配置
+  - 更新 purchase.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 47. 补全缺失页面迁移 - P2 中优先级页面（系统管理模块）
+
+- [ ] 47.1 迁移系统管理模块剩余页面（第一批）
+  - 迁移分类管理页面 (category)
+  - 迁移图标管理页面 (icon)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.1_
+
+- [ ] 47.2 迁移系统管理模块剩余页面（第二批）
+  - 迁移语言管理页面 (language)
+  - 迁移系统通知页面 (system-notice)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.1_
+
+- [ ] 47.3 更新系统管理模块路由配置
+  - 更新 system.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 48. Checkpoint - P1 和 P2 补全页面验证
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 49. 补全缺失页面迁移 - P3 低优先级页面
+
+- [ ] 49.1 迁移消息中间件模块剩余页面
+  - 迁移工作流设置页面 (work-setting)
+  - 迁移工作流 SQL 页面 (work-sql)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.8_
+
+- [ ] 49.2 更新消息中间件模块路由配置
+  - 更新 message.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 49.3 迁移人员配置模块剩余页面
+  - 迁移就业状态配置页面 (employment-status)
+  - 迁移性别代码配置页面 (gender-code)
+  - 迁移工作状态配置页面 (work-status)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.10_
+
+- [ ] 49.4 更新人员配置模块路由配置
+  - 更新 personnel.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 49.5 迁移区域配置模块剩余页面
+  - 迁移区县信息配置页面 (district-information)
+  - 迁移区域信息配置页面 (regional-information)
+  - 适配组件和 API
+  - 测试页面功能
+  - _Requirements: 4.9_
+
+- [ ] 49.6 更新区域配置模块路由配置
+  - 更新 region.ts 路由（添加所有剩余页面）
+  - 配置路由元信息
+  - 测试路由访问
+  - _Requirements: 15.1, 15.2, 15.3, 15.4_
+
+- [ ] 50. Checkpoint - 所有补全页面验证
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 51. 补全页面迁移总结和文档更新
+
+- [ ] 51.1 生成补全页面迁移报告
+  - 统计迁移的页面数量
+  - 记录遇到的问题和解决方案
+  - 记录经验教训
+  - 提供后续优化建议
+  - _Requirements: All_
+
+- [ ] 51.2 更新迁移进度报告
+  - 更新整体迁移进度
+  - 更新各模块完成情况
+  - 更新风险评估
+  - _Requirements: All_
+
+- [ ] 51.3 更新项目文档
+  - 更新页面清单
+  - 更新路由配置文档
+  - 更新开发指南
   - _Requirements: All_

@@ -55,7 +55,7 @@
 1. **阶段一：基础设施迁移** (1-2 周)
    - HTTP 请求层适配
    - 状态管理适配
-   - 路由系统适配
+   - 路由系统适配（包括路由分层管理）
    - 工具函数迁移
 
 2. **阶段二：公共组件迁移** (2-3 周)
@@ -78,6 +78,76 @@
    - 功能测试
    - 性能优化
    - 用户体验优化
+
+### Router Management Strategy
+
+为了清晰区分 Pure-Admin 框架路由和业务路由，采用分层路由管理方案：
+
+#### 路由目录结构
+
+```plain
+main/src/router/modules/
+├── pure-admin/          # Pure-Admin 框架原生路由
+│   ├── home.ts         # 首页
+│   ├── components.ts   # 组件示例
+│   ├── table.ts        # 表格示例
+│   ├── form.ts         # 表单示例
+│   ├── remaining.ts    # 特殊路由（不参与菜单）
+│   └── ...             # 其他框架路由
+└── business/            # 业务路由（从旧项目迁移）
+    ├── base-config.ts   # 基础配置模块
+    ├── base-data.ts     # 基础数据模块
+    ├── billing.ts       # 计费配置模块
+    ├── daily-check.ts   # 日常检查模块
+    ├── inventory.ts     # 库存管理模块
+    ├── message.ts       # 消息中间件模块
+    ├── personnel.ts     # 人员配置模块
+    ├── purchase.ts      # 采购管理模块
+    ├── region.ts        # 区域配置模块
+    └── system.ts        # 系统管理模块
+```
+
+#### 路由分类说明
+
+**Pure-Admin 路由**：
+
+- 定义：Pure-Admin 框架原生提供的示例和功能路由
+- 用途：框架功能演示、开发参考示例、通用功能组件
+- 特点：由框架维护，可根据需要启用或禁用
+
+**Business 路由**：
+
+- 定义：从旧项目迁移过来的业务路由
+- 用途：实际业务功能、WMS 系统核心模块、生产环境使用
+- 特点：从 origin 项目迁移而来，包含完整的业务逻辑
+
+#### 路由加载机制
+
+路由入口文件自动加载两类路由：
+
+```typescript
+/** 导入 Pure-Admin 原生路由 */
+const pureAdminModules: Record<string, any> = import.meta.glob(
+	["./modules/pure-admin/**/*.ts", "!./modules/pure-admin/**/remaining.ts"],
+	{ eager: true },
+);
+
+/** 导入业务路由（从旧项目迁移） */
+const businessModules: Record<string, any> = import.meta.glob(["./modules/business/**/*.ts"], { eager: true });
+
+/** 合并所有路由模块 */
+const modules: Record<string, any> = {
+	...pureAdminModules,
+	...businessModules,
+};
+```
+
+这种分层管理方案的优势：
+
+1. **清晰的职责划分**：框架路由和业务路由分开管理
+2. **易于维护**：可以快速识别和定位路由文件
+3. **灵活的配置**：可以独立启用或禁用某一类路由
+4. **便于升级**：框架升级时不会影响业务路由
 
 ## Components and Interfaces
 

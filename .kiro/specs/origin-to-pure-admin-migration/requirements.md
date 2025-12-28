@@ -19,6 +19,8 @@
 - **Tailwind CSS**: 原子化 CSS 框架
 - **EARS**: Easy Approach to Requirements Syntax，需求语法规范
 - **INCOSE**: International Council on Systems Engineering，系统工程国际委员会
+- **Pure-Admin 路由**: Pure-Admin 框架原生提供的示例和功能路由，存放在 `main/src/router/modules/pure-admin` 目录
+- **Business 路由**: 从旧项目迁移过来的业务路由，存放在 `main/src/router/modules/business` 目录
 
 ## Requirements
 
@@ -32,7 +34,8 @@
 2. WHEN 迁移系统处理 HTTP 请求配置时 THEN 迁移系统 SHALL 将 Origin 项目的 axios 拦截器逻辑适配到 Pure-Admin 的 HTTP 工具类
 3. WHEN 迁移系统处理状态管理时 THEN 迁移系统 SHALL 将 pinia-plugin-persistedstate 的持久化逻辑转换为 responsive-storage 的等效实现
 4. WHEN 迁移系统处理路由配置时 THEN 迁移系统 SHALL 保留 unplugin-vue-router 的自动路由功能并集成 Pure-Admin 的权限验证逻辑
-5. WHEN 基础设施迁移完成时 THEN 迁移系统 SHALL 验证 HTTP 请求、状态持久化和路由跳转功能正常运行
+5. WHEN 迁移系统处理路由分层时 THEN 迁移系统 SHALL 将路由文件分为 pure-admin 和 business 两个目录以清晰区分框架路由和业务路由
+6. WHEN 基础设施迁移完成时 THEN 迁移系统 SHALL 验证 HTTP 请求、状态持久化和路由跳转功能正常运行
 
 ### Requirement 2
 

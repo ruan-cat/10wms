@@ -33,6 +33,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。也被称呼为`本项目`。
 - 原项目： 即 `origin` 目录内的项目。也被称呼为`旧项目`。
 - `报告地址`： 即 `main\src\docs\reports` 目录。全部的报告文件都应该存放到这个目录内。
+- `pure-admin 路由`： Pure-Admin 框架原生提供的示例和功能路由，存放在 `main\src\router\modules\pure-admin` 目录。
+- `business 路由`： 从旧项目迁移过来的业务路由，存放在 `main\src\router\modules\business` 目录。
 
 ## 3. 代码/编码格式要求
 
@@ -419,3 +421,141 @@ pnpm up-taze
 - pure-admin 文档 ： https://pure-admin.cn/
 - pure-admin 文档仓库 ： https://github.com/pure-admin/pure-admin-doc
 - pure-admin 注册路由 ： `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/01.指南/07.路由和菜单.md`
+
+## 14. 路由管理规范
+
+### 14.1 路由目录结构
+
+项目采用分层路由管理方案，将路由文件按来源分为两类：
+
+```plain
+main/src/router/modules/
+├── pure-admin/          # Pure-Admin 框架原生路由
+│   ├── home.ts
+│   ├── components.ts
+│   ├── table.ts
+│   ├── form.ts
+│   ├── remaining.ts     # 特殊路由（不参与菜单）
+│   └── ...
+└── business/            # 业务路由（从旧项目迁移）
+    ├── base-config.ts   # 基础配置模块
+    ├── base-data.ts     # 基础数据模块
+    ├── billing.ts       # 计费配置模块
+    ├── daily-check.ts   # 日常检查模块
+    ├── inventory.ts     # 库存管理模块
+    ├── message.ts       # 消息中间件模块
+    ├── personnel.ts     # 人员配置模块
+    ├── purchase.ts      # 采购管理模块
+    ├── region.ts        # 区域配置模块
+    └── system.ts        # 系统管理模块
+```
+
+### 14.2 路由分类说明
+
+#### 14.2.1 Pure-Admin 路由
+
+- **定义**：Pure-Admin 框架原生提供的示例和功能路由
+- **存放位置**：`main/src/router/modules/pure-admin/`
+- **用途**：
+  - 框架功能演示
+  - 开发参考示例
+  - 通用功能组件
+- **特点**：
+  - 由 Pure-Admin 框架维护
+  - 可根据需要启用或禁用
+  - 不涉及具体业务逻辑
+
+#### 14.2.2 Business 路由
+
+- **定义**：从旧项目迁移过来的业务路由
+- **存放位置**：`main/src/router/modules/business/`
+- **用途**：
+  - 实际业务功能
+  - WMS 系统核心模块
+  - 生产环境使用
+- **特点**：
+  - 从 origin 项目迁移而来
+  - 包含完整的业务逻辑
+  - 需要持续维护和更新
+
+### 14.3 路由加载机制
+
+路由入口文件 `main/src/router/index.ts` 会自动加载两类路由：
+
+```typescript
+/** 导入 Pure-Admin 原生路由 */
+const pureAdminModules: Record<string, any> = import.meta.glob(
+	["./modules/pure-admin/**/*.ts", "!./modules/pure-admin/**/remaining.ts"],
+	{ eager: true },
+);
+
+/** 导入业务路由（从旧项目迁移） */
+const businessModules: Record<string, any> = import.meta.glob(["./modules/business/**/*.ts"], { eager: true });
+
+/** 合并所有路由模块 */
+const modules: Record<string, any> = {
+	...pureAdminModules,
+	...businessModules,
+};
+```
+
+### 14.4 新增路由规范
+
+#### 14.4.1 新增 Pure-Admin 路由
+
+如果需要添加 Pure-Admin 框架的示例或功能路由：
+
+1. 在 `main/src/router/modules/pure-admin/` 目录下创建路由文件
+2. 遵循 Pure-Admin 路由配置规范
+3. 文件会被自动加载，无需手动引入
+
+#### 14.4.2 新增 Business 路由
+
+如果需要添加新的业务模块路由：
+
+1. 在 `main/src/router/modules/business/` 目录下创建路由文件
+2. 使用 Pure-Admin 标准路由配置格式
+3. 配置路由元信息（title、icon、rank 等）
+4. 文件会被自动加载，无需手动引入
+
+**示例**：
+
+```typescript
+import { $t } from "@/plugins/i18n";
+import type { RouteConfigsTable } from "@/types/global";
+
+const Layout = () => import("@/layout/index.vue");
+
+/** 业务模块路由 */
+const moduleRouter: RouteConfigsTable = {
+	path: "/module",
+	name: "Module",
+	component: Layout,
+	redirect: "/module/page1",
+	meta: {
+		title: $t("menus.module"),
+		icon: "ep:menu",
+		rank: 10,
+	},
+	children: [
+		{
+			path: "/module/page1",
+			name: "ModulePage1",
+			component: () => import("@/pages/module/page1/index.vue"),
+			meta: {
+				title: $t("menus.page1"),
+				showLink: true,
+			},
+		},
+	],
+};
+
+export default moduleRouter;
+```
+
+### 14.5 路由维护注意事项
+
+1. **不要混淆两类路由**：Pure-Admin 路由和 Business 路由应严格分开存放
+2. **保持目录整洁**：不要在 `modules` 根目录直接创建路由文件
+3. **遵循命名规范**：路由文件名使用 kebab-case 格式
+4. **及时更新文档**：新增业务模块时，同步更新相关文档

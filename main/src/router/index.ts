@@ -4,7 +4,7 @@ import { getConfig } from "@/config";
 import NProgress from "@/utils/progress";
 import { transformI18n } from "@/plugins/i18n";
 import { buildHierarchyTree } from "@/utils/tree";
-import remainingRouter from "./modules/remaining";
+import remainingRouter from "./modules/pure-admin/remaining";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import { isUrl, openLink, cloneDeep, isAllEmpty, storageLocal } from "@pureadmin/utils";
@@ -23,15 +23,32 @@ import {
 } from "./utils";
 import { type Router, type RouteRecordRaw, type RouteComponent, createRouter } from "vue-router";
 import { type DataInfo, userKey, removeToken, multipleTabsKey } from "@/utils/auth";
-import { consola } from "consola";
 
-/** 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
+/**
+ * 路由模块说明：
+ * - pure-admin 路由：Pure-Admin 框架原生提供的示例和功能路由
+ * - business 路由：从旧项目迁移过来的业务路由
+ *
+ * 自动导入全部静态路由，无需再手动引入！
+ * 匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件，除了 remaining.ts 文件
  * 如何匹配所有文件请看：https://github.com/mrmlnc/fast-glob#basic-syntax
  * 如何排除文件请看：https://cn.vitejs.dev/guide/features.html#negative-patterns
  */
-const modules: Record<string, any> = import.meta.glob(["./modules/**/*.ts", "!./modules/**/remaining.ts"], {
-	eager: true,
-});
+
+/** 导入 Pure-Admin 原生路由 */
+const pureAdminModules: Record<string, any> = import.meta.glob(
+	["./modules/pure-admin/**/*.ts", "!./modules/pure-admin/**/remaining.ts"],
+	{ eager: true },
+);
+
+/** 导入业务路由（从旧项目迁移） */
+const businessModules: Record<string, any> = import.meta.glob(["./modules/business/**/*.ts"], { eager: true });
+
+/** 合并所有路由模块 */
+const modules: Record<string, any> = {
+	...pureAdminModules,
+	...businessModules,
+};
 
 /** 原始静态路由（未做任何处理） */
 const routes = [];

@@ -1142,3 +1142,321 @@ Each test should include:
 - Setup and teardown procedures
 - Expected outcomes
 - Edge cases covered
+
+## Router Configuration Cleanup
+
+### Current State Analysis
+
+当前 main/src/router/index.ts 使用了多个自动化路由相关的依赖：
+
+1. **vue-router/auto**: 自动化路由插件，基于文件系统自动生成路由
+2. **virtual:meta-layouts**: 虚拟模块，用于自动布局组件注入
+3. **@ruan-cat/utils/unplugin-vue-router**: 自定义的路由处理工具
+4. **vite-plugin-vue-meta-layouts**: Vite 插件，用于元数据布局管理
+
+这些自动化工具虽然提供了便利，但也带来了以下问题：
+
+- 增加了项目复杂度和学习成本
+- 与 Pure-Admin 的标准路由方式不一致
+- 调试困难，路由生成过程不透明
+- 可能导致路由冲突和死循环问题
+
+### Target State
+
+采用 Pure-Admin 标准的路由配置方式：
+
+1. **手动路由配置**: 在 main/src/router/modules 目录下手动定义路由
+2. **原生 createRouter**: 使用 vue-router 原生的 createRouter 函数
+3. **清晰的路由结构**: 路由配置文件清晰可读，易于维护
+4. **标准的懒加载**: 使用动态 import 实现路由懒加载
+
+### Migration Steps
+
+#### 1. Remove Auto-Router Dependencies
+
+从 main/src/router/index.ts 中移除以下导入：
+
+```typescript
+// 移除这些导入
+import { createRouter } from "vue-router/auto";
+import { handleHotUpdate, routes as autoRoutes } from "vue-router/auto-routes";
+import { createGetRoutes, setupLayouts } from "virtual:meta-layouts";
+import { disposalAutoRouter } from "@ruan-cat/utils/unplugin-vue-router";
+```
+
+恢复使用 vue-router 原生导入：
+
+```typescript
+// 使用原生导入
+import { createRouter } from "vue-router";
+```
+
+#### 2. Simplify Router Creation
+
+简化路由实例创建逻辑：
+
+```typescript
+// 移除前
+export const router: Router = createRouter({
+	history: getHistoryMode(import.meta.env.VITE_ROUTER_HISTORY),
+	routes: setupLayouts(constantRoutes.concat(...(remainingRouter as any))),
+	strict: true,
+	scrollBehavior(to, from, savedPosition) {
+		// ...
+	},
+});
+
+// 移除后
+export const router: Router = createRouter({
+	history: getHistoryMode(import.meta.env.VITE_ROUTER_HISTORY),
+	routes: constantRoutes.concat(...(remainingRouter as any)),
+	strict: true,
+	scrollBehavior(to, from, savedPosition) {
+		// ...
+	},
+});
+```
+
+#### 3. Remove Auto-Route Processing Logic
+
+移除自动路由相关的处理逻辑：
+
+```typescript
+// 移除这些变量和逻辑
+const isAutoRoutes = false;
+const flattenAutoRoutes = formatFlatteningRoutes(buildHierarchyTree(ascending(autoRoutes.flat(Infinity))));
+const cleanedAutoRoutes = disposalAutoRouter(autoRoutes);
+```
+
+#### 4. Simplify Route Constants
+
+简化路由常量定义：
+
+```typescript
+// 移除前
+export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
+	formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
+);
+
+const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(setupLayouts(constantRoutes));
+
+// 移除后
+export const constantRoutes: Array<RouteRecordRaw> = formatTwoStageRoutes(
+	formatFlatteningRoutes(buildHierarchyTree(ascending(routes.flat(Infinity)))),
+);
+
+const initConstantRoutes: Array<RouteRecordRaw> = cloneDeep(constantRoutes);
+```
+
+### Page Structure Reorganization
+
+#### Current Structure Issues
+
+当前 main/src/views 和 main/src/pages 目录混合使用：
+
+- **main/src/views**: 包含 Pure-Admin 示例页面和部分业务页面
+- **main/src/pages**: 包含测试页面（a、b 目录）和部分业务页面
+
+这种混合结构导致：
+
+- 难以区分框架示例代码和业务代码
+- 测试页面污染业务代码目录
+- 不符合项目规范
+
+#### Target Structure
+
+明确的目录职责划分：
+
+- **main/src/views**: 仅保留 Pure-Admin 框架自带的示例页面
+- **main/src/pages**: 存放所有从 Origin 项目迁移的业务页面
+
+#### Business Pages Organization
+
+业务页面按照业务模块分类存储：
+
+```plain
+main/src/pages/
+├── system/              # 系统管理模块
+│   ├── user/           # 用户管理
+│   ├── role/           # 角色管理
+│   ├── menu/           # 菜单管理
+│   └── dept/           # 部门管理
+├── base-data/          # 基础数据模块
+│   ├── goods/          # 商品管理
+│   ├── customer/       # 客户管理
+│   └── supplier/       # 供应商管理
+├── purchase/           # 采购管理模块
+│   ├── appointment/    # 预约采购
+│   └── receiving/      # 收货管理
+├── inventory/          # 库存管理模块
+│   ├── check/          # 库存盘点
+│   └── stock/          # 库存查询
+├── outbound/           # 出库管理模块
+│   └── picking/        # 拣货管理
+├── daily-check/        # 日常检查模块
+│   ├── abnormal/       # 异常发货
+│   └── temperature/    # 温度维护
+├── base-config/        # 基础配置模块
+│   ├── auto-code/      # 自动编码
+│   ├── unit/           # 计量单位
+│   └── product-category/ # 产品类别
+├── warehouse-config/   # 仓库配置模块
+│   └── order-type/     # 订单类型
+├── report/             # 客户报表模块
+│   ├── stock/          # 库存报表
+│   └── expiry-warning/ # 有效期预警
+└── personnel-config/   # 人员配置模块
+    └── academic-code/  # 学历代码
+```
+
+#### Pages to Remove
+
+从 main/src/pages 目录删除以下测试页面：
+
+- main/src/pages/a/
+- main/src/pages/b/
+
+### Route Registration Standards
+
+#### Route Configuration File Structure
+
+按照 Pure-Admin 文档规范，在 main/src/router/modules 目录下创建路由配置文件：
+
+```typescript
+// main/src/router/modules/system.ts
+import { RouteConfigsTable } from "@/types/router";
+
+const systemRouter: RouteConfigsTable = {
+	path: "/system",
+	redirect: "/system/user",
+	meta: {
+		icon: "ri:settings-3-line",
+		title: "系统管理",
+		rank: 10,
+	},
+	children: [
+		{
+			path: "/system/user",
+			name: "SystemUser",
+			component: () => import("@/pages/system/user/index.vue"),
+			meta: {
+				title: "用户管理",
+				showLink: true,
+			},
+		},
+		{
+			path: "/system/role",
+			name: "SystemRole",
+			component: () => import("@/pages/system/role/index.vue"),
+			meta: {
+				title: "角色管理",
+				showLink: true,
+			},
+		},
+		{
+			path: "/system/menu",
+			name: "SystemMenu",
+			component: () => import("@/pages/system/menu/index.vue"),
+			meta: {
+				title: "菜单管理",
+				showLink: true,
+			},
+		},
+		{
+			path: "/system/dept",
+			name: "SystemDept",
+			component: () => import("@/pages/system/dept/index.vue"),
+			meta: {
+				title: "部门管理",
+				showLink: true,
+			},
+		},
+	],
+};
+
+export default systemRouter;
+```
+
+#### Route Meta Configuration
+
+路由元信息必须包含以下字段：
+
+```typescript
+interface RouteMeta {
+	// 必填字段
+	title: string; // 路由标题，用于菜单显示和页面标题
+
+	// 可选字段
+	icon?: string; // 菜单图标
+	showLink?: boolean; // 是否在菜单中显示，默认 true
+	rank?: number; // 菜单排序，数字越小越靠前
+	keepAlive?: boolean; // 是否缓存页面
+	roles?: string[]; // 允许访问的角色列表
+	auths?: string[]; // 允许访问的权限列表
+}
+```
+
+#### Component Lazy Loading
+
+所有路由组件必须使用动态导入实现懒加载：
+
+```typescript
+// 正确的懒加载方式
+component: () => import("@/pages/system/user/index.vue");
+
+// 错误的直接导入方式（不要使用）
+import UserPage from "@/pages/system/user/index.vue";
+component: UserPage;
+```
+
+#### Route Naming Conventions
+
+路由命名遵循以下规范：
+
+1. **路由路径**: 使用 kebab-case，如 `/system/user`
+2. **路由名称**: 使用 PascalCase，如 `SystemUser`
+3. **组件路径**: 相对于 src 目录，使用 `@/` 别名
+
+### Correctness Properties for Router Cleanup
+
+#### Property 24: Auto-Router Dependencies Removal
+
+_For any_ import statement in main/src/router/index.ts, the file should not import from vue-router/auto, virtual:meta-layouts, @ruan-cat/utils/unplugin-vue-router, or vite-plugin-vue-meta-layouts.
+
+**Validates: Requirements 13.1, 13.2, 13.3, 13.4**
+
+#### Property 25: Native Router Usage
+
+_For any_ router instance creation, the createRouter function should be imported from vue-router (not vue-router/auto).
+
+**Validates: Requirements 13.5**
+
+#### Property 26: Business Pages Location
+
+_For any_ business page migrated from Origin project, the page file should be located in main/src/pages directory (not main/src/views).
+
+**Validates: Requirements 14.1**
+
+#### Property 27: Test Pages Removal
+
+_For any_ directory in main/src/pages, the directory should not be a test directory (such as 'a' or 'b').
+
+**Validates: Requirements 14.3**
+
+#### Property 28: Route Configuration Completeness
+
+_For any_ business page in main/src/pages, there should be a corresponding route configuration in main/src/router/modules.
+
+**Validates: Requirements 15.1**
+
+#### Property 29: Route Meta Completeness
+
+_For any_ route configuration, the meta field should include at least the title field.
+
+**Validates: Requirements 15.3**
+
+#### Property 30: Route Lazy Loading
+
+_For any_ route component configuration, the component should be loaded using dynamic import (() => import()).
+
+**Validates: Requirements 15.4**

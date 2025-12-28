@@ -57,3 +57,11 @@
    - 从旧项目迁移的页面，应该存放在 `main\src\pages` 目录内。
    - 原来 `main\src\pages` 目录内多余的测试页面，应该删除掉。
    - 确保你按照 `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/01.指南/07.路由和菜单.md` 文档的要求，迁移旧项目的页面路由，并注册页面。
+
+## 002 旧代码路由迁移不完整
+
+1. origin\src\views
+2. main\src\pages
+3. 从旧代码内，很多已经有的页面，没有及时迁移过来，迁移不完整。
+4. 请迁移这些旧代码，并设置好路由配置。确保这些代码在主项目内能够运行。
+5. 请你及时更新 kiro 和 openspec 的对应规范和任务清单。

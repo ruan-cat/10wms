@@ -51,5 +51,37 @@ export default {
 				title: "字典管理",
 			},
 		},
+		{
+			path: "/system/category",
+			name: "Category",
+			component: () => import("@/pages/system/category/index.vue"),
+			meta: {
+				title: "分类管理",
+			},
+		},
+		{
+			path: "/system/icon",
+			name: "Icon",
+			component: () => import("@/pages/system/icon/index.vue"),
+			meta: {
+				title: "图标管理",
+			},
+		},
+		{
+			path: "/system/language",
+			name: "Language",
+			component: () => import("@/pages/system/language/index.vue"),
+			meta: {
+				title: "语言管理",
+			},
+		},
+		{
+			path: "/system/system-notice",
+			name: "SystemNotice",
+			component: () => import("@/pages/system/system-notice/index.vue"),
+			meta: {
+				title: "系统通知",
+			},
+		},
 	],
 } satisfies RouteConfigsTable;

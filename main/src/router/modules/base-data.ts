@@ -43,5 +43,21 @@ export default {
 				title: "供应商管理",
 			},
 		},
+		{
+			path: "/base-data/rfid",
+			name: "RFID",
+			component: () => import("@/pages/base-data/rfid/index.vue"),
+			meta: {
+				title: "RFID管理",
+			},
+		},
+		{
+			path: "/base-data/third-customer",
+			name: "ThirdCustomer",
+			component: () => import("@/pages/base-data/third-customer/index.vue"),
+			meta: {
+				title: "第三方客户",
+			},
+		},
 	],
 } satisfies RouteConfigsTable;

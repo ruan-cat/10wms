@@ -43,15 +43,12 @@ const newHomeRoute1 = {
 const newHomeRoute2 = {
 	path: "/",
 	name: "Home",
-	// 业务变更 按照布局组件要求 路由不应该配置任何布局组件
-	// component: Layout,
+	component: Layout,
 	redirect: "/welcome",
 	meta: {
 		icon: "ep/home-filled",
 		title: $t("menus.pureHome"),
 		rank: RouterOrderEnums.home,
-		// TODO: 补充布局插件所需要的额外属性
-		layout: "index",
 	},
 	children: [
 		{

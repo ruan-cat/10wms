@@ -43,5 +43,45 @@ export default {
 				title: "库存查询",
 			},
 		},
+		{
+			path: "/purchase/client-purchase",
+			name: "ClientPurchase",
+			component: () => import("@/pages/purchase/client-purchase/index.vue"),
+			meta: {
+				title: "客户进货",
+			},
+		},
+		{
+			path: "/purchase/other-warehousing",
+			name: "OtherWarehousing",
+			component: () => import("@/pages/purchase/other-warehousing/index.vue"),
+			meta: {
+				title: "其他入库",
+			},
+		},
+		{
+			path: "/purchase/purchase-notification-details",
+			name: "PurchaseNotificationDetails",
+			component: () => import("@/pages/purchase/purchase-notification-details/index.vue"),
+			meta: {
+				title: "进货通知明细",
+			},
+		},
+		{
+			path: "/purchase/receiving-register",
+			name: "ReceivingRegister",
+			component: () => import("@/pages/purchase/receiving-register/index.vue"),
+			meta: {
+				title: "收货登记",
+			},
+		},
+		{
+			path: "/purchase/received-unlisted-stock",
+			name: "ReceivedUnlistedStock",
+			component: () => import("@/pages/purchase/received-unlisted-stock/index.vue"),
+			meta: {
+				title: "收货未上架库存",
+			},
+		},
 	],
 } satisfies RouteConfigsTable;

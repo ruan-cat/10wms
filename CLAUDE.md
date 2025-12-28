@@ -418,3 +418,4 @@ pnpm up-taze
 - pure-admin 在线预览界面 ： https://pure-admin.github.io/vue-pure-admin/#/login
 - pure-admin 文档 ： https://pure-admin.cn/
 - pure-admin 文档仓库 ： https://github.com/pure-admin/pure-admin-doc
+- pure-admin 注册路由 ： `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/01.指南/07.路由和菜单.md`

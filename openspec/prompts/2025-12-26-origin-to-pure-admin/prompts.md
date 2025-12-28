@@ -70,3 +70,19 @@
 
 1. 阅读 kiro 的 .kiro\specs\origin-to-pure-admin-migration\tasks.md 任务清单，按照你设计的【补全缺失页面迁移 - P1 高优先级页面】任务，持续完成任务修改。
 2. 完成 P1 任务后，就持续去完成后续优先级的页面迁移任务。并确保同步更新路由配置的 `main\src\router\modules` 路由定义模块。
+
+## 004 <!-- TODO: --> 重构路由模块的存储文件，更改路由识别读取的路径，新建全新的路由存储规范
+
+1. 阅读 main\src\router\modules 目录的文件。现在我完全没办法去区分清楚，那些路由是 pure-admin 的，那些是旧项目迁移过来的，有意义的业务路由。现在遇到难点，无法区分 pure-admin 原生路由，和旧项目业务路由。
+2. 设计新的目录层级： 我要求你在 `main\src\router\modules` 内，设计两层具有区分能力的目录。
+   - pure-admin 目录。
+   - business 目录。专门存放被迁移过来的，业务路由文件。
+3. 更新路由读取能力： 及时更新 `main\src\router\index.ts` 文件读取路由的写法，确保能够分别的，区分地实现路由信息的读取。默认情况将全部的路由都读取到。包括 `pure-admin` 路由和 `business` 路由。
+4. 更新全局文档，说明专业术语： 更新 `CLAUDE.md` 文档，说明项目有两款路由：
+   - `pure-admin` 路由
+   - `business` 路由
+5. 更新 kiro.origin-to-pure-admin 的 spec 规格文件： 重点说明清楚使用了新的路由存储方案。
+   - .kiro\specs\origin-to-pure-admin-migration\design.md
+   - .kiro\specs\origin-to-pure-admin-migration\requirements.md
+6. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
+   - openspec\changes\origin-to-pure-admin\specs 增加一个新的规格，router，重点说明使用了新的路由存储方案。

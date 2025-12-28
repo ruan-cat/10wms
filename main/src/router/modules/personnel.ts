@@ -1,16 +1,18 @@
 import { $t } from "@/plugins/i18n";
+import type { RouteConfigsTable } from "@/types/global";
 
 const Layout = () => import("@/layout/index.vue");
 
-export default {
+/** 人员配置模块路由 */
+const personnelRouter: RouteConfigsTable = {
 	path: "/personnel",
 	name: "Personnel",
 	component: Layout,
 	redirect: "/personnel/academic-code",
 	meta: {
+		title: $t("menus.personnel"),
 		icon: "ep:user",
-		title: "人员配置",
-		rank: 53,
+		rank: 9,
 	},
 	children: [
 		{
@@ -18,8 +20,38 @@ export default {
 			name: "AcademicCode",
 			component: () => import("@/pages/personnel/academic-code/index.vue"),
 			meta: {
-				title: "学历代码",
+				title: $t("menus.academicCode"),
+				showLink: true,
+			},
+		},
+		{
+			path: "/personnel/employment-status",
+			name: "EmploymentStatus",
+			component: () => import("@/pages/personnel/employment-status/index.vue"),
+			meta: {
+				title: $t("menus.employmentStatus"),
+				showLink: true,
+			},
+		},
+		{
+			path: "/personnel/gender-code",
+			name: "GenderCode",
+			component: () => import("@/pages/personnel/gender-code/index.vue"),
+			meta: {
+				title: $t("menus.genderCode"),
+				showLink: true,
+			},
+		},
+		{
+			path: "/personnel/work-status",
+			name: "WorkStatus",
+			component: () => import("@/pages/personnel/work-status/index.vue"),
+			meta: {
+				title: $t("menus.workStatus"),
+				showLink: true,
 			},
 		},
 	],
-} satisfies RouteConfigsTable;
+};
+
+export default personnelRouter;

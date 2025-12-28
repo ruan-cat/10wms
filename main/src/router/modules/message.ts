@@ -1,16 +1,18 @@
 import { $t } from "@/plugins/i18n";
+import type { RouteConfigsTable } from "@/types/global";
 
 const Layout = () => import("@/layout/index.vue");
 
-export default {
+/** 消息中间件模块路由 */
+const messageRouter: RouteConfigsTable = {
 	path: "/message",
 	name: "Message",
 	component: Layout,
 	redirect: "/message/message-center",
 	meta: {
+		title: $t("menus.message"),
 		icon: "ep:message",
-		title: "消息中间件",
-		rank: 51,
+		rank: 8,
 	},
 	children: [
 		{
@@ -18,7 +20,8 @@ export default {
 			name: "MessageCenter",
 			component: () => import("@/pages/message/message-center/index.vue"),
 			meta: {
-				title: "消息中心",
+				title: $t("menus.messageCenter"),
+				showLink: true,
 			},
 		},
 		{
@@ -26,8 +29,29 @@ export default {
 			name: "MessageTemplate",
 			component: () => import("@/pages/message/message-template/index.vue"),
 			meta: {
-				title: "消息模板",
+				title: $t("menus.messageTemplate"),
+				showLink: true,
+			},
+		},
+		{
+			path: "/message/work-setting",
+			name: "WorkSetting",
+			component: () => import("@/pages/message/work-setting/index.vue"),
+			meta: {
+				title: $t("menus.workSetting"),
+				showLink: true,
+			},
+		},
+		{
+			path: "/message/work-sql",
+			name: "WorkSql",
+			component: () => import("@/pages/message/work-sql/index.vue"),
+			meta: {
+				title: $t("menus.workSql"),
+				showLink: true,
 			},
 		},
 	],
-} satisfies RouteConfigsTable;
+};
+
+export default messageRouter;

@@ -446,34 +446,34 @@
   - 测试产品类别功能
   - _Requirements: 4.13_
 
-- [-] 22. 业务模块迁移 - P3: 其他辅助模块
+- [x] 22. 业务模块迁移 - P3: 其他辅助模块
 
-- [ ] 22.1 迁移计费配置模块
-  - 创建 main/src/views/billing 目录
+- [x] 22.1 迁移计费配置模块
+  - 创建 main/src/pages/billing 目录
   - 迁移计费模式页面
   - 迁移费用模板页面
   - 适配组件和 API
   - 测试计费配置功能
   - _Requirements: 4.7_
 
-- [ ] 22.2 迁移消息中间件模块
-  - 创建 main/src/views/message 目录
+- [x] 22.2 迁移消息中间件模块
+  - 创建 main/src/pages/message 目录
   - 迁移消息中心页面
   - 迁移消息模板页面
   - 适配组件和 API
   - 测试消息中间件功能
   - _Requirements: 4.8_
 
-- [ ] 22.3 迁移区域配置模块
-  - 创建 main/src/views/region 目录
+- [x] 22.3 迁移区域配置模块
+  - 创建 main/src/pages/region 目录
   - 迁移区域信息页面
   - 迁移城市类型页面
   - 适配组件和 API
   - 测试区域配置功能
   - _Requirements: 4.9_
 
-- [ ] 22.4 迁移人员配置模块
-  - 创建 main/src/views/personnel 目录
+- [x] 22.4 迁移人员配置模块
+  - 创建 main/src/pages/personnel 目录
   - 迁移学历代码页面
   - 迁移就业状态页面
   - 适配组件和 API
@@ -754,9 +754,9 @@
 - [ ] 32. Final Checkpoint - 迁移完成验证
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 33. 路由配置清理 - 移除自动路由依赖
+- [x] 33. 路由配置清理 - 移除自动路由依赖
 
-- [ ] 33.1 移除自动路由相关导入
+- [x] 33.1 移除自动路由相关导入
   - 从 main/src/router/index.ts 移除 vue-router/auto 导入
   - 从 main/src/router/index.ts 移除 virtual:meta-layouts 导入
   - 从 main/src/router/index.ts 移除 @ruan-cat/utils/unplugin-vue-router 导入
@@ -764,13 +764,13 @@
   - 恢复使用 vue-router 原生的 createRouter 导入
   - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5_
 
-- [ ] 33.2 简化路由实例创建
+- [x] 33.2 简化路由实例创建
   - 移除 setupLayouts 函数调用
   - 使用原生 routes 配置
   - 简化 initConstantRoutes 定义
   - _Requirements: 13.5_
 
-- [ ] 33.3 移除自动路由处理逻辑
+- [x] 33.3 移除自动路由处理逻辑
   - 删除 isAutoRoutes 变量
   - 删除 flattenAutoRoutes 变量
   - 删除 cleanedAutoRoutes 变量
@@ -778,33 +778,33 @@
   - 清理相关的 console.warn 调试代码
   - _Requirements: 13.1, 13.3_
 
-- [ ] 33.4 编写路由配置清理属性测试
+- [x] 33.4 编写路由配置清理属性测试
   - **Property 24: Auto-Router Dependencies Removal**
   - **Property 25: Native Router Usage**
   - **Validates: Requirements 13.1, 13.2, 13.3, 13.4, 13.5**
 
-- [ ] 33.5 测试路由功能
+- [x] 33.5 测试路由功能
   - 验证路由跳转正常
   - 验证菜单显示正常
   - 验证路由懒加载正常
   - 验证路由守卫正常
   - _Requirements: 13.5_
 
-- [ ] 34. 页面结构调整 - 清理测试页面
+- [x] 34. 页面结构调整 - 清理测试页面
 
-- [ ] 34.1 删除测试页面
+- [x] 34.1 删除测试页面
   - 删除 main/src/pages/a 目录
   - 删除 main/src/pages/b 目录
   - 删除 main/src/pages-t 目录（如果存在）
   - _Requirements: 14.3_
 
-- [ ] 34.2 编写测试页面移除属性测试
+- [x] 34.2 编写测试页面移除属性测试
   - **Property 27: Test Pages Removal**
   - **Validates: Requirements 14.3**
 
-- [ ] 35. 页面结构调整 - 迁移业务页面到 pages 目录
+- [-] 35. 页面结构调整 - 迁移业务页面到 pages 目录
 
-- [ ] 35.1 迁移系统管理模块页面
+- [x] 35.1 迁移系统管理模块页面
   - 确认 main/src/views/system 已迁移到 main/src/pages/system
   - 验证用户管理、角色管理、菜单管理、部门管理页面路径
   - _Requirements: 14.1, 14.4_

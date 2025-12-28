@@ -41,3 +41,19 @@
 2. **依赖分析**：在指派子代理前，先分析业务路径之间的耦合关系，确保改写顺序合理。
 3. **动态编排**：根据任务进度和子代理的反馈，实时调整后续任务的粒度。
 4. **回复语言**：全程使用**中文**。
+
+## 001 更新 kiro 文档和，删除掉主项目关于自动化路由的配置
+
+1. 我需要你完成以下任务：
+   - 更新文档： 按照以下要求体现的需求，更新 `openspec\changes\origin-to-pure-admin` 目录下面的迁移规范文档、任务进度文档等。和 kiro 的 `.kiro\specs\origin-to-pure-admin-migration` 文档、任务进度文档等。
+   - 完成修改： 按照以下更改需求，完成更改。
+2. 针对 main\src\router\index.ts 路由配置入口文件。
+3. 删除掉路由配置对以下内容的使用。在主项目内，不使用自动路由相关的配置。
+   - vue-router/auto
+   - virtual:meta-layouts
+   - @ruan-cat/utils/unplugin-vue-router
+   - vite-plugin-vue-meta-layouts
+4. 在 `main\src\views` 目录内，我无法区分出那些是 pure-admin 框架本身自带的东西，那些是我们的业务代码。请你更新调整文件和存储结构：
+   - 从旧项目迁移的页面，应该存放在 `main\src\pages` 目录内。
+   - 原来 `main\src\pages` 目录内多余的测试页面，应该删除掉。
+   - 确保你按照 `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/01.指南/07.路由和菜单.md` 文档的要求，迁移旧项目的页面路由，并注册页面。

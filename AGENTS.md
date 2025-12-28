@@ -410,9 +410,12 @@ pnpm up-taze
 
 ## 13. 及时获取项目使用框架的文档与信息
 
-### 13.1 项目基架模板 `vue-pure-admin`
+### 13.1 pure-admin 后台框架模板
 
-在本仓库内，又被称呼为 `pure-admin` 模板。
+`apps\admin` 项目套用是 `pure-admin` 模板。
 
-- 仓库： https://github.com/pure-admin/vue-pure-admin
-- 文档： https://pure-admin.cn/
+- pure-admin 模板仓库 ： https://github.com/pure-admin/vue-pure-admin
+- pure-admin 在线预览界面 ： https://pure-admin.github.io/vue-pure-admin/#/login
+- pure-admin 文档 ： https://pure-admin.cn/
+- pure-admin 文档仓库 ： https://github.com/pure-admin/pure-admin-doc
+- pure-admin 注册路由 ： `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/01.指南/07.路由和菜单.md`

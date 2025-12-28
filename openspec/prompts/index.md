@@ -2,7 +2,7 @@
 
 本项目全部的杂项提示词。
 
-## 001 <!-- TODO: --> 初始化 `origin-to-pure-admin` 的 openspec 任务
+## 001 初始化 `origin-to-pure-admin` 的 openspec 任务
 
 你的任务是阅读文档要求，帮我初始化一揽子 openspec 任务。任务名称为 `origin-to-pure-admin` 。
 

@@ -238,3 +238,105 @@ login:
   purePassWordSureReg: Please enter confirm password
   purePassWordDifferentReg: The two passwords do not match!
   purePassWordUpdateReg: Password has been updated
+
+# Business Module Menus
+business:
+  # System Management
+  system: System Management
+  user: User Management
+  role: Role Management
+  menu: Menu Management
+  dept: Department Management
+  dictionary: Dictionary Management
+  category: Category Management
+  icon: Icon Management
+  language: Language Management
+  systemNotice: System Notice
+
+  # Base Data
+  baseData: Base Data
+  goods: Goods Management
+  goodsDetail: Goods Detail
+  customer: Customer Management
+  supplier: Supplier Management
+  rfid: RFID Management
+  thirdCustomer: Third Party Customer
+
+  # Purchase Management
+  purchase: Purchase Management
+  appointment: Appointment Purchase
+  batchReceiving: Batch Receiving
+  receiving: Receiving Management
+  stockInquiry: Stock Inquiry
+  clientPurchase: Client Purchase
+  otherWarehousing: Other Warehousing
+  purchaseNotificationDetails: Purchase Notification Details
+  receivingRegister: Receiving Register
+  receivedUnlistedStock: Received Unlisted Stock
+
+  # Inventory Management
+  inventory: Inventory Management
+  inventoryCheck: Inventory Check
+  comprehensiveInventory: Comprehensive Inventory
+  stock: Stock Query
+  differentialPosting: Differential Posting
+  doubleQuotation: Double Quotation
+  inventoryDifference: Inventory Difference
+  moveInventory: Move Inventory
+  movingCount: Moving Count
+  shelfAdjustment: Shelf Adjustment
+  takedownAdjustment: Takedown Adjustment
+
+  # Billing Configuration
+  billing: Billing Configuration
+  billingMode: Billing Mode
+  expenseTemplate: Expense Template
+  billingCommodityCategory: Billing Commodity Category
+  billingDate: Billing Date
+  contractBillingMethod: Contract Billing Method
+  customerBillingConfiguration: Customer Billing Configuration
+  expenseName: Expense Name
+  expenseType: Expense Type
+  measurementType: Measurement Type
+  priceType: Price Type
+  warehousingRate: Warehousing Rate
+
+  # Message Middleware
+  message: Message Middleware
+  messageCenter: Message Center
+  messageTemplate: Message Template
+  workSetting: Work Setting
+  workSql: Work SQL
+
+  # Personnel Configuration
+  personnel: Personnel Configuration
+  academicCode: Academic Code
+  employmentStatus: Employment Status
+  genderCode: Gender Code
+  workStatus: Work Status
+
+  # Region Configuration
+  region: Region Configuration
+  areaInformation: Area Information
+  cityType: City Type
+  districtInformation: District Information
+  regionalInformation: Regional Information
+
+  # Daily Check
+  dailyCheck: Daily Check
+  abnormalDelivery: Abnormal Delivery
+  temperature: Temperature Maintenance
+  receivedUnsold: Received Unsold
+  shipmentDelayWarn: Shipment Delay Warning
+
+  # Base Configuration
+  baseConfig: Base Configuration
+  measuringUnit: Measuring Unit
+  productCategory: Product Category
+  encodingType: Encoding Type
+  flatType: Flat Type
+  parameterType: Parameter Type
+  productAttribute: Product Attribute
+  qualityCode: Quality Code
+  qualityInspectionStatus: Quality Inspection Status
+  systemParameter: System Parameter

@@ -640,3 +640,22 @@ export default moduleRouter;
 2. **保持目录整洁**：不要在 `modules` 根目录直接创建路由文件
 3. **遵循命名规范**：路由文件名使用 kebab-case 格式
 4. **及时更新文档**：新增业务模块时，同步更新相关文档
+
+## 获取技术栈对应的上下文
+
+以下是本项目使用的部分技术栈，你应该主动访问 github 仓库，或者使用 context7 MCP 来访问最新的文档。
+
+### pure-admin 后台框架模板
+
+`apps\admin` 项目套用是 `pure-admin` 模板。
+
+- pure-admin 模板仓库 ： https://github.com/pure-admin/vue-pure-admin
+- pure-admin 在线预览界面 ： https://pure-admin.github.io/vue-pure-admin/#/login
+- pure-admin 文档 ： https://pure-admin.cn/
+- pure-admin 文档仓库 ： https://github.com/pure-admin/pure-admin-doc
+- pure-admin 注册路由 ： `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/01.指南/07.路由和菜单.md`
+
+### claude code skill
+
+- 编写语法与格式： https://code.claude.com/docs/zh-CN/skills
+- 最佳实践： https://platform.claude.com/docs/zh-CN/agents-and-tools/agent-skills/best-practices

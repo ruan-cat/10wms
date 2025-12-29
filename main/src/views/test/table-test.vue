@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { ref, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import Table from "@/components/Table/index.vue";
@@ -294,7 +294,7 @@ function handleClearSelection() {
 				<!-- 状态列自定义渲染 -->
 				<template #bodyCell="{ row, prop }">
 					<template v-if="prop === 'status'">
-						<el-tag :type="statusTypeMap[row.status]">
+						<el-tag :type="statusTypeMap[row.status] as any">
 							{{ statusTextMap[row.status] }}
 						</el-tag>
 					</template>

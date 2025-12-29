@@ -1,6 +1,8 @@
 <script setup lang="ts" generic="T extends Record<string, any>">
 import { ref, reactive, computed } from "vue";
+import { ElMessageBox } from "element-plus";
 import type { FormInstance, FormRules } from "element-plus";
+import { IconifyIconOffline } from "@/components/ReIcon";
 
 /** 表格列配置 */
 export interface TableColumn {

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<div class="regional-information-container">
 		<el-card shadow="never">
 			<template #header>
@@ -163,18 +163,16 @@ async function getList() {
 			size: pagination.pageSize,
 			...searchForm,
 		};
-		const response = await http.request({
+		const response = await http.requestCompat({
 			url: "/api/region/regional-information/list",
 			method: "post",
 			data: params,
-		});
-
-		if (response.data) {
-			tableData.value = response.data.rows.map((item) => ({
+		}); if ((response as any).data) {
+			tableData.value = (response as any).data.rows.map((item) => ({
 				...item,
 				cityDel: item.cityDel === "0" ? "启用" : "停用",
 			}));
-			pagination.total = response.data.total;
+			pagination.total = (response as any).data.total;
 		}
 	} catch (error) {
 		ElMessage.error("获取数据失败");
@@ -242,7 +240,7 @@ async function handleSubmit() {
 			try {
 				const url = formData.id ? "/api/region/regional-information/update" : "/api/region/regional-information/add";
 
-				await http.request({
+				await http.requestCompat({
 					url,
 					method: "post",
 					data: formData,
@@ -261,7 +259,7 @@ async function handleSubmit() {
 /** 删除 */
 async function handleDelete(row: any) {
 	try {
-		await http.request({
+		await http.requestCompat({
 			url: "/api/region/regional-information/delete",
 			method: "post",
 			data: { id: row.id },
@@ -287,7 +285,7 @@ async function handleBatchDelete() {
 		});
 
 		const ids = selectedRows.value.map((row: any) => row.id).join(",");
-		await http.request({
+		await http.requestCompat({
 			url: "/api/region/regional-information/delete",
 			method: "post",
 			data: { ids },

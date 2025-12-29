@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { PaginationProps as ElPaginationProps } from "element-plus";
-import { ref, computed, watchImmediate } from "vue";
+import { ref, computed, watch } from "vue";
 
 /**
  * 分页组件

@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import axios from "axios";
 import Sortable from "sortablejs";
 import UploadForm from "./form.vue";
@@ -219,7 +219,7 @@ const onDownload = () => {
 		<div class="flex flex-wrap">
 			<p>
 				裁剪、上传头像请参考
-				<span class="font-bold text-[18x] cursor-pointer hover:text-[red]" @click="router.push({ name: 'SystemUser' })">
+				<span class="font-bold text-[18x] cursor-pointer hover:text-[red]" @click="router.push({ name: 'SystemUser' } as any)">
 					系统管理-用户管理
 				</span>
 				表格操作栏中的上传头像功能

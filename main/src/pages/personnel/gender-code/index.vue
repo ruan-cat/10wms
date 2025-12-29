@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<div class="gender-code-container">
 		<el-card shadow="never">
 			<template #header>
@@ -131,15 +131,13 @@ async function getList() {
 			size: pagination.pageSize,
 			...searchForm,
 		};
-		const response = await http.request({
+		const response = await http.requestCompat({
 			url: "/api/personnel/gender-code/list",
 			method: "post",
 			data: params,
-		});
-
-		if (response.data) {
-			tableData.value = response.data.rows;
-			pagination.total = response.data.total;
+		}); if ((response as any).data) {
+			tableData.value = (response as any).data.rows;
+			pagination.total = (response as any).data.total;
 		}
 	} catch (error) {
 		ElMessage.error("获取数据失败");
@@ -196,7 +194,7 @@ async function handleSubmit() {
 			try {
 				const url = formData.id ? "/api/personnel/gender-code/update" : "/api/personnel/gender-code/add";
 
-				await http.request({
+				await http.requestCompat({
 					url,
 					method: "post",
 					data: formData,
@@ -215,7 +213,7 @@ async function handleSubmit() {
 /** 删除 */
 async function handleDelete(row: any) {
 	try {
-		await http.request({
+		await http.requestCompat({
 			url: "/api/personnel/gender-code/delete",
 			method: "post",
 			data: { id: row.id },
@@ -241,7 +239,7 @@ async function handleBatchDelete() {
 		});
 
 		const ids = selectedRows.value.map((row: any) => row.id).join(",");
-		await http.request({
+		await http.requestCompat({
 			url: "/api/personnel/gender-code/delete",
 			method: "post",
 			data: { ids },

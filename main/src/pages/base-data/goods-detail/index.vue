@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+﻿<script lang="ts" setup>
 import SimpleDataTable from "@/components/Table/index.vue";
 import type { SimpleDataTableColumn } from "@/components/Table/types";
 import { ElButton, ElMessage, ElMessageBox, ElForm, ElFormItem, ElInput } from "element-plus";
@@ -30,7 +30,7 @@ const currentPageData = ref({ pageIndex: 1, pageSize: 10, pages: 0, total: 0 });
 async function loadData() {
 	loading.value = true;
 	try {
-		const response = await http.request<any>({
+		const response = await http.requestCompat<any>({
 			url: "/api/goods-detail/list",
 			method: "post",
 			data: { pageIndex: currentPageData.value.pageIndex, pageSize: currentPageData.value.pageSize },
@@ -103,7 +103,7 @@ function handleBatchDelete() {
 	})
 		.then(async () => {
 			try {
-				await http.request({
+				await http.requestCompat({
 					url: "/api/goods-detail/delete",
 					method: "post",
 					data: { ids: selectedRows.value.map((row) => row.id) },
@@ -125,7 +125,7 @@ function handleDelete(row: TableData) {
 	})
 		.then(async () => {
 			try {
-				await http.request({ url: "/api/goods-detail/delete", method: "post", data: { ids: [row.id] } });
+				await http.requestCompat({ url: "/api/goods-detail/delete", method: "post", data: { ids: [row.id] } });
 				ElMessage.success("删除成功");
 				loadData();
 			} catch (error) {
@@ -142,10 +142,10 @@ async function submitForm() {
 	}
 	try {
 		if (dialogType.value === 0) {
-			await http.request({ url: "/api/goods-detail/add", method: "post", data: form.value });
+			await http.requestCompat({ url: "/api/goods-detail/add", method: "post", data: form.value });
 			ElMessage.success("新增成功");
 		} else if (dialogType.value === 1) {
-			await http.request({ url: "/api/goods-detail/update", method: "post", data: form.value });
+			await http.requestCompat({ url: "/api/goods-detail/update", method: "post", data: form.value });
 			ElMessage.success("编辑成功");
 		}
 		dialogVisible.value = false;

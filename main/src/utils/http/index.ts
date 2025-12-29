@@ -172,6 +172,12 @@ class PureHttp {
 	public get<T, P>(url: string, params?: AxiosRequestConfig<P>, config?: PureHttpRequestConfig): Promise<T> {
 		return this.request<T>("get", url, params, config);
 	}
+
+	/** 兼容旧版本的单参数请求方法 */
+	public requestCompat<T>(config: AxiosRequestConfig & { method?: RequestMethods }): Promise<T> {
+		const { method = "get", url, ...rest } = config;
+		return this.request<T>(method, url as string, rest);
+	}
 }
 
 export const http = new PureHttp();

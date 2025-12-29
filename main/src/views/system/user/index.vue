@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<div class="user-management">
 		<!-- 搜索表单 -->
 		<el-card shadow="never" class="mb-4">
@@ -104,8 +104,8 @@
 
 			<!-- 分页 -->
 			<el-pagination
-				v-model:current-page="pagination.pageIndex"
-				v-model:page-size="pagination.pageSize"
+				v-model:current-page="pagination.page"
+				v-model:page-size="pagination.size"
 				:total="pagination.total"
 				:page-sizes="[10, 20, 50, 100]"
 				layout="total, sizes, prev, pager, next, jumper"
@@ -215,8 +215,8 @@ defineOptions({
 
 /** 搜索表单 */
 const searchForm = reactive<GetUserListParams>({
-	pageIndex: 1,
-	pageSize: 10,
+	page: 1,
+	size: 10,
 	username: "",
 	realname: "",
 	status: undefined,
@@ -229,8 +229,8 @@ const selectedRows = ref<UserDTO[]>([]);
 
 /** 分页 */
 const pagination = reactive({
-	pageIndex: 1,
-	pageSize: 10,
+	page: 1,
+	size: 10,
 	total: 0,
 });
 
@@ -309,12 +309,12 @@ async function fetchData() {
 	loading.value = true;
 	try {
 		const params: GetUserListParams = {
-			pageIndex: pagination.pageIndex,
-			pageSize: pagination.pageSize,
+			page: pagination.page,
+			size: pagination.size,
 			...searchForm,
 		};
 		const res = await getUserList(params);
-		tableData.value = res.rows || [];
+		tableData.value = (res as any).list || [];
 		pagination.total = res.total || 0;
 	} catch (error) {
 		ElMessage.error("获取用户列表失败");
@@ -345,7 +345,7 @@ async function fetchRoleList() {
 
 /** 搜索 */
 function handleSearch() {
-	pagination.pageIndex = 1;
+	pagination.page = 1;
 	fetchData();
 }
 
@@ -354,7 +354,7 @@ function handleReset() {
 	searchForm.username = "";
 	searchForm.realname = "";
 	searchForm.status = undefined;
-	pagination.pageIndex = 1;
+	pagination.page = 1;
 	fetchData();
 }
 

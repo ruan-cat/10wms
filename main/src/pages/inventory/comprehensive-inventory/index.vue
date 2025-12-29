@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+﻿<script lang="ts" setup>
 import SimpleDataTable from "@/components/Table/index.vue";
 import type { SimpleDataTableColumn } from "@/components/Table/types";
 import { ElButton, ElMessage, ElMessageBox, ElForm, ElFormItem, ElInput } from "element-plus";
@@ -32,7 +32,7 @@ const currentPageData = ref({ pageIndex: 1, pageSize: 10, pages: 0, total: 0 });
 async function loadData() {
 	loading.value = true;
 	try {
-		const response = await http.request<any>({
+		const response = await http.requestCompat<any>({
 			url: "/api/inventory/comprehensive/list",
 			method: "post",
 			data: { pageIndex: currentPageData.value.pageIndex, pageSize: currentPageData.value.pageSize },

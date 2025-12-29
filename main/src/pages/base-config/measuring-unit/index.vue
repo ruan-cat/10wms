@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+﻿<script lang="ts" setup>
 import SimpleDataTable from "@/components/Table/index.vue";
 import type { SimpleDataTableColumn } from "@/components/Table/types";
 import { ElButton, ElMessage, ElMessageBox, ElForm, ElFormItem, ElInput } from "element-plus";
@@ -47,7 +47,7 @@ const currentPageData = ref({
 async function loadData() {
 	loading.value = true;
 	try {
-		const response = await http.request<any>({
+		const response = await http.requestCompat<any>({
 			url: "/api/measuring-unit/list",
 			method: "post",
 			data: {
@@ -149,7 +149,7 @@ function handleBatchDelete() {
 	})
 		.then(async () => {
 			try {
-				await http.request({
+				await http.requestCompat({
 					url: "/api/measuring-unit/delete",
 					method: "post",
 					data: { ids: selectedRows.value.map((row) => row.id) },
@@ -175,7 +175,7 @@ function handleDelete(row: TableData) {
 	})
 		.then(async () => {
 			try {
-				await http.request({
+				await http.requestCompat({
 					url: "/api/measuring-unit/delete",
 					method: "post",
 					data: { ids: [row.id] },
@@ -202,7 +202,7 @@ async function submitForm() {
 	try {
 		if (dialogType.value === 0) {
 			// 新增
-			await http.request({
+			await http.requestCompat({
 				url: "/api/measuring-unit/add",
 				method: "post",
 				data: form.value,
@@ -210,7 +210,7 @@ async function submitForm() {
 			ElMessage.success("新增成功");
 		} else if (dialogType.value === 1) {
 			// 编辑
-			await http.request({
+			await http.requestCompat({
 				url: "/api/measuring-unit/update",
 				method: "post",
 				data: form.value,

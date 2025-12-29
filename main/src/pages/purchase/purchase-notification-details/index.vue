@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<div class="purchase-notification-details-container">
 		<ElCard shadow="never">
 			<!-- 搜索表单 -->
@@ -88,7 +88,7 @@ const tableColumns = [
 const loadTableData = async () => {
 	loading.value = true;
 	try {
-		const response = await http.request({
+		const response = await http.requestCompat({
 			url: "/api/purchase/purchase-notification-details/list",
 			method: "post",
 			data: {
@@ -96,11 +96,9 @@ const loadTableData = async () => {
 				pageNum: pagination.currentPage,
 				pageSize: pagination.pageSize,
 			},
-		});
-
-		if (response.data) {
-			tableData.value = response.data.records || [];
-			pagination.total = response.data.total || 0;
+		}); if ((response as any).data) {
+			tableData.value = (response as any).data.records || [];
+			pagination.total = (response as any).data.total || 0;
 		}
 	} catch (error) {
 		console.error("加载数据失败:", error);

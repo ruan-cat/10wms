@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<div class="client-purchase-container">
 		<ElCard shadow="never">
 			<!-- 搜索表单 -->
@@ -206,7 +206,7 @@ const formRules = {
 const loadTableData = async () => {
 	loading.value = true;
 	try {
-		const response = await http.request({
+		const response = await http.requestCompat({
 			url: "/api/purchase/client-purchase/list",
 			method: "post",
 			data: {
@@ -214,11 +214,9 @@ const loadTableData = async () => {
 				pageNum: pagination.currentPage,
 				pageSize: pagination.pageSize,
 			},
-		});
-
-		if (response.data) {
-			tableData.value = response.data.records || [];
-			pagination.total = response.data.total || 0;
+		}); if ((response as any).data) {
+			tableData.value = (response as any).data.records || [];
+			pagination.total = (response as any).data.total || 0;
 		}
 	} catch (error) {
 		console.error("加载数据失败:", error);
@@ -269,7 +267,7 @@ const handleBatchDelete = async () => {
 		await ElMessageBox.confirm(`确定要删除选中的 ${selectedRows.value.length} 条记录吗？`, "提示", { type: "warning" });
 
 		const ids = selectedRows.value.map((row: any) => row.id);
-		await http.request({
+		await http.requestCompat({
 			url: "/api/purchase/client-purchase/batchDelete",
 			method: "post",
 			data: { ids },
@@ -295,7 +293,7 @@ const handleSubmit = async () => {
 		const url =
 			dialogMode.value === "add" ? "/api/purchase/client-purchase/add" : "/api/purchase/client-purchase/update";
 
-		await http.request({
+		await http.requestCompat({
 			url,
 			method: "post",
 			data: form,

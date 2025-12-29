@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import type { FormInstance, FormRules } from "element-plus";
+import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from "element-plus";
+import { IconifyIconOffline } from "@/components/ReIcon";
 
 defineOptions({
 	name: "WarehouseConfigOrderType",

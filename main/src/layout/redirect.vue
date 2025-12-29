@@ -9,7 +9,7 @@ defineOptions({
 const { currentRoute, replace } = useRouter();
 
 const { params, query } = unref(currentRoute);
-const { path } = params;
+const { path } = params as any;
 
 const _path = Array.isArray(path) ? path.join("/") : path;
 

@@ -1,5 +1,7 @@
-<script lang="ts" setup>
+﻿<script lang="ts" setup>
 import { onMounted } from "vue";
+import { ElMessage } from "element-plus";
+import { IconifyIconOffline } from "@/components/ReIcon";
 import { disAutoConnect, hiprint } from "vue-plugin-hiprint";
 
 defineOptions({

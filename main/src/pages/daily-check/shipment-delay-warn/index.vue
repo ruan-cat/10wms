@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+﻿<script setup lang="tsx">
 import { ref } from "vue";
 import { http } from "@/utils/http";
 import { message } from "@/utils/message";
@@ -100,7 +100,7 @@ const columns: TableColumnList = [
 async function onSearch() {
 	loading.value = true;
 	try {
-		const response = await http.request({
+		const response = await http.requestCompat({
 			url: "/api/daily-check/shipment-delay-warn/list",
 			method: "post",
 			data: {
@@ -109,8 +109,8 @@ async function onSearch() {
 			},
 		});
 
-		dataList.value = response.data?.list || [];
-		pagination.value.total = response.data?.total || 0;
+		dataList.value = (response as any).data?.list || [];
+		pagination.value.total = (response as any).data?.total || 0;
 	} catch (error) {
 		message("获取数据失败", { type: "error" });
 	} finally {

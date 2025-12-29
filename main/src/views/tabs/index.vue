@@ -1,4 +1,4 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { deleteChildren, getNodeByUniqueId, appendFieldByUniqueId } from "@/utils/tree";
 import { useDetail } from "./hooks";
 import { ref, computed } from "vue";
@@ -81,7 +81,6 @@ function onCloseTags() {
 			default-expand-all
 			:props="{
 				label: (data) => transformI18n(data.meta.title),
-				value: 'uniqueId',
 				children: 'children',
 				disabled: 'disabled',
 			}"
@@ -94,7 +93,7 @@ function onCloseTags() {
 		<el-button class="m-2!" @click="onCloseTags">关闭标签</el-button>
 
 		<el-divider />
-		<el-button @click="router.push({ name: 'Menu1-2-2' })"> 跳转页内菜单（传name对象，优先推荐） </el-button>
+		<el-button @click="router.push({ name: 'Menu1-2-2' } as any)"> 跳转页内菜单（传name对象，优先推荐） </el-button>
 		<el-button @click="router.push('/nested/menu1/menu1-2/menu1-2-2')"> 跳转页内菜单（直接传要跳转的路径） </el-button>
 		<el-button @click="router.push({ path: '/nested/menu1/menu1-2/menu1-2-2' })">
 			跳转页内菜单（传path对象）
@@ -106,7 +105,7 @@ function onCloseTags() {
 				router.push({
 					name: 'Menu1-2-2',
 					query: { text: '传name对象，优先推荐' },
-				})
+				} as any)
 			"
 		>
 			携参跳转页内菜单（传name对象，优先推荐）
@@ -130,6 +129,6 @@ function onCloseTags() {
 		</el-link>
 
 		<el-divider />
-		<el-button @click="router.push({ name: 'Empty' })"> 跳转无Layout的空白页面 </el-button>
+		<el-button @click="router.push({ name: 'Empty' } as any)"> 跳转无Layout的空白页面 </el-button>
 	</el-card>
 </template>

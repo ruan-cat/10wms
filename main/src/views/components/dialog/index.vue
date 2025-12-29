@@ -1,4 +1,4 @@
-<script setup lang="tsx">
+﻿<script setup lang="tsx">
 import { useRouter } from "vue-router";
 import { h, createVNode, ref } from "vue";
 import { message } from "@/utils/message";
@@ -461,7 +461,7 @@ function onSureBtnLoading() {
 						Dialog
 					</el-link>
 					，采用函数式调用弹框组件（更多操作实例请参考
-					<span class="cursor-pointer text-primary" @click="router.push({ name: 'SystemDept' })"> 系统管理页面 </span>
+					<span class="cursor-pointer text-primary" @click="router.push({ name: 'SystemDept' } as any)"> 系统管理页面 </span>
 					）
 				</span>
 			</div>

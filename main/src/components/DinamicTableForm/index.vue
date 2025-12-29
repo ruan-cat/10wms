@@ -13,7 +13,7 @@ import { computed, ref } from "vue";
  * @description
  * 动态表格样式的表单组件，支持动态增删行和可编辑列
  */
-export interface DinamicTableFormProps<
+interface DinamicTableFormProps<
 	T extends Record<string, any>,
 	Column extends SimpleDataTableColumn<T> = EditableTableColumn<T>,
 > extends _OmitSimpleDataTableProps<T, Column> {
@@ -38,7 +38,7 @@ export interface DinamicTableFormProps<
 	 * @description
 	 * 列配置数组，支持 editable 属性控制是否可编辑
 	 */
-	columns: Column[];
+	columns: EditableTableColumn<T>[];
 }
 
 const props = withDefaults(defineProps<DinamicTableFormProps<T>>(), {
@@ -56,7 +56,7 @@ const columnsWithOperation = computed(() => {
 		label: "操作",
 		width: 60,
 		editable: true,
-	} as Column);
+	} as EditableTableColumn<T>);
 	return cols;
 });
 

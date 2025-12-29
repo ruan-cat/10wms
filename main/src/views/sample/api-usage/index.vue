@@ -1,4 +1,4 @@
-<template>
+﻿<template>
 	<el-card class="box-card">
 		<template #header>
 			<div class="card-header">
@@ -172,10 +172,10 @@ const handleAddUser = async () => {
 		const result = await addUser({
 			username: "testuser",
 			password: "123456",
-			realName: "测试用户",
-			phone: "13800138000",
+			realname: "测试用户",
 			email: "test@example.com",
-			status: 1,
+			departmentIds: [],
+			roleIds: [],
 		});
 		ElMessage.success(`添加用户成功，ID: ${result}`);
 	} catch (error) {
@@ -187,13 +187,10 @@ const handleAddUser = async () => {
 /** 更新用户 */
 const handleUpdateUser = async () => {
 	try {
-		await updateUser({
-			id: "1",
+		await updateUser("test-user-id", {
 			username: "testuser",
-			realName: "更新后的用户",
-			phone: "13800138000",
+			realname: "更新后的用户",
 			email: "test@example.com",
-			status: 1,
 		});
 		ElMessage.success("更新用户成功");
 	} catch (error) {

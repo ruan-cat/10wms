@@ -116,6 +116,7 @@ describe("Table Component Property-Based Tests", () => {
 					// 验证选择列存在
 					const selectionColumn = wrapper.find('.el-table-column[type="selection"]');
 					// 注意：由于 el-table-column 是运行时渲染的，我们主要验证配置是否正确传递
+					// @ts-expect-error - Test accessing internal component properties
 					expect(wrapper.vm.pureColumns.some((col: any) => col.type === "selection")).toBe(true);
 				}
 
@@ -138,9 +139,11 @@ describe("Table Component Property-Based Tests", () => {
 
 				if (isIndex) {
 					// 验证索引列存在
+					// @ts-expect-error - Test accessing internal component properties
 					expect(wrapper.vm.pureColumns.some((col: any) => col.type === "index")).toBe(true);
 				} else {
 					// 验证索引列不存在
+					// @ts-expect-error - Test accessing internal component properties
 					expect(wrapper.vm.pureColumns.some((col: any) => col.type === "index")).toBe(false);
 				}
 
@@ -176,6 +179,7 @@ describe("Table Component Property-Based Tests", () => {
 					});
 
 					// 触发分页变化
+					// @ts-expect-error - Test accessing internal component methods
 					wrapper.vm.handlePageChange({ currentPage: newPage, pageSize: newPageSize });
 
 					// 验证事件被触发且参数正确
@@ -214,6 +218,7 @@ describe("Table Component Property-Based Tests", () => {
 					});
 
 					// 触发排序变化
+					// @ts-expect-error - Test accessing internal component methods
 					wrapper.vm.handleSortChange({ prop, order });
 
 					// 验证事件被触发且参数正确
@@ -293,6 +298,7 @@ describe("Table Component Property-Based Tests", () => {
 					});
 
 					// 验证列配置被正确处理
+					// @ts-expect-error - Test accessing internal component properties
 					const pureColumns = wrapper.vm.pureColumns;
 
 					columns.forEach((col, index) => {

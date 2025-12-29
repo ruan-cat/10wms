@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { ElMessage } from "element-plus";
+import { IconifyIconOffline } from "@/components/ReIcon";
 
 defineOptions({
 	name: "ReportStock",

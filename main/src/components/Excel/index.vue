@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+import { ElMessage, ElMessageBox } from "element-plus";
 import * as XLSX from "xlsx";
 
 interface ExcelProps {

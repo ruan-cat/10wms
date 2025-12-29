@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import { ElMessage } from "element-plus";
 import ConfigTable from "@/components/ConfigTable/index.vue";
 import type { TableColumn, FormField } from "@/components/ConfigTable/index.vue";
 

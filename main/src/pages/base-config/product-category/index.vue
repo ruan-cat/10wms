@@ -389,7 +389,7 @@ function submitForm() {
 		<!-- 表格 -->
 		<ElTable
 			:data="mockData"
-			:row-key="(row: CategoryRow) => row.id"
+			:row-key="(row: CategoryRow) => String(row.id)"
 			border
 			stripe
 			style="width: 100%"

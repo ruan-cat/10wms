@@ -9,7 +9,7 @@ const personnelRouter: RouteConfigsTable = {
 	component: Layout,
 	redirect: "/personnel/academic-code",
 	meta: {
-		title: $t("menus.personnel"),
+		title: $t("business.personnel"),
 		icon: "ri:user-star-line",
 		rank: 9,
 	},
@@ -19,7 +19,7 @@ const personnelRouter: RouteConfigsTable = {
 			name: "AcademicCode",
 			component: () => import("@/pages/personnel/academic-code/index.vue"),
 			meta: {
-				title: $t("menus.academicCode"),
+				title: $t("business.academicCode"),
 				icon: "ri:graduation-cap-line",
 				showLink: true,
 			},
@@ -29,7 +29,7 @@ const personnelRouter: RouteConfigsTable = {
 			name: "EmploymentStatus",
 			component: () => import("@/pages/personnel/employment-status/index.vue"),
 			meta: {
-				title: $t("menus.employmentStatus"),
+				title: $t("business.employmentStatus"),
 				icon: "ri:briefcase-line",
 				showLink: true,
 			},
@@ -39,7 +39,7 @@ const personnelRouter: RouteConfigsTable = {
 			name: "GenderCode",
 			component: () => import("@/pages/personnel/gender-code/index.vue"),
 			meta: {
-				title: $t("menus.genderCode"),
+				title: $t("business.genderCode"),
 				icon: "ri:user-2-line",
 				showLink: true,
 			},
@@ -49,7 +49,7 @@ const personnelRouter: RouteConfigsTable = {
 			name: "WorkStatus",
 			component: () => import("@/pages/personnel/work-status/index.vue"),
 			meta: {
-				title: $t("menus.workStatus"),
+				title: $t("business.workStatus"),
 				icon: "ri:user-follow-line",
 				showLink: true,
 			},

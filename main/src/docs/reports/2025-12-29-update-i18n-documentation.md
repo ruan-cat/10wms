@@ -128,11 +128,36 @@
 
 ## 6. 后续工作
 
+### 6.1 修复遗漏的命名空间问题（2025-12-29）
+
+在文档更新完成后，发现部分路由文件仍在使用错误的 `menus.` 命名空间而不是 `business.` 命名空间。
+
+**问题文件**：
+
+- `main/src/router/modules/business/message.ts` - 使用了 `menus.message` 等
+- `main/src/router/modules/business/region.ts` - 使用了 `menus.region` 等
+- `main/src/router/modules/business/personnel.ts` - 使用了 `menus.personnel` 等
+
+**修复内容**：
+
+- 将 message 路由的 4 个 i18n 键从 `menus.` 改为 `business.`
+- 将 region 路由的 5 个 i18n 键从 `menus.` 改为 `business.`
+- 将 personnel 路由的 5 个 i18n 键从 `menus.` 改为 `business.`
+
+**验证结果**：
+
+- ✅ 所有文件通过 TypeScript 类型检查
+- ✅ i18n 键名与 zh-CN.yaml 中的配置完全匹配
+- ✅ 菜单应该能够正确显示中文文本
+
+### 6.2 完成状态
+
 i18n 相关的全部工作已完成：
 
 1. ✅ 实现 i18n 配置和路由更新
 2. ✅ 更新项目文档
 3. ✅ 验证功能正常
+4. ✅ 修复遗漏的命名空间问题
 
 无需进一步的 i18n 相关工作。
 

@@ -9,7 +9,7 @@ const regionRouter: RouteConfigsTable = {
 	component: Layout,
 	redirect: "/region/area-information",
 	meta: {
-		title: $t("menus.region"),
+		title: $t("business.region"),
 		icon: "ri:map-pin-line",
 		rank: 10,
 	},
@@ -19,7 +19,7 @@ const regionRouter: RouteConfigsTable = {
 			name: "AreaInformation",
 			component: () => import("@/pages/region/area-information/index.vue"),
 			meta: {
-				title: $t("menus.areaInformation"),
+				title: $t("business.areaInformation"),
 				icon: "ri:map-2-line",
 				showLink: true,
 			},
@@ -29,7 +29,7 @@ const regionRouter: RouteConfigsTable = {
 			name: "CityType",
 			component: () => import("@/pages/region/city-type/index.vue"),
 			meta: {
-				title: $t("menus.cityType"),
+				title: $t("business.cityType"),
 				icon: "ri:building-2-line",
 				showLink: true,
 			},
@@ -39,7 +39,7 @@ const regionRouter: RouteConfigsTable = {
 			name: "DistrictInformation",
 			component: () => import("@/pages/region/district-information/index.vue"),
 			meta: {
-				title: $t("menus.districtInformation"),
+				title: $t("business.districtInformation"),
 				icon: "ri:community-line",
 				showLink: true,
 			},
@@ -49,7 +49,7 @@ const regionRouter: RouteConfigsTable = {
 			name: "RegionalInformation",
 			component: () => import("@/pages/region/regional-information/index.vue"),
 			meta: {
-				title: $t("menus.regionalInformation"),
+				title: $t("business.regionalInformation"),
 				icon: "ri:global-line",
 				showLink: true,
 			},

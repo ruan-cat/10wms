@@ -9,7 +9,7 @@ const messageRouter: RouteConfigsTable = {
 	component: Layout,
 	redirect: "/message/message-center",
 	meta: {
-		title: $t("menus.message"),
+		title: $t("business.message"),
 		icon: "ri:mail-line",
 		rank: 8,
 	},
@@ -19,7 +19,7 @@ const messageRouter: RouteConfigsTable = {
 			name: "MessageCenter",
 			component: () => import("@/pages/message/message-center/index.vue"),
 			meta: {
-				title: $t("menus.messageCenter"),
+				title: $t("business.messageCenter"),
 				icon: "ri:inbox-line",
 				showLink: true,
 			},
@@ -29,7 +29,7 @@ const messageRouter: RouteConfigsTable = {
 			name: "MessageTemplate",
 			component: () => import("@/pages/message/message-template/index.vue"),
 			meta: {
-				title: $t("menus.messageTemplate"),
+				title: $t("business.messageTemplate"),
 				icon: "ri:file-copy-line",
 				showLink: true,
 			},
@@ -39,7 +39,7 @@ const messageRouter: RouteConfigsTable = {
 			name: "WorkSetting",
 			component: () => import("@/pages/message/work-setting/index.vue"),
 			meta: {
-				title: $t("menus.workSetting"),
+				title: $t("business.workSetting"),
 				icon: "ri:settings-2-line",
 				showLink: true,
 			},
@@ -49,7 +49,7 @@ const messageRouter: RouteConfigsTable = {
 			name: "WorkSql",
 			component: () => import("@/pages/message/work-sql/index.vue"),
 			meta: {
-				title: $t("menus.workSql"),
+				title: $t("business.workSql"),
 				icon: "ri:code-s-slash-line",
 				showLink: true,
 			},

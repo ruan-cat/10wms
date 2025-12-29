@@ -122,6 +122,9 @@ const transitionMain = defineComponent({
 							<LayFooter v-if="!hideFooter" />
 						</el-scrollbar>
 						<div v-else class="grow">
+							<el-backtop :title="t('buttons.pureBackTop')">
+								<BackTopIcon />
+							</el-backtop>
 							<transitionMain :route="route">
 								<keep-alive v-if="isKeepAlive" :include="usePermissionStoreHook().cachePageList">
 									<component :is="Comp" :key="fullPath" :frameInfo="frameInfo" class="main-content" />

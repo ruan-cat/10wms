@@ -6,7 +6,7 @@ export default {
 	component: Layout,
 	redirect: "/base-config/measuring-unit",
 	meta: {
-		icon: "ep:setting",
+		icon: "ri:settings-3-line",
 		title: "基础配置",
 		rank: 40,
 	},
@@ -17,6 +17,7 @@ export default {
 			component: () => import("@/pages/base-config/measuring-unit/index.vue"),
 			meta: {
 				title: "计量单位",
+				icon: "ri:ruler-line",
 			},
 		},
 		{
@@ -25,6 +26,7 @@ export default {
 			component: () => import("@/pages/base-config/product-category/index.vue"),
 			meta: {
 				title: "产品类别",
+				icon: "ri:folder-3-line",
 			},
 		},
 		{
@@ -33,6 +35,7 @@ export default {
 			component: () => import("@/pages/base-config/encoding-type/index.vue"),
 			meta: {
 				title: "编码类型",
+				icon: "ri:barcode-line",
 			},
 		},
 		{
@@ -41,6 +44,7 @@ export default {
 			component: () => import("@/pages/base-config/flat-type/index.vue"),
 			meta: {
 				title: "房型类型",
+				icon: "ri:home-4-line",
 			},
 		},
 		{
@@ -49,6 +53,7 @@ export default {
 			component: () => import("@/pages/base-config/parameter-type/index.vue"),
 			meta: {
 				title: "参数类型",
+				icon: "ri:list-settings-line",
 			},
 		},
 		{
@@ -57,6 +62,7 @@ export default {
 			component: () => import("@/pages/base-config/product-attribute/index.vue"),
 			meta: {
 				title: "产品属性",
+				icon: "ri:price-tag-3-line",
 			},
 		},
 		{
@@ -65,6 +71,7 @@ export default {
 			component: () => import("@/pages/base-config/quality-code/index.vue"),
 			meta: {
 				title: "品质代码",
+				icon: "ri:medal-line",
 			},
 		},
 		{
@@ -73,6 +80,7 @@ export default {
 			component: () => import("@/pages/base-config/quality-inspection-status/index.vue"),
 			meta: {
 				title: "品检状态",
+				icon: "ri:checkbox-circle-line",
 			},
 		},
 		{
@@ -81,6 +89,7 @@ export default {
 			component: () => import("@/pages/base-config/system-parameter/index.vue"),
 			meta: {
 				title: "系统参数",
+				icon: "ri:settings-4-line",
 			},
 		},
 	],

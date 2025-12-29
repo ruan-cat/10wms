@@ -126,6 +126,57 @@ export function successResponse<T>(data: T, message: string = "操作成功") {
 1. 主动添加**数字**序号，便于我阅读文档。
 2. 主动**维护正确的数字序号顺序**。如果你处理的 markdown 文档，其手动添加的序号顺序不对，请你及时的更新序号顺序。
 
+### 3.5 路由图标配置规范
+
+在配置路由的 `meta.icon` 字段时，应遵循以下规范：
+
+**图标风格偏好**：
+
+1. **细线风格优先**：优先使用细线条图标（如 `-line` 后缀），避免使用实心风格图标（如 `-fill` 后缀）
+2. **图标集选择**：主要使用 Remix Icon (`ri:`) 图标集，其次可以使用 Solar Icon Set (`solar:`)
+3. **语义清晰**：图标应与功能语义匹配，易于识别
+
+**图标配置示例**：
+
+```typescript
+// ✅ 正确：使用细线风格图标
+meta: {
+  title: "用户管理",
+  icon: "ri:user-line",  // Remix Icon 细线风格
+}
+
+// ✅ 正确：使用 Solar 细线风格
+meta: {
+  title: "设置",
+  icon: "solar:settings-linear",  // Solar 细线风格
+}
+
+// ❌ 避免：使用实心图标
+meta: {
+  title: "用户管理",
+  icon: "ri:user-fill",  // 实心风格，不推荐
+}
+```
+
+**常用图标推荐**：
+
+| 功能类型 |        推荐图标        |   风格   |
+| :------: | :--------------------: | :------: |
+| 用户管理 |     `ri:user-line`     | 细线风格 |
+| 角色管理 |    `ri:admin-line`     | 细线风格 |
+| 菜单管理 |     `ri:menu-line`     | 细线风格 |
+| 数据管理 |  `ri:database-2-line`  | 细线风格 |
+| 文件管理 |  `ri:file-list-line`   | 细线风格 |
+| 设置配置 |  `ri:settings-3-line`  | 细线风格 |
+| 消息通知 | `ri:notification-line` | 细线风格 |
+| 搜索查询 |    `ri:search-line`    | 细线风格 |
+
+**图标资源**：
+
+- Remix Icon 官网：https://remixicon.com/
+- Iconify 图标搜索：https://icon-sets.iconify.design/
+- Pure-Admin 图标文档：https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/02.进阶/01.图标.md
+
 ## 5. 报告编写规范
 
 在大多数情况下，你的更改是**不需要**编写任何说明报告的。但是每当你需要编写报告时，请你首先遵循以下要求：

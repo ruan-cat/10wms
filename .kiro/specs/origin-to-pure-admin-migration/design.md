@@ -486,7 +486,7 @@ interface PaginationConfig {
 interface RouteMetaConfig {
 	// Pure-Admin 标准字段
 	title: string;
-	icon?: string;
+	icon?: string; // 图标配置，优先使用细线风格（如 ri:user-line）
 	showLink?: boolean;
 	keepAlive?: boolean;
 	roles?: string[];
@@ -498,6 +498,23 @@ interface RouteMetaConfig {
 	order?: number;
 	isSample?: boolean;
 }
+
+/**
+ * 图标配置规范
+ *
+ * 图标风格偏好：
+ * 1. 优先使用细线风格图标（如 Remix Icon 的 -line 后缀）
+ * 2. 避免使用实心风格图标（如 -fill 后缀）
+ * 3. 主要使用 Remix Icon (ri:) 图标集
+ * 4. 图标应与功能语义匹配
+ *
+ * 示例：
+ * - 用户管理: ri:user-line
+ * - 角色管理: ri:admin-line
+ * - 菜单管理: ri:menu-line
+ * - 数据管理: ri:database-2-line
+ * - 设置配置: ri:settings-3-line
+ */
 ```
 
 ### Style Configuration Model

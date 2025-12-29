@@ -6,7 +6,7 @@ export default {
 	component: Layout,
 	redirect: "/system/user",
 	meta: {
-		icon: "ep:setting",
+		icon: "ri:shield-user-line",
 		title: "系统管理",
 		rank: 10,
 	},
@@ -17,6 +17,7 @@ export default {
 			component: () => import("@/pages/system/user/index.vue"),
 			meta: {
 				title: "用户管理",
+				icon: "ri:user-line",
 			},
 		},
 		{
@@ -25,6 +26,7 @@ export default {
 			component: () => import("@/pages/system/role/index.vue"),
 			meta: {
 				title: "角色管理",
+				icon: "ri:admin-line",
 			},
 		},
 		{
@@ -33,6 +35,7 @@ export default {
 			component: () => import("@/pages/system/menu/index.vue"),
 			meta: {
 				title: "菜单管理",
+				icon: "ri:menu-line",
 			},
 		},
 		{
@@ -41,6 +44,7 @@ export default {
 			component: () => import("@/pages/system/dept/index.vue"),
 			meta: {
 				title: "部门管理",
+				icon: "ri:organization-chart",
 			},
 		},
 		{
@@ -49,6 +53,7 @@ export default {
 			component: () => import("@/pages/system/dictionary/index.vue"),
 			meta: {
 				title: "字典管理",
+				icon: "ri:book-2-line",
 			},
 		},
 		{
@@ -57,6 +62,7 @@ export default {
 			component: () => import("@/pages/system/category/index.vue"),
 			meta: {
 				title: "分类管理",
+				icon: "ri:folder-open-line",
 			},
 		},
 		{
@@ -65,6 +71,7 @@ export default {
 			component: () => import("@/pages/system/icon/index.vue"),
 			meta: {
 				title: "图标管理",
+				icon: "ri:palette-line",
 			},
 		},
 		{
@@ -73,6 +80,7 @@ export default {
 			component: () => import("@/pages/system/language/index.vue"),
 			meta: {
 				title: "语言管理",
+				icon: "ri:translate-2",
 			},
 		},
 		{
@@ -81,6 +89,7 @@ export default {
 			component: () => import("@/pages/system/system-notice/index.vue"),
 			meta: {
 				title: "系统通知",
+				icon: "ri:notification-2-line",
 			},
 		},
 	],

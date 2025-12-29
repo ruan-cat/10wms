@@ -134,3 +134,22 @@
    - .kiro\specs\origin-to-pure-admin-migration\requirements.md
 5. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
    - openspec\changes\origin-to-pure-admin\specs
+
+## 008 路由 meta 配置都增加 icon
+
+1. 阅读 `icon` 文档，了解清楚在 pure-admin 框架内，如何使用路由的 icon 配置。正确配置 `meta.icon` `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/02.进阶/01.图标.md`
+2. 请你根据各个路由菜单的功能，自己选择合适的，美观的 `iconify` 标签。不需要征询我使用哪款 `iconify` 图标集。
+3. `iconify` 图标风格：
+   - 少使用、避免使用实心风格。
+   - 我偏好于干练的细线风格。
+   - 对 `iconify` 图标集没有什么偏好。
+4. 处理范围： 全部 `main\src\router\modules\business` 目录下的全部路由，不管是父级路由还是子集路由，都要提供有意义的 `icon` 取值。
+
+### 01 把我对 icon 的风格选型偏好，更新到文档内
+
+1. 更新 `CLAUDE.md` 文档。
+2. 更新 kiro.origin-to-pure-admin 的 spec 规格文件：
+   - .kiro\specs\origin-to-pure-admin-migration\design.md
+   - .kiro\specs\origin-to-pure-admin-migration\requirements.md
+3. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
+   - openspec\changes\origin-to-pure-admin\specs

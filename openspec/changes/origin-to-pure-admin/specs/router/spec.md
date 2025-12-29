@@ -181,9 +181,71 @@ export default moduleRouter;
 
 1. 使用 `Layout` 组件作为父路由组件
 2. 配置 `meta.title` 使用国际化
-3. 配置 `meta.icon` 使用 Element Plus 图标
+3. 配置 `meta.icon` 使用图标（详见图标配置规范）
 4. 配置 `meta.rank` 控制菜单排序
 5. 子路由使用动态导入实现懒加载
+
+### 5.3 图标配置规范
+
+**图标风格偏好**：
+
+1. **细线风格优先**：优先使用细线条图标（如 Remix Icon 的 `-line` 后缀）
+2. **避免实心图标**：避免使用实心风格图标（如 `-fill` 后缀）
+3. **图标集选择**：主要使用 Remix Icon (`ri:`) 图标集
+4. **语义匹配**：图标应与功能语义匹配，易于识别
+
+**图标配置示例**：
+
+```typescript
+// ✅ 正确：使用细线风格图标
+meta: {
+  title: "用户管理",
+  icon: "ri:user-line",  // Remix Icon 细线风格
+}
+
+// ✅ 正确：父级和子级都配置图标
+const moduleRouter: RouteConfigsTable = {
+  path: "/system",
+  meta: {
+    title: "系统管理",
+    icon: "ri:shield-user-line",  // 父级图标
+  },
+  children: [
+    {
+      path: "/system/user",
+      meta: {
+        title: "用户管理",
+        icon: "ri:user-line",  // 子级图标
+      },
+    },
+  ],
+};
+
+// ❌ 避免：使用实心图标
+meta: {
+  title: "用户管理",
+  icon: "ri:user-fill",  // 实心风格，不推荐
+}
+```
+
+**常用图标推荐**：
+
+| 功能类型 |        推荐图标        |
+| :------: | :--------------------: |
+| 用户管理 |     `ri:user-line`     |
+| 角色管理 |    `ri:admin-line`     |
+| 菜单管理 |     `ri:menu-line`     |
+| 数据管理 |  `ri:database-2-line`  |
+| 文件管理 |  `ri:file-list-line`   |
+| 设置配置 |  `ri:settings-3-line`  |
+| 消息通知 | `ri:notification-line` |
+| 搜索查询 |    `ri:search-line`    |
+
+**图标资源**：
+
+- Remix Icon 官网：https://remixicon.com/
+- Iconify 图标搜索：https://icon-sets.iconify.design/
+- Pure-Admin 图标文档：https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/02.进阶/01.图标.md
 
 ## 6. 新增路由流程
 

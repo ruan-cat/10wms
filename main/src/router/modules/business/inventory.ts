@@ -6,7 +6,7 @@ export default {
 	component: Layout,
 	redirect: "/inventory/check",
 	meta: {
-		icon: "ep:box",
+		icon: "ri:archive-line",
 		title: "库存管理",
 		rank: 35,
 	},
@@ -17,6 +17,7 @@ export default {
 			component: () => import("@/pages/inventory/check/index.vue"),
 			meta: {
 				title: "库存盘点",
+				icon: "ri:file-list-line",
 			},
 		},
 		{
@@ -25,6 +26,7 @@ export default {
 			component: () => import("@/pages/inventory/comprehensive-inventory/index.vue"),
 			meta: {
 				title: "综合库存查询",
+				icon: "ri:search-2-line",
 			},
 		},
 		{
@@ -33,6 +35,7 @@ export default {
 			component: () => import("@/pages/inventory/stock/index.vue"),
 			meta: {
 				title: "库存查询",
+				icon: "ri:search-line",
 			},
 		},
 		{
@@ -41,6 +44,7 @@ export default {
 			component: () => import("@/pages/inventory/differentialposting/index.vue"),
 			meta: {
 				title: "差异过账管理",
+				icon: "ri:exchange-line",
 			},
 		},
 		{
@@ -49,6 +53,7 @@ export default {
 			component: () => import("@/pages/inventory/double-quotation/index.vue"),
 			meta: {
 				title: "复盘",
+				icon: "ri:refresh-line",
 			},
 		},
 		{
@@ -57,6 +62,7 @@ export default {
 			component: () => import("@/pages/inventory/inventory-difference/index.vue"),
 			meta: {
 				title: "盘点差异",
+				icon: "ri:contrast-2-line",
 			},
 		},
 		{
@@ -65,6 +71,7 @@ export default {
 			component: () => import("@/pages/inventory/move-inventory/index.vue"),
 			meta: {
 				title: "移库管理",
+				icon: "ri:arrow-left-right-line",
 			},
 		},
 		{
@@ -73,6 +80,7 @@ export default {
 			component: () => import("@/pages/inventory/moving-count/index.vue"),
 			meta: {
 				title: "动仓盘点",
+				icon: "ri:stack-line",
 			},
 		},
 		{
@@ -81,6 +89,7 @@ export default {
 			component: () => import("@/pages/inventory/shelf-adjustment/index.vue"),
 			meta: {
 				title: "上架调整",
+				icon: "ri:arrow-up-line",
 			},
 		},
 		{
@@ -89,6 +98,7 @@ export default {
 			component: () => import("@/pages/inventory/takedown-adjustment/index.vue"),
 			meta: {
 				title: "下架调整",
+				icon: "ri:arrow-down-line",
 			},
 		},
 	],

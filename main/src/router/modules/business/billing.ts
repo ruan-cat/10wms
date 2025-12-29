@@ -8,7 +8,7 @@ export default {
 	component: Layout,
 	redirect: "/billing/billing-mode",
 	meta: {
-		icon: "ep:money",
+		icon: "ri:money-dollar-circle-line",
 		title: "计费配置",
 		rank: 50,
 	},
@@ -19,6 +19,7 @@ export default {
 			component: () => import("@/pages/billing/billing-mode/index.vue"),
 			meta: {
 				title: "计费模式",
+				icon: "ri:calculator-line",
 			},
 		},
 		{
@@ -27,6 +28,7 @@ export default {
 			component: () => import("@/pages/billing/expense-template/index.vue"),
 			meta: {
 				title: "费用模板",
+				icon: "ri:file-text-line",
 			},
 		},
 		{
@@ -35,6 +37,7 @@ export default {
 			component: () => import("@/pages/billing/billing-commodity-category/index.vue"),
 			meta: {
 				title: "计费商品类别",
+				icon: "ri:price-tag-2-line",
 			},
 		},
 		{
@@ -43,6 +46,7 @@ export default {
 			component: () => import("@/pages/billing/billing-date/index.vue"),
 			meta: {
 				title: "计费日期",
+				icon: "ri:calendar-2-line",
 			},
 		},
 		{
@@ -51,6 +55,7 @@ export default {
 			component: () => import("@/pages/billing/contract-billing-method/index.vue"),
 			meta: {
 				title: "合同计费方式",
+				icon: "ri:file-list-2-line",
 			},
 		},
 		{
@@ -59,6 +64,7 @@ export default {
 			component: () => import("@/pages/billing/customer-billing-configuration/index.vue"),
 			meta: {
 				title: "客户计费配置",
+				icon: "ri:user-settings-line",
 			},
 		},
 		{
@@ -67,6 +73,7 @@ export default {
 			component: () => import("@/pages/billing/expense-name/index.vue"),
 			meta: {
 				title: "费用名称",
+				icon: "ri:text",
 			},
 		},
 		{
@@ -75,6 +82,7 @@ export default {
 			component: () => import("@/pages/billing/expense-type/index.vue"),
 			meta: {
 				title: "费用类型",
+				icon: "ri:list-check",
 			},
 		},
 		{
@@ -83,6 +91,7 @@ export default {
 			component: () => import("@/pages/billing/measurement-type/index.vue"),
 			meta: {
 				title: "计量类型",
+				icon: "ri:scales-3-line",
 			},
 		},
 		{
@@ -91,6 +100,7 @@ export default {
 			component: () => import("@/pages/billing/price-type/index.vue"),
 			meta: {
 				title: "价格类型",
+				icon: "ri:money-cny-circle-line",
 			},
 		},
 		{
@@ -99,6 +109,7 @@ export default {
 			component: () => import("@/pages/billing/warehousing-rate/index.vue"),
 			meta: {
 				title: "入库费率",
+				icon: "ri:percent-line",
 			},
 		},
 	],

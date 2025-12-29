@@ -21,6 +21,9 @@
 - **INCOSE**: International Council on Systems Engineering，系统工程国际委员会
 - **Pure-Admin 路由**: Pure-Admin 框架原生提供的示例和功能路由，存放在 `main/src/router/modules/pure-admin` 目录
 - **Business 路由**: 从旧项目迁移过来的业务路由，存放在 `main/src/router/modules/business` 目录
+- **路由图标**: 路由配置中的 `meta.icon` 字段，用于在菜单中显示图标
+- **细线图标**: 使用细线条绘制的图标风格，如 Remix Icon 的 `-line` 后缀图标
+- **实心图标**: 使用填充色绘制的图标风格，如 Remix Icon 的 `-fill` 后缀图标
 
 ## Requirements
 
@@ -204,3 +207,16 @@
 3. WHEN 迁移系统配置路由元信息时 THEN 迁移系统 SHALL 包含 title、icon、showLink、rank 等必要字段
 4. WHEN 迁移系统配置路由组件时 THEN 迁移系统 SHALL 使用动态导入（() => import()）实现路由懒加载
 5. WHEN 迁移系统完成路由注册时 THEN 迁移系统 SHALL 验证路由能够正确加载对应的页面组件
+
+### Requirement 16
+
+**User Story:** 作为开发团队，我希望为所有路由配置合适的图标，以便提升菜单的视觉效果和用户体验。
+
+#### Acceptance Criteria
+
+1. WHEN 迁移系统配置路由图标时 THEN 迁移系统 SHALL 优先使用细线风格图标（如 Remix Icon 的 `-line` 后缀图标）
+2. WHEN 迁移系统配置路由图标时 THEN 迁移系统 SHALL 避免使用实心风格图标（如 `-fill` 后缀图标）
+3. WHEN 迁移系统选择图标时 THEN 迁移系统 SHALL 确保图标与功能语义匹配且易于识别
+4. WHEN 迁移系统配置父级路由时 THEN 迁移系统 SHALL 为父级路由的 meta.icon 字段配置合适的图标
+5. WHEN 迁移系统配置子级路由时 THEN 迁移系统 SHALL 为子级路由的 meta.icon 字段配置合适的图标
+6. WHEN 迁移系统完成图标配置时 THEN 迁移系统 SHALL 验证所有图标在菜单中正常显示且风格统一

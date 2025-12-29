@@ -6,7 +6,7 @@ export default {
 	component: Layout,
 	redirect: "/daily-check/abnormal-delivery",
 	meta: {
-		icon: "ep:calendar-check",
+		icon: "ri:task-line",
 		title: "日常检查",
 		rank: 35,
 	},
@@ -17,6 +17,7 @@ export default {
 			component: () => import("@/pages/daily-check/abnormal-delivery/index.vue"),
 			meta: {
 				title: "异常发货",
+				icon: "ri:error-warning-line",
 			},
 		},
 		{
@@ -25,6 +26,7 @@ export default {
 			component: () => import("@/pages/daily-check/temperature/index.vue"),
 			meta: {
 				title: "温度维护",
+				icon: "ri:temp-cold-line",
 			},
 		},
 		{
@@ -33,6 +35,7 @@ export default {
 			component: () => import("@/pages/daily-check/received-unsold/index.vue"),
 			meta: {
 				title: "收货未上架",
+				icon: "ri:inbox-unarchive-line",
 			},
 		},
 		{
@@ -41,6 +44,7 @@ export default {
 			component: () => import("@/pages/daily-check/shipment-delay-warn/index.vue"),
 			meta: {
 				title: "出货延迟预警",
+				icon: "ri:alarm-warning-line",
 			},
 		},
 	],

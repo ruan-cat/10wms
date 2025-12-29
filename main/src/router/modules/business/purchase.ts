@@ -6,7 +6,7 @@ export default {
 	component: Layout,
 	redirect: "/purchase/appointment",
 	meta: {
-		icon: "ep:shopping-cart",
+		icon: "ri:shopping-cart-2-line",
 		title: "采购管理",
 		rank: 32,
 	},
@@ -17,6 +17,7 @@ export default {
 			component: () => import("@/pages/purchase/appointment/index.vue"),
 			meta: {
 				title: "预约采购",
+				icon: "ri:calendar-check-line",
 			},
 		},
 		{
@@ -25,6 +26,7 @@ export default {
 			component: () => import("@/pages/purchase/batch-receiving/index.vue"),
 			meta: {
 				title: "批量收货",
+				icon: "ri:inbox-archive-line",
 			},
 		},
 		{
@@ -33,6 +35,7 @@ export default {
 			component: () => import("@/pages/purchase/receiving/index.vue"),
 			meta: {
 				title: "收货管理",
+				icon: "ri:inbox-line",
 			},
 		},
 		{
@@ -41,6 +44,7 @@ export default {
 			component: () => import("@/pages/purchase/stock-inquiry/index.vue"),
 			meta: {
 				title: "库存查询",
+				icon: "ri:search-eye-line",
 			},
 		},
 		{
@@ -49,6 +53,7 @@ export default {
 			component: () => import("@/pages/purchase/client-purchase/index.vue"),
 			meta: {
 				title: "客户进货",
+				icon: "ri:user-add-line",
 			},
 		},
 		{
@@ -57,6 +62,7 @@ export default {
 			component: () => import("@/pages/purchase/other-warehousing/index.vue"),
 			meta: {
 				title: "其他入库",
+				icon: "ri:download-2-line",
 			},
 		},
 		{
@@ -65,6 +71,7 @@ export default {
 			component: () => import("@/pages/purchase/purchase-notification-details/index.vue"),
 			meta: {
 				title: "进货通知明细",
+				icon: "ri:notification-3-line",
 			},
 		},
 		{
@@ -73,6 +80,7 @@ export default {
 			component: () => import("@/pages/purchase/receiving-register/index.vue"),
 			meta: {
 				title: "收货登记",
+				icon: "ri:file-add-line",
 			},
 		},
 		{
@@ -81,6 +89,7 @@ export default {
 			component: () => import("@/pages/purchase/received-unlisted-stock/index.vue"),
 			meta: {
 				title: "收货未上架库存",
+				icon: "ri:inbox-2-line",
 			},
 		},
 	],

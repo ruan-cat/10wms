@@ -10,7 +10,7 @@ const messageRouter: RouteConfigsTable = {
 	redirect: "/message/message-center",
 	meta: {
 		title: $t("menus.message"),
-		icon: "ep:message",
+		icon: "ri:mail-line",
 		rank: 8,
 	},
 	children: [
@@ -20,6 +20,7 @@ const messageRouter: RouteConfigsTable = {
 			component: () => import("@/pages/message/message-center/index.vue"),
 			meta: {
 				title: $t("menus.messageCenter"),
+				icon: "ri:inbox-line",
 				showLink: true,
 			},
 		},
@@ -29,6 +30,7 @@ const messageRouter: RouteConfigsTable = {
 			component: () => import("@/pages/message/message-template/index.vue"),
 			meta: {
 				title: $t("menus.messageTemplate"),
+				icon: "ri:file-copy-line",
 				showLink: true,
 			},
 		},
@@ -38,6 +40,7 @@ const messageRouter: RouteConfigsTable = {
 			component: () => import("@/pages/message/work-setting/index.vue"),
 			meta: {
 				title: $t("menus.workSetting"),
+				icon: "ri:settings-2-line",
 				showLink: true,
 			},
 		},
@@ -47,6 +50,7 @@ const messageRouter: RouteConfigsTable = {
 			component: () => import("@/pages/message/work-sql/index.vue"),
 			meta: {
 				title: $t("menus.workSql"),
+				icon: "ri:code-s-slash-line",
 				showLink: true,
 			},
 		},

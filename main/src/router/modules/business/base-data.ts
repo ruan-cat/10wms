@@ -6,7 +6,7 @@ export default {
 	component: Layout,
 	redirect: "/base-data/goods",
 	meta: {
-		icon: "ep:box",
+		icon: "ri:database-2-line",
 		title: "基础数据",
 		rank: 30,
 	},
@@ -17,6 +17,7 @@ export default {
 			component: () => import("@/pages/base-data/goods/index.vue"),
 			meta: {
 				title: "商品管理",
+				icon: "ri:shopping-bag-3-line",
 			},
 		},
 		{
@@ -25,6 +26,7 @@ export default {
 			component: () => import("@/pages/base-data/goods-detail/index.vue"),
 			meta: {
 				title: "商品详情",
+				icon: "ri:file-list-3-line",
 			},
 		},
 		{
@@ -33,6 +35,7 @@ export default {
 			component: () => import("@/pages/base-data/customer/index.vue"),
 			meta: {
 				title: "客户管理",
+				icon: "ri:user-3-line",
 			},
 		},
 		{
@@ -41,6 +44,7 @@ export default {
 			component: () => import("@/pages/base-data/supplier/index.vue"),
 			meta: {
 				title: "供应商管理",
+				icon: "ri:truck-line",
 			},
 		},
 		{
@@ -49,6 +53,7 @@ export default {
 			component: () => import("@/pages/base-data/rfid/index.vue"),
 			meta: {
 				title: "RFID管理",
+				icon: "ri:radio-line",
 			},
 		},
 		{
@@ -57,6 +62,7 @@ export default {
 			component: () => import("@/pages/base-data/third-customer/index.vue"),
 			meta: {
 				title: "第三方客户",
+				icon: "ri:group-line",
 			},
 		},
 	],

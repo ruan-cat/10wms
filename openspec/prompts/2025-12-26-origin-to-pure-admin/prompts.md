@@ -87,7 +87,7 @@
 6. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
    - openspec\changes\origin-to-pure-admin\specs 增加一个新的规格，router，重点说明使用了新的路由存储方案。
 
-## 005 <!-- TODO: --> 设计入口，区分 `pure-admin` 路由和 `business` 路由，实现清晰的侧边栏
+## 005 设计入口，区分 `pure-admin` 路由和 `business` 路由，实现清晰的侧边栏
 
 1. 阅读以下 url 图片：
 

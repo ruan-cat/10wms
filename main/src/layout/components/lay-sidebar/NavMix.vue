@@ -4,13 +4,15 @@ import { useNav } from "@/layout/hooks/useNav";
 import { transformI18n } from "@/plugins/i18n";
 import LaySearch from "../lay-search/index.vue";
 import LayNotice from "../lay-notice/index.vue";
-import { ref, toRaw, watch, onMounted, nextTick } from "vue";
+import { ref, toRaw, watch, computed, onMounted, nextTick } from "vue";
 import { useRenderIcon } from "@/components/ReIcon/src/hooks";
 import { getParentPaths, findRouteByPath } from "@/router/utils";
 import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import LaySidebarExtraIcon from "../lay-sidebar/components/SidebarExtraIcon.vue";
 import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
+import { useSidebarType } from "@/composables/use-sidebar-type";
+import SidebarTypeSwitcher from "@/components/SidebarTypeSwitcher/index.vue";
 
 import GlobalizationIcon from "@/assets/svg/globalization.svg?component";
 import AccountSettingsIcon from "~icons/ri/user-settings-line";
@@ -35,14 +37,20 @@ const {
 	getDropdownItemStyle,
 	getDropdownItemClass,
 } = useNav();
+const { filterRoutesBySidebarType, currentSidebarType } = useSidebarType();
+
+const filteredMenus = computed(() => {
+	return filterRoutesBySidebarType(usePermissionStoreHook().wholeMenus, currentSidebarType.value);
+});
 
 function getDefaultActive(routePath) {
 	const wholeMenus = usePermissionStoreHook().wholeMenus;
+	const filteredMenus = filterRoutesBySidebarType(wholeMenus, currentSidebarType.value);
 	/** 当前路由的父级路径 */
-	const parentRoutes = getParentPaths(routePath, wholeMenus)[0];
+	const parentRoutes = getParentPaths(routePath, filteredMenus)[0];
 	defaultActive.value = !isAllEmpty(route.meta?.activePath)
 		? route.meta.activePath
-		: findRouteByPath(parentRoutes, wholeMenus)?.children[0]?.path;
+		: findRouteByPath(parentRoutes, filteredMenus)?.children[0]?.path;
 }
 
 onMounted(() => {
@@ -54,7 +62,7 @@ nextTick(() => {
 });
 
 watch(
-	() => [route.path, usePermissionStoreHook().wholeMenus],
+	() => [route.path, usePermissionStoreHook().wholeMenus, currentSidebarType.value],
 	() => {
 		getDefaultActive(route.path);
 	},
@@ -75,11 +83,7 @@ watch(
 			class="horizontal-header-menu"
 			:default-active="defaultActive"
 		>
-			<el-menu-item
-				v-for="route in usePermissionStoreHook().wholeMenus"
-				:key="route.path"
-				:index="resolvePath(route) || route.redirect"
-			>
+			<el-menu-item v-for="route in filteredMenus" :key="route.path" :index="resolvePath(route) || route.redirect">
 				<template #title>
 					<div v-if="toRaw(route.meta.icon)" :class="['sub-menu-icon', route.meta.icon]">
 						<component :is="useRenderIcon(route.meta && toRaw(route.meta.icon))" />
@@ -94,6 +98,8 @@ watch(
 			</el-menu-item>
 		</el-menu>
 		<div class="horizontal-header-right">
+			<!-- 侧边栏类型切换 -->
+			<SidebarTypeSwitcher />
 			<!-- 菜单搜索 -->
 			<LaySearch id="header-search" />
 			<!-- 国际化 -->

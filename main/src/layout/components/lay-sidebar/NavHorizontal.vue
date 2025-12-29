@@ -11,6 +11,7 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 import LaySidebarItem from "../lay-sidebar/components/SidebarItem.vue";
 import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
 import { useSidebarType } from "@/composables/use-sidebar-type";
+import SidebarTypeSwitcher from "@/components/SidebarTypeSwitcher/index.vue";
 
 import GlobalizationIcon from "@/assets/svg/globalization.svg?component";
 import AccountSettingsIcon from "~icons/ri/user-settings-line";
@@ -72,6 +73,8 @@ onMounted(() => {
 			<LaySidebarItem v-for="route in filteredMenus" :key="route.path" :item="route" :base-path="route.path" />
 		</el-menu>
 		<div class="horizontal-header-right">
+			<!-- 侧边栏类型切换 -->
+			<SidebarTypeSwitcher />
 			<!-- 菜单搜索 -->
 			<LaySearch id="header-search" />
 			<!-- 国际化 -->

@@ -8,24 +8,27 @@
 
 ### 2.1 目录结构
 
-清理前，`views` 目录包含以下遗留业务模块：
+清理前，`views` 目录包含以下需要处理的业务模块：
 
-|       目录名        |   模块名称   | 页面数量 |      状态      |
-| :-----------------: | :----------: | :------: | :------------: |
-|   `base-config/`    | 基础配置模块 | 部分页面 | 已迁移到 pages |
-|    `base-data/`     | 基础数据模块 | 部分页面 | 已迁移到 pages |
-|   `daily-check/`    | 日常检查模块 | 部分页面 | 已迁移到 pages |
-|    `inventory/`     | 库存管理模块 | 部分页面 | 已迁移到 pages |
-|     `outbound/`     | 出库管理模块 | 部分页面 | 已迁移到 pages |
-| `personnel-config/` | 人员配置模块 | 部分页面 | 已迁移到 pages |
-|     `purchase/`     | 采购管理模块 | 部分页面 | 已迁移到 pages |
-|      `report/`      | 客户报表模块 | 部分页面 | 已迁移到 pages |
-|      `system/`      | 系统管理模块 | 部分页面 | 已迁移到 pages |
-| `warehouse-config/` | 仓库配置模块 | 部分页面 | 已迁移到 pages |
+|       目录名        |   模块名称   |    创建时间     |       状态       |
+| :-----------------: | :----------: | :-------------: | :--------------: |
+|   `base-config/`    | 基础配置模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+|    `base-data/`     | 基础数据模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+|   `daily-check/`    | 日常检查模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+|    `inventory/`     | 库存管理模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+|     `outbound/`     | 出库管理模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+| `personnel-config/` | 人员配置模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+|     `purchase/`     | 采购管理模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+|      `report/`      | 客户报表模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+| `warehouse-config/` | 仓库配置模块 | 2025-12-28 创建 | 错误迁移，需删除 |
+|      `system/`      | 系统管理模块 | 2025-05-12 创建 |  框架自带，保留  |
 
-**总计**：10 个业务模块目录
+**总计**：10 个业务模块目录（9 个需删除，1 个保留）
 
-**重要说明**：这些目录中的页面已经全部迁移到 `main/src/pages/` 目录，并且业务路由配置已全部指向 `pages` 目录。保留这些遗留目录会导致开发混淆和维护困难。
+**重要说明**：
+
+- **需要删除的目录**：在 2025-12-28 迁移过程中错误创建的 9 个业务模块目录
+- **需要保留的目录**：`system` 目录是 Pure-Admin 框架初始化时（2025-05-12）就存在的，属于框架自带示例，不应删除
 
 ### 2.2 问题分析
 
@@ -40,20 +43,40 @@
 
 ### 3.1 清理前检查
 
-**检查项目**：
+**Git 历史检查**：
 
-- ✅ 确认路由配置已全部指向 `pages` 目录
-- ✅ 确认没有代码引用 `views` 目录下的业务模块
-- ✅ 确认业务页面已完整迁移到 `pages` 目录
+通过检查 git 历史记录，确认各目录的创建时间：
 
-**检查命令**：
+```powershell
+# 检查各目录的创建时间
+$dirs = @("base-config", "base-data", "daily-check", "inventory", "outbound", "personnel-config", "purchase", "report", "system", "warehouse-config")
+foreach ($dir in $dirs) {
+    $firstCommit = git log --format="%ai" --diff-filter=A --all -- "main/src/views/$dir" | Select-Object -Last 1
+    Write-Host "$dir : $firstCommit"
+}
+```
+
+**检查结果**：
+
+- `base-config` : 2025-12-28 02:49:07 +0800 ❌ 需删除
+- `base-data` : 2025-12-28 02:21:15 +0800 ❌ 需删除
+- `daily-check` : 2025-12-28 02:21:15 +0800 ❌ 需删除
+- `inventory` : 2025-12-28 02:21:15 +0800 ❌ 需删除
+- `outbound` : 2025-12-28 02:21:15 +0800 ❌ 需删除
+- `personnel-config` : 2025-12-28 04:25:25 +0800 ❌ 需删除
+- `purchase` : 2025-12-28 02:21:15 +0800 ❌ 需删除
+- `report` : 2025-12-28 04:25:25 +0800 ❌ 需删除
+- `system` : 2025-05-12 17:39:34 +0800 ✅ 保留（框架自带）
+- `warehouse-config` : 2025-12-28 04:25:25 +0800 ❌ 需删除
+
+**路由配置检查**：
 
 ```bash
 # 检查路由配置
-grep -r "views/(base-config|base-data|daily-check|inventory|outbound|personnel-config|purchase|report|system|warehouse-config)" main/src/router/modules/business/
+grep -r "views/(base-config|base-data|daily-check|inventory|outbound|personnel-config|purchase|report|warehouse-config)" main/src/router/modules/business/
 
 # 检查代码引用
-grep -r "@/views/(base-config|base-data|daily-check|inventory|outbound|personnel-config|purchase|report|system|warehouse-config)" main/src/ --exclude-dir=views
+grep -r "@/views/(base-config|base-data|daily-check|inventory|outbound|personnel-config|purchase|report|warehouse-config)" main/src/ --exclude-dir=views
 ```
 
 **检查结果**：✅ 无任何引用，可以安全删除
@@ -62,41 +85,45 @@ grep -r "@/views/(base-config|base-data|daily-check|inventory|outbound|personnel
 
 **执行时间**：2025-12-29
 
+**清理原则**：
+
+- ✅ 只删除 2025-12-28 创建的业务模块目录（错误迁移）
+- ✅ 保留 2025-05-12 创建的 system 目录（框架自带）
+
 **执行命令**：
 
 ```powershell
-# 删除基础配置模块
+# 删除基础配置模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\base-config"
 
-# 删除基础数据模块
+# 删除基础数据模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\base-data"
 
-# 删除日常检查模块
+# 删除日常检查模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\daily-check"
 
-# 删除库存管理模块
+# 删除库存管理模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\inventory"
 
-# 删除出库管理模块
+# 删除出库管理模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\outbound"
 
-# 删除人员配置模块
+# 删除人员配置模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\personnel-config"
 
-# 删除采购管理模块
+# 删除采购管理模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\purchase"
 
-# 删除客户报表模块
+# 删除客户报表模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\report"
 
-# 删除系统管理模块
-Remove-Item -Recurse -Force "main\src\views\system"
-
-# 删除仓库配置模块
+# 删除仓库配置模块（2025-12-28 创建）
 Remove-Item -Recurse -Force "main\src\views\warehouse-config"
+
+# 注意：system 目录保留（2025-05-12 创建，框架自带）
 ```
 
-**执行结果**：✅ 全部删除成功
+**执行结果**：✅ 9 个目录删除成功，1 个目录保留
 
 ## 4. 清理后状态
 
@@ -128,15 +155,20 @@ Remove-Item -Recurse -Force "main\src\views\warehouse-config"
 |      `result/`      | Pure-Admin 示例 |     结果页面     |
 |      `sample/`      | Pure-Admin 示例 |     示例页面     |
 |   `schema-form/`    | Pure-Admin 示例 |  表单设计器示例  |
+|      `system/`      | Pure-Admin 示例 | 系统管理示例页面 |
 |      `table/`       | Pure-Admin 示例 |     表格示例     |
 |       `tabs/`       | Pure-Admin 示例 |    标签页示例    |
 |       `test/`       | Pure-Admin 示例 |     测试页面     |
 |     `vue-flow/`     | Pure-Admin 示例 |    流程图示例    |
 |     `welcome/`      | Pure-Admin 示例 |     欢迎页面     |
 
-**总计**：27 个 Pure-Admin 示例目录
+**总计**：28 个 Pure-Admin 示例目录（包括框架自带的 system 目录）
 
-**重要说明**：所有业务模块的遗留目录已被清理，`views` 目录现在只包含 Pure-Admin 框架自带的示例页面。
+**重要说明**：
+
+- 所有 2025-12-28 错误迁移的业务模块目录已被清理
+- `system` 目录是 Pure-Admin 框架自带的示例页面（2025-05-12 创建），已保留
+- `views` 目录现在只包含 Pure-Admin 框架的示例页面
 
 ### 4.1 目录结构
 

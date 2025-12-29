@@ -28,6 +28,8 @@
 				:data="tableData"
 				:columns="tableColumns"
 				:loading="loading"
+				is-index
+				is-multiple-select
 				:pagination="pagination"
 				@selection-change="handleSelectionChange"
 				@page-change="handlePageChange"
@@ -77,7 +79,7 @@
 import { ref, reactive, onMounted } from "vue";
 import { ElMessage, ElMessageBox, type FormInstance, type FormRules } from "element-plus";
 import { http } from "@/utils/http";
-import SimpleDataTable from "@/components/SimpleDataTable/index.vue";
+import SimpleDataTable from "@/components/Table/index.vue";
 
 /** 搜索表单 */
 const searchForm = reactive({
@@ -92,11 +94,9 @@ const selectedRows = ref([]);
 
 /** 表格列配置 */
 const tableColumns = [
-	{ type: "selection", width: 55 },
-	{ type: "index", label: "序号", width: 60 },
 	{ prop: "statusCode", label: "状态代码", minWidth: 150 },
 	{ prop: "statusName", label: "状态名称", minWidth: 200 },
-	{ prop: "operation", label: "操作", width: 200, fixed: "right" },
+	{ prop: "operation", label: "操作", width: 200, fixed: "right" as const },
 ];
 
 /** 分页配置 */
@@ -135,7 +135,8 @@ async function getList() {
 			url: "/api/personnel/employment-status/list",
 			method: "post",
 			data: params,
-		}); if ((response as any).data) {
+		});
+		if ((response as any).data) {
 			tableData.value = (response as any).data.rows;
 			pagination.total = (response as any).data.total;
 		}
@@ -260,9 +261,9 @@ function handleSelectionChange(selection: any[]) {
 }
 
 /** 分页变化 */
-function handlePageChange(page: number, size: number) {
-	pagination.currentPage = page;
-	pagination.pageSize = size;
+function handlePageChange({ currentPage, pageSize }: { currentPage: number; pageSize: number }) {
+	pagination.currentPage = currentPage;
+	pagination.pageSize = pageSize;
 	getList();
 }
 

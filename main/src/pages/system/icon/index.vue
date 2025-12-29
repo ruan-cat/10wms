@@ -3,8 +3,8 @@ import { ref, onMounted } from "vue";
 import { http } from "@/utils/http";
 import { message } from "@/utils/message";
 import { IconifyIconOffline } from "@/components/ReIcon";
-import type { PaginationProps } from "@pureadmin/table";
-import SimpleDataTable from "@/components/SimpleDataTable/index.vue";
+import type { SimpleDataTableColumn } from "@/components/Table/types";
+import SimpleDataTable from "@/components/Table/index.vue";
 
 defineOptions({
 	name: "Icon",
@@ -15,27 +15,14 @@ const dataList = ref([]);
 /** 加载状态 */
 const loading = ref(true);
 /** 分页配置 */
-const pagination = ref<PaginationProps>({
+const pagination = ref({
 	total: 0,
 	pageSize: 10,
 	currentPage: 1,
-	background: true,
 });
 
 /** 表格列配置 */
-const columns: TableColumnList = [
-	{
-		type: "selection",
-		width: 55,
-		align: "left",
-		hide: ({ checkList }) => !checkList.includes("勾选列"),
-	},
-	{
-		label: "序号",
-		type: "index",
-		width: 70,
-		hide: ({ checkList }) => !checkList.includes("序号列"),
-	},
+const columns: SimpleDataTableColumn[] = [
 	{
 		label: "图标名称",
 		prop: "iconName",
@@ -50,7 +37,6 @@ const columns: TableColumnList = [
 		label: "图标预览",
 		prop: "iconPreview",
 		minWidth: 100,
-		cellRenderer: ({ row }) => <IconifyIconOffline icon={row.iconCode} width='24' height='24' />,
 	},
 	{
 		label: "分类",
@@ -59,7 +45,7 @@ const columns: TableColumnList = [
 	},
 	{
 		label: "操作",
-		fixed: "right",
+		fixed: "right" as const,
 		width: 150,
 		slot: "operation",
 	},
@@ -88,13 +74,9 @@ async function onSearch() {
 }
 
 /** 分页变化 */
-function handleSizeChange(val: number) {
-	pagination.value.pageSize = val;
-	onSearch();
-}
-
-function handleCurrentChange(val: number) {
-	pagination.value.currentPage = val;
+function handlePageChange({ currentPage, pageSize }: { currentPage: number; pageSize: number }) {
+	pagination.value.currentPage = currentPage;
+	pagination.value.pageSize = pageSize;
 	onSearch();
 }
 
@@ -115,9 +97,9 @@ onMounted(() => {
 			:data="dataList"
 			:columns="columns"
 			:loading="loading"
+			is-index
 			:pagination="pagination"
-			@size-change="handleSizeChange"
-			@current-change="handleCurrentChange"
+			@page-change="handlePageChange"
 		>
 			<template #operation="{ row }">
 				<el-button link type="primary" size="small" @click="handleView(row)"> 查看 </el-button>

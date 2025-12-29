@@ -34,6 +34,8 @@
 				:data="tableData"
 				:columns="tableColumns"
 				:loading="loading"
+				is-index
+				is-multiple-select
 				:pagination="{
 					total: pagination.total,
 					currentPage: pagination.currentPage,
@@ -129,7 +131,7 @@ import { ref, reactive, onMounted } from "vue";
 import { ElMessage, ElMessageBox, type FormInstance } from "element-plus";
 import { Plus, Delete, Search, Refresh, Edit } from "@element-plus/icons-vue";
 import { http } from "@/utils/http";
-import SimpleDataTable from "@/components/SimpleDataTable/index.vue";
+import SimpleDataTable from "@/components/Table/index.vue";
 
 /** 搜索表单 */
 const searchForm = reactive({
@@ -151,8 +153,6 @@ const pagination = reactive({
 
 /** 表格列配置 */
 const tableColumns = [
-	{ type: "selection", width: 55 },
-	{ type: "index", label: "序号", width: 60 },
 	{ prop: "name", label: "创建人名称", width: 120 },
 	{ prop: "creatTime", label: "创建日期", width: 120 },
 	{ slot: "operation", label: "操作", width: 240 },
@@ -221,7 +221,8 @@ const loadTableData = async () => {
 				pageNum: pagination.currentPage,
 				pageSize: pagination.pageSize,
 			},
-		}); if ((response as any).data) {
+		});
+		if ((response as any).data) {
 			tableData.value = (response as any).data.records || [];
 			pagination.total = (response as any).data.total || 0;
 		}
@@ -249,9 +250,9 @@ const handleReset = () => {
 };
 
 /** 分页变化 */
-const handlePageChange = ({ page, limit }: { page: number; limit: number }) => {
-	pagination.currentPage = page;
-	pagination.pageSize = limit;
+const handlePageChange = ({ currentPage, pageSize }: { currentPage: number; pageSize: number }) => {
+	pagination.currentPage = currentPage;
+	pagination.pageSize = pageSize;
 	loadTableData();
 };
 

@@ -11,9 +11,9 @@ export type SimpleDataTableColumnProp<T extends Object> = keyof T | string;
 /** 表格列配置 */
 export interface SimpleDataTableColumn<T extends Object = any> {
 	/** 列标识 */
-	prop: SimpleDataTableColumnProp<T>;
+	prop?: SimpleDataTableColumnProp<T>;
 	/** 列标题 */
-	label: string;
+	label?: string;
 	/** 列宽度 */
 	width?: number | string;
 	/** 最小列宽度 */
@@ -36,6 +36,8 @@ export interface SimpleDataTableColumn<T extends Object = any> {
 	headerClassName?: string;
 	/** 格式化函数 */
 	formatter?: (row: T, column: TableColumnCtx<T>, cellValue: any, index: number) => string | number;
+	/** 插槽名称 */
+	slot?: string;
 }
 
 /** 表格 Props */

@@ -28,6 +28,8 @@
 				:data="tableData"
 				:columns="tableColumns"
 				:loading="loading"
+				is-index
+				is-multiple-select
 				:pagination="{
 					total: pagination.total,
 					currentPage: pagination.currentPage,
@@ -82,7 +84,7 @@ import { ref, reactive, onMounted } from "vue";
 import { ElMessage, ElMessageBox, type FormInstance } from "element-plus";
 import { Plus, Delete, Search, Refresh } from "@element-plus/icons-vue";
 import { http } from "@/utils/http";
-import SimpleDataTable from "@/components/SimpleDataTable/index.vue";
+import SimpleDataTable from "@/components/Table/index.vue";
 
 /** 搜索表单 */
 const searchForm = reactive({
@@ -104,8 +106,6 @@ const pagination = reactive({
 
 /** 表格列配置 */
 const tableColumns = [
-	{ type: "selection", width: 55 },
-	{ type: "index", label: "序号", width: 60 },
 	{ prop: "inventoryNo", label: "盘点单号", minWidth: 150 },
 	{ prop: "goodsCode", label: "商品编码", width: 150 },
 	{ prop: "goodsName", label: "商品名称", minWidth: 200 },
@@ -114,7 +114,7 @@ const tableColumns = [
 	{ prop: "differenceQty", label: "差异数量", width: 120 },
 	{ prop: "remark", label: "备注", minWidth: 200 },
 	{ prop: "createTime", label: "创建时间", width: 180 },
-	{ slot: "operation", label: "操作", width: 200, fixed: "right" },
+	{ slot: "operation", label: "操作", width: 200, fixed: "right" as const },
 ];
 
 /** 对话框 */
@@ -156,7 +156,8 @@ const loadTableData = async () => {
 				pageNum: pagination.currentPage,
 				pageSize: pagination.pageSize,
 			},
-		}); if ((response as any).data) {
+		});
+		if ((response as any).data) {
 			tableData.value = (response as any).data.records || [];
 			pagination.total = (response as any).data.total || 0;
 		}
@@ -184,9 +185,9 @@ const handleReset = () => {
 };
 
 /** 分页变化 */
-const handlePageChange = ({ page, limit }: { page: number; limit: number }) => {
-	pagination.currentPage = page;
-	pagination.pageSize = limit;
+const handlePageChange = ({ currentPage, pageSize }: { currentPage: number; pageSize: number }) => {
+	pagination.currentPage = currentPage;
+	pagination.pageSize = pageSize;
 	loadTableData();
 };
 

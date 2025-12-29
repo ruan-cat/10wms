@@ -289,6 +289,10 @@ business:
   shelfAdjustment: 上架调整
   takedownAdjustment: 下架调整
 
+  # 出库管理
+  outbound: 出库管理
+  picking: 拣货管理
+
   # 计费配置
   billing: 计费配置
   billingMode: 计费模式
@@ -342,3 +346,12 @@ business:
   qualityCode: 品质代码
   qualityInspectionStatus: 品检状态
   systemParameter: 系统参数
+
+  # 仓库配置
+  warehouseConfig: 仓库配置
+  orderType: 订单类型
+
+  # 客户报表
+  report: 客户报表
+  stockReport: 库存报表
+  expiryWarning: 有效期预警

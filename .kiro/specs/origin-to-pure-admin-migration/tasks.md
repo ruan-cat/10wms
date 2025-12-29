@@ -718,54 +718,56 @@
   - _Requirements: 8.2_
   - **状态**：已规划，待实施
 
-- [ ] 30. 回滚机制验证
-- [ ] 30.1 验证备份功能
+- [x] 30. 回滚机制验证
+
+- [x] 30.1 验证备份功能
   - 验证备份分支已创建
   - 验证备份时间点已标记
   - 验证备份完整性
   - _Requirements: 12.1_
 
-- [ ] 30.2 测试回滚功能
+- [x] 30.2 测试回滚功能
   - 模拟严重错误场景
   - 执行回滚操作
   - 验证系统恢复正常
   - 验证回滚日志记录
   - _Requirements: 12.2, 12.3, 12.4_
 
-- [ ] 31. 最终验证和文档
-- [ ] 31.1 功能完整性验证
+- [x] 31. 最终验证和文档
+
+- [x] 31.1 功能完整性验证
   - 对照需求文档检查所有功能
   - 验证无功能遗漏
   - 验证用户体验良好
   - _Requirements: All_
 
-- [ ] 31.2 代码质量验证
+- [x] 31.2 代码质量验证
   - 验证代码规范统一
   - 验证类型定义完善
   - 验证测试覆盖充分
   - _Requirements: 11.1, 11.2, 11.3_
 
-- [ ] 31.3 性能指标验证
+- [x] 31.3 性能指标验证
   - 验证首屏加载时间 < 3s
   - 验证打包体积合理
   - 验证运行流畅无卡顿
   - _Requirements: 9.4_
 
-- [ ] 31.4 更新项目文档
+- [x] 31.4 更新项目文档
   - 更新 README.md
   - 更新 API 文档
   - 更新组件文档
   - 更新开发指南
   - _Requirements: All_
 
-- [ ] 31.5 生成迁移报告
+- [x] 31.5 生成迁移报告
   - 总结迁移过程
   - 记录遇到的问题和解决方案
   - 记录经验教训
   - 提供后续优化建议
   - _Requirements: All_
 
-- [ ] 32. Final Checkpoint - 迁移完成验证
+- [x] 32. Final Checkpoint - 迁移完成验证
   - Ensure all tests pass, ask the user if questions arise.
 
 - [x] 33. 路由配置清理 - 移除自动路由依赖
@@ -823,58 +825,58 @@
   - 验证用户管理、角色管理、菜单管理、部门管理页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.2 迁移基础数据模块页面
+- [x] 35.2 迁移基础数据模块页面
   - 确认 main/src/views/base-data 已迁移到 main/src/pages/base-data
   - 验证商品管理、客户管理、供应商管理页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.3 迁移采购管理模块页面
+- [x] 35.3 迁移采购管理模块页面
   - 确认 main/src/views/purchase 已迁移到 main/src/pages/purchase
   - 验证预约采购、收货管理页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.4 迁移库存管理模块页面
+- [x] 35.4 迁移库存管理模块页面
   - 确认 main/src/views/inventory 已迁移到 main/src/pages/inventory
   - 验证库存盘点、库存查询页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.5 迁移出库管理模块页面
+- [x] 35.5 迁移出库管理模块页面
   - 确认 main/src/views/outbound 已迁移到 main/src/pages/outbound
   - 验证拣货管理页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.6 迁移日常检查模块页面
+- [x] 35.6 迁移日常检查模块页面
   - 确认 main/src/views/daily-check 已迁移到 main/src/pages/daily-check
   - 验证异常发货、温度维护页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.7 迁移基础配置模块页面
+- [x] 35.7 迁移基础配置模块页面
   - 确认 main/src/views/base-config 已迁移到 main/src/pages/base-config
   - 验证自动编码、计量单位、产品类别页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.8 迁移仓库配置模块页面
+- [x] 35.8 迁移仓库配置模块页面
   - 确认 main/src/views/warehouse-config 已迁移到 main/src/pages/warehouse-config
   - 验证订单类型页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.9 迁移客户报表模块页面
+- [x] 35.9 迁移客户报表模块页面
   - 确认 main/src/views/report 已迁移到 main/src/pages/report
   - 验证库存报表、有效期预警页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.10 迁移人员配置模块页面
+- [x] 35.10 迁移人员配置模块页面
   - 确认 main/src/views/personnel-config 已迁移到 main/src/pages/personnel-config
   - 验证学历代码页面路径
   - _Requirements: 14.1, 14.4_
 
-- [ ] 35.11 编写业务页面位置属性测试
+- [x] 35.11 编写业务页面位置属性测试
   - **Property 26: Business Pages Location**
   - **Validates: Requirements 14.1**
 
-- [ ] 36. 路由注册 - 按照 Pure-Admin 规范注册业务页面路由
+- [x] 36. 路由注册 - 按照 Pure-Admin 规范注册业务页面路由
 
-- [ ] 36.1 创建系统管理模块路由配置
+- [x] 36.1 创建系统管理模块路由配置
   - 创建 main/src/router/modules/system.ts
   - 配置用户管理、角色管理、菜单管理、部门管理路由
   - 使用 RouteConfigsTable 类型
@@ -882,7 +884,7 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.2 创建基础数据模块路由配置
+- [x] 36.2 创建基础数据模块路由配置
   - 创建 main/src/router/modules/base-data.ts
   - 配置商品管理、客户管理、供应商管理路由
   - 使用 RouteConfigsTable 类型
@@ -890,7 +892,7 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.3 创建采购管理模块路由配置
+- [x] 36.3 创建采购管理模块路由配置
   - 创建 main/src/router/modules/purchase.ts
   - 配置预约采购、收货管理路由
   - 使用 RouteConfigsTable 类型
@@ -898,7 +900,7 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.4 创建库存管理模块路由配置
+- [x] 36.4 创建库存管理模块路由配置
   - 创建 main/src/router/modules/inventory.ts
   - 配置库存盘点、库存查询路由
   - 使用 RouteConfigsTable 类型
@@ -906,7 +908,7 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.5 创建出库管理模块路由配置
+- [x] 36.5 创建出库管理模块路由配置
   - 创建 main/src/router/modules/outbound.ts
   - 配置拣货管理路由
   - 使用 RouteConfigsTable 类型
@@ -914,7 +916,7 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.6 创建日常检查模块路由配置
+- [x] 36.6 创建日常检查模块路由配置
   - 创建 main/src/router/modules/daily-check.ts
   - 配置异常发货、温度维护路由
   - 使用 RouteConfigsTable 类型
@@ -922,7 +924,7 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.7 创建基础配置模块路由配置
+- [x] 36.7 创建基础配置模块路由配置
   - 创建 main/src/router/modules/base-config.ts
   - 配置自动编码、计量单位、产品类别路由
   - 使用 RouteConfigsTable 类型
@@ -930,7 +932,7 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.8 创建仓库配置模块路由配置
+- [x] 36.8 创建仓库配置模块路由配置
   - 创建 main/src/router/modules/warehouse-config.ts
   - 配置订单类型路由
   - 使用 RouteConfigsTable 类型
@@ -938,15 +940,16 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.9 创建客户报表模块路由配置
+- [x] 36.9 创建客户报表模块路由配置
   - 创建 main/src/router/modules/report.ts
+
   - 配置库存报表、有效期预警路由
   - 使用 RouteConfigsTable 类型
   - 配置路由元信息
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.10 创建人员配置模块路由配置
+- [x] 36.10 创建人员配置模块路由配置
   - 创建 main/src/router/modules/personnel-config.ts
   - 配置学历代码路由
   - 使用 RouteConfigsTable 类型
@@ -954,13 +957,13 @@
   - 使用动态导入实现懒加载
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 36.11 编写路由配置完整性属性测试
+- [x] 36.11 编写路由配置完整性属性测试
   - **Property 28: Route Configuration Completeness**
   - **Property 29: Route Meta Completeness**
   - **Property 30: Route Lazy Loading**
   - **Validates: Requirements 15.1, 15.3, 15.4**
 
-- [ ] 36.12 测试所有业务页面路由
+- [x] 36.12 测试所有业务页面路由
   - 验证系统管理模块路由可访问
   - 验证基础数据模块路由可访问
   - 验证采购管理模块路由可访问
@@ -973,24 +976,24 @@
   - 验证人员配置模块路由可访问
   - _Requirements: 15.5_
 
-- [ ] 37. Checkpoint - 路由配置和页面结构调整验证
+- [x] 37. Checkpoint - 路由配置和页面结构调整验证
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 38. 更新项目文档
+- [x] 38. 更新项目文档
 
-- [ ] 38.1 更新路由配置文档
+- [x] 38.1 更新路由配置文档
   - 在项目文档中说明已移除自动路由配置
   - 说明当前使用 Pure-Admin 标准路由方式
   - 提供路由配置示例和最佳实践
   - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5_
 
-- [ ] 38.2 更新页面结构文档
+- [x] 38.2 更新页面结构文档
   - 说明 main/src/pages 和 main/src/views 的职责划分
   - 说明业务页面的组织结构
   - 提供页面创建和路由注册的指南
   - _Requirements: 14.1, 14.2, 14.4_
 
-- [ ] 38.3 更新迁移进度报告
+- [x] 38.3 更新迁移进度报告
   - 记录路由配置清理完成情况
   - 记录页面结构调整完成情况
   - 记录遇到的问题和解决方案
@@ -1038,7 +1041,7 @@
   - 更新 system.ts 路由（添加字典管理）
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 40. 补全缺失页面迁移 - P2 中优先级页面（基础配置模块）
+- [x] 40. 补全缺失页面迁移 - P2 中优先级页面（基础配置模块）
 
 - [x] 40.1 迁移基础配置模块剩余页面（第一批）
   - 迁移编码类型页面 (encoding-type)
@@ -1069,7 +1072,7 @@
   - 测试路由访问
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 41. 补全缺失页面迁移 - P2 中优先级页面（基础数据模块）
+- [x] 41. 补全缺失页面迁移 - P2 中优先级页面（基础数据模块）
 
 - [x] 41.1 迁移基础数据模块剩余页面
   - 迁移 RFID 管理页面 (rfid)
@@ -1085,7 +1088,7 @@
   - 测试路由访问
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 42. 补全缺失页面迁移 - P2 中优先级页面（计费配置模块）
+- [x] 42. 补全缺失页面迁移 - P2 中优先级页面（计费配置模块）
 
 - [x] 42.1 迁移计费配置模块页面（第一批）
   - 迁移计费商品类别配置页面 (billing-commodity-category)
@@ -1117,7 +1120,7 @@
   - 测试路由访问
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 43. 补全缺失页面迁移 - P2 中优先级页面（日常检查模块）
+- [x] 43. 补全缺失页面迁移 - P2 中优先级页面（日常检查模块）
 
 - [x] 43.1 迁移日常检查模块剩余页面
   - 迁移收货未上架页面 (received-unsold)
@@ -1191,7 +1194,7 @@
   - 测试路由访问
   - _Requirements: 15.1, 15.2, 15.3, 15.4_
 
-- [ ] 47. 补全缺失页面迁移 - P2 中优先级页面（系统管理模块）
+- [x] 47. 补全缺失页面迁移 - P2 中优先级页面（系统管理模块）
 
 - [x] 47.1 迁移系统管理模块剩余页面（第一批）
   - 迁移分类管理页面 (category)

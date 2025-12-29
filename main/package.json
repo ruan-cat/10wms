@@ -189,7 +189,6 @@
 		"vite-plugin-remove-console": "^2.2.0",
 		"vite-plugin-router-warn": "^1.0.0",
 		"vite-plugin-vue-devtools": "^7.7.9",
-		"vite-plugin-vue-meta-layouts": "^0.5.1",
 		"vite-svg-loader": "^5.1.0",
 		"vue-eslint-parser": "^10.2.0",
 		"vue-tsc": "^2.2.12"

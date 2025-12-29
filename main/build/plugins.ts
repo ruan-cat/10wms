@@ -19,9 +19,6 @@ import { vitePluginFakeServer } from "vite-plugin-fake-server";
 import VueRouter from "unplugin-vue-router/vite";
 import { getRouteName } from "@ruan-cat/utils/unplugin-vue-router";
 
-// 布局插件
-import MetaLayouts from "vite-plugin-vue-meta-layouts";
-
 // 自动导入插件
 import AutoImport from "unplugin-auto-import/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
@@ -97,27 +94,6 @@ export function getPluginsList(
 	const lifecycle = process.env.npm_lifecycle_event;
 	return [
 		tailwindcss(),
-
-		/**
-		 * 布局插件
-		 * @description 注意到布局插件源码demo的写法 这里把布局组件移动到 `路由插件` 上面。
-		 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/unplugin-vue-router/vite.config.ts#L11-L17
-		 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/vite-plugin-pages/vite.config.ts#L8
-		 *
-		 * @see https://github.com/dishait/vite-plugin-vue-meta-layouts/blob/main/README_EN.md#config
-		 */
-		MetaLayouts({
-			// 本项目的路由文件夹名称为 layout
-			target: "src/layout",
-			// 为了避免影响其他地方 故设置默认布局的名称为 index
-			defaultLayout: "index",
-			skipTopLevelRouteLayout: true,
-			/**
-			 * 忽略掉全部 components 文件夹下面的组件 避免识别成布局组件
-			 * @see https://vscode.dev/github/dishait/vite-plugin-vue-meta-layouts/blob/main/examples/unplugin-vue-router/vite.config.ts#L13
-			 */
-			excludes: ["**/components/**/*.vue"],
-		}),
 
 		/**
 		 * 类型化路由插件

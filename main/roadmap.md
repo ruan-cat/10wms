@@ -9,7 +9,7 @@
 ### 安装依赖
 
 ```bash
-pnpm -F=@ruan-cat-10wms/main i -D unplugin-vue-router vite-plugin-vue-meta-layouts
+pnpm -F=@ruan-cat-10wms/main i -D unplugin-vue-router
 ```
 
 ### 配置自动导入插件需要的类型

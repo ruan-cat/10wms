@@ -116,3 +116,10 @@
 11. 将上述路由机制和术语，更新到 `CLAUDE.md` 文档内：
     - 增加 `主业务侧边栏` 和 `案例侧边栏` 的术语说明。
     - 在 `CLAUDE.md` 文档内，增加对上述路由与侧边栏识别机制的说明。但是注意要缩减篇幅，避免 `CLAUDE.md` 文件太长。给其他 AI 大模型带来较大的 token 负担，仅仅需要说明必要的机制即可。
+
+## 006 主项目删除全部关于 `vite-plugin-vue-meta-layouts` 的内容
+
+1. kiro 和 openspec 的迁移任务内，重点说明不再使用 `vite-plugin-vue-meta-layouts` 来完成布局改造。
+2. 主项目代码删除 `vite-plugin-vue-meta-layouts` 依赖，避免使用该 vite 插件，删除掉相关的类型导入配置等等。
+3. 我怀疑布局组件的内容没有热更新，因此我需要你先删除掉这个系列插件。避免混淆。毕竟在 pure-admin 框架内，确实没必要引入这款 `vite-plugin-vue-meta-layouts` 插件。
+4. 仓库信息： https://github.com/dishait/vite-plugin-vue-meta-layouts

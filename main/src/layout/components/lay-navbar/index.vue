@@ -46,7 +46,7 @@ const { t, locale, translationCh, translationEn } = useTranslationLang();
 
 		<LayNavMix v-if="layout === 'mix'" />
 
-		<div v-if="layout === 'vertical'" class="vertical-header-right">
+		<div class="vertical-header-right">
 			<!-- 侧边栏类型切换 -->
 			<SidebarTypeSwitcher />
 			<!-- 菜单搜索 -->

@@ -43,9 +43,7 @@
         自动化路由插件 准备类型识别
         https://uvr.esm.is/introduction.html#setup
       */
-      "unplugin-vue-router/client",
-      // 自动化布局插件 准备类型识别
-      "vite-plugin-vue-meta-layouts/client",
+      "unplugin-vue-router/client"
     ]
   },
   "include": [

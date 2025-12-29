@@ -33,6 +33,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - 主项目： 即 `main` 目录内的项目。是一个基于 `pure-admin` 模板的仓库。也被称呼为`本项目`。
 - 原项目： 即 `origin` 目录内的项目。也被称呼为`旧项目`。
 - `报告地址`： 即 `main\src\docs\reports` 目录。全部的报告文件都应该存放到这个目录内。
+- `侧边栏类型`： 用于区分不同类型的侧边栏菜单，包括：
+  - `wmsBusinessPage`（主业务侧边栏）：显示从 origin 项目迁移的业务页面
+  - `pureAdminExamplePage`（案例侧边栏）：显示 pure-admin 框架的示例页面
+- `pure-admin 路由`： Pure-Admin 框架原生提供的示例和功能路由，存放在 `main/src/router/modules/pure-admin/` 目录。
+- `business 路由`： 从旧项目迁移过来的业务路由，存放在 `main/src/router/modules/business/` 目录。
+- `主业务侧边栏`： 显示 WMS 业务页面的侧边栏，对应 `business` 路由（`sidebarType: wmsBusinessPage`）。
+- `案例侧边栏`： 显示 Pure-Admin 示例页面的侧边栏，对应 `pure-admin` 路由（`sidebarType: pureAdminExamplePage`）。
 - `pure-admin 路由`： Pure-Admin 框架原生提供的示例和功能路由，存放在 `main\src\router\modules\pure-admin` 目录。
 - `business 路由`： 从旧项目迁移过来的业务路由，存放在 `main\src\router\modules\business` 目录。
 
@@ -421,6 +428,80 @@ pnpm up-taze
 - pure-admin 文档 ： https://pure-admin.cn/
 - pure-admin 文档仓库 ： https://github.com/pure-admin/pure-admin-doc
 - pure-admin 注册路由 ： `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/01.指南/07.路由和菜单.md`
+
+### 13.2 侧边栏类型切换功能
+
+主项目实现了侧边栏类型区分功能，用于在主业务页面和框架示例页面之间切换。
+
+**核心 API**：`useSidebarType` 组合式函数（位于 `main/src/composables/use-sidebar-type/`）
+
+**使用方式**：
+
+- 在导航栏已集成 `<SidebarTypeSwitcher />` 切换组件
+- 侧边栏组件自动根据当前类型过滤显示对应的菜单
+- 切换状态会持久化到 localStorage
+
+**路由归属规则**：
+
+1. 约定式：`router/modules/business/` → 主业务，`router/modules/pure-admin/` → 案例示例
+2. 显式配置：在路由 `meta.sidebarType` 中指定（优先级更高）
+
+详细文档参见：`main/src/composables/use-sidebar-type/index.md`
+
+## 14. 路由与侧边栏管理
+
+### 14.1 路由分类
+
+项目路由分为两类，存放在不同目录：
+
+- **pure-admin 路由**: `main/src/router/modules/pure-admin/` - 框架示例路由
+- **business 路由**: `main/src/router/modules/business/` - 业务路由
+
+### 14.2 侧边栏类型
+
+通过 `meta.sidebarType` 字段区分侧边栏类型：
+
+|     类型     |           值           |         说明         |
+| :----------: | :--------------------: | :------------------: |
+| 主业务侧边栏 |   `wmsBusinessPage`    | WMS 业务页面（默认） |
+|  案例侧边栏  | `pureAdminExamplePage` | Pure-Admin 示例页面  |
+
+### 14.3 路由归属规则
+
+**约定式配置（默认）**：
+
+- `business` 目录的路由 → `wmsBusinessPage`
+- `pure-admin` 目录的路由 → `pureAdminExamplePage`
+
+**显式配置（优先级更高）**：
+
+```typescript
+{
+  path: "/example",
+  meta: {
+    title: "示例",
+    sidebarType: "pureAdminExamplePage" // 显式指定
+  }
+}
+```
+
+### 14.4 侧边栏切换
+
+使用 `useSidebarType` 组合式 API 切换侧边栏：
+
+```typescript
+import { useSidebarType } from "@/composables/use-sidebar-type";
+
+const { switchSidebarType } = useSidebarType();
+
+// 切换到主业务侧边栏
+switchSidebarType("wmsBusinessPage");
+
+// 切换到案例侧边栏
+switchSidebarType("pureAdminExamplePage");
+```
+
+详细文档：`main/src/composables/use-sidebar-type/index.md`
 
 ## 14. 路由管理规范
 

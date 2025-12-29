@@ -7,6 +7,7 @@ import { useTranslationLang } from "@/layout/hooks/useTranslationLang";
 import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
 import LaySidebarBreadCrumb from "../lay-sidebar/components/SidebarBreadCrumb.vue";
 import LaySidebarTopCollapse from "../lay-sidebar/components/SidebarTopCollapse.vue";
+import SidebarTypeSwitcher from "@/components/SidebarTypeSwitcher/index.vue";
 
 import GlobalizationIcon from "@/assets/svg/globalization.svg?component";
 import AccountSettingsIcon from "~icons/ri/user-settings-line";
@@ -46,6 +47,8 @@ const { t, locale, translationCh, translationEn } = useTranslationLang();
 		<LayNavMix v-if="layout === 'mix'" />
 
 		<div v-if="layout === 'vertical'" class="vertical-header-right">
+			<!-- 侧边栏类型切换 -->
+			<SidebarTypeSwitcher />
 			<!-- 菜单搜索 -->
 			<LaySearch id="header-search" />
 			<!-- 国际化 -->

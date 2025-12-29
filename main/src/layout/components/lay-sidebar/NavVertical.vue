@@ -11,6 +11,7 @@ import LaySidebarLogo from "../lay-sidebar/components/SidebarLogo.vue";
 import LaySidebarItem from "../lay-sidebar/components/SidebarItem.vue";
 import LaySidebarLeftCollapse from "../lay-sidebar/components/SidebarLeftCollapse.vue";
 import LaySidebarCenterCollapse from "../lay-sidebar/components/SidebarCenterCollapse.vue";
+import { useSidebarType } from "@/composables/use-sidebar-type";
 
 const route = useRoute();
 const isShow = ref(false);
@@ -19,13 +20,14 @@ const showLogo = ref(
 );
 
 const { device, pureApp, isCollapse, tooltipEffect, menuSelect, toggleSideBar } = useNav();
+const { filterRoutesBySidebarType, currentSidebarType } = useSidebarType();
 
 const subMenuData = ref([]);
 
 const menuData = computed(() => {
-	return pureApp.layout === "mix" && device.value !== "mobile"
-		? subMenuData.value
-		: usePermissionStoreHook().wholeMenus;
+	const baseMenus =
+		pureApp.layout === "mix" && device.value !== "mobile" ? subMenuData.value : usePermissionStoreHook().wholeMenus;
+	return filterRoutesBySidebarType(baseMenus, currentSidebarType.value);
 });
 
 const loading = computed(() => (pureApp.layout === "mix" ? false : menuData.value.length === 0 ? true : false));

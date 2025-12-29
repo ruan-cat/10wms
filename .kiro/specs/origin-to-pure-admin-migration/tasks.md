@@ -1256,22 +1256,67 @@
 - [x] 50. Checkpoint - 所有补全页面验证
   - P3 低优先级页面迁移已全部完成（7/7，100%）
 
-- [ ] 51. 补全页面迁移总结和文档更新
+- [x] 51. 侧边栏类型区分功能实现
 
-- [ ] 51.1 生成补全页面迁移报告
+- [x] 51.1 设计侧边栏类型区分方案
+  - 定义 SidebarType 类型（wmsBusinessPage | pureAdminExamplePage）
+  - 设计约定式配置规则（基于路由文件位置）
+  - 设计显式配置规则（meta.sidebarType）
+  - 设计状态持久化方案（localStorage）
+  - _Requirements: 16.1, 16.2_
+
+- [x] 51.2 实现 useSidebarType 组合式 API
+  - 创建 main/src/composables/use-sidebar-type/index.ts
+  - 实现 switchSidebarType 切换函数
+  - 实现 filterRoutesBySidebarType 过滤函数
+  - 实现 getSidebarTypeFromRoute 判断函数
+  - 使用泛型支持 menuType 和 RouteRecordRaw 类型
+  - _Requirements: 16.1, 16.3_
+
+- [x] 51.3 创建侧边栏类型切换组件
+  - 创建 main/src/components/SidebarTypeSwitcher/index.vue
+  - 实现切换按钮 UI
+  - 集成 useSidebarType API
+  - 添加切换动画效果
+  - _Requirements: 16.4_
+
+- [x] 51.4 集成到侧边栏组件
+  - 修改 NavVertical.vue 集成路由过滤
+  - 修改 NavHorizontal.vue 集成路由过滤
+  - 修改 lay-navbar/index.vue 添加切换器
+  - 测试菜单过滤功能
+  - _Requirements: 16.5_
+
+- [x] 51.5 编写完整文档
+  - 创建 use-sidebar-type/index.md API 文档
+  - 创建 use-sidebar-type/example.vue 使用示例
+  - 更新 CLAUDE.md 添加术语和使用说明
+  - 创建集成完成报告
+  - _Requirements: 16.6_
+
+- [x] 51.6 测试侧边栏类型区分功能
+  - 验证类型定义无错误
+  - 验证路由过滤逻辑正确
+  - 验证状态持久化正常
+  - 验证切换功能正常
+  - _Requirements: 16.7_
+
+- [ ] 52. 补全页面迁移总结和文档更新
+
+- [ ] 52.1 生成补全页面迁移报告
   - 统计迁移的页面数量
   - 记录遇到的问题和解决方案
   - 记录经验教训
   - 提供后续优化建议
   - _Requirements: All_
 
-- [ ] 51.2 更新迁移进度报告
+- [ ] 52.2 更新迁移进度报告
   - 更新整体迁移进度
   - 更新各模块完成情况
   - 更新风险评估
   - _Requirements: All_
 
-- [ ] 51.3 更新项目文档
+- [ ] 52.3 更新项目文档
   - 更新页面清单
   - 更新路由配置文档
   - 更新开发指南

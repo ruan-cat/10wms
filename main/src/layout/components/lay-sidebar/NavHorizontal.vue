@@ -10,6 +10,7 @@ import { useTranslationLang } from "../../hooks/useTranslationLang";
 import { usePermissionStoreHook } from "@/store/modules/permission";
 import LaySidebarItem from "../lay-sidebar/components/SidebarItem.vue";
 import LaySidebarFullScreen from "../lay-sidebar/components/SidebarFullScreen.vue";
+import { useSidebarType } from "@/composables/use-sidebar-type";
 
 import GlobalizationIcon from "@/assets/svg/globalization.svg?component";
 import AccountSettingsIcon from "~icons/ri/user-settings-line";
@@ -36,8 +37,13 @@ const {
 	getDropdownItemStyle,
 	getDropdownItemClass,
 } = useNav();
+const { filterRoutesBySidebarType, currentSidebarType } = useSidebarType();
 
 const defaultActive = computed(() => (!isAllEmpty(route.meta?.activePath) ? route.meta.activePath : route.path));
+
+const filteredMenus = computed(() => {
+	return filterRoutesBySidebarType(usePermissionStoreHook().wholeMenus, currentSidebarType.value);
+});
 
 nextTick(() => {
 	menuRef.value?.handleResize();
@@ -63,12 +69,7 @@ onMounted(() => {
 			class="horizontal-header-menu"
 			:default-active="defaultActive"
 		>
-			<LaySidebarItem
-				v-for="route in usePermissionStoreHook().wholeMenus"
-				:key="route.path"
-				:item="route"
-				:base-path="route.path"
-			/>
+			<LaySidebarItem v-for="route in filteredMenus" :key="route.path" :item="route" :base-path="route.path" />
 		</el-menu>
 		<div class="horizontal-header-right">
 			<!-- 菜单搜索 -->

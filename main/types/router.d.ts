@@ -22,11 +22,23 @@ declare global {
 	}
 
 	/**
+	 * 侧边栏类型
+	 * @description 用于区分不同类型的侧边栏菜单
+	 */
+	type SidebarType =
+		/** Pure-Admin 提供的示例页面 */
+		| "pureAdminExamplePage"
+		/** WMS 业务页面 */
+		| "wmsBusinessPage";
+
+	/**
 	 * @description 完整子路由的`meta`配置表
 	 */
 	interface CustomizeRouteMeta {
 		/** 菜单名称（兼容国际化、非国际化，如何用国际化的写法就必须在根目录的`locales`文件夹下对应添加） `必填` */
 		title: string;
+		/** 侧边栏类型（用于区分业务侧边栏和示例侧边栏）`可选` */
+		sidebarType?: SidebarType;
 		/** 菜单图标 `可选` */
 		icon?: string | FunctionalComponent;
 		/** 菜单名称右侧的额外图标 */

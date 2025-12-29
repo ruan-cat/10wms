@@ -1,5 +1,4 @@
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "@/types/global";
 
 const Layout = () => import("@/layout/index.vue");
 

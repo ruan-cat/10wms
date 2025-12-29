@@ -147,7 +147,6 @@ Business 路由必须遵循以下规范：
 
 ```typescript
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "@/types/global";
 
 const Layout = () => import("@/layout/index.vue");
 

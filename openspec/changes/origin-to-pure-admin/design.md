@@ -415,8 +415,6 @@ main/src/pages/
 
 ```typescript
 // main/src/router/modules/system.ts
-import { RouteConfigsTable } from "@/types/router";
-
 const systemRouter: RouteConfigsTable = {
 	path: "/system",
 	redirect: "/system/user",

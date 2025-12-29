@@ -603,7 +603,6 @@ const modules: Record<string, any> = {
 
 ```typescript
 import { $t } from "@/plugins/i18n";
-import type { RouteConfigsTable } from "@/types/global";
 
 const Layout = () => import("@/layout/index.vue");
 
@@ -640,6 +639,56 @@ export default moduleRouter;
 2. **保持目录整洁**：不要在 `modules` 根目录直接创建路由文件
 3. **遵循命名规范**：路由文件名使用 kebab-case 格式
 4. **及时更新文档**：新增业务模块时，同步更新相关文档
+
+### 14.6 RouteConfigsTable 类型使用规范
+
+`RouteConfigsTable` 是 Pure-Admin 框架定义的全局类型，用于路由配置。
+
+**重要规则**：
+
+1. **不要手动导入**：`RouteConfigsTable` 是全局类型，无需使用 `import` 语句导入
+2. **直接使用**：在路由文件中可以直接使用该类型，TypeScript 会自动识别
+
+**错误写法**：
+
+```typescript
+// ❌ 错误：不应该手动导入全局类型
+import type { RouteConfigsTable } from "@/types/global";
+import type { RouteConfigsTable } from "@/types/router";
+
+const router: RouteConfigsTable = {
+	// ...
+};
+```
+
+**正确写法**：
+
+```typescript
+// ✅ 正确：直接使用全局类型，无需导入
+import { $t } from "@/plugins/i18n";
+
+const Layout = () => import("@/layout/index.vue");
+
+const router: RouteConfigsTable = {
+	path: "/example",
+	name: "Example",
+	component: Layout,
+	meta: {
+		title: $t("menus.example"),
+		icon: "ep:menu",
+		rank: 10,
+	},
+	children: [],
+};
+
+export default router;
+```
+
+**类型定义位置**：
+
+- `RouteConfigsTable` 类型定义在 `main/types/router.d.ts` 文件中
+- 该文件通过 TypeScript 的全局声明机制，使类型在整个项目中可用
+- 无需在每个使用的文件中重复导入
 
 ## 获取技术栈对应的上下文
 

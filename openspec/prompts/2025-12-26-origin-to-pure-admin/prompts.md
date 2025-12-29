@@ -123,3 +123,14 @@
 2. 主项目代码删除 `vite-plugin-vue-meta-layouts` 依赖，避免使用该 vite 插件，删除掉相关的类型导入配置等等。
 3. 我怀疑布局组件的内容没有热更新，因此我需要你先删除掉这个系列插件。避免混淆。毕竟在 pure-admin 框架内，确实没必要引入这款 `vite-plugin-vue-meta-layouts` 插件。
 4. 仓库信息： https://github.com/dishait/vite-plugin-vue-meta-layouts
+
+## 007 避免使用错误的 `RouteConfigsTable` 写法
+
+1. 类型 RouteConfigsTable 不应该使用类似于 `"@/types/global"` 的方式导入。这是全局类型，无需手动导入。
+2. 更新更改 `CLAUDE.md` 文档，避免错误写法。
+3. 更新全部 `main\src\router\modules\business` 目录下面的写法，避免出现错误导入。
+4. 更新 kiro.origin-to-pure-admin 的 spec 规格文件：
+   - .kiro\specs\origin-to-pure-admin-migration\design.md
+   - .kiro\specs\origin-to-pure-admin-migration\requirements.md
+5. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
+   - openspec\changes\origin-to-pure-admin\specs

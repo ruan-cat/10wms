@@ -9,7 +9,7 @@ export default {
 	redirect: "/billing/billing-mode",
 	meta: {
 		icon: "ri:money-dollar-circle-line",
-		title: "计费配置",
+		title: $t("business.billing"),
 		rank: 50,
 	},
 	children: [
@@ -18,7 +18,7 @@ export default {
 			name: "BillingMode",
 			component: () => import("@/pages/billing/billing-mode/index.vue"),
 			meta: {
-				title: "计费模式",
+				title: $t("business.billingMode"),
 				icon: "ri:calculator-line",
 			},
 		},
@@ -27,7 +27,7 @@ export default {
 			name: "ExpenseTemplate",
 			component: () => import("@/pages/billing/expense-template/index.vue"),
 			meta: {
-				title: "费用模板",
+				title: $t("business.expenseTemplate"),
 				icon: "ri:file-text-line",
 			},
 		},
@@ -36,7 +36,7 @@ export default {
 			name: "BillingCommodityCategory",
 			component: () => import("@/pages/billing/billing-commodity-category/index.vue"),
 			meta: {
-				title: "计费商品类别",
+				title: $t("business.billingCommodityCategory"),
 				icon: "ri:price-tag-2-line",
 			},
 		},
@@ -45,7 +45,7 @@ export default {
 			name: "BillingDate",
 			component: () => import("@/pages/billing/billing-date/index.vue"),
 			meta: {
-				title: "计费日期",
+				title: $t("business.billingDate"),
 				icon: "ri:calendar-2-line",
 			},
 		},
@@ -54,7 +54,7 @@ export default {
 			name: "ContractBillingMethod",
 			component: () => import("@/pages/billing/contract-billing-method/index.vue"),
 			meta: {
-				title: "合同计费方式",
+				title: $t("business.contractBillingMethod"),
 				icon: "ri:file-list-2-line",
 			},
 		},
@@ -63,7 +63,7 @@ export default {
 			name: "CustomerBillingConfiguration",
 			component: () => import("@/pages/billing/customer-billing-configuration/index.vue"),
 			meta: {
-				title: "客户计费配置",
+				title: $t("business.customerBillingConfiguration"),
 				icon: "ri:user-settings-line",
 			},
 		},
@@ -72,7 +72,7 @@ export default {
 			name: "ExpenseName",
 			component: () => import("@/pages/billing/expense-name/index.vue"),
 			meta: {
-				title: "费用名称",
+				title: $t("business.expenseName"),
 				icon: "ri:text",
 			},
 		},
@@ -81,7 +81,7 @@ export default {
 			name: "ExpenseType",
 			component: () => import("@/pages/billing/expense-type/index.vue"),
 			meta: {
-				title: "费用类型",
+				title: $t("business.expenseType"),
 				icon: "ri:list-check",
 			},
 		},
@@ -90,7 +90,7 @@ export default {
 			name: "MeasurementType",
 			component: () => import("@/pages/billing/measurement-type/index.vue"),
 			meta: {
-				title: "计量类型",
+				title: $t("business.measurementType"),
 				icon: "ri:scales-3-line",
 			},
 		},
@@ -99,7 +99,7 @@ export default {
 			name: "PriceType",
 			component: () => import("@/pages/billing/price-type/index.vue"),
 			meta: {
-				title: "价格类型",
+				title: $t("business.priceType"),
 				icon: "ri:money-cny-circle-line",
 			},
 		},
@@ -108,7 +108,7 @@ export default {
 			name: "WarehousingRate",
 			component: () => import("@/pages/billing/warehousing-rate/index.vue"),
 			meta: {
-				title: "入库费率",
+				title: $t("business.warehousingRate"),
 				icon: "ri:percent-line",
 			},
 		},

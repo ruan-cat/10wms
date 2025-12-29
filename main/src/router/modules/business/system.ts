@@ -1,3 +1,5 @@
+import { $t } from "@/plugins/i18n";
+
 const Layout = () => import("@/layout/index.vue");
 
 export default {
@@ -7,7 +9,7 @@ export default {
 	redirect: "/system/user",
 	meta: {
 		icon: "ri:shield-user-line",
-		title: "系统管理",
+		title: $t("business.system"),
 		rank: 10,
 	},
 	children: [
@@ -16,7 +18,7 @@ export default {
 			name: "User",
 			component: () => import("@/pages/system/user/index.vue"),
 			meta: {
-				title: "用户管理",
+				title: $t("business.user"),
 				icon: "ri:user-line",
 			},
 		},
@@ -25,7 +27,7 @@ export default {
 			name: "Role",
 			component: () => import("@/pages/system/role/index.vue"),
 			meta: {
-				title: "角色管理",
+				title: $t("business.role"),
 				icon: "ri:admin-line",
 			},
 		},
@@ -34,7 +36,7 @@ export default {
 			name: "Menu",
 			component: () => import("@/pages/system/menu/index.vue"),
 			meta: {
-				title: "菜单管理",
+				title: $t("business.menu"),
 				icon: "ri:menu-line",
 			},
 		},
@@ -43,7 +45,7 @@ export default {
 			name: "Dept",
 			component: () => import("@/pages/system/dept/index.vue"),
 			meta: {
-				title: "部门管理",
+				title: $t("business.dept"),
 				icon: "ri:organization-chart",
 			},
 		},
@@ -52,7 +54,7 @@ export default {
 			name: "Dictionary",
 			component: () => import("@/pages/system/dictionary/index.vue"),
 			meta: {
-				title: "字典管理",
+				title: $t("business.dictionary"),
 				icon: "ri:book-2-line",
 			},
 		},
@@ -61,7 +63,7 @@ export default {
 			name: "Category",
 			component: () => import("@/pages/system/category/index.vue"),
 			meta: {
-				title: "分类管理",
+				title: $t("business.category"),
 				icon: "ri:folder-open-line",
 			},
 		},
@@ -70,7 +72,7 @@ export default {
 			name: "Icon",
 			component: () => import("@/pages/system/icon/index.vue"),
 			meta: {
-				title: "图标管理",
+				title: $t("business.icon"),
 				icon: "ri:palette-line",
 			},
 		},
@@ -79,7 +81,7 @@ export default {
 			name: "Language",
 			component: () => import("@/pages/system/language/index.vue"),
 			meta: {
-				title: "语言管理",
+				title: $t("business.language"),
 				icon: "ri:translate-2",
 			},
 		},
@@ -88,7 +90,7 @@ export default {
 			name: "SystemNotice",
 			component: () => import("@/pages/system/system-notice/index.vue"),
 			meta: {
-				title: "系统通知",
+				title: $t("business.systemNotice"),
 				icon: "ri:notification-2-line",
 			},
 		},

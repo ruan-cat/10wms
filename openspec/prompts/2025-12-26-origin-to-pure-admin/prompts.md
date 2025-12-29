@@ -153,3 +153,20 @@
    - .kiro\specs\origin-to-pure-admin-migration\requirements.md
 3. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
    - openspec\changes\origin-to-pure-admin\specs
+
+## 009 优化 i18n 说明文本；改造路由页面的 i18n 写法；明确项目的 i18n 改造与使用规范
+
+1. 阅读以下 url 图片。
+
+![2025-12-29-22-33-16](https://gh-img-store.ruan-cat.com/01s-docs/10wms/2025-12-29-22-33-16.png)
+
+2. 在 `main\src\router\modules\business` 内。使用了不存在 `menus.message` 字段，是因为 i18n 配置缺少了。你应该补全 i18n。
+3. 阅读 `https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/02.进阶/03.国际化.md` 文档，了解清楚主项目如何配置 i18n 文本。
+4. 补全 `main\src\router\modules\business` 目录内全部路由文件的 i18n 说明配置。
+5. 将其他的使用中文的部分，全部改写成 i18n 写法。我希望整个业务路由的文本，都使用 i18n 来管理。
+6. 更新以下文件，说明清楚在迁移改造的时候，需要满足 i18n 编写规范。
+7. 更新 kiro.origin-to-pure-admin 的 spec 规格文件：
+   - .kiro\specs\origin-to-pure-admin-migration\design.md
+   - .kiro\specs\origin-to-pure-admin-migration\requirements.md
+8. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
+   - openspec\changes\origin-to-pure-admin\specs

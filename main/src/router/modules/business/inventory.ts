@@ -1,3 +1,5 @@
+import { $t } from "@/plugins/i18n";
+
 const Layout = () => import("@/layout/index.vue");
 
 export default {
@@ -7,7 +9,7 @@ export default {
 	redirect: "/inventory/check",
 	meta: {
 		icon: "ri:archive-line",
-		title: "库存管理",
+		title: $t("business.inventory"),
 		rank: 35,
 	},
 	children: [
@@ -16,7 +18,7 @@ export default {
 			name: "InventoryCheck",
 			component: () => import("@/pages/inventory/check/index.vue"),
 			meta: {
-				title: "库存盘点",
+				title: $t("business.inventoryCheck"),
 				icon: "ri:file-list-line",
 			},
 		},
@@ -25,7 +27,7 @@ export default {
 			name: "ComprehensiveInventory",
 			component: () => import("@/pages/inventory/comprehensive-inventory/index.vue"),
 			meta: {
-				title: "综合库存查询",
+				title: $t("business.comprehensiveInventory"),
 				icon: "ri:search-2-line",
 			},
 		},
@@ -34,7 +36,7 @@ export default {
 			name: "Stock",
 			component: () => import("@/pages/inventory/stock/index.vue"),
 			meta: {
-				title: "库存查询",
+				title: $t("business.stock"),
 				icon: "ri:search-line",
 			},
 		},
@@ -43,7 +45,7 @@ export default {
 			name: "DifferentialPosting",
 			component: () => import("@/pages/inventory/differentialposting/index.vue"),
 			meta: {
-				title: "差异过账管理",
+				title: $t("business.differentialPosting"),
 				icon: "ri:exchange-line",
 			},
 		},
@@ -52,7 +54,7 @@ export default {
 			name: "DoubleQuotation",
 			component: () => import("@/pages/inventory/double-quotation/index.vue"),
 			meta: {
-				title: "复盘",
+				title: $t("business.doubleQuotation"),
 				icon: "ri:refresh-line",
 			},
 		},
@@ -61,7 +63,7 @@ export default {
 			name: "InventoryDifference",
 			component: () => import("@/pages/inventory/inventory-difference/index.vue"),
 			meta: {
-				title: "盘点差异",
+				title: $t("business.inventoryDifference"),
 				icon: "ri:contrast-2-line",
 			},
 		},
@@ -70,7 +72,7 @@ export default {
 			name: "MoveInventory",
 			component: () => import("@/pages/inventory/move-inventory/index.vue"),
 			meta: {
-				title: "移库管理",
+				title: $t("business.moveInventory"),
 				icon: "ri:arrow-left-right-line",
 			},
 		},
@@ -79,7 +81,7 @@ export default {
 			name: "MovingCount",
 			component: () => import("@/pages/inventory/moving-count/index.vue"),
 			meta: {
-				title: "动仓盘点",
+				title: $t("business.movingCount"),
 				icon: "ri:stack-line",
 			},
 		},
@@ -88,7 +90,7 @@ export default {
 			name: "ShelfAdjustment",
 			component: () => import("@/pages/inventory/shelf-adjustment/index.vue"),
 			meta: {
-				title: "上架调整",
+				title: $t("business.shelfAdjustment"),
 				icon: "ri:arrow-up-line",
 			},
 		},
@@ -97,7 +99,7 @@ export default {
 			name: "TakedownAdjustment",
 			component: () => import("@/pages/inventory/takedown-adjustment/index.vue"),
 			meta: {
-				title: "下架调整",
+				title: $t("business.takedownAdjustment"),
 				icon: "ri:arrow-down-line",
 			},
 		},

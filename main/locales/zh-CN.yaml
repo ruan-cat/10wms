@@ -240,3 +240,105 @@ login:
   purePassWordUpdateReg: 修改密码成功
 test:
   nihao: 你好，这是测试片段
+
+# 业务模块菜单
+business:
+  # 系统管理
+  system: 系统管理
+  user: 用户管理
+  role: 角色管理
+  menu: 菜单管理
+  dept: 部门管理
+  dictionary: 字典管理
+  category: 分类管理
+  icon: 图标管理
+  language: 语言管理
+  systemNotice: 系统通知
+
+  # 基础数据
+  baseData: 基础数据
+  goods: 商品管理
+  goodsDetail: 商品详情
+  customer: 客户管理
+  supplier: 供应商管理
+  rfid: RFID管理
+  thirdCustomer: 第三方客户
+
+  # 采购管理
+  purchase: 采购管理
+  appointment: 预约采购
+  batchReceiving: 批量收货
+  receiving: 收货管理
+  stockInquiry: 库存查询
+  clientPurchase: 客户进货
+  otherWarehousing: 其他入库
+  purchaseNotificationDetails: 进货通知明细
+  receivingRegister: 收货登记
+  receivedUnlistedStock: 收货未上架库存
+
+  # 库存管理
+  inventory: 库存管理
+  inventoryCheck: 库存盘点
+  comprehensiveInventory: 综合库存查询
+  stock: 库存查询
+  differentialPosting: 差异过账管理
+  doubleQuotation: 复盘
+  inventoryDifference: 盘点差异
+  moveInventory: 移库管理
+  movingCount: 动仓盘点
+  shelfAdjustment: 上架调整
+  takedownAdjustment: 下架调整
+
+  # 计费配置
+  billing: 计费配置
+  billingMode: 计费模式
+  expenseTemplate: 费用模板
+  billingCommodityCategory: 计费商品类别
+  billingDate: 计费日期
+  contractBillingMethod: 合同计费方式
+  customerBillingConfiguration: 客户计费配置
+  expenseName: 费用名称
+  expenseType: 费用类型
+  measurementType: 计量类型
+  priceType: 价格类型
+  warehousingRate: 入库费率
+
+  # 消息中间件
+  message: 消息中间件
+  messageCenter: 消息中心
+  messageTemplate: 消息模板
+  workSetting: 工作设置
+  workSql: 工作SQL
+
+  # 人员配置
+  personnel: 人员配置
+  academicCode: 学历代码
+  employmentStatus: 就业状态
+  genderCode: 性别代码
+  workStatus: 工作状态
+
+  # 区域配置
+  region: 区域配置
+  areaInformation: 区域信息
+  cityType: 城市类型
+  districtInformation: 区县信息
+  regionalInformation: 地区信息
+
+  # 日常检查
+  dailyCheck: 日常检查
+  abnormalDelivery: 异常发货
+  temperature: 温度维护
+  receivedUnsold: 收货未上架
+  shipmentDelayWarn: 出货延迟预警
+
+  # 基础配置
+  baseConfig: 基础配置
+  measuringUnit: 计量单位
+  productCategory: 产品类别
+  encodingType: 编码类型
+  flatType: 房型类型
+  parameterType: 参数类型
+  productAttribute: 产品属性
+  qualityCode: 品质代码
+  qualityInspectionStatus: 品检状态
+  systemParameter: 系统参数

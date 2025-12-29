@@ -24,6 +24,10 @@
 - **路由图标**: 路由配置中的 `meta.icon` 字段，用于在菜单中显示图标
 - **细线图标**: 使用细线条绘制的图标风格，如 Remix Icon 的 `-line` 后缀图标
 - **实心图标**: 使用填充色绘制的图标风格，如 Remix Icon 的 `-fill` 后缀图标
+- **i18n**: 国际化（Internationalization）的缩写，用于支持多语言的系统
+- **$t 函数**: Pure-Admin 框架提供的国际化翻译函数，用于获取当前语言的文本
+- **i18n 键**: 国际化配置文件中的键名，用于标识特定的文本内容
+- **business 命名空间**: 业务路由专用的 i18n 命名空间，所有业务路由文本都在此命名空间下配置
 
 ## Requirements
 
@@ -220,3 +224,17 @@
 4. WHEN 迁移系统配置父级路由时 THEN 迁移系统 SHALL 为父级路由的 meta.icon 字段配置合适的图标
 5. WHEN 迁移系统配置子级路由时 THEN 迁移系统 SHALL 为子级路由的 meta.icon 字段配置合适的图标
 6. WHEN 迁移系统完成图标配置时 THEN 迁移系统 SHALL 验证所有图标在菜单中正常显示且风格统一
+
+### Requirement 17
+
+**User Story:** 作为开发团队，我希望为所有业务路由配置国际化支持，以便系统能够支持多语言并提升用户体验。
+
+#### Acceptance Criteria
+
+1. WHEN 迁移系统配置路由标题时 THEN 迁移系统 SHALL 使用 $t 函数引用 i18n 键而不是硬编码中文文本
+2. WHEN 迁移系统配置业务路由 i18n 时 THEN 迁移系统 SHALL 在 main/locales/zh-CN.yaml 的 business 命名空间下配置所有文本
+3. WHEN 迁移系统定义 i18n 键名时 THEN 迁移系统 SHALL 使用 camelCase 格式且与路由功能语义匹配
+4. WHEN 迁移系统配置父级路由时 THEN 迁移系统 SHALL 为父级路由的 meta.title 配置 i18n 键
+5. WHEN 迁移系统配置子级路由时 THEN 迁移系统 SHALL 为子级路由的 meta.title 配置 i18n 键
+6. WHEN 迁移系统完成 i18n 配置时 THEN 迁移系统 SHALL 验证所有路由标题在菜单中正确显示中文文本
+7. WHEN 迁移系统使用 $t 函数时 THEN 迁移系统 SHALL 在路由文件顶部导入 $t 函数（import { $t } from "@/plugins/i18n"）

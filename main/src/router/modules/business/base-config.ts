@@ -1,3 +1,5 @@
+import { $t } from "@/plugins/i18n";
+
 const Layout = () => import("@/layout/index.vue");
 
 export default {
@@ -7,7 +9,7 @@ export default {
 	redirect: "/base-config/measuring-unit",
 	meta: {
 		icon: "ri:settings-3-line",
-		title: "基础配置",
+		title: $t("business.baseConfig"),
 		rank: 40,
 	},
 	children: [
@@ -16,7 +18,7 @@ export default {
 			name: "MeasuringUnit",
 			component: () => import("@/pages/base-config/measuring-unit/index.vue"),
 			meta: {
-				title: "计量单位",
+				title: $t("business.measuringUnit"),
 				icon: "ri:ruler-line",
 			},
 		},
@@ -25,7 +27,7 @@ export default {
 			name: "ProductCategory",
 			component: () => import("@/pages/base-config/product-category/index.vue"),
 			meta: {
-				title: "产品类别",
+				title: $t("business.productCategory"),
 				icon: "ri:folder-3-line",
 			},
 		},
@@ -34,7 +36,7 @@ export default {
 			name: "EncodingType",
 			component: () => import("@/pages/base-config/encoding-type/index.vue"),
 			meta: {
-				title: "编码类型",
+				title: $t("business.encodingType"),
 				icon: "ri:barcode-line",
 			},
 		},
@@ -43,7 +45,7 @@ export default {
 			name: "FlatType",
 			component: () => import("@/pages/base-config/flat-type/index.vue"),
 			meta: {
-				title: "房型类型",
+				title: $t("business.flatType"),
 				icon: "ri:home-4-line",
 			},
 		},
@@ -52,7 +54,7 @@ export default {
 			name: "ParameterType",
 			component: () => import("@/pages/base-config/parameter-type/index.vue"),
 			meta: {
-				title: "参数类型",
+				title: $t("business.parameterType"),
 				icon: "ri:list-settings-line",
 			},
 		},
@@ -61,7 +63,7 @@ export default {
 			name: "ProductAttribute",
 			component: () => import("@/pages/base-config/product-attribute/index.vue"),
 			meta: {
-				title: "产品属性",
+				title: $t("business.productAttribute"),
 				icon: "ri:price-tag-3-line",
 			},
 		},
@@ -70,7 +72,7 @@ export default {
 			name: "QualityCode",
 			component: () => import("@/pages/base-config/quality-code/index.vue"),
 			meta: {
-				title: "品质代码",
+				title: $t("business.qualityCode"),
 				icon: "ri:medal-line",
 			},
 		},
@@ -79,7 +81,7 @@ export default {
 			name: "QualityInspectionStatus",
 			component: () => import("@/pages/base-config/quality-inspection-status/index.vue"),
 			meta: {
-				title: "品检状态",
+				title: $t("business.qualityInspectionStatus"),
 				icon: "ri:checkbox-circle-line",
 			},
 		},
@@ -88,7 +90,7 @@ export default {
 			name: "SystemParameter",
 			component: () => import("@/pages/base-config/system-parameter/index.vue"),
 			meta: {
-				title: "系统参数",
+				title: $t("business.systemParameter"),
 				icon: "ri:settings-4-line",
 			},
 		},

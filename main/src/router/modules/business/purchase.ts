@@ -1,3 +1,5 @@
+import { $t } from "@/plugins/i18n";
+
 const Layout = () => import("@/layout/index.vue");
 
 export default {
@@ -7,7 +9,7 @@ export default {
 	redirect: "/purchase/appointment",
 	meta: {
 		icon: "ri:shopping-cart-2-line",
-		title: "采购管理",
+		title: $t("business.purchase"),
 		rank: 32,
 	},
 	children: [
@@ -16,7 +18,7 @@ export default {
 			name: "Appointment",
 			component: () => import("@/pages/purchase/appointment/index.vue"),
 			meta: {
-				title: "预约采购",
+				title: $t("business.appointment"),
 				icon: "ri:calendar-check-line",
 			},
 		},
@@ -25,7 +27,7 @@ export default {
 			name: "BatchReceiving",
 			component: () => import("@/pages/purchase/batch-receiving/index.vue"),
 			meta: {
-				title: "批量收货",
+				title: $t("business.batchReceiving"),
 				icon: "ri:inbox-archive-line",
 			},
 		},
@@ -34,7 +36,7 @@ export default {
 			name: "Receiving",
 			component: () => import("@/pages/purchase/receiving/index.vue"),
 			meta: {
-				title: "收货管理",
+				title: $t("business.receiving"),
 				icon: "ri:inbox-line",
 			},
 		},
@@ -43,7 +45,7 @@ export default {
 			name: "StockInquiry",
 			component: () => import("@/pages/purchase/stock-inquiry/index.vue"),
 			meta: {
-				title: "库存查询",
+				title: $t("business.stockInquiry"),
 				icon: "ri:search-eye-line",
 			},
 		},
@@ -52,7 +54,7 @@ export default {
 			name: "ClientPurchase",
 			component: () => import("@/pages/purchase/client-purchase/index.vue"),
 			meta: {
-				title: "客户进货",
+				title: $t("business.clientPurchase"),
 				icon: "ri:user-add-line",
 			},
 		},
@@ -61,7 +63,7 @@ export default {
 			name: "OtherWarehousing",
 			component: () => import("@/pages/purchase/other-warehousing/index.vue"),
 			meta: {
-				title: "其他入库",
+				title: $t("business.otherWarehousing"),
 				icon: "ri:download-2-line",
 			},
 		},
@@ -70,7 +72,7 @@ export default {
 			name: "PurchaseNotificationDetails",
 			component: () => import("@/pages/purchase/purchase-notification-details/index.vue"),
 			meta: {
-				title: "进货通知明细",
+				title: $t("business.purchaseNotificationDetails"),
 				icon: "ri:notification-3-line",
 			},
 		},
@@ -79,7 +81,7 @@ export default {
 			name: "ReceivingRegister",
 			component: () => import("@/pages/purchase/receiving-register/index.vue"),
 			meta: {
-				title: "收货登记",
+				title: $t("business.receivingRegister"),
 				icon: "ri:file-add-line",
 			},
 		},
@@ -88,7 +90,7 @@ export default {
 			name: "ReceivedUnlistedStock",
 			component: () => import("@/pages/purchase/received-unlisted-stock/index.vue"),
 			meta: {
-				title: "收货未上架库存",
+				title: $t("business.receivedUnlistedStock"),
 				icon: "ri:inbox-2-line",
 			},
 		},

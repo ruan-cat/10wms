@@ -247,6 +247,111 @@ meta: {
 - Iconify 图标搜索：https://icon-sets.iconify.design/
 - Pure-Admin 图标文档：https://github.com/pure-admin/pure-admin-doc/blob/master/docs/01.指南/02.进阶/01.图标.md
 
+### 5.4 国际化（i18n）配置规范
+
+**配置原则**：
+
+1. **禁止硬编码**：所有业务路由的文本内容必须使用 i18n 管理，不允许硬编码中文文本
+2. **统一命名空间**：业务路由使用 `business` 命名空间
+3. **语义化键名**：i18n 键名使用 camelCase 格式，与功能语义匹配
+
+**配置位置**：
+
+- 配置文件：`main/locales/zh-CN.yaml`
+- 命名空间：`business`
+
+**使用步骤**：
+
+1. 在路由文件顶部导入 $t 函数
+2. 在 meta.title 中使用 $t 函数引用 i18n 键
+3. 在 zh-CN.yaml 的 business 命名空间下配置对应的中文文本
+
+**配置示例**：
+
+```yaml
+# main/locales/zh-CN.yaml
+business:
+  # 系统管理模块
+  system: 系统管理
+  systemUser: 用户管理
+  systemRole: 角色管理
+  systemMenu: 菜单管理
+  systemDept: 部门管理
+
+  # 基础数据模块
+  baseData: 基础数据
+  baseDataGoods: 商品管理
+  baseDataCustomer: 客户管理
+  baseDataSupplier: 供应商管理
+```
+
+**路由配置示例**：
+
+```typescript
+// ✅ 正确：使用 i18n
+import { $t } from "@/plugins/i18n";
+
+const Layout = () => import("@/layout/index.vue");
+
+const systemRouter: RouteConfigsTable = {
+	path: "/system",
+	name: "System",
+	component: Layout,
+	redirect: "/system/user",
+	meta: {
+		title: $t("business.system"), // 使用 i18n
+		icon: "ri:shield-user-line",
+		rank: 1,
+	},
+	children: [
+		{
+			path: "/system/user",
+			name: "SystemUser",
+			component: () => import("@/pages/system/user/index.vue"),
+			meta: {
+				title: $t("business.systemUser"), // 使用 i18n
+				showLink: true,
+			},
+		},
+	],
+};
+
+export default systemRouter;
+```
+
+**错误示例（不要使用）**：
+
+```typescript
+// ❌ 错误：硬编码中文文本
+meta: {
+  title: "系统管理",  // 不要硬编码
+}
+
+// ❌ 错误：使用不存在的 i18n 键
+meta: {
+  title: $t("menus.system"),  // menus 命名空间不存在
+}
+
+// ❌ 错误：未导入 $t 函数
+meta: {
+  title: $t("business.system"),  // 缺少 import { $t } from "@/plugins/i18n";
+}
+```
+
+**键名规范**：
+
+1. **父级模块**：使用简短的模块名称（如 `system`、`baseData`）
+2. **子级页面**：使用 `模块名 + 页面名` 的组合（如 `systemUser`、`baseDataGoods`）
+3. **使用 camelCase**：所有键名使用驼峰命名法
+4. **语义清晰**：键名应清晰表达功能含义
+
+**验证方法**：
+
+1. 检查所有路由文件是否导入了 $t 函数
+2. 检查所有 meta.title 是否使用 $t 函数
+3. 检查 zh-CN.yaml 中是否配置了所有使用的 i18n 键
+4. 在浏览器中验证菜单文本是否正确显示
+
 ## 6. 新增路由流程
 
 ### 6.1 新增 Pure-Admin 路由

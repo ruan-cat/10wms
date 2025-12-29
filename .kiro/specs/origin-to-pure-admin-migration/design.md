@@ -482,7 +482,7 @@ interface PaginationConfig {
 
 ### Route Configuration Model
 
-```typescript
+````typescript
 interface RouteMetaConfig {
 	// Pure-Admin 标准字段
 	title: string;
@@ -515,7 +515,70 @@ interface RouteMetaConfig {
  * - 数据管理: ri:database-2-line
  * - 设置配置: ri:settings-3-line
  */
-```
+
+/**
+ * 国际化（i18n）配置规范
+ *
+ * 所有业务路由的文本内容必须使用国际化管理，不允许硬编码中文文本。
+ *
+ * 配置位置：
+ * - 业务路由 i18n 配置文件：main/locales/zh-CN.yaml
+ * - 命名空间：business
+ *
+ * 使用方式：
+ * 1. 在路由文件顶部导入 $t 函数：import { $t } from "@/plugins/i18n";
+ * 2. 在 meta.title 中使用 $t 函数：title: $t("business.xxx")
+ * 3. 在 zh-CN.yaml 的 business 命名空间下配置对应的中文文本
+ *
+ * 键名规范：
+ * - 使用 camelCase 格式
+ * - 键名应与功能语义匹配
+ * - 父级模块使用简短名称，子级页面使用完整描述
+ *
+ * 示例：
+ * ```yaml
+ * business:
+ *   system: 系统管理
+ *   systemUser: 用户管理
+ *   systemRole: 角色管理
+ *   systemMenu: 菜单管理
+ * ```
+ *
+ * 路由配置示例：
+ * ```typescript
+ * import { $t } from "@/plugins/i18n";
+ *
+ * const systemRouter: RouteConfigsTable = {
+ *   path: "/system",
+ *   meta: {
+ *     title: $t("business.system"),  // 使用 i18n
+ *     icon: "ri:shield-user-line",
+ *   },
+ *   children: [
+ *     {
+ *       path: "/system/user",
+ *       meta: {
+ *         title: $t("business.systemUser"),  // 使用 i18n
+ *       },
+ *     },
+ *   ],
+ * };
+ * ```
+ *
+ * 错误示例（不要使用）：
+ * ```typescript
+ * // ❌ 错误：硬编码中文文本
+ * meta: {
+ *   title: "系统管理",
+ * }
+ *
+ * // ❌ 错误：使用不存在的 i18n 键
+ * meta: {
+ *   title: $t("menus.system"),  // menus 命名空间不存在
+ * }
+ * ```
+ */
+````
 
 ### Style Configuration Model
 

@@ -23,8 +23,8 @@ export function useDetail() {
 				query: parameter,
 				meta: {
 					title: {
-						zh: `No.${parameter.id} - 详情信息`,
-						en: `No.${parameter.id} - DetailInfo`,
+						zh: `No.${(parameter as any).id} - 详情信息`,
+						en: `No.${(parameter as any).id} - DetailInfo`,
 					},
 					// 如果使用的是非国际化精简版title可以像下面这么写
 					// title: `No.${index} - 详情信息`,
@@ -33,7 +33,7 @@ export function useDetail() {
 				},
 			});
 			// 路由跳转
-			router.push({ name: "TabQueryDetail", query: parameter });
+			router.push({ name: "TabQueryDetail" as any, query: parameter });
 		} else if (model === "params") {
 			useMultiTagsStoreHook().handleTags("push", {
 				path: `/tabs/params-detail/:id`,
@@ -41,14 +41,14 @@ export function useDetail() {
 				params: parameter,
 				meta: {
 					title: {
-						zh: `No.${parameter.id} - 详情信息`,
-						en: `No.${parameter.id} - DetailInfo`,
+						zh: `No.${(parameter as any).id} - 详情信息`,
+						en: `No.${(parameter as any).id} - DetailInfo`,
 					},
 					// 如果使用的是非国际化精简版title可以像下面这么写
 					// title: `No.${index} - 详情信息`,
 				},
 			});
-			router.push({ name: "TabParamsDetail", params: parameter });
+			router.push({ name: "TabParamsDetail" as any, params: parameter });
 		}
 	}
 

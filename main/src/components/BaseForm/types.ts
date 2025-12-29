@@ -1,5 +1,4 @@
-import type { _InputProps, _SelectProps } from "./_extends";
-import type { DinamicTableFormProps } from "@/components/DinamicTableForm/index.vue";
+import type { _InputProps, _SelectProps, _BaseFormItemProps } from "./_extends";
 import type { FormProps } from "element-plus";
 
 /** 表单组件 可用的表单类型 */
@@ -73,10 +72,11 @@ interface SelectProps<T> extends Omit<_SelectProps<T>, "modelValue"> {
  * @description
  * TODO: 拓展属性
  */
-interface DateProps<T> extends _BaseFormItemProps<T> {
+interface DateProps<T> extends Omit<_BaseFormItemProps<T>, "responsive"> {
 	placeholder?: string;
 	format?: string;
 	valueFormat?: string;
+	responsive?: ResponsiveConfig;
 	type?:
 		| "date"
 		| "datetime"
@@ -97,11 +97,12 @@ interface DateProps<T> extends _BaseFormItemProps<T> {
  * @description
  * TODO: 拓展属性
  */
-interface NumberProps<T> extends _BaseFormItemProps<T> {
+interface NumberProps<T> extends Omit<_BaseFormItemProps<T>, "responsive"> {
 	min?: number;
 	max?: number;
 	step?: number;
 	precision?: number;
+	responsive?: ResponsiveConfig;
 }
 
 /**
@@ -109,13 +110,13 @@ interface NumberProps<T> extends _BaseFormItemProps<T> {
  * @description
  * TODO: 未来对接新的，专门的表格字段类型 DinamicTableFormProps
  */
-interface TableProps<
-	T,
-	Row = T[_BaseFormItemProps<T>["prop"]] extends Record<string, any>
-		? T[_BaseFormItemProps<T>["prop"]]
-		: Record<string, any>,
->
-	extends _BaseFormItemProps<T>, DinamicTableFormProps<Row extends Record<string, any> ? Row : never> {}
+interface TableProps<T> extends Omit<_BaseFormItemProps<T>, "responsive"> {
+	/** 表格列配置 */
+	columns?: any[];
+	/** 表格数据 */
+	data?: any[];
+	responsive?: ResponsiveConfig;
+}
 
 /** 基础表单项 */
 export type BaseFormItem<T> =

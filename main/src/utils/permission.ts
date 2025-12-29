@@ -6,32 +6,6 @@ import type { RouteRecordRaw } from "vue-router";
  * 用于将 Origin 的菜单权限数据结构转换为 Pure-Admin 的路由数据结构
  */
 
-/** Pure-Admin 路由元信息 */
-export interface RouteMeta {
-	/** 菜单名称（兼容国际化、非国际化，如果用国际化的写法就必须在根目录的locales文件夹下对应添加） */
-	title?: string;
-	/** 菜单图标 */
-	icon?: string;
-	/** 是否在菜单中显示（默认`true`）*/
-	showLink?: boolean;
-	/** 是否显示父级菜单 */
-	showParent?: boolean;
-	/** 页面级别权限设置 */
-	roles?: Array<string>;
-	/** 按钮级别权限设置 */
-	auths?: Array<string>;
-	/** 路由组件缓存（开启 `true`、关闭 `false`）*/
-	keepAlive?: boolean;
-	/** 内嵌的`iframe`链接 */
-	frameSrc?: string;
-	/** `iframe`页是否开启首次加载动画（默认`true`）*/
-	frameLoading?: boolean;
-	/** 是否是外链 */
-	isLink?: string;
-	/** 菜单排序，值越高排的越后（只针对顶级路由）*/
-	rank?: number;
-}
-
 /**
  * 将 Origin 的菜单数据转换为 Pure-Admin 的路由配置
  * @param menus Origin 菜单数据
@@ -53,7 +27,7 @@ export function transformMenusToRoutes(menus: MenuDTO[]): RouteRecordRaw[] {
  * @returns 路由配置
  */
 function transformMenuToRoute(menu: MenuDTO): RouteRecordRaw {
-	const route: RouteRecordRaw = {
+	const route: Partial<RouteRecordRaw> = {
 		path: menu.path,
 		name: menu.name,
 		meta: {
@@ -61,7 +35,7 @@ function transformMenuToRoute(menu: MenuDTO): RouteRecordRaw {
 			icon: menu.icon,
 			showLink: !menu.hidden,
 			rank: menu.sort,
-		} as RouteMeta,
+		},
 	};
 
 	// 如果是菜单类型，设置组件
@@ -75,7 +49,7 @@ function transformMenuToRoute(menu: MenuDTO): RouteRecordRaw {
 		route.children = transformMenusToRoutes(menu.children);
 	}
 
-	return route;
+	return route as RouteRecordRaw;
 }
 
 /**

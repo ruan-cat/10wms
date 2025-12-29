@@ -2,10 +2,7 @@ import {
 	type RouterHistory,
 	type RouteRecordRaw,
 	type RouteComponent,
-	/**
-	 * 我们使用自动化路由插件 故不使用原版路由的函数
-	 */
-	// createWebHistory,
+	createWebHistory,
 	createWebHashHistory,
 } from "vue-router";
 import { router } from "./index";
@@ -21,11 +18,6 @@ import { usePermissionStoreHook } from "@/store/modules/permission";
 const IFrame = () => import("@/layout/frame.vue");
 // https://cn.vitejs.dev/guide/features.html#glob-import
 const modulesRoutes = import.meta.glob("/src/views/**/*.{vue,tsx}");
-
-/**
- * 在本工具文件内 我们换成 自动化布局插件 提供的函数
- */
-import { createWebHistory } from "vue-router/auto";
 
 // 动态路由
 import { getAsyncRoutes } from "@/api/routes";
@@ -264,30 +256,30 @@ function handleAliveRoute({ name }: ToRouteType, mode?: string) {
 		case "add":
 			usePermissionStoreHook().cacheOperate({
 				mode: "add",
-				name,
+				name: name as any,
 			});
 			break;
 		case "delete":
 			usePermissionStoreHook().cacheOperate({
 				mode: "delete",
-				name,
+				name: name as any,
 			});
 			break;
 		case "refresh":
 			usePermissionStoreHook().cacheOperate({
 				mode: "refresh",
-				name,
+				name: name as any,
 			});
 			break;
 		default:
 			usePermissionStoreHook().cacheOperate({
 				mode: "delete",
-				name,
+				name: name as any,
 			});
 			useTimeoutFn(() => {
 				usePermissionStoreHook().cacheOperate({
 					mode: "add",
-					name,
+					name: name as any,
 				});
 			}, 100);
 	}

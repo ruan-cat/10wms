@@ -1,4 +1,4 @@
-import type { InputProps, ISelectProps } from "element-plus";
+import type { InputProps, SelectProps as ISelectProps } from "element-plus";
 import type { ResponsiveConfig } from "./types";
 
 /**

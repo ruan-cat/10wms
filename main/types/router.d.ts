@@ -6,7 +6,7 @@ import type { FunctionalComponent } from "vue";
 declare global {
 	interface ToRouteType extends RouteLocationNormalized {
 		meta: CustomizeRouteMeta;
-		// 警告 报错不存在 路由名称 name 可能需要导入自动化路由的name
+		name: string | symbol | undefined | null;
 	}
 
 	/**
@@ -79,6 +79,8 @@ declare global {
 		order?: number;
 		/** 是否为示例页面（Origin 兼容）`可选` */
 		isSample?: boolean;
+		/** 索引签名，允许任意字符串键 */
+		[key: string]: any;
 	}
 
 	/**

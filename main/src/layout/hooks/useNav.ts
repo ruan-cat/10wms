@@ -105,7 +105,7 @@ export function useNav() {
 	}
 
 	function toAccountSettings() {
-		router.push({ name: "AccountSettings" });
+		router.push({ name: "AccountSettings" as any });
 	}
 
 	function toggleSideBar() {

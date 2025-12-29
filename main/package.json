@@ -37,6 +37,10 @@
 		"vite",
 		"esm"
 	],
+	"engines": {
+		"node": ">=22.14.0",
+		"pnpm": ">=10.16.1"
+	},
 	"homepage": "https://github.com/pure-admin/vue-pure-admin",
 	"repository": {
 		"type": "git",

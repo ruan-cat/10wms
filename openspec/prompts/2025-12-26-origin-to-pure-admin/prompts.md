@@ -86,3 +86,33 @@
    - .kiro\specs\origin-to-pure-admin-migration\requirements.md
 6. 更新 openspec.origin-to-pure-admin 的 spec 规格文件：
    - openspec\changes\origin-to-pure-admin\specs 增加一个新的规格，router，重点说明使用了新的路由存储方案。
+
+## 005 <!-- TODO: --> 设计入口，区分 `pure-admin` 路由和 `business` 路由，实现清晰的侧边栏
+
+1. 阅读以下 url 图片：
+
+![2025-12-29-10-54-00](https://gh-img-store.ruan-cat.com/01s-docs/10wms/2025-12-29-10-54-00.png)
+
+2. 可以很清楚的得知，侧边栏的显示效果不好。`pure-admin` 路由和 `business` 路由全部混在一起了。阅读起来不方便。
+3. 我希望你建立一个机制，实现主业务侧边栏，和案例侧边栏的区分。我希望通过特定的入口，点击以后就能够看到案例侧边栏。
+   - `主业务侧边栏`： 即默认的 `business` 路由组成的页面。
+   - `案例侧边栏`： 即默认的，来自 `pure-admin` 路由组成的页面。
+4. `sidebarType` 侧边栏类型的取值： 我设计为联合类型的字符串。
+   - `pureAdminExamplePage` 来自 pure-admin 提供的例子页面。
+   - `wmsBusinessPage` wms 业务的页面。
+5. 基于路由存储结构的约定式配置： 尽管我增加设计了 `meta.sidebarType` 这个**非必填**字段，但是这并不意味着你现在就要扫描全部的 `main\src\router\modules` 目录内的全部路由，并统一配置 `sidebarType` 字段。相反，我要求你基于 modules 路由存储的位置，默认区分 sidebarType 。
+   - `pure-admin` 路由的默认取值为 `pureAdminExamplePage` 。
+   - `business` 路由的默认取值为 `wmsBusinessPage` 。
+6. 可以随时配置某款路由归属于那个侧边栏：
+   - 我希望你基于现有的路由 `meta` 配置类型，增设一个 `sidebarType` 的字段。根据所配置的 `sidebarType` 字段的类型，来实现侧边栏数据的识别与加载。
+   - 当我给一个路由的 `meta.sidebarType` 设置具体值时，那么该路由就归属于那个侧边栏。
+7. 约定式与显性配置的优先级区分：
+   - 默认按照约定式的路由来区分所归属的侧边栏。
+   - 其次根据显性配置的 `meta.sidebarType` 来决定归属。因为我预期设计会有部分 `pure-admin` 路由会归属于主业务侧边栏。成为主业务的一部分。
+8. 制作高内聚的 `main\src\composables` 的专项组合式 api 工具：我要求你在 `main\src\composables\use-sidebar-type` 目录内，新建一个组合式 api，来实现上述的全部功能，最后该组合式 api 会在需要的地方使用。我希望关于`主业务侧边栏`和`案例侧边栏`全部的业务处理逻辑，都在这个组合式 api 内实现。
+9. `use-sidebar-type` 组合式工具要准备完善的文档：
+   - 应该充分的阅读旧项目的 `origin\src\composables` 目录结构，模仿旧项目组合式工具的代码存储结构，也编写详细的文档、使用案例。
+10. 适当修改侧边栏的逻辑： 我们增加了新的处理 `meta.sidebarType` 字段，允许你适当的修改侧边栏的逻辑，确保能够实现区分式的侧边栏。
+11. 将上述路由机制和术语，更新到 `CLAUDE.md` 文档内：
+    - 增加 `主业务侧边栏` 和 `案例侧边栏` 的术语说明。
+    - 在 `CLAUDE.md` 文档内，增加对上述路由与侧边栏识别机制的说明。但是注意要缩减篇幅，避免 `CLAUDE.md` 文件太长。给其他 AI 大模型带来较大的 token 负担，仅仅需要说明必要的机制即可。

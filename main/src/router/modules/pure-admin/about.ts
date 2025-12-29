@@ -10,6 +10,7 @@ export default {
 		icon: "ri/file-info-line",
 		title: $t("menus.pureAbout"),
 		rank: RouterOrderEnums.about,
+		sidebarType: "pureAdminExamplePage",
 	},
 	children: [
 		{

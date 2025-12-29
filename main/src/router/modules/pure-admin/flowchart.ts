@@ -10,6 +10,7 @@ export default {
 		icon: "ep/set-up",
 		title: $t("menus.pureFlowChart"),
 		rank: RouterOrderEnums.flowchart,
+		sidebarType: "pureAdminExamplePage",
 	},
 	children: [
 		{

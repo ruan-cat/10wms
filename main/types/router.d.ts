@@ -134,6 +134,8 @@ declare global {
 			showLink?: boolean;
 			/** 菜单升序排序，值越高排的越后（只针对顶级路由）`可选` */
 			rank?: number;
+			/** 侧边栏类型（用于区分业务侧边栏和示例侧边栏）`可选` */
+			sidebarType?: SidebarType;
 
 			/** 为路由的 meta 对象增加 自动布局插件 所需要的配置 */
 			layout?: LayoutEnums;

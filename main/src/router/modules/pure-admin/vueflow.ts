@@ -9,6 +9,7 @@ export default {
 		icon: "ep/set-up",
 		title: "vue-flow",
 		rank: RouterOrderEnums.vueflow,
+		sidebarType: "pureAdminExamplePage",
 	},
 	children: [
 		{

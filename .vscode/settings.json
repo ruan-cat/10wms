@@ -176,5 +176,9 @@
 	],
 	"vscodeCustomCodeColor.highlightValueColor": "#b392f0",
 	"search.indexing.maxFileSize": 524288000,
-	"search.indexing.batchSize": 1000
+	"search.indexing.batchSize": 1000,
+	"explorer.fileNesting.patterns": {
+		// 折叠 AI大模型记忆文件
+		"CLAUDE.md": "GEMINI.md,AGENTS.md"
+	}
 }

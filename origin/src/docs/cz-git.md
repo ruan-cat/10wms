@@ -1,5 +1,13 @@
 # git 提交
 
+::: warning 本页面已整合到到 01s 笔记内
+
+本页面已经整合到专门的 01s 笔记，请在 01s 笔记内检索即可。
+
+点此查看全部可用的 [01s 笔记域名](https://dm.ruan-cat.com/domain/01s-doc.html)。
+
+:::
+
 ## 已配置好 cz-git
 
 我们项目已经配置好了 git commit 提交的模板工具了。如果你需要更改配置，请更改 commitlint.config.cjs 配置即可。

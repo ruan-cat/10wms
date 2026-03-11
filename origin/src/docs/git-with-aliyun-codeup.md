@@ -1,5 +1,13 @@
 # 使用阿里云效平台的日常 git 协作方式
 
+::: warning 本页面已整合到到 01s 笔记内
+
+本页面已经整合到专门的 01s 笔记，请在 01s 笔记内检索即可。
+
+点此查看全部可用的 [01s 笔记域名](https://dm.ruan-cat.com/domain/01s-doc.html)。
+
+:::
+
 我们项目的 git 团队协作，都可以用阿里云效平台完成。点此进入到我们的项目的[代码库](https://codeup.aliyun.com/zero-one-star/zero-awei/zero-one-10wms/)。
 
 下面列举我们的 git 协作方式：

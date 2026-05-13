@@ -109,5 +109,10 @@
 		"vitepress": "^1.6.4",
 		"vitepress-demo-plugin": "^1.5.1",
 		"vitest": "^3.2.4"
+	},
+	"author": {
+		"name": "ruan-cat",
+		"email": "1219043956@qq.com",
+		"url": "https://github.com/ruan-cat"
 	}
 }

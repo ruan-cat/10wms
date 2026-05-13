@@ -43,9 +43,9 @@
 	},
 	"license": "MIT",
 	"author": {
-		"name": "xiaoxian521",
-		"email": "pureadmin@163.com",
-		"url": "https://github.com/xiaoxian521"
+		"name": "ruan-cat",
+		"email": "1219043956@qq.com",
+		"url": "https://github.com/ruan-cat"
 	},
 	"dependencies": {
 		"@pureadmin/descriptions": "^1.2.1",

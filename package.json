@@ -2,7 +2,11 @@
 	"name": "@ruan-cat-10wms/root",
 	"private": true,
 	"version": "0.0.0",
-	"author": "ruan-cat",
+	"author": {
+		"name": "ruan-cat",
+		"email": "1219043956@qq.com",
+		"url": "https://github.com/ruan-cat"
+	},
 	"license": "ISC",
 	"description": "阮喵喵10wms项目的monorepo根目录。用来实现一个后台项目的升级改造。",
 	"main": "index.js",

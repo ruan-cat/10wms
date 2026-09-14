@@ -11,7 +11,7 @@
 	"description": "阮喵喵10wms项目的monorepo根目录。用来实现一个后台项目的升级改造。",
 	"main": "index.js",
 	"type": "module",
-	"packageManager": "pnpm@10.26.2",
+	"packageManager": "pnpm@12.4.1",
 	"engines": {
 		"node": ">=22.14.0"
 	},

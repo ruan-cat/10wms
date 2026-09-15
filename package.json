@@ -17,7 +17,7 @@
 	},
 	"scripts": {
 		"up-taze": "pnpm -w up @ruan-cat/taze-config -L && npx taze -r",
-		"build": "turbo build",
+		"build": "pnpm -r --filter '!./examples/**' run build",
 		"deploy-vercel": "turbo do-deploy-vercel",
 		"test": "vitest --ui --watch --api.port=4000",
 		"format": "prettier --experimental-cli --write --no-parallel '**/*.{js,jsx,ts,tsx,mts,json,css,scss,md,yml,yaml,html}'",
@@ -25,7 +25,7 @@
 		"changeset:add": "changeset add",
 		"changeset:version": "changeset version && changeset tag",
 		"git:push": "git push --follow-tags",
-		"build:docs": "turbo build:docs",
+		"build:docs": "pnpm -F @ruan-cat-10wms/wms-frontend-origin run docs:build",
 		"preinstall": "npx only-allow pnpm",
 		"git:fetch": "git fetch -p",
 		"clear": "pnpm run clear:deps && pnpm run clear:cache",

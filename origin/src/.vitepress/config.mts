@@ -2,15 +2,17 @@ import {
 	addChangelog2doc,
 	setGenerateSidebar,
 	setUserConfig,
-	copyClaudeAgents,
+	copyClaudeFiles,
 } from "@ruan-cat/vitepress-preset-config/config";
 
 import AutoImport from "../plugins/unplugin-auto-import/index.ts";
 import tsAlias from "../plugins/vite-plugin-ts-alias/index.ts";
 
-// 将 claude agents 移动到指定的文件目录内
-copyClaudeAgents({
-	target: "origin/src/docs/claude",
+// 将根目录 .claude 下的 agents/commands/skills 复制到文档目录内。
+// 注意：copyClaudeAgents 是幽灵 API，任何已发布版本的 preset-config 均只提供 copyClaudeFiles。
+// vitepress 运行目录为 origin/，target 相对于该目录解析。
+copyClaudeFiles({
+	target: "src/docs/claude",
 });
 
 // 为文档添加自动生成的changelog
